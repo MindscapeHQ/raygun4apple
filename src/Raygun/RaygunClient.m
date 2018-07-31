@@ -12,9 +12,12 @@
 
 #import "RaygunClient.h"
 
+static NSString *apiEndPoint = @"https://api.raygun.com/entries";
+
 @interface RaygunClient()
 
 // private stuff
+@property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 
 @end
 
@@ -49,6 +52,19 @@
 
 - (void)sendException:(NSException *)exception {
   // NOT IMP
+}
+
+- (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSURLResponse*, NSData*, NSError*))handler {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:apiEndPoint]];
+    
+    request.HTTPMethod = @"POST";
+    [request setValue:_apiKey forHTTPHeaderField:@"X-ApiKey"];
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    [request setValue:[NSString stringWithFormat:@"%tu", [crashData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:crashData];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:self.queue completionHandler:handler];
 }
 
 @end
