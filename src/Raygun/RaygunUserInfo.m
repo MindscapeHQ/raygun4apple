@@ -34,22 +34,22 @@
                withEmail:(NSString *)email
             withFullName:(NSString *)fullName
            withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isanonymous {
-    return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:isanonymous withUuid:nil];
+         withIsAnonymous:(BOOL)isAnonymous {
+    return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:isAnonymous withUuid:nil];
 }
 
 - (id)initWithIdentifier:(NSString *)identifier
                withEmail:(NSString *)email
             withFullName:(NSString *)fullName
            withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isanonymous
+         withIsAnonymous:(BOOL)isAnonymous
                 withUuid:(NSString *)uuid {
     if ((self = [super init])) {
         self.identifier  = identifier;
         self.email       = email;
         self.fullName    = fullName;
         self.firstName   = firstName;
-        self.isAnonymous = isanonymous;
+        self.isAnonymous = isAnonymous;
         self.uuid        = uuid;
     }
     return self;

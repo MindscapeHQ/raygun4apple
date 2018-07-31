@@ -86,7 +86,7 @@
                withEmail:(NSString *)email
             withFullName:(NSString *)fullName
            withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isanonymous;
+         withIsAnonymous:(BOOL) isAnonymous;
 
 /**
  Creates and returns a RaygunUserInfo object.
@@ -104,7 +104,7 @@
                withEmail:(NSString *)email
             withFullName:(NSString *)fullName
            withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isanonymous
+         withIsAnonymous:(BOOL) isAnonymous
                 withUuid:(NSString *)uuid;
 
 /**

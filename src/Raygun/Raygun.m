@@ -12,8 +12,15 @@
 #import "Pulse.h"
 #import "KSCrash.h"
 #import "RaygunErrorFormatter.h"
+#import "RaygunCrashInstallation.h"
 
 static NSString *apiEndPoint = @"https://api.raygun.com/entries";
+
+static Raygun *sharedRaygun = nil;
+
+static RaygunCrashInstallation *installation = nil;
+
+static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 
 @interface Raygun()
 
@@ -43,10 +50,6 @@ static NSString *apiEndPoint = @"https://api.raygun.com/entries";
 
 @end
 
-static id _sharedRaygun;
-
-static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
-
 @implementation Raygun
 
 @synthesize nextReportUUID       = _nextReportUUID;
@@ -68,14 +71,18 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 + (id)sharedReporterWithApiKey:(NSString *)theApiKey withCrashReporting:(bool)crashReporting omitMachineName:(bool)omitMachineName {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedRaygun = [[self alloc] initWithApiKey:theApiKey withCrashReporting:crashReporting omitMachineName:omitMachineName];
+        sharedRaygun = [[self alloc] initWithApiKey:theApiKey withCrashReporting:crashReporting omitMachineName:omitMachineName];
+        
+        installation = [[RaygunCrashInstallation alloc] init];
+        [installation install];
+        [installation sendAllReports];
     });
     
-    return _sharedRaygun;
+    return sharedRaygun;
 }
 
 + (id)sharedReporter {
-    return _sharedRaygun;
+    return sharedRaygun;
 }
 
 - (id)attachPulse{
