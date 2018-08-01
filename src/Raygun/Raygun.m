@@ -126,6 +126,11 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
             [self.fileManager createDirectoryAtPath:self.crashesDirectory withIntermediateDirectories:YES attributes:attributes error:NULL];
         }
         
+        self.crashReporter = [KSCrash sharedInstance];
+        [self.crashReporter setMaxReportCount:10];
+        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+        [self.crashReporter setUserInfo:userInfo];
+        
         //TODO
         /*
         PLCrashReporterConfig *configuration = [[PLCrashReporterConfig alloc] initWithSignalHandlerType:PLCrashReporterSignalHandlerTypeBSD symbolicationStrategy:PLCrashReporterSymbolicationStrategyNone];
@@ -275,6 +280,18 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     }
 }
 
+- (void)sendMessage:(RaygunMessage *)message {
+    bool send = true;
+    
+    if (_onBeforeSendDelegate != nil) {
+        send = [_onBeforeSendDelegate onBeforeSend:message];
+    }
+    
+    if (send) {
+        [self sendCrashData:[message convertToJson] completionHandler:NULL];
+    }
+}
+
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData {
     NSError *innerError = [self getInnerError:error];
     NSString *reason = [innerError localizedDescription];
@@ -339,20 +356,26 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 
 - (void)setApplicationVersion:(NSString *)applicationVersion {
     _applicationVersion = applicationVersion;
-    //TODO
-    //[self.crashReporter setApplicationVersion:applicationVersion];
+    [self updateCrashReportUserInfo];
 }
 
 -(void)setTags:(NSArray *)tags {
     _tags = tags;
-    //TODO
-    //[self.crashReporter setTags:tags];
+    [self updateCrashReportUserInfo];
 }
 
 - (void)setUserCustomData:(NSDictionary *)userCustomData {
     _userCustomData = userCustomData;
-    // TODO
-    //[self.crashReporter setUserCustomData:userCustomData];
+    [self updateCrashReportUserInfo];
+}
+
+- (void)updateCrashReportUserInfo {
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[@"applicationVersion"] = _applicationVersion;
+    userInfo[@"userCustomData"] = _userCustomData;
+    userInfo[@"tags"] = _tags;
+    
+    [self.crashReporter setUserInfo:userInfo];
 }
 
 - (void)processCrashReports {

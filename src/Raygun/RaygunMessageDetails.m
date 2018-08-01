@@ -17,7 +17,6 @@
 @synthesize environment    = _environment;
 @synthesize error          = _error;
 @synthesize user           = _user;
-@synthesize crashReport    = _crashReport; // base64 encoded crash report
 @synthesize tags           = _tags;
 @synthesize userCustomData = _userCustomData;
 
@@ -66,10 +65,6 @@
     
     if (_error) {
         dict[@"error"] = [_error convertToDictionary];
-    }
-    
-    if (_crashReport) {
-        dict[@"crashReport"] = _crashReport;
     }
     
     if (_user) {

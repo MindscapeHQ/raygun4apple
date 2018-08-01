@@ -23,7 +23,6 @@
 @property (nonatomic, readwrite, retain) RaygunEnvironmentMessage *environment;
 @property (nonatomic, readwrite, retain) RaygunErrorMessage *error;
 @property (nonatomic, readwrite, retain) RaygunUserInfo *user;
-@property (nonatomic, readwrite, copy) NSString *crashReport;
 @property (nonatomic, readwrite, retain) NSArray *tags;
 @property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
 

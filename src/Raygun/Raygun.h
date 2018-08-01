@@ -203,9 +203,15 @@ typedef enum {
 - (void)send:(NSString *)exceptionName withReason: (NSString *)exceptionReason withTags: (NSArray *)tags withUserCustomData: (NSDictionary *)userCustomData;
 
 /**
+ Manually send a RaygunMessage to Raygun.
+ */
+- (void)sendMessage:(RaygunMessage *)message;
+
+/**
  Manually send an error to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
  */
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
+
 
 /**
  Manually send a Pulse (RUM) timing event to Raygun.

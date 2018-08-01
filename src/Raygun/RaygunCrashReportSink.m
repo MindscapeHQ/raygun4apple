@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Raygun.h"
+#import "RaygunMessage.h"
+#import "RaygunCrashReportConverter.h"
 #import "RaygunCrashReportSink.h"
 #import "KSCrash.h"
 
@@ -15,17 +18,21 @@
 - (void) filterReports:(NSArray*) reports
           onCompletion:(KSCrashReportFilterCompletion) onCompletion
 {
-    /*
-    NSError* error = nil;
-    NSData* jsonData = [KSJSONCodec encode:reports
-                                   options:KSJSONEncodeOptionSorted
-                                     error:&error];
-    if(jsonData == nil)
-    {
-        kscrash_callCompletion(onCompletion, reports, NO, error);
-        return;
-    }
-     */
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
+        NSMutableArray *sentReports = [NSMutableArray new];
+        RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
+        for (NSDictionary *report in reports) {
+            if (nil != Raygun.sharedReporter) {
+                RaygunMessage *message = [converter convertReportToMessage:report];
+                [Raygun.sharedReporter sendMessage:message];
+                [sentReports addObject:report];
+            }
+        }
+        if (onCompletion) {
+            onCompletion(sentReports, TRUE, nil);
+        }
+    });
 }
 
 @end

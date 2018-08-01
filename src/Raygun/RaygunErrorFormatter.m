@@ -141,12 +141,14 @@ NSString * const ManagedStackTraceRegex = @"at (.*?)(?: in (.*):([0-9]*))?\\s*$"
     
     details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
     
+    /*
     if ([data respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
         details.crashReport = [data base64EncodedStringWithOptions:kNilOptions];
     }
     else {
         details.crashReport = [data base64Encoding];
     }
+     */
     
     // TODO
     /*
