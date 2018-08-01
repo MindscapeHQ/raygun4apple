@@ -20,10 +20,6 @@
 @synthesize tags           = _tags;
 @synthesize userCustomData = _userCustomData;
 
--(void)setClient:(RaygunClientMessage *)client {
-    _client = client;
-}
-
 -(void)setEnvironment:(RaygunEnvironmentMessage *)environment {
     _environment = environment;
 }

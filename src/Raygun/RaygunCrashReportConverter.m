@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 #import "RaygunCrashReportConverter.h"
 
@@ -25,45 +26,34 @@
 }
 
 - (NSString *)occurredOn:(NSDictionary *)report {
-    NSDate *occurredOn = nil;
+    NSString *occurredOn = report[@"report"][@"timestamp"];
     
-    NSDateFormatter *isoFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-    
-    [isoFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-    [isoFormatter setTimeZone:utcTimeZone];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [isoFormatter setLocale:locale];
-    
-    if ([report[@"report"][@"timestamp"] isKindOfClass:NSNumber.class]) {
-        occurredOn = [NSDate dateWithTimeIntervalSince1970:[report[@"report"][@"timestamp"] integerValue]];
-    } else {
-        occurredOn = [isoFormatter dateFromString:report[@"report"][@"timestamp"]];
+    if (occurredOn == nil){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+        
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+        [dateFormatter setTimeZone:utcTimeZone];
+        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [dateFormatter setLocale:locale];
+        
+        occurredOn = [dateFormatter stringFromDate:[NSDate date]];
     }
     
-    NSString *result = [isoFormatter stringFromDate:occurredOn];
-    
-    result = [result stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSRange range = {0, [result length]};
-    result = [result stringByReplacingOccurrencesOfString:@"a." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"a" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    
-    return result;
+    return occurredOn;
 }
 
 - (RaygunMessageDetails *)messageDetailsFromReport:(NSDictionary *)report {
     RaygunMessageDetails *details = [[RaygunMessageDetails alloc] init];
     
-    details.version = report[@"user"][@"applicationVersion"];
+    NSString *appVersion = report[@"user"][@"applicationVersion"];
+    if (appVersion == nil){
+        appVersion = report[@"system"][@"CFBundleShortVersionString"];
+    }
+    if (appVersion == nil){
+        appVersion = @"Unknown";
+    }
+    details.version = appVersion;
     
     RaygunClientMessage *client = [self clientInfoFromCrashReport:report];
     details.client = client;
@@ -76,8 +66,8 @@
     
     // TODO
     //RaygunUserInfo *user = [self userInfoFromCrashReport:crashReport.userInfo];
-    RaygunUserInfo *user = [[RaygunUserInfo alloc] init];
-    details.user = user;
+    //RaygunUserInfo *user = [[RaygunUserInfo alloc] init];
+    //details.user = user;
     
     //details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
     
@@ -106,10 +96,12 @@
 - (RaygunEnvironmentMessage *)environmentDetailsFromCrashReport:(NSDictionary *)report {
     RaygunEnvironmentMessage *environment = [[RaygunEnvironmentMessage alloc] init];
     
+    NSDictionary *systemData = report[@"system"];
+    
     NSString *osVersion = [NSString stringWithFormat:@"%@ %@ (%@)",
-                           report[@"system"][@"system_name"],
-                           report[@"system"][@"system_version"],
-                           report[@"system"][@"os_version"]];
+                           systemData[@"system_name"],
+                           systemData[@"system_version"],
+                           systemData[@"os_version"]];
     
     if (!osVersion) {
         osVersion = @"NotProvided";
@@ -127,18 +119,21 @@
         localeStr = @"NotProvided";
     }
     
-    //TODO
-    //CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
     environment.processorCount     = nil;
     environment.oSVersion          = osVersion;
-    environment.model              = report[@"system"][@"cpu_arch"];
-    //environment.windowsBoundWidth  = @(screenBounds.size.width);
-    //environment.windowsBoundHeight = @(screenBounds.size.height);
-    //environment.resolutionScale    = @([[UIScreen mainScreen] scale]);
-    environment.cpu                = report[@"system"][@"cpu_arch"];
+    environment.model              = systemData[@"machine"];
+    environment.windowsBoundWidth  = @(screenBounds.size.width);
+    environment.windowsBoundHeight = @(screenBounds.size.height);
+    environment.resolutionScale    = @([[UIScreen mainScreen] scale]);
+    environment.cpu                = systemData[@"cpu_arch"];
     environment.utcOffset          = @([[NSTimeZone systemTimeZone] secondsFromGMT] / 3600);
     environment.locale             = localeStr;
+    environment.kernelVersion      = systemData[@"kernel_version"];
+    environment.memorySize         = systemData[@"memory"][@"size"];
+    environment.memoryFree         = systemData[@"memory"][@"free"];
+    environment.jailBroken         = systemData[@"jailbroken"];
     
     //TODO: Add memory information, jailbroken
     

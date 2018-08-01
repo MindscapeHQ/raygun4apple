@@ -19,6 +19,11 @@
 @synthesize cpu                = _cpu;
 @synthesize utcOffset          = _utcOffset;
 @synthesize locale             = _locale;
+@synthesize kernelVersion      = _kernelVersion;
+@synthesize jailBroken         = _jailBroken;
+@synthesize memoryFree         = _memoryFree;
+@synthesize memorySize         = _memorySize;
+
 
 -(NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -58,6 +63,20 @@
     if (_locale) {
         dict[@"locale"] = _locale;
     }
+    
+    if (_kernelVersion) {
+        dict[@"kernelVersion"] = _kernelVersion;
+    }
+    
+    if (_memorySize) {
+        dict[@"totalPhysicalMemory"] = _memorySize;
+    }
+    
+    if (_memoryFree) {
+        dict[@"availablePhysicalMemory"] = _memoryFree;
+    }
+    
+    dict[@"rooted"] = _jailBroken?@YES:@NO;
     
     return dict;
 }

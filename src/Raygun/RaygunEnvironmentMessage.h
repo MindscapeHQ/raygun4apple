@@ -22,6 +22,10 @@
 @property (nonatomic, readwrite, copy) NSString *cpu;
 @property (nonatomic, readwrite, copy) NSNumber *utcOffset;
 @property (nonatomic, readwrite, copy) NSString *locale;
+@property (nonatomic, readwrite, copy) NSString *kernelVersion;
+@property (nonatomic, readwrite, copy) NSNumber *memoryFree;
+@property (nonatomic, readwrite, copy) NSNumber *memorySize;
+@property (nonatomic, readwrite) BOOL jailBroken;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.
