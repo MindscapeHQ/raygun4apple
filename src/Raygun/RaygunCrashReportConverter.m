@@ -69,7 +69,7 @@
     //RaygunUserInfo *user = [[RaygunUserInfo alloc] init];
     //details.user = user;
     
-    //details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
+    details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
     
     // TODO
     /*
@@ -135,41 +135,80 @@
     environment.memoryFree         = systemData[@"memory"][@"free"];
     environment.jailBroken         = systemData[@"jailbroken"];
     
-    //TODO: Add memory information, jailbroken
-    
     return environment;
 }
 
 - (RaygunErrorMessage *)errorDetailsFromCrashReport:(NSDictionary *)report {
-    NSString *signalName = report[@"crash"][@"error"][@"signal"][@"name"];
-    NSString *signalCode = report[@"crash"][@"error"][@"signal"][@"code_name"];
     
-    NSString *className = @"NotProvided";
-    NSString *message = @"NotProvided";
+    NSDictionary *errorData = report[@"crash"][@"error"];
+    NSString *diagnosis = report[@"crash"][@"diagnosis"];
+    NSString *signalName = @"Unknown";
+    NSString *signalCode = @"Unknown";
+    NSString *className = @"Unknown";
+    NSString *message = nil;
+    
+    if (errorData != nil) {
         
-        //TODO
-        /*
-         PLCrashReportExceptionInfo *exceptionInfo = [crashReport exceptionInfo];
-         NSString *className = [exceptionInfo respondsToSelector:@selector(exceptionName)] ? [exceptionInfo exceptionName] : @"NotProvided";
-         NSString *message = [exceptionInfo respondsToSelector:@selector(exceptionReason)] ? [exceptionInfo exceptionReason] : @"NotProvided";
-         */
+        NSString *exceptionType = errorData[@"type"];
+        
+        if ([exceptionType isEqualToString:@"nsexception"]) {
+            message = errorData[@"nsexception"][@"reason"];
+            className = errorData[@"nsexception"][@"name"];
+        }
+        else if ([exceptionType isEqualToString:@"cpp_exception"]) {
+            message = errorData[@"cpp_exception"][@"name"];
+            className = @"C++ Exception";
+        }
+        else if ([exceptionType isEqualToString:@"mach"]) {
+            message = [NSString stringWithFormat:@"Exception %@, Code %@, Subcode %@",
+                       [self nullCoalesce:errorData[@"mach"] withProperty:@"exception_name" withFallback:@"exception"],
+                       [self nullCoalesce:errorData[@"mach"] withProperty:@"code_name" withFallback:@"code"],
+                       errorData[@"mach"][@"subcode"]];
+            className = errorData[@"mach"][@"exception_name"];
+            signalCode = [self nullCoalesce:errorData[@"signal"] withProperty:@"code_name" withFallback:@"code"];
+            signalName = errorData[@"signal"][@"name"];
+        }
+        else if ([exceptionType isEqualToString:@"signal"]) {
+            signalCode = [self nullCoalesce:errorData[@"signal"] withProperty:@"code_name" withFallback:@"code"];
+            signalName = errorData[@"signal"][@"name"];
+            message = [NSString stringWithFormat:@"Signal %@, Code %@",
+                       signalName,
+                       signalCode];
+            className = errorData[@"mach"][@"exception_name"];
+        }
+        else if ([exceptionType isEqualToString:@"deadlock"]) {
+            message = @"Deadlock";
+        }
+        else if ([exceptionType isEqualToString:@"user"]) {
+            message = errorData[@"reason"];
+            className = errorData[@"user_reported"][@"name"];
+        }
+        
+        if (message == nil){
+            message = @"Unknown";
+        }
+        
+        if (diagnosis != nil && diagnosis.length > 0) {
+            message = [message stringByAppendingString:[NSString stringWithFormat:@" >\n%@", diagnosis]];
+        }
+    }
+    
     return [[RaygunErrorMessage alloc] init:className withMessage:message withSignalName:signalName withSignalCode:signalCode withStackTrace:nil];
 }
 
+- (NSObject *)nullCoalesce:(NSDictionary *)data withProperty:(NSString *)property withFallback:(NSString *) fallback {
+    return [data objectForKey:property] ? [data objectForKey:property] : [data objectForKey:fallback];
+}
+
 - (RaygunUserInfo *)userInfoFromCrashReport:(NSData *)userInfo {
-    //TODO
-    /*
-     if (userInfo && userInfo.userId) {
-     return [[RaygunUserInfo alloc] initWithIdentifier:userInfo.userId
-     withEmail:userInfo.email
-     withFullName:userInfo.fullName
-     withFirstName:userInfo.firstName
-     withIsAnonymous:userInfo.isAnonymous
-     withUuid:userInfo.uuid];
-     }
-     */
-    
-    return nil;
+    if (userInfo && userInfo.userId) {
+        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo.userId
+            withEmail:userInfo.email
+            withFullName:userInfo.fullName
+            withFirstName:userInfo.firstName
+            withIsAnonymous:userInfo.isAnonymous
+            withUuid:userInfo.uuid];
+    }
 }
 
 @end
