@@ -19,6 +19,7 @@
 @synthesize user           = _user;
 @synthesize tags           = _tags;
 @synthesize userCustomData = _userCustomData;
+@synthesize threads        = _threads;
 
 -(void)setEnvironment:(RaygunEnvironmentMessage *)environment {
     _environment = environment;
@@ -38,6 +39,10 @@
 
 -(void)setUserCustomData:(NSDictionary *)userCustomData {
     _userCustomData = userCustomData;
+}
+
+-(void)setThreads:(NSArray<RaygunThread *> *)threads {
+    _threads = threads;
 }
 
 -(NSDictionary *)convertToDictionary {
@@ -73,6 +78,14 @@
     
     if (_userCustomData) {
         dict[@"userCustomData"] = _userCustomData;
+    }
+    
+    if (_threads && _threads.count > 0) {
+        NSMutableArray *threads = [NSMutableArray new];
+        for (RaygunThread *thread in _threads) {
+            [threads addObject:[thread convertToDictionary]];
+        }
+        dict[@"threads"] = threads;
     }
     
     return dict;

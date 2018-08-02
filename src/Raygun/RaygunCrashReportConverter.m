@@ -196,19 +196,23 @@
     return [[RaygunErrorMessage alloc] init:className withMessage:message withSignalName:signalName withSignalCode:signalCode withStackTrace:nil];
 }
 
-- (NSObject *)nullCoalesce:(NSDictionary *)data withProperty:(NSString *)property withFallback:(NSString *) fallback {
+- (NSString *)nullCoalesce:(NSDictionary *)data withProperty:(NSString *)property withFallback:(NSString *) fallback {
     return [data objectForKey:property] ? [data objectForKey:property] : [data objectForKey:fallback];
 }
 
-- (RaygunUserInfo *)userInfoFromCrashReport:(NSData *)userInfo {
-    if (userInfo && userInfo.userId) {
-        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo.userId
-            withEmail:userInfo.email
-            withFullName:userInfo.fullName
-            withFirstName:userInfo.firstName
-            withIsAnonymous:userInfo.isAnonymous
-            withUuid:userInfo.uuid];
+- (RaygunUserInfo *)userInfoFromReport:(NSDictionary *)report {
+    NSDictionary *userInfo = report[@"user"][@"userInfo"];
+    
+    if (userInfo != nil) {
+        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"userId"]
+            withEmail:userInfo[@"email"]
+            withFullName:userInfo[@"fullName"]
+            withFirstName:userInfo[@"firstName"]
+            withIsAnonymous:userInfo[@"isAnonymous"]
+            withUuid:userInfo[@"uuid"]];
     }
+    
+    return nil;
 }
 
 @end

@@ -17,7 +17,7 @@
 @property (nonatomic, readwrite, copy) NSString *message;
 @property (nonatomic, readwrite, copy) NSString *signalName;
 @property (nonatomic, readwrite, copy) NSString *signalCode;
-@property (nonatomic, readwrite, retain) NSArray *stackTrace;
+@property (nonatomic, readwrite, strong) NSArray *stackTrace;
 
 -(id) init:(NSString *)className withMessage:(NSString *)message
                               withSignalName:(NSString *)signalName

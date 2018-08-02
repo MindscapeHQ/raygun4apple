@@ -13,18 +13,20 @@
 #import "RaygunEnvironmentMessage.h"
 #import "RaygunErrorMessage.h"
 #import "RaygunUserInfo.h"
+#import "RaygunThread.h"
 
 @interface RaygunMessageDetails : NSObject
 
 @property (nonatomic, readwrite, copy) NSString *groupingKey;
 @property (nonatomic, readwrite, copy) NSString *machineName;
 @property (nonatomic, readwrite, copy) NSString *version;
-@property (nonatomic, readwrite, retain) RaygunClientMessage *client;
-@property (nonatomic, readwrite, retain) RaygunEnvironmentMessage *environment;
-@property (nonatomic, readwrite, retain) RaygunErrorMessage *error;
-@property (nonatomic, readwrite, retain) RaygunUserInfo *user;
-@property (nonatomic, readwrite, retain) NSArray *tags;
-@property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
+@property (nonatomic, readwrite, strong) RaygunClientMessage *client;
+@property (nonatomic, readwrite, strong) RaygunEnvironmentMessage *environment;
+@property (nonatomic, readwrite, strong) RaygunErrorMessage *error;
+@property (nonatomic, readwrite, strong) RaygunUserInfo *user;
+@property (nonatomic, readwrite, strong) NSArray *tags;
+@property (nonatomic, readwrite, strong) NSDictionary *userCustomData;
+@property (nonatomic, strong) NSArray<RaygunThread *> *threads;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

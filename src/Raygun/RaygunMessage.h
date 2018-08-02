@@ -14,7 +14,7 @@
 @interface RaygunMessage : NSObject
 
 @property (nonatomic, readwrite, copy) NSString *occurredOn;
-@property (nonatomic, readwrite, retain) RaygunMessageDetails *details;
+@property (nonatomic, readwrite, strong) RaygunMessageDetails *details;
 
 - (id)init:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details;
 

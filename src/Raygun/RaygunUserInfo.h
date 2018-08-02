@@ -19,12 +19,12 @@
  
  @warning The identifier must be set in order for any of the other fields to be sent.
  */
-@property (nonatomic, readwrite, retain) NSString *identifier;
+@property (nonatomic, readwrite, strong) NSString *identifier;
 
 /**
  * Device Identifier.
  */
-@property (nonatomic, readwrite, retain) NSString *uuid;
+@property (nonatomic, readwrite, strong) NSString *uuid;
 
 /**
  Flag indicating whether a user is anonymous or not.
@@ -35,17 +35,17 @@
 /**
  User's email address
  */
-@property (nonatomic, readwrite, retain) NSString *email;
+@property (nonatomic, readwrite, strong) NSString *email;
 
 /**
  User's full name.
  */
-@property (nonatomic, readwrite, retain) NSString *fullName;
+@property (nonatomic, readwrite, strong) NSString *fullName;
 
 /**
  User's first or preferred name.
  */
-@property (nonatomic, readwrite, retain) NSString *firstName;
+@property (nonatomic, readwrite, strong) NSString *firstName;
 
 /**
  Creates and returns a RaygunUserInfo object.

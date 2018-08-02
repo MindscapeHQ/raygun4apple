@@ -56,6 +56,8 @@ typedef enum {
 
 @property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
 
+@property (nonatomic, readwrite, retain) RaygunUserInfo *userInfo;
+
 @property (nonatomic, readwrite, retain) id onBeforeSendDelegate;
 
 /**

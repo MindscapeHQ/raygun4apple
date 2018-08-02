@@ -57,6 +57,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 @synthesize tags                 = _tags;
 @synthesize userCustomData       = _userCustomData;
 @synthesize onBeforeSendDelegate = _onBeforeSendDelegate;
+@synthesize userInfo             = _userInfo;
 
 #pragma mark - Initialising Methods
 
@@ -326,18 +327,17 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 #pragma mark - Unique User Tracking
 
 - (void)identify:(NSString *)userId {
-    //TODO
-    //[self.crashReporter identify:userId];
+    _userInfo = [[RaygunUserInfo alloc] initWithIdentifier:userId];
+    _userInfo.isAnonymous = true;
     
-    RaygunUserInfo *userInfo = [[RaygunUserInfo alloc] initWithIdentifier:userId];
-    userInfo.isAnonymous = true;
-    [self.pulse identifyWithUserInfo:userInfo];
+    [self identifyWithUserInfo:_userInfo];
 }
 
 - (void)identifyWithUserInfo:(RaygunUserInfo *)userInfo {
-    //TODO
-    //[self.crashReporter identifyWithUserInfo:userInfo];
+    _userInfo = userInfo;
+    
     [self.pulse identifyWithUserInfo:userInfo];
+    [self updateCrashReportUserInfo];
 }
 
 #pragma mark - RUM Performance Tracking
@@ -372,8 +372,9 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 - (void)updateCrashReportUserInfo {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     userInfo[@"applicationVersion"] = _applicationVersion;
-    userInfo[@"userCustomData"] = _userCustomData;
+    userInfo[@"customData"] = _userCustomData;
     userInfo[@"tags"] = _tags;
+    userInfo[@"userInfo"] = [_userInfo convertToDictionary];
     
     [self.crashReporter setUserInfo:userInfo];
 }
