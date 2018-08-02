@@ -16,6 +16,10 @@
 
 @implementation RaygunCrashReportConverter
 
+static inline NSString *hexAddress(NSNumber *value) {
+    return [NSString stringWithFormat:@"0x%016llx", [value unsignedLongLongValue]];
+}
+
 - (RaygunMessage *)convertReportToMessage:(NSDictionary *)report {
     NSString *occurredOn = [self occurredOn:report];
     RaygunMessageDetails *details = [self messageDetailsFromReport:report];
@@ -46,14 +50,7 @@
 - (RaygunMessageDetails *)messageDetailsFromReport:(NSDictionary *)report {
     RaygunMessageDetails *details = [[RaygunMessageDetails alloc] init];
     
-    NSString *appVersion = report[@"user"][@"applicationVersion"];
-    if (appVersion == nil){
-        appVersion = report[@"system"][@"CFBundleShortVersionString"];
-    }
-    if (appVersion == nil){
-        appVersion = @"Unknown";
-    }
-    details.version = appVersion;
+    details.version = [self applicationVersionFromCrashReport:report];
     
     RaygunClientMessage *client = [self clientInfoFromCrashReport:report];
     details.client = client;
@@ -64,25 +61,34 @@
     RaygunErrorMessage *error = [self errorDetailsFromCrashReport:report];
     details.error = error;
     
-    // TODO
-    //RaygunUserInfo *user = [self userInfoFromCrashReport:crashReport.userInfo];
-    //RaygunUserInfo *user = [[RaygunUserInfo alloc] init];
-    //details.user = user;
-    
     details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
     
-    // TODO
-    /*
-     if (crashReport.tags) {
-     [details setTags:crashReport.tags];
-     }
-     
-     if (crashReport.userCustomData) {
-     [details setUserCustomData:crashReport.userCustomData];
-     }
-     */
+    NSDictionary *userData = report[@"user"];
+    if (userData != nil){
+        RaygunUserInfo *user = [self userInfoFromCrashReportUserData:userData];
+        details.user = user;
+        
+        if (userData[@"tags"]) {
+            details.tags = userData[@"tags"];
+        }
+        
+        if (userData[@"customData"]) {
+            details.userCustomData = userData[@"customData"];
+        }
+    }
     
     return details;
+}
+
+- (NSString *)applicationVersionFromCrashReport:(NSDictionary *)report {
+    NSString *appVersion = report[@"user"][@"applicationVersion"];
+    if (appVersion == nil){
+        appVersion = report[@"system"][@"CFBundleShortVersionString"];
+    }
+    if (appVersion == nil){
+        appVersion = @"Unknown";
+    }
+    return appVersion;
 }
 
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
@@ -200,8 +206,8 @@
     return [data objectForKey:property] ? [data objectForKey:property] : [data objectForKey:fallback];
 }
 
-- (RaygunUserInfo *)userInfoFromReport:(NSDictionary *)report {
-    NSDictionary *userInfo = report[@"user"][@"userInfo"];
+- (RaygunUserInfo *)userInfoFromCrashReportUserData:(NSDictionary *)userData {
+    NSDictionary *userInfo = userData[@"userInfo"];
     
     if (userInfo != nil) {
         return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"userId"]
@@ -214,5 +220,84 @@
     
     return nil;
 }
+
+- (NSArray *)threadsFromCrashReport:(NSDictionary *)report {
+    NSArray *threads = report[@"crash"][@"threads"];
+    NSArray *binaryImages = report[@"binary_images"];
+    NSMutableArray *raygunThreads = [NSMutableArray new];
+    for (NSInteger threadIndex = 0; threadIndex < (NSInteger) threads.count; threadIndex++) {
+        RaygunThread *thread = [self threadAtIndex:threadIndex threads:threads binaryImages:binaryImages];
+        if (thread) {
+            [raygunThreads addObject:thread];
+        }
+    }
+    return raygunThreads;
+}
+
+- (RaygunThread *) threadAtIndex:(NSInteger)threadIndex threads:(NSArray *)threads binaryImages:(NSArray *)binaryImages {
+    if (threadIndex >= threads.count) {
+        return nil;
+    }
+    NSDictionary *threadData = [threads objectAtIndex:threadIndex];
+    
+    RaygunThread *thread = [[RaygunThread alloc] init:threadData[@"index"]];
+    thread.stacktrace = [self stackTraceForThread:threadData binaryImages:binaryImages];
+    thread.crashed = threadData[@"crashed"];
+    thread.current = threadData[@"current_thread"];
+    thread.name = threadData[@"name"];
+    if (thread.name == nil) {
+        thread.name = threadData[@"dispatch_queue"];
+    }
+    return thread;
+}
+
+- (RaygunStacktrace *)stackTraceForThread:(NSDictionary *)thread binaryImages:(NSArray *)binaryImages {
+    NSArray<RaygunFrame *> *frames = [self stackFramesForThread:thread binaryImages:binaryImages];
+    RaygunStacktrace *stacktrace = [[RaygunStacktrace alloc] init:frames];
+    return stacktrace;
+}
+
+- (NSArray<RaygunFrame *> *)stackFramesForThread:(NSDictionary *)thread binaryImages:(NSArray *)binaryImages {
+    NSArray *frameData = thread[@"backtrace"][@"contents"];
+    NSUInteger frameCount = frameData.count;
+    if (frameCount <= 0) {
+        return [NSArray new];
+    }
+    
+    NSMutableArray *frames = [NSMutableArray arrayWithCapacity:frameCount];
+    for (NSInteger i = frameCount - 1; i >= 0; i--) {
+        [frames addObject:[self stackFrameFromFrameData:[frameData objectAtIndex:i] binaryImages:binaryImages]];
+    }
+    return frames;
+}
+
+- (RaygunFrame *)stackFrameFromFrameData:(NSDictionary *)frameData binaryImages:(NSArray *)binaryImages {
+ 
+    uintptr_t instructionAddress = (uintptr_t) [frameData[@"instruction_addr"] unsignedLongLongValue];
+    NSDictionary *binaryImage = [self binaryImageForAddress:instructionAddress binaryImages:NULL];
+
+    RaygunFrame *frame = [[RaygunFrame alloc] init];
+    frame.symbolAddress = hexAddress(frameData[@"symbol_addr"]);
+    frame.instructionAddress = hexAddress(frameData[@"instruction_addr"]);
+    frame.imageAddress = hexAddress(binaryImage[@"image_addr"]);
+    frame.binaryName = binaryImage[@"name"];
+    if (frameData[@"symbol_name"]) {
+        frame.symbolName = frameData[@"symbol_name"];
+    }
+    return frame;
+}
+
+- (NSDictionary *)binaryImageForAddress:(uintptr_t)address binaryImages:(NSArray *)binaryImages {
+     NSDictionary *result = nil;
+     for (NSDictionary *binaryImage in binaryImages) {
+         uintptr_t imageStart = (uintptr_t) [binaryImage[@"image_addr"] unsignedLongLongValue];
+         uintptr_t imageEnd = imageStart + (uintptr_t) [binaryImage[@"image_size"] unsignedLongLongValue];
+         if (address >= imageStart && address < imageEnd) {
+             result = binaryImage;
+             break;
+         }
+     }
+     return result;
+ }
 
 @end
