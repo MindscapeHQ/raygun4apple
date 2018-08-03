@@ -480,15 +480,15 @@
 		DC5EFAB6211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAB5211148AA002C0713 /* RaygunCrashReportConverter.m */; };
 		DC5EFAB7211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAB5211148AA002C0713 /* RaygunCrashReportConverter.m */; };
 		DC5EFAB8211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAB5211148AA002C0713 /* RaygunCrashReportConverter.m */; };
-		DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; };
-		DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; };
-		DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; };
-		DC5EFAE12112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; };
-		DC5EFAE22112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; };
-		DC5EFAE32112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; };
-		DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; };
-		DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; };
-		DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; };
+		DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFADC2112AF02002C0713 /* RaygunFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE12112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE22112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE32112B113002C0713 /* RaygunStacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE02112B113002C0713 /* RaygunStacktrace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAE42112B6C0002C0713 /* RaygunThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC5EFAE92112BCAC002C0713 /* RaygunFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */; };
 		DC5EFAEA2112BCAC002C0713 /* RaygunFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */; };
 		DC5EFAEB2112BCAC002C0713 /* RaygunFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */; };
@@ -498,9 +498,9 @@
 		DC5EFAF12112BD13002C0713 /* RaygunStacktrace.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF02112BD13002C0713 /* RaygunStacktrace.m */; };
 		DC5EFAF22112BD13002C0713 /* RaygunStacktrace.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF02112BD13002C0713 /* RaygunStacktrace.m */; };
 		DC5EFAF32112BD13002C0713 /* RaygunStacktrace.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF02112BD13002C0713 /* RaygunStacktrace.m */; };
-		DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; };
-		DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; };
-		DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; };
+		DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC5EFAF92113C29B002C0713 /* RaygunBinaryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF82113C29B002C0713 /* RaygunBinaryImage.m */; };
 		DC5EFAFA2113C29B002C0713 /* RaygunBinaryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF82113C29B002C0713 /* RaygunBinaryImage.m */; };
 		DC5EFAFB2113C29B002C0713 /* RaygunBinaryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFAF82113C29B002C0713 /* RaygunBinaryImage.m */; };
@@ -1265,6 +1265,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */,
+				DC5EFAE12112B113002C0713 /* RaygunStacktrace.h in Headers */,
+				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
+				DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFA95210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFA80210FFA7A002C0713 /* RaygunMessageDetails.h in Headers */,
 				DC5EFA8C210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
@@ -1283,8 +1287,6 @@
 				A2E4ACE221003DAA0003C8B4 /* StringRef.h in Headers */,
 				A2E4AD9A21003DAA0003C8B4 /* KSStackCursor_MachineContext.h in Headers */,
 				A2E4ADAA21003DAA0003C8B4 /* KSSysCtl.h in Headers */,
-				DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */,
-				DC5EFAE12112B113002C0713 /* RaygunStacktrace.h in Headers */,
 				A2E4AD2821003DAA0003C8B4 /* KSCrashMonitor_NSException.h in Headers */,
 				A2E4ACFA21003DAA0003C8B4 /* KSCrashCachedData.h in Headers */,
 				A2E4ADF821003DAA0003C8B4 /* KSHTTPRequestSender.h in Headers */,
@@ -1300,7 +1302,6 @@
 				A2E4AE0421003DAA0003C8B4 /* NSString+URLEncode.h in Headers */,
 				A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */,
 				A2E4ADFC21003DAA0003C8B4 /* KSReachabilityKSCrash.h in Headers */,
-				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
 				A2E4ACDA21003DAA0003C8B4 /* KSCrashInstallationVictory.h in Headers */,
 				A2E4AD2021003DAA0003C8B4 /* KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD821003DAA0003C8B4 /* NSData+GZip.h in Headers */,
@@ -1340,7 +1341,6 @@
 				A2E4AD9221003DAA0003C8B4 /* KSStackCursor.h in Headers */,
 				A2E4AD7A21003DAA0003C8B4 /* KSMach.h in Headers */,
 				A2E4ADD621003DAA0003C8B4 /* KSVarArgs.h in Headers */,
-				DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				A2660FC920FE914F00C12A69 /* raygun4apple_iOS.h in Headers */,
 				A2E4AD5E21003DAA0003C8B4 /* KSDemangle_Swift.h in Headers */,
 				A2E4AD0221003DAA0003C8B4 /* KSCrashReport.h in Headers */,
@@ -1386,6 +1386,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */,
+				DC5EFAE22112B113002C0713 /* RaygunStacktrace.h in Headers */,
+				DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */,
+				DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFA66210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
 				DC5EFA90210FFA7A002C0713 /* RaygunUserInfo.h in Headers */,
 				DC5EFA8D210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
@@ -1404,8 +1408,6 @@
 				A2E4ACE321003DAA0003C8B4 /* StringRef.h in Headers */,
 				A2E4AD9B21003DAA0003C8B4 /* KSStackCursor_MachineContext.h in Headers */,
 				A2E4ADAB21003DAA0003C8B4 /* KSSysCtl.h in Headers */,
-				DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */,
-				DC5EFAE22112B113002C0713 /* RaygunStacktrace.h in Headers */,
 				A2E4AD2921003DAA0003C8B4 /* KSCrashMonitor_NSException.h in Headers */,
 				A2E4ACFB21003DAA0003C8B4 /* KSCrashCachedData.h in Headers */,
 				A2E4ADF921003DAA0003C8B4 /* KSHTTPRequestSender.h in Headers */,
@@ -1421,7 +1423,6 @@
 				A2E4AE0521003DAA0003C8B4 /* NSString+URLEncode.h in Headers */,
 				A2E4AE1321003DAA0003C8B4 /* Malloc.h in Headers */,
 				A2E4ADFD21003DAA0003C8B4 /* KSReachabilityKSCrash.h in Headers */,
-				DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */,
 				A2E4ACDB21003DAA0003C8B4 /* KSCrashInstallationVictory.h in Headers */,
 				A2E4AD2121003DAA0003C8B4 /* KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD921003DAA0003C8B4 /* NSData+GZip.h in Headers */,
@@ -1461,7 +1462,6 @@
 				A2E4AD9321003DAA0003C8B4 /* KSStackCursor.h in Headers */,
 				A2E4AD7B21003DAA0003C8B4 /* KSMach.h in Headers */,
 				A2E4ADD721003DAA0003C8B4 /* KSVarArgs.h in Headers */,
-				DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				A2660FE520FE931100C12A69 /* raygun4apple_tvOS.h in Headers */,
 				A2E4AD5F21003DAA0003C8B4 /* KSDemangle_Swift.h in Headers */,
 				A2E4AD0321003DAA0003C8B4 /* KSCrashReport.h in Headers */,
@@ -1507,16 +1507,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5EFA8E210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
-				DC5EFA67210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
 				DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */,
-				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFAE32112B113002C0713 /* RaygunStacktrace.h in Headers */,
+				DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */,
+				DC5EFA8E210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
+				DC5EFA67210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
+				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInfo.h in Headers */,
 				DC5EFA8B210FFA7A002C0713 /* Raygun.h in Headers */,
 				DC5EFA82210FFA7A002C0713 /* RaygunMessageDetails.h in Headers */,
-				DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFA85210FFA7A002C0713 /* RaygunMessage.h in Headers */,
 				DC5EFAAC211015A9002C0713 /* RaygunCrashReportSink.h in Headers */,
 				DC5EFAA4211013FB002C0713 /* RaygunCrashInstallation.h in Headers */,
@@ -1772,7 +1772,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"NOTRIAL_VERSION\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"";
+			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"NOTRIAL_VERSION\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\nopen \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"";
 		};
 		A266102E20FEE0C600C12A69 /* Make Universal Library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2127,6 +2127,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2154,6 +2155,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raygun.raygun4apple;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
@@ -2207,6 +2209,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2227,6 +2230,7 @@
 				KEEP_PRIVATE_EXTERNS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raygun.raygun4apple;
 				PRODUCT_NAME = "$(PROJECT_NAME)";

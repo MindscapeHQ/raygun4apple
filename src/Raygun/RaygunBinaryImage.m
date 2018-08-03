@@ -31,6 +31,8 @@
 -(NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     
+    dict[@"processor"] = [NSMutableDictionary new];
+    
     if (self.uuid) {
         dict[@"uuid"] = self.uuid;
     }
@@ -38,16 +40,16 @@
         dict[@"name"] = self.name;
     }
     if (self.cpuType) {
-        dict[@"cpuType"] = self.cpuType;
+        dict[@"processor"][@"type"] = self.cpuType;
     }
     if (self.cpuSubtype) {
-        dict[@"cpuSubtype"] = self.cpuSubtype;
+        dict[@"processor"][@"subType"] = self.cpuSubtype;
     }
     if (self.imageAddress) {
-        dict[@"imageAddress"] = self.imageAddress;
+        dict[@"baseAddress"] = self.imageAddress;
     }
     if (self.imageSize) {
-        dict[@"imageSize"] = self.imageSize;
+        dict[@"size"] = self.imageSize;
     }
     
     return dict;

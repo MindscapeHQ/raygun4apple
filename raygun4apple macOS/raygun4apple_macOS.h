@@ -22,3 +22,7 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_macOSVersionString[];
 #import "RaygunMessage.h"
 #import "RaygunMessageDetails.h"
 #import "RaygunClientMessage.h"
+#import "RaygunBinaryImage.h"
+#import "RaygunStacktrace.h"
+#import "RaygunThread.h"
+#import "RaygunFrame.h"

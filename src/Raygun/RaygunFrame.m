@@ -24,7 +24,7 @@
         dict[@"symbolAddress"] = self.symbolAddress;
     }
     if (self.instructionAddress) {
-        dict[@"instructionAddress"] = self.instructionAddress;
+        dict[@"programCounter"] = self.instructionAddress;
     }
     
     return dict;
