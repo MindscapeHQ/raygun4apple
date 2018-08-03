@@ -88,6 +88,14 @@
         dict[@"threads"] = threads;
     }
     
+    if (_binaryImages && _binaryImages.count > 0) {
+        NSMutableArray *binaryImages = [NSMutableArray new];
+        for (RaygunBinaryImage *binaryImage in _binaryImages) {
+            [binaryImages addObject:[binaryImage convertToDictionary]];
+        }
+        dict[@"binaryImages"] = binaryImages;
+    }
+    
     return dict;
 }
 

@@ -14,6 +14,7 @@
 #import "RaygunErrorMessage.h"
 #import "RaygunUserInfo.h"
 #import "RaygunThread.h"
+#import "RaygunBinaryImage.h"
 
 @interface RaygunMessageDetails : NSObject
 
@@ -27,6 +28,7 @@
 @property (nonatomic, readwrite, strong) NSArray *tags;
 @property (nonatomic, readwrite, strong) NSDictionary *userCustomData;
 @property (nonatomic, strong) NSArray<RaygunThread *> *threads;
+@property (nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

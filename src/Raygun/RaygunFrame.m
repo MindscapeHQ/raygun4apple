@@ -26,12 +26,6 @@
     if (self.instructionAddress) {
         dict[@"instructionAddress"] = self.instructionAddress;
     }
-    if (self.binaryName) {
-        dict[@"binaryName"] = self.binaryName;
-    }
-    if (self.symbolName) {
-        dict[@"symbolName"] = self.symbolName;
-    }
     
     return dict;
 }
