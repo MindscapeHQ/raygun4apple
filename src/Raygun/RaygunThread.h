@@ -9,13 +9,13 @@
 #define RaygunThread_h
 
 #import <Foundation/Foundation.h>
-#import "RaygunStacktrace.h"
+#import "RaygunFrame.h"
 
 @interface RaygunThread : NSObject
 
 @property(nonatomic, readwrite, copy) NSNumber *threadIndex;
 @property(nonatomic, readwrite, copy) NSString *name;
-@property(nonatomic, strong) RaygunStacktrace *stacktrace;
+@property(nonatomic, strong) NSArray<RaygunFrame *> *frames;
 @property(nonatomic, readwrite) BOOL crashed;
 @property(nonatomic, readwrite) BOOL current;
 

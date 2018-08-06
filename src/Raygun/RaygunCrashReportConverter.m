@@ -249,7 +249,7 @@
     uintptr_t imageEnd = imageStart + (uintptr_t) [binaryImage[@"image_size"] unsignedLongLongValue];
     
     for (RaygunThread *thread in threads) {
-        for (RaygunFrame *frame in thread.stacktrace.frames) {
+        for (RaygunFrame *frame in thread.frames) {
             uintptr_t address = frame.instructionAddress.longValue;
             if (address >= imageStart && address < imageEnd) {
                 // binary image is referenced
@@ -267,7 +267,7 @@
     
     for (NSDictionary *thread in threadData) {
         RaygunThread *raygunThread = [[RaygunThread alloc] init:thread[@"index"]];
-        raygunThread.stacktrace = [self stackTraceForThread:thread];
+        raygunThread.frames = [self stackFramesForThread:thread];
         raygunThread.crashed = thread[@"crashed"];
         raygunThread.current = thread[@"current_thread"];
         raygunThread.name = thread[@"name"];
@@ -279,12 +279,6 @@
     }
     
     return raygunThreads;
-}
-
-- (RaygunStacktrace *)stackTraceForThread:(NSDictionary *)thread {
-    NSArray<RaygunFrame *> *frames = [self stackFramesForThread:thread];
-    RaygunStacktrace *stacktrace = [[RaygunStacktrace alloc] init:frames];
-    return stacktrace;
 }
 
 - (NSArray<RaygunFrame *> *)stackFramesForThread:(NSDictionary *)thread {
@@ -303,11 +297,7 @@
 
 - (RaygunFrame *)stackFrameFromFrameData:(NSDictionary *)frameData {
     RaygunFrame *frame = [[RaygunFrame alloc] init];
-    frame.symbolAddress = frameData[@"symbol_addr"];
     frame.instructionAddress = frameData[@"instruction_addr"];
-    if (frameData[@"symbol_name"]) {
-        frame.symbolName = frameData[@"symbol_name"];
-    }
     return frame;
 }
 

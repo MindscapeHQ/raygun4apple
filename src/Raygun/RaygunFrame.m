@@ -17,12 +17,6 @@
 -(NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     
-    if (self.symbolName) {
-        dict[@"symbolName"] = self.symbolName;
-    }
-    if (self.symbolAddress) {
-        dict[@"symbolAddress"] = self.symbolAddress;
-    }
     if (self.instructionAddress) {
         dict[@"programCounter"] = self.instructionAddress;
     }
