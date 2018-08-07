@@ -192,11 +192,16 @@
             className = errorData[@"user_reported"][@"name"];
         }
         
-        if (message == nil){
+        if (message == nil && (diagnosis == nil || diagnosis.length == 0)){
+            // No message and no diagnosis either
             message = @"NotProvided";
         }
-        
-        if (diagnosis != nil && diagnosis.length > 0) {
+        else if (message == nil && diagnosis != nil && diagnosis.length > 0){
+            // No message but we have a diagnosis
+            message = diagnosis;
+        }
+        else if (message != nil && diagnosis != nil && diagnosis.length > 0) {
+            // We have a message and diagnosis so append them
             message = [message stringByAppendingString:[NSString stringWithFormat:@" \n%@", diagnosis]];
         }
     }
