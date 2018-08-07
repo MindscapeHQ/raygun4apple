@@ -12,7 +12,9 @@
 
 @interface RaygunFrame : NSObject
 
+@property(nonatomic, readwrite, copy) NSNumber *symbolAddress;
 @property(nonatomic, readwrite, copy) NSNumber *instructionAddress;
+@property(nonatomic, readwrite, copy) NSString *symbolName;
 
 - (id)init;
 

@@ -19,19 +19,13 @@
 
 -(NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"index":self.threadIndex,
+                                                                                @"threadNumber":self.threadIndex,
                                                                                 @"crashed":self.crashed?@YES:@NO,
                                                                                 @"current":self.current?@YES:@NO
                                                                                 }];
     
     if (self.name){
         dict[@"name"] = self.name;
-    }
-    if (self.threadIndex){
-        dict[@"threadNumber"] = self.threadIndex;
-    }
-    if (self.crashed){
-        dict[@"crashed"] = self.crashed?@YES:@NO;
     }
     
     NSMutableArray *frames = [NSMutableArray new];

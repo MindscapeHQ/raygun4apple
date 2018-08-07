@@ -94,9 +94,9 @@
 }
 
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
-    NSString *clientName = @"Raygun4iOS";
-    NSString *clientUrl  = @"https://github.com/mindscapehq/raygun4ios";
-    NSString *clientVersion = @"3.0.0";
+    NSString *clientName = @"Raygun4Apple";
+    NSString *clientUrl  = @"https://github.com/mindscapehq/raygun4apple";
+    NSString *clientVersion = @"1.0.0 beta 1";
 
     return [[RaygunClientMessage alloc] init:clientName withVersion:clientVersion withUrl:clientUrl];
 }
@@ -297,7 +297,11 @@
 
 - (RaygunFrame *)stackFrameFromFrameData:(NSDictionary *)frameData {
     RaygunFrame *frame = [[RaygunFrame alloc] init];
+    frame.symbolAddress = frameData[@"symbol_addr"];
     frame.instructionAddress = frameData[@"instruction_addr"];
+    if (frameData[@"symbol_name"]) {
+        frame.symbolName = frameData[@"symbol_name"];
+    }
     return frame;
 }
 
