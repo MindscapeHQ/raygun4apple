@@ -40,11 +40,11 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 
 @property (nonatomic, readwrite, retain) Pulse *pulse;
 
-- (void)handleCrashReport;
+//- (void)handleCrashReport;
 
-- (void)sendCrashFile:(NSString *)file;
+//- (void)sendCrashFile:(NSString *)file;
 
-- (void)processCrashReports;
+//- (void)processCrashReports;
 
 @end
 
