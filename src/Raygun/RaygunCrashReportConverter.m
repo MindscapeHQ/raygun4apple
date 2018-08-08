@@ -96,7 +96,7 @@
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
     NSString *clientName = @"Raygun4Apple";
     NSString *clientUrl  = @"https://github.com/mindscapehq/raygun4apple";
-    NSString *clientVersion = @"1.0.0 beta 1";
+    NSString *clientVersion = @"1.0.0 beta 2";
 
     return [[RaygunClientMessage alloc] init:clientName withVersion:clientVersion withUrl:clientUrl];
 }
@@ -141,7 +141,7 @@
     environment.kernelVersion      = systemData[@"kernel_version"];
     environment.memorySize         = systemData[@"memory"][@"size"];
     environment.memoryFree         = systemData[@"memory"][@"free"];
-    environment.jailBroken         = systemData[@"jailbroken"];
+    environment.jailBroken         = [systemData[@"jailbroken"] boolValue];
     
     return environment;
 }
@@ -217,11 +217,11 @@
     NSDictionary *userInfo = userData[@"userInfo"];
     
     if (userInfo != nil) {
-        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"userId"]
+        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"identifier"]
             withEmail:userInfo[@"email"]
             withFullName:userInfo[@"fullName"]
             withFirstName:userInfo[@"firstName"]
-            withIsAnonymous:userInfo[@"isAnonymous"]
+            withIsAnonymous:[userInfo[@"isAnonymous"] boolValue]
             withUuid:userInfo[@"uuid"]];
     }
     
@@ -273,8 +273,8 @@
     for (NSDictionary *thread in threadData) {
         RaygunThread *raygunThread = [[RaygunThread alloc] init:thread[@"index"]];
         raygunThread.frames = [self stackFramesForThread:thread];
-        raygunThread.crashed = thread[@"crashed"];
-        raygunThread.current = thread[@"current_thread"];
+        raygunThread.crashed = [thread[@"crashed"] boolValue];
+        raygunThread.current = [thread[@"current_thread"] boolValue];
         raygunThread.name = thread[@"name"];
         if (raygunThread.name == nil) {
             raygunThread.name = thread[@"dispatch_queue"];

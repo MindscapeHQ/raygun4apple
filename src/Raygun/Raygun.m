@@ -128,9 +128,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         }
         
         self.crashReporter = [KSCrash sharedInstance];
-        [self.crashReporter setMaxReportCount:10];
-        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-        [self.crashReporter setUserInfo:userInfo];
+        [self.crashReporter setMaxReportCount:10]; // TODO: Allow this to be configured
         
         //TODO
         /*
@@ -180,16 +178,10 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         [self storeIdentifier:identifier];
     }
     
-    //TODO
-    // When initializing Raygun, start by using the id as both the identifier and the uuid.
-    // This is the default behaviour, but can be overwitten by calling identify or identifyWithUserInfo
-    //[self.crashReporter identify:identifier];
-    //[self.crashReporter setUuid:identifier];
-    
     RaygunUserInfo *userInfo = [[RaygunUserInfo alloc] initWithIdentifier:identifier];
     userInfo.isAnonymous = true;
     
-    [self.pulse identifyWithUserInfo:userInfo];
+    [self identifyWithUserInfo:userInfo];
 }
 
 - (NSString *)generateAnonymousIdentifier {
