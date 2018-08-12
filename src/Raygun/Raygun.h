@@ -169,40 +169,40 @@ typedef enum {
  
  @param delegate the RaygunOnBeforeSendDelegate instance to receive notifications.
  */
-- (void)setOnBeforeSendDelegate:(id)delegate;
+//- (void)setOnBeforeSendDelegate:(id)delegate;
 
 /**
  Generates a crash report at the current execution point. Useful for testing the crash reporter setup.
  
  @warning this will not crash your application, only send a crash report to Raygun.
  */
-- (void)crash;
+//- (void)crash;
 
 /**
  Manually send an exception to Raygun with the current state of execution.
  
  @warning backtrace will only be populated if you have caught the exception
  */
-- (void)send:(NSException *)exception;
+//- (void)send:(NSException *)exception;
 
 /**
  Manually send an exception to Raygun with the current state of execution and a list of tags.
  
  @warning backtrace will only be populated if you have caught the exception
  */
-- (void)send:(NSException *)exception withTags:(NSArray *)tags;
+//- (void)send:(NSException *)exception withTags:(NSArray *)tags;
 
 /**
  Manually send an exception to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
  
  @warning backtrace will only be populated if you have caught the exception
  */
-- (void)send:(NSException *)exception withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
+//- (void)send:(NSException *)exception withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
 
 /**
  Manually send an exception name and reason to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
  */
-- (void)send:(NSString *)exceptionName withReason: (NSString *)exceptionReason withTags: (NSArray *)tags withUserCustomData: (NSDictionary *)userCustomData;
+//- (void)send:(NSString *)exceptionName withReason: (NSString *)exceptionReason withTags: (NSArray *)tags withUserCustomData: (NSDictionary *)userCustomData;
 
 /**
  Manually send a RaygunMessage to Raygun.
@@ -212,7 +212,7 @@ typedef enum {
 /**
  Manually send an error to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
  */
-- (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
+//- (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
 
 
 /**

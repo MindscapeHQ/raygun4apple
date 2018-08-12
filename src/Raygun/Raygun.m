@@ -38,21 +38,18 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
 
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 
-@property (nonatomic, readonly, copy) NSString *nextReportUUID;
-
 @property (nonatomic, readwrite, retain) Pulse *pulse;
 
-- (void)handleCrashReport;
+//- (void)handleCrashReport;
 
-- (void)sendCrashFile:(NSString *)file;
+//- (void)sendCrashFile:(NSString *)file;
 
-- (void)processCrashReports;
+//- (void)processCrashReports;
 
 @end
 
 @implementation Raygun
 
-@synthesize nextReportUUID       = _nextReportUUID;
 @synthesize applicationVersion   = _applicationVersion;
 @synthesize tags                 = _tags;
 @synthesize userCustomData       = _userCustomData;
@@ -128,22 +125,10 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         }
         
         self.crashReporter = [KSCrash sharedInstance];
-        [self.crashReporter setMaxReportCount:10];
-        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-        [self.crashReporter setUserInfo:userInfo];
+        [self.crashReporter setMaxReportCount:10]; // TODO: Allow this to be configured
         
         //TODO
         /*
-        PLCrashReporterConfig *configuration = [[PLCrashReporterConfig alloc] initWithSignalHandlerType:PLCrashReporterSignalHandlerTypeBSD symbolicationStrategy:PLCrashReporterSymbolicationStrategyNone];
-        self.crashReporter = [[PLCrashReporter alloc] initWithConfiguration:configuration];
-        [configuration release];
-        
-        if ([self.crashReporter hasPendingCrashReport]) {
-            [self handleCrashReport];
-        }
-        
-        [self processCrashReports];
-        
         if (crashReporting) {
             // This later causes the log-writer to be initialized:
             [self.crashReporter enableCrashReporter];
@@ -159,17 +144,6 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     _onBeforeSendDelegate = delegate;
 }
 
-- (NSString *) nextReportUUID {
-    NSString *uuidString = nil;
-    //TODO
-    /*
-    CFUUIDRef uuid = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, [self.crashReporter nextReportUuid]);
-    NSString *uuidString = (__bridge NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
-    CFRelease(uuid);
-     */
-    return uuidString;
-}
-
 - (void)assignDefaultIdentifier {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -180,16 +154,10 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         [self storeIdentifier:identifier];
     }
     
-    //TODO
-    // When initializing Raygun, start by using the id as both the identifier and the uuid.
-    // This is the default behaviour, but can be overwitten by calling identify or identifyWithUserInfo
-    //[self.crashReporter identify:identifier];
-    //[self.crashReporter setUuid:identifier];
-    
     RaygunUserInfo *userInfo = [[RaygunUserInfo alloc] initWithIdentifier:identifier];
     userInfo.isAnonymous = true;
     
-    [self.pulse identifyWithUserInfo:userInfo];
+    [self identifyWithUserInfo:userInfo];
 }
 
 - (NSString *)generateAnonymousIdentifier {
@@ -212,6 +180,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     [defaults synchronize];
 }
 
+/*
 - (void)crash {
     NSArray* tags = self.tags.count == 0 ? nil : self.tags;
     NSDictionary* customData = self.userCustomData.count == 0 ? nil : self.userCustomData;
@@ -221,9 +190,11 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     
     [self encodeAndSendCrashData:errorData completionHandler:nil];
 }
+ */
 
 #pragma mark - Send Methods
 
+/*
 - (void)send:(NSException *)exception {
     NSArray* tags = self.tags.count == 0 ? nil : self.tags;
     NSDictionary* customData = self.userCustomData.count == 0 ? nil : self.userCustomData;
@@ -280,6 +251,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         [self send:e withTags:tags withUserCustomData:userCustomData];
     }
 }
+ */
 
 - (void)sendMessage:(RaygunMessage *)message {
     bool send = true;
@@ -293,6 +265,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     }
 }
 
+/*
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData {
     NSError *innerError = [self getInnerError:error];
     NSString *reason = [innerError localizedDescription];
@@ -307,6 +280,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         [self send:e withTags:tags withUserCustomData:userCustomData];
     }
 }
+ */
 
 - (void)sendPulseTimingEvent:(RaygunPulseEventType)eventType withName:(NSString*)name withDuration:(int)milliseconds {
     NSString* type = @"p";
@@ -379,6 +353,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
     [self.crashReporter setUserInfo:userInfo];
 }
 
+/*
 - (void)processCrashReports {
     if ([self.fileManager fileExistsAtPath:self.crashesDirectory]) {
         NSString *file = nil;
@@ -491,6 +466,7 @@ static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifi
         [self sendCrashData:[message convertToJson] completionHandler:handler];
     }
 }
+ */
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSURLResponse*, NSData*, NSError*))handler {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:apiEndPoint]];

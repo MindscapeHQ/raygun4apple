@@ -21,6 +21,9 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+*.xcsettings
+*.xcworkspace
+.DS_Store
 
 ## Obj-C/Swift specific
 *.hmap
@@ -61,5 +64,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# Custom
 raygun4apple/
-WorkspaceSettings.xcsettings
