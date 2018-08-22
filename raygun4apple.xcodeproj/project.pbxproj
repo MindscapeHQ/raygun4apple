@@ -46,6 +46,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A253165D212675CB0053C2E6 /* RaygunEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = A253165C212675CB0053C2E6 /* RaygunEventType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A253165E212675CB0053C2E6 /* RaygunEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = A253165C212675CB0053C2E6 /* RaygunEventType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A253165F212675CB0053C2E6 /* RaygunEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = A253165C212675CB0053C2E6 /* RaygunEventType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A25316612126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A25316602126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A25316622126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A25316602126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A25316632126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A25316602126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2660FC220FE914F00C12A69 /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2660FB820FE914F00C12A69 /* raygun4apple.framework */; };
 		A2660FC720FE914F00C12A69 /* raygun4apple_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2660FC620FE914F00C12A69 /* raygun4apple_iOSTests.m */; };
 		A2660FC920FE914F00C12A69 /* raygun4apple_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A2660FBB20FE914F00C12A69 /* raygun4apple_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -461,6 +467,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A253165C212675CB0053C2E6 /* RaygunEventType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunEventType.h; sourceTree = "<group>"; };
+		A25316602126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunOnBeforeSendDelegate.h; sourceTree = "<group>"; };
 		A2660FB820FE914F00C12A69 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FBB20FE914F00C12A69 /* raygun4apple_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raygun4apple_iOS.h; sourceTree = "<group>"; };
 		A2660FBC20FE914F00C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1084,6 +1092,8 @@
 				DC5EFAEC2112BCF8002C0713 /* RaygunThread.m */,
 				DC5EFA5D210FFA7A002C0713 /* RaygunUserInfo.h */,
 				DC5EFA5A210FFA79002C0713 /* RaygunUserInfo.m */,
+				A253165C212675CB0053C2E6 /* RaygunEventType.h */,
+				A25316602126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h */,
 			);
 			path = Raygun;
 			sourceTree = "<group>";
@@ -1095,6 +1105,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A25316612126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */,
+				A253165D212675CB0053C2E6 /* RaygunEventType.h in Headers */,
 				DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */,
@@ -1193,6 +1205,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A25316622126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */,
+				A253165E212675CB0053C2E6 /* RaygunEventType.h in Headers */,
 				DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */,
@@ -1291,6 +1305,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A253165F212675CB0053C2E6 /* RaygunEventType.h in Headers */,
+				A25316632126777F0053C2E6 /* RaygunOnBeforeSendDelegate.h in Headers */,
 				DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DCD5C2052117E8BF002623B7 /* RaygunNetworkLogger.h in Headers */,
 				DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */,
