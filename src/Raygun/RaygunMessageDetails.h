@@ -12,7 +12,7 @@
 #import "RaygunClientMessage.h"
 #import "RaygunEnvironmentMessage.h"
 #import "RaygunErrorMessage.h"
-#import "RaygunUserInfo.h"
+#import "RaygunUserInformation.h"
 #import "RaygunThread.h"
 #import "RaygunBinaryImage.h"
 
@@ -24,7 +24,7 @@
 @property (nonatomic, readwrite, strong) RaygunClientMessage *client;
 @property (nonatomic, readwrite, strong) RaygunEnvironmentMessage *environment;
 @property (nonatomic, readwrite, strong) RaygunErrorMessage *error;
-@property (nonatomic, readwrite, strong) RaygunUserInfo *user;
+@property (nonatomic, readwrite, strong) RaygunUserInformation *user;
 @property (nonatomic, readwrite, strong) NSArray *tags;
 @property (nonatomic, readwrite, strong) NSDictionary *userCustomData;
 @property (nonatomic, strong) NSArray<RaygunThread *> *threads;

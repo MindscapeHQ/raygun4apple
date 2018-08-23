@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RaygunUserInfo.h"
+#import "RaygunUserInformation.h"
 
 @interface Pulse : NSObject
 
@@ -17,7 +17,7 @@
 
 - (void)attachWithNetworkLogging:(bool)networkLogging;
 
-- (void)identifyWithUserInfo:(RaygunUserInfo *)userInfo;
+- (void)identifyWithUserInfo:(RaygunUserInformation *)userInfo;
 
 - (void)ignoreViews:(NSArray *)viewNames;
 

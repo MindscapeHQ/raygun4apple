@@ -13,7 +13,7 @@
 #import <sys/utsname.h>
 
 #import "RaygunNetworkLogger.h"
-#import "RaygunUserInfo.h"
+#import "RaygunUserInformation.h"
 
 #import "Pulse.h"
 
@@ -29,7 +29,7 @@ static NSString* _sessionId;
 
 static bool _enabled;
 static NSString* _lastViewName;
-static RaygunUserInfo* _userInfo;
+static RaygunUserInformation* _userInfo;
 static NSOperationQueue* _queue;
 static NSMutableDictionary* _timers;
 static RaygunNetworkLogger* _networkLogger;
@@ -68,9 +68,9 @@ static NSMutableSet* _ignoredViews;
     });
 }
 
-- (void)identifyWithUserInfo:(RaygunUserInfo *)userInfo {
+- (void)identifyWithUserInfo:(RaygunUserInformation *)userInfo {
     if (userInfo == nil || userInfo.identifier == nil || [[userInfo.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0){
-        userInfo = [[RaygunUserInfo alloc] initWithIdentifier:[Pulse getAnonymousIdentifier]];
+        userInfo = [[RaygunUserInformation alloc] initWithIdentifier:[Pulse getAnonymousIdentifier]];
         userInfo.isAnonymous = true;
     }
     

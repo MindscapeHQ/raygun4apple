@@ -25,4 +25,4 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_tvOSVersionString[];
 #import "RaygunMessage.h"
 #import "RaygunMessageDetails.h"
 #import "RaygunThread.h"
-#import "RaygunUserInfo.h"
+#import "RaygunUserInformation.h"

@@ -26,7 +26,7 @@
 
 #import "RaygunMessage.h"
 #import "RaygunEventType.h"
-#import "RaygunUserInfo.h"
+#import "RaygunUserInformation.h"
 
 @interface Raygun : NSObject
 
@@ -34,7 +34,7 @@
 @property (nonatomic, readwrite, copy) NSString *applicationVersion;
 @property (nonatomic, readwrite, retain) NSArray *tags;
 @property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
-@property (nonatomic, readwrite, retain) RaygunUserInfo *userInfo;
+@property (nonatomic, readwrite, retain) RaygunUserInformation *userInformation;
 @property (nonatomic, readwrite, retain) id onBeforeSendDelegate;
 
 + (id)sharedClient;
@@ -64,7 +64,7 @@
 
 // Unique User Tracking
 
-- (void)identify:(NSString *)userId;
-- (void)identifyWithUserInfo:(RaygunUserInfo *)userInfo;
+- (void)identifyWithIdentifier:(NSString *)identifier;
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
 @end

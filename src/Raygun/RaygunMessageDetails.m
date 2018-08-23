@@ -29,7 +29,7 @@
     _error = error;
 }
 
--(void)setUser:(RaygunUserInfo *)user {
+-(void)setUser:(RaygunUserInformation *)user {
     _user = user;
 }
 

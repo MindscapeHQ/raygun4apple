@@ -74,7 +74,7 @@
     // User
     NSDictionary *userData = report[@"user"];
     if (userData != nil) {
-        RaygunUserInfo *user = [self userInfoFromCrashReportUserData:userData];
+        RaygunUserInformation *user = [self userInfoFromCrashReportUserData:userData];
         details.user = user;
         
         if (userData[@"tags"]) {
@@ -217,11 +217,11 @@
     return [data objectForKey:property] ? [data objectForKey:property] : [data objectForKey:fallback];
 }
 
-- (RaygunUserInfo *)userInfoFromCrashReportUserData:(NSDictionary *)userData {
+- (RaygunUserInformation *)userInfoFromCrashReportUserData:(NSDictionary *)userData {
     NSDictionary *userInfo = userData[@"userInfo"];
     
     if (userInfo != nil) {
-        return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"identifier"]
+        return [[RaygunUserInformation alloc] initWithIdentifier:userInfo[@"identifier"]
                                                 withEmail:userInfo[@"email"]
                                              withFullName:userInfo[@"fullName"]
                                             withFirstName:userInfo[@"firstName"]

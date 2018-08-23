@@ -33,7 +33,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 @synthesize tags                 = _tags;
 @synthesize userCustomData       = _userCustomData;
 @synthesize onBeforeSendDelegate = _onBeforeSendDelegate;
-@synthesize userInfo             = _userInfo;
+@synthesize userInformation      = _userInformation;
 
 #pragma mark - Setters -
 
@@ -72,12 +72,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 - (id)initWithApiKey:(NSString *)theApiKey {
     if ((self = [super init])) {
-        
         self.apiKey = theApiKey;
         self.queue  = [[NSOperationQueue alloc] init];
-        
-        // ??? This needs to happen after enabling the crash reporter because it sets a value to the log-writer:
-        [self assignDefaultIdentifier];
     }
     return self;
 }
@@ -94,6 +90,9 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
         // Configure KSCrash settings.
         id crashReporter = [KSCrash sharedInstance];
         [crashReporter setMaxReportCount:10]; // TODO: Allow this to be configured
+        
+        // Set an anonymous user for reports.
+        [self assignAnonymousUser];
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
@@ -178,7 +177,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     userInfo[@"applicationVersion"] = _applicationVersion;
     userInfo[@"customData"]         = _userCustomData;
     userInfo[@"tags"]               = _tags;
-    userInfo[@"userInfo"]           = [_userInfo convertToDictionary];
+    userInfo[@"userInfo"]           = [_userInformation convertToDictionary];
     
     [[KSCrash sharedInstance] setUserInfo:userInfo];
 }
@@ -205,19 +204,15 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)enableAutomaticNetworkLogging:(bool)networkLogging {
-    
+    // TODO
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
-    //if (self.pulse != nil) {
-    //    [self.pulse ignoreViews:viewNames];
-    //}
+    // TODO
 }
 
 - (void)ignoreURLs:(NSArray *)urls {
-    //if (self.pulse != nil) {
-    //    [self.pulse ignoreURLs:urls];
-    //}
+    // TODO
 }
 
 - (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds {
@@ -230,9 +225,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 #pragma mark - Unique User Tracking -
 
-- (void)assignDefaultIdentifier {
+- (void)assignAnonymousUser {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
     
     if (!identifier) {
@@ -240,24 +234,10 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
         [self storeIdentifier:identifier];
     }
     
-    RaygunUserInfo *userInfo = [[RaygunUserInfo alloc] initWithIdentifier:identifier];
+    RaygunUserInformation *userInfo = [[RaygunUserInformation alloc] initWithIdentifier:identifier];
     userInfo.isAnonymous = true;
     
-    [self identifyWithUserInfo:userInfo];
-}
-
-- (void)identify:(NSString *)userId {
-    _userInfo = [[RaygunUserInfo alloc] initWithIdentifier:userId];
-    _userInfo.isAnonymous = true;
-    
-    [self identifyWithUserInfo:_userInfo];
-}
-
-- (void)identifyWithUserInfo:(RaygunUserInfo *)userInfo {
-    _userInfo = userInfo;
-    
-    //[self.pulse identifyWithUserInfo:userInfo];
-    [self updateCrashReportUserInfo];
+    [self identifyWithUserInformation:userInfo];
 }
 
 - (NSString *)generateAnonymousIdentifier {
@@ -279,6 +259,18 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
     [defaults synchronize];
+}
+
+- (void)identifyWithIdentifier:(NSString *)userId {
+    _userInformation = [[RaygunUserInformation alloc] initWithIdentifier:userId];
+    [self identifyWithUserInformation:_userInformation];
+}
+
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
+    _userInformation = userInformation;
+    
+    //[self.pulse identifyWithUserInfo:userInfo];
+    [self updateCrashReportUserInfo];
 }
 
 @end

@@ -1,16 +1,15 @@
 //
-//  RaygunUserInfo.m
-//  Raygun4iOS
+//  RaygunUserInformations.m
+//  Raygun4Apple
 //
 //  Created by Jason Fauchelle on 16/06/15.
 //  Copyright (c) 2015 Mindscape. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "RaygunUserInformation.h"
 
-#import "RaygunUserInfo.h"
-
-@implementation RaygunUserInfo
+@implementation RaygunUserInformation
 
 @synthesize identifier  = _identifier;
 @synthesize uuid        = _uuid;
@@ -61,15 +60,19 @@
     if (_identifier) {
         details[@"identifier"] = _identifier;
     }
+    
     if (_email) {
         details[@"email"] = _email;
     }
+    
     if (_fullName) {
         details[@"fullName"] = _fullName;
     }
+    
     if (_firstName) {
         details[@"firstName"] = _firstName;
     }
+    
     if (_uuid) {
         details[@"uuid"] = _uuid;
     }
