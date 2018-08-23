@@ -30,7 +30,7 @@
         if (error != nil) {
             NSLog(@"Error sending: %@", [error localizedDescription]);
         }
-        NSLog([NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]);
+        NSLog(@"%@", [NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]);
         if (completed && onCompletion) {
             onCompletion(filteredReports, completed, error);
         }
