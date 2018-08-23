@@ -11,7 +11,6 @@
 #import "Raygun.h"
 #import "Pulse.h"
 #import "KSCrash.h"
-#import "RaygunErrorFormatter.h"
 #import "RaygunCrashInstallation.h"
 #import "RaygunOnBeforeSendDelegate.h"
 
@@ -23,10 +22,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 @interface Raygun()
 
-@property (nonatomic, readwrite, retain) RaygunErrorFormatter *formatter;
-
 @property (nonatomic, readwrite, copy) NSString *apiKey;
-
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 
 @end
@@ -77,9 +73,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (id)initWithApiKey:(NSString *)theApiKey {
     if ((self = [super init])) {
         
-        self.apiKey    = theApiKey;
-        self.formatter = [[RaygunErrorFormatter alloc] init];
-        self.queue     = [[NSOperationQueue alloc] init];
+        self.apiKey = theApiKey;
+        self.queue  = [[NSOperationQueue alloc] init];
         
         // ??? This needs to happen after enabling the crash reporter because it sets a value to the log-writer:
         [self assignDefaultIdentifier];
