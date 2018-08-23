@@ -100,10 +100,6 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     });
 }
 
-- (void)omitMachineNameFromCrashReports:(bool)omit {
-    [self.formatter setOmitMachineName:omit];
-}
-
 - (void)sendException:(NSException *)exception {
     [self sendException:exception withTags:nil withUserCustomData:nil];
 }
@@ -139,7 +135,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     NSError *innerError = [self getInnerError:error];
     NSString *reason = [innerError localizedDescription];
     if (!reason) {
-        reason = @"NotProvided";
+        reason = @"Unknown";
     }
     
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"%@ [code: %ld]", innerError.domain, (long)innerError.code] reason:reason userInfo:nil];
@@ -180,9 +176,9 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)updateCrashReportUserInfo {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     userInfo[@"applicationVersion"] = _applicationVersion;
-    userInfo[@"customData"] = _userCustomData;
-    userInfo[@"tags"] = _tags;
-    userInfo[@"userInfo"] = [_userInfo convertToDictionary];
+    userInfo[@"customData"]         = _userCustomData;
+    userInfo[@"tags"]               = _tags;
+    userInfo[@"userInfo"]           = [_userInfo convertToDictionary];
     
     [[KSCrash sharedInstance] setUserInfo:userInfo];
 }
