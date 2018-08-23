@@ -19,7 +19,6 @@
 - (RaygunMessage *)convertReportToMessage:(NSDictionary *)report {
     NSString *occurredOn = [self occurredOn:report];
     RaygunMessageDetails *details = [self messageDetailsFromReport:report];
-    
     RaygunMessage *message = [[RaygunMessage alloc] init:occurredOn withDetails:details];
     
     return message;
@@ -28,7 +27,7 @@
 - (NSString *)occurredOn:(NSDictionary *)report {
     NSString *occurredOn = report[@"report"][@"timestamp"];
     
-    if (occurredOn == nil){
+    if (occurredOn == nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
         
@@ -46,27 +45,35 @@
 - (RaygunMessageDetails *)messageDetailsFromReport:(NSDictionary *)report {
     RaygunMessageDetails *details = [[RaygunMessageDetails alloc] init];
     
+    // Application Version
     details.version = [self applicationVersionFromCrashReport:report];
     
+    // Raygun Client
     RaygunClientMessage *client = [self clientInfoFromCrashReport:report];
     details.client = client;
     
+    // Environment
     RaygunEnvironmentMessage *env = [self environmentDetailsFromCrashReport:report];
     details.environment = env;
     
+    // Error
     RaygunErrorMessage *error = [self errorDetailsFromCrashReport:report];
     details.error = error;
     
+    // Threads
     NSArray<RaygunThread *> *threads = [self threadsFromCrashReport:report];
     details.threads = threads;
     
+    // Binaries
     NSArray<RaygunBinaryImage *> *binaryImages = [self referencedBinaryImagesFromCrashReport:report threads:threads];
     details.binaryImages = binaryImages;
     
-    details.machineName = self.omitMachineName ? nil : [[UIDevice currentDevice] name];
+    // Machine Name
+    details.machineName = [[UIDevice currentDevice] name];
     
+    // User
     NSDictionary *userData = report[@"user"];
-    if (userData != nil){
+    if (userData != nil) {
         RaygunUserInfo *user = [self userInfoFromCrashReportUserData:userData];
         details.user = user;
         
@@ -84,20 +91,22 @@
 
 - (NSString *)applicationVersionFromCrashReport:(NSDictionary *)report {
     NSString *appVersion = report[@"user"][@"applicationVersion"];
-    if (appVersion == nil){
+    
+    if (appVersion == nil) {
         appVersion = report[@"system"][@"CFBundleShortVersionString"];
     }
-    if (appVersion == nil){
+    
+    if (appVersion == nil) {
         appVersion = @"Unknown";
     }
     return appVersion;
 }
 
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
-    NSString *clientName = @"Raygun4Apple";
-    NSString *clientUrl  = @"https://github.com/mindscapehq/raygun4apple";
+    NSString *clientName    = @"Raygun4Apple";
+    NSString *clientUrl     = @"https://github.com/mindscapehq/raygun4apple";
     NSString *clientVersion = @"1.0.0 beta 2";
-
+    
     return [[RaygunClientMessage alloc] init:clientName withVersion:clientVersion withUrl:clientUrl];
 }
 
@@ -112,9 +121,9 @@
                            systemData[@"os_version"]];
     
     if (!osVersion) {
-        osVersion = @"NotProvided";
+        osVersion = @"Unknown";
     }
-
+    
     NSLocale *locale = [NSLocale currentLocale];
     NSString *localeStr = [locale displayNameForKey:NSLocaleIdentifier value: [locale localeIdentifier]];
     
@@ -122,9 +131,8 @@
         localeStr = [locale localeIdentifier];
     }
     
-    // Just in case:
     if (!localeStr) {
-        localeStr = @"NotProvided";
+        localeStr = @"Unknown";
     }
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
@@ -148,55 +156,51 @@
 
 - (RaygunErrorMessage *)errorDetailsFromCrashReport:(NSDictionary *)report {
     
-    NSDictionary *errorData = report[@"crash"][@"error"];
-    NSString *diagnosis = report[@"crash"][@"diagnosis"];
-    NSString *signalName = @"Unknown";
-    NSString *signalCode = @"Unknown";
-    NSString *className = @"Unknown";
-    NSString *message = nil;
+    NSDictionary *errorData  = report[@"crash"][@"error"];
+    NSString     *diagnosis  = report[@"crash"][@"diagnosis"];
+    NSString     *signalName = @"Unknown";
+    NSString     *signalCode = @"Unknown";
+    NSString     *className  = @"Unknown";
+    NSString     *message    = nil;
     
     if (errorData != nil) {
-        
         NSString *exceptionType = errorData[@"type"];
         
         if ([exceptionType isEqualToString:@"nsexception"]) {
-            message = errorData[@"nsexception"][@"reason"];
+            message   = errorData[@"nsexception"][@"reason"];
             className = errorData[@"nsexception"][@"name"];
         }
         else if ([exceptionType isEqualToString:@"cpp_exception"]) {
-            message = errorData[@"cpp_exception"][@"name"];
+            message   = errorData[@"cpp_exception"][@"name"];
             className = @"C++ Exception";
         }
         else if ([exceptionType isEqualToString:@"mach"]) {
             message = [NSString stringWithFormat:@"Exception %@, Code %@, Subcode %@",
                        [self nullCoalesce:errorData[@"mach"] withProperty:@"exception_name" withFallback:@"exception"],
-                       [self nullCoalesce:errorData[@"mach"] withProperty:@"code_name" withFallback:@"code"],
-                       errorData[@"mach"][@"subcode"]];
-            className = errorData[@"mach"][@"exception_name"];
+                       [self nullCoalesce:errorData[@"mach"] withProperty:@"code_name" withFallback:@"code"], errorData[@"mach"][@"subcode"]];
+            className  = errorData[@"mach"][@"exception_name"];
             signalCode = [self nullCoalesce:errorData[@"signal"] withProperty:@"code_name" withFallback:@"code"];
             signalName = errorData[@"signal"][@"name"];
         }
         else if ([exceptionType isEqualToString:@"signal"]) {
             signalCode = [self nullCoalesce:errorData[@"signal"] withProperty:@"code_name" withFallback:@"code"];
             signalName = errorData[@"signal"][@"name"];
-            message = [NSString stringWithFormat:@"Signal %@, Code %@",
-                       signalName,
-                       signalCode];
-            className = errorData[@"mach"][@"exception_name"];
+            message    = [NSString stringWithFormat:@"Signal %@, Code %@", signalName, signalCode];
+            className  = errorData[@"mach"][@"exception_name"];
         }
         else if ([exceptionType isEqualToString:@"deadlock"]) {
             message = @"Deadlock";
         }
         else if ([exceptionType isEqualToString:@"user"]) {
-            message = errorData[@"reason"];
+            message   = errorData[@"reason"];
             className = errorData[@"user_reported"][@"name"];
         }
         
-        if (message == nil && (diagnosis == nil || diagnosis.length == 0)){
+        if (message == nil && (diagnosis == nil || diagnosis.length == 0)) {
             // No message and no diagnosis either
-            message = @"NotProvided";
+            message = @"Unknown";
         }
-        else if (message == nil && diagnosis != nil && diagnosis.length > 0){
+        else if (message == nil && diagnosis != nil && diagnosis.length > 0) {
             // No message but we have a diagnosis
             message = diagnosis;
         }
@@ -218,11 +222,11 @@
     
     if (userInfo != nil) {
         return [[RaygunUserInfo alloc] initWithIdentifier:userInfo[@"identifier"]
-            withEmail:userInfo[@"email"]
-            withFullName:userInfo[@"fullName"]
-            withFirstName:userInfo[@"firstName"]
-            withIsAnonymous:[userInfo[@"isAnonymous"] boolValue]
-            withUuid:userInfo[@"uuid"]];
+                                                withEmail:userInfo[@"email"]
+                                             withFullName:userInfo[@"fullName"]
+                                            withFirstName:userInfo[@"firstName"]
+                                          withIsAnonymous:[userInfo[@"isAnonymous"] boolValue]
+                                                 withUuid:userInfo[@"uuid"]];
     }
     
     return nil;
@@ -233,14 +237,13 @@
     NSMutableArray *raygunBinaryImages = [NSMutableArray new];
     
     for (NSDictionary *binaryImage in binaryImageData) {
-        if ([self isBinaryImageReferenced:binaryImage threads:threads]){
-            RaygunBinaryImage *raygunBinaryImage = [[RaygunBinaryImage alloc]
-                                                    initWithUuId:binaryImage[@"uuid"]
-                                                    withName:binaryImage[@"name"]
-                                                    withCpuType:binaryImage[@"cpu_type"]
-                                                    withCpuSubType:binaryImage[@"cpu_subtype"]
-                                                    withImageAddress:binaryImage[@"image_addr"]
-                                                    withImageSize:binaryImage[@"image_size"]];
+        if ([self isBinaryImageReferenced:binaryImage threads:threads]) {
+            RaygunBinaryImage *raygunBinaryImage = [[RaygunBinaryImage alloc] initWithUuId:binaryImage[@"uuid"]
+                                                                                  withName:binaryImage[@"name"]
+                                                                               withCpuType:binaryImage[@"cpu_type"]
+                                                                            withCpuSubType:binaryImage[@"cpu_subtype"]
+                                                                          withImageAddress:binaryImage[@"image_addr"]
+                                                                             withImageSize:binaryImage[@"image_size"]];
             
             [raygunBinaryImages addObject:raygunBinaryImage];
         }
@@ -272,10 +275,10 @@
     
     for (NSDictionary *thread in threadData) {
         RaygunThread *raygunThread = [[RaygunThread alloc] init:thread[@"index"]];
-        raygunThread.frames = [self stackFramesForThread:thread];
+        raygunThread.frames  = [self stackFramesForThread:thread];
         raygunThread.crashed = [thread[@"crashed"] boolValue];
         raygunThread.current = [thread[@"current_thread"] boolValue];
-        raygunThread.name = thread[@"name"];
+        raygunThread.name    = thread[@"name"];
         if (raygunThread.name == nil) {
             raygunThread.name = thread[@"dispatch_queue"];
         }
@@ -311,3 +314,4 @@
 }
 
 @end
+

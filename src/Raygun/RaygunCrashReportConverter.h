@@ -10,8 +10,6 @@
 
 @interface RaygunCrashReportConverter : NSObject
 
-@property (nonatomic, readwrite) bool omitMachineName;
-
 - (RaygunMessage *)convertReportToMessage:(NSDictionary *)report;
 
 @end
