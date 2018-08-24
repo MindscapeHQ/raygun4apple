@@ -329,18 +329,22 @@ static void crashCallback(const KSCrashReportWriter* writer)
 
 - (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion
 {
-    NSError* error = [self validateProperties];
-    if(error != nil)
+    [self sendAllReportsWithSink:[self sink] withCompletion:onCompletion];
+}
+
+- (void) sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion) onCompletion
+{
+    NSError *error = [self validateProperties];
+    if (error != nil)
     {
-        if(onCompletion != nil)
+        if (onCompletion != nil)
         {
             onCompletion(nil, NO, error);
         }
         return;
     }
-
-    id<KSCrashReportFilter> sink = [self sink];
-    if(sink == nil)
+    
+    if (sink == nil)
     {
         onCompletion(nil, NO, [NSError errorWithDomain:[[self class] description]
                                                   code:0
