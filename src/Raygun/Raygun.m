@@ -13,6 +13,7 @@
 #import "KSCrash.h"
 #import "RaygunCrashInstallation.h"
 #import "RaygunOnBeforeSendDelegate.h"
+#import "RaygunCrashReportCustomSink.h"
 
 static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString * const kApiEndPoint = @"https://api.raygun.com/entries";
@@ -31,7 +32,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 @synthesize applicationVersion   = _applicationVersion;
 @synthesize tags                 = _tags;
-@synthesize userCustomData       = _userCustomData;
+@synthesize customData           = _customData;
 @synthesize onBeforeSendDelegate = _onBeforeSendDelegate;
 @synthesize userInformation      = _userInformation;
 
@@ -47,8 +48,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     [self updateCrashReportUserInfo];
 }
 
-- (void)setUserCustomData:(NSDictionary *)userCustomData {
-    _userCustomData = userCustomData;
+- (void)setCustomData:(NSDictionary *)customData {
+    _customData = customData;
     [self updateCrashReportUserInfo];
 }
 
@@ -62,17 +63,17 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     return sharedRaygunInstance;
 }
 
-+ (id)sharedClientWithApiKey:(NSString *)theApiKey {
++ (id)sharedClientWithApiKey:(NSString *)apiKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedRaygunInstance = [[self alloc] initWithApiKey:theApiKey];
+        sharedRaygunInstance = [[self alloc] initWithApiKey:apiKey];
     });
     return sharedRaygunInstance;
 }
 
-- (id)initWithApiKey:(NSString *)theApiKey {
+- (id)initWithApiKey:(NSString *)apiKey {
     if ((self = [super init])) {
-        self.apiKey = theApiKey;
+        self.apiKey = apiKey;
         self.queue  = [[NSOperationQueue alloc] init];
     }
     return self;
@@ -83,15 +84,14 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)enableCrashReporting {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        // Install the crash reporter
+        // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
         [sharedCrashInstallation install];
         
         // Configure KSCrash settings.
-        id crashReporter = [KSCrash sharedInstance];
-        [crashReporter setMaxReportCount:10]; // TODO: Allow this to be configured
+        [KSCrash.sharedInstance setMaxReportCount:10]; // TODO: Allow this to be configured
         
-        // Set an anonymous user for reports.
+        // Set an anonymous user for any new reports.
         [self assignAnonymousUser];
         
         // Send any outstanding reports.
@@ -100,14 +100,14 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)sendException:(NSException *)exception {
-    [self sendException:exception withTags:nil withUserCustomData:nil];
+    [self sendException:exception withTags:nil withCustomData:nil];
 }
 
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags {
-    [self sendException:exception withTags:tags withUserCustomData:nil];
+    [self sendException:exception withTags:tags withCustomData:nil];
 }
 
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData {
+- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     [KSCrash.sharedInstance reportUserException:exception.name
                                          reason:exception.reason
                                        language:@""
@@ -116,21 +116,21 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
                                   logAllThreads:NO
                                terminateProgram:NO];
     
-    [sharedCrashInstallation sendAllReports];
+    [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
 }
 
-- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData {
+- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     NSException *exception = [NSException exceptionWithName:exceptionName reason:reason userInfo:nil];
     
     @try {
         @throw exception;
     }
     @catch (NSException *caughtException) {
-        [self sendException:caughtException withTags:tags withUserCustomData:userCustomData];
+        [self sendException:caughtException withTags:tags withCustomData:customData];
     }
 }
 
-- (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData {
+- (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     NSError *innerError = [self getInnerError:error];
     NSString *reason = [innerError localizedDescription];
     if (!reason) {
@@ -143,7 +143,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
         @throw exception;
     }
     @catch (NSException *caughtException) {
-        [self sendException:caughtException withTags:tags withUserCustomData:userCustomData];
+        [self sendException:caughtException withTags:tags withCustomData:customData];
     }
 }
 
@@ -175,11 +175,11 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)updateCrashReportUserInfo {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     userInfo[@"applicationVersion"] = _applicationVersion;
-    userInfo[@"customData"]         = _userCustomData;
     userInfo[@"tags"]               = _tags;
+    userInfo[@"customData"]         = _customData;
     userInfo[@"userInfo"]           = [_userInformation convertToDictionary];
     
-    [[KSCrash sharedInstance] setUserInfo:userInfo];
+    [KSCrash.sharedInstance setUserInfo:userInfo];
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSURLResponse*, NSData*, NSError*))handler {

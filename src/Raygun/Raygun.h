@@ -33,14 +33,14 @@
 @property (nonatomic, readonly, copy) NSString *apiKey;
 @property (nonatomic, readwrite, copy) NSString *applicationVersion;
 @property (nonatomic, readwrite, retain) NSArray *tags;
-@property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
+@property (nonatomic, readwrite, retain) NSDictionary *customData;
 @property (nonatomic, readwrite, retain) RaygunUserInformation *userInformation;
 @property (nonatomic, readwrite, retain) id onBeforeSendDelegate;
 
 + (id)sharedClient;
-+ (id)sharedClientWithApiKey:(NSString *)theApiKey;
++ (id)sharedClientWithApiKey:(NSString *)apiKey;
 
-- (id)initWithApiKey:(NSString *)theApiKey;
+- (id)initWithApiKey:(NSString *)apiKey;
 
 // Crash Reporting
 
@@ -48,9 +48,9 @@
 - (void)setOnBeforeSendDelegate:(id)delegate;
 - (void)sendException:(NSException *)exception;
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags;
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
-- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
-- (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
+- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
 - (void)sendMessage:(RaygunMessage *)message;
 - (void)crash;
 
