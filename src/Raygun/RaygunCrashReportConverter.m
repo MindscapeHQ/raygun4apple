@@ -71,7 +71,7 @@
     // Machine Name
     details.machineName = [[UIDevice currentDevice] name];
     
-    // User
+    // User, Tags & Custom Data
     NSDictionary *userData = report[@"user"];
     if (userData != nil) {
         RaygunUserInformation *user = [self userInfoFromCrashReportUserData:userData];
@@ -82,7 +82,7 @@
         }
         
         if (userData[@"customData"]) {
-            details.userCustomData = userData[@"customData"];
+            details.customData = userData[@"customData"];
         }
     }
     
@@ -222,11 +222,11 @@
     
     if (userInfo != nil) {
         return [[RaygunUserInformation alloc] initWithIdentifier:userInfo[@"identifier"]
-                                                withEmail:userInfo[@"email"]
-                                             withFullName:userInfo[@"fullName"]
-                                            withFirstName:userInfo[@"firstName"]
-                                          withIsAnonymous:[userInfo[@"isAnonymous"] boolValue]
-                                                 withUuid:userInfo[@"uuid"]];
+                                                       withEmail:userInfo[@"email"]
+                                                    withFullName:userInfo[@"fullName"]
+                                                   withFirstName:userInfo[@"firstName"]
+                                                 withIsAnonymous:[userInfo[@"isAnonymous"] boolValue]
+                                                        withUuid:userInfo[@"uuid"]];
     }
     
     return nil;
