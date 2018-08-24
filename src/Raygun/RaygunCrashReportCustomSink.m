@@ -23,9 +23,6 @@
 
 @implementation RaygunCrashReportCustomSink
 
-@synthesize tags       = _tags;
-@synthesize customData = _customData;
-
 -(id)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     if ((self = [super init])) {
         self.tags = tags;
@@ -45,14 +42,14 @@
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
                 // Add tags
-                if (_tags && _tags.count > 0) {
+                if (self.tags && self.tags.count > 0) {
                     NSMutableArray *combinedTags = [NSMutableArray arrayWithArray:message.details.tags];
                     [combinedTags addObjectsFromArray:self.tags];
                     message.details.tags = combinedTags;
                 }
 
                 // Add custom data
-                if (_customData && _customData.count > 0) {
+                if (self.customData && self.customData.count > 0) {
                     NSMutableDictionary *combinedCustomData = [NSMutableDictionary dictionaryWithDictionary:message.details.customData];
                     [combinedCustomData addEntriesFromDictionary:self.customData];
                     message.details.customData = combinedCustomData;
