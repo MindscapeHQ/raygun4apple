@@ -1,5 +1,5 @@
 //
-//  Pulse.h
+//  RaygunRealUserMonitoring.h
 //  Raygun4iOS
 //
 //  Created by Jason Fauchelle on 27/04/16.
@@ -9,20 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "RaygunUserInformation.h"
 
-@interface Pulse : NSObject
+@interface RaygunRealUserMonitoring : NSObject
 
 - (id)initWithApiKey:(NSString *)apiKey;
 
-- (void)attach;
+- (void)enable;
 
 - (void)attachWithNetworkLogging:(bool)networkLogging;
 
-- (void)identifyWithUserInfo:(RaygunUserInformation *)userInfo;
+- (void)identifyWithUserInfo:(RaygunUserInformation *)userInformation;
 
 - (void)ignoreViews:(NSArray *)viewNames;
 
 - (void)ignoreURLs:(NSArray *)urls;
 
-+ (void)sendPulseEvent:(NSString*)name withType:(NSString*)type withDuration:(NSNumber*)duration;
++ (void)sendEvent:(NSString*)name withType:(NSString*)type withDuration:(NSNumber*)duration;
 
 @end

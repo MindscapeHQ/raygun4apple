@@ -16,7 +16,7 @@
 #import <objc/message.h>
 #import <sys/utsname.h>
 
-#import "Pulse.h"
+#import "RaygunRealUserMonitoring.h"
 
 #import "RaygunNetworkLogger.h"
 
@@ -237,7 +237,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
             urlString = [NSString stringWithFormat:@"%@ %@", httpMethod, urlString];
         }
         
-        [Pulse sendPulseEvent:urlString withType:@"n" withDuration:[NSNumber numberWithInteger:milliseconds]];
+        [RaygunRealUserMonitoring sendEvent:urlString withType:@"n" withDuration:[NSNumber numberWithInteger:milliseconds]];
     }
 }
 

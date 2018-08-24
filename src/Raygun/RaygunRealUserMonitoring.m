@@ -1,5 +1,5 @@
 //
-//  Pulse.m
+//  RaygunRealUserMonitoring.m
 //  Raygun4iOS
 //
 //  Created by Jason Fauchelle on 27/04/16.
@@ -15,11 +15,11 @@
 #import "RaygunNetworkLogger.h"
 #import "RaygunUserInformation.h"
 
-#import "Pulse.h"
+#import "RaygunRealUserMonitoring.h"
 
-#pragma mark - Pulse
+#pragma mark - RaygunRealUserMonitoring
 
-@implementation Pulse
+@implementation RaygunRealUserMonitoring
 
 static NSString* const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString* const kApiEndPoint = @"https://api.raygun.com/events";
@@ -44,7 +44,7 @@ static NSMutableSet* _ignoredViews;
     return self;
 }
 
-- (void)attach {
+- (void)enable {
     [self attachWithNetworkLogging:true];
 }
 
@@ -70,15 +70,15 @@ static NSMutableSet* _ignoredViews;
 
 - (void)identifyWithUserInfo:(RaygunUserInformation *)userInfo {
     if (userInfo == nil || userInfo.identifier == nil || [[userInfo.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0){
-        userInfo = [[RaygunUserInformation alloc] initWithIdentifier:[Pulse getAnonymousIdentifier]];
+        userInfo = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunRealUserMonitoring getAnonymousIdentifier]];
         userInfo.isAnonymous = true;
     }
     
     if (_userInfo != nil){
-        NSString* uuid = [Pulse getAnonymousIdentifier];
+        NSString* uuid = [RaygunRealUserMonitoring getAnonymousIdentifier];
         if (![uuid isEqualToString:_userInfo.identifier] && ![_userInfo.identifier isEqualToString:userInfo.identifier]) {
             if (_sessionId != nil) {
-                [Pulse sendPulseEvent:@"session_end"];
+                [RaygunRealUserMonitoring sendEvent:@"session_end"];
             }
         }
     }
@@ -105,25 +105,25 @@ static NSMutableSet* _ignoredViews;
 + (void)checkForSessionStart {
     if (_sessionId == nil) {
         _sessionId = [[NSUUID UUID] UUIDString];
-        [Pulse sendPulseEvent:@"session_start"];
+        [RaygunRealUserMonitoring sendEvent:@"session_start"];
     }
 }
 
 - (void)onDidBecomeActive:(NSNotification *)notification {
-    [Pulse checkForSessionStart];
+    [RaygunRealUserMonitoring checkForSessionStart];
     
-    if (![Pulse shouldIgnoreView:_lastViewName]) {
-        [Pulse sendPulseEvent:_lastViewName withType:@"p" withDuration:[NSNumber numberWithInteger:0]];
+    if (![RaygunRealUserMonitoring shouldIgnoreView:_lastViewName]) {
+        [RaygunRealUserMonitoring sendEvent:_lastViewName withType:@"p" withDuration:[NSNumber numberWithInteger:0]];
     }
 }
 
 - (void)onDidEnterBackground:(NSNotification *)notification {
     if (_sessionId != nil) {
-        [Pulse sendPulseEvent:@"session_end"];
+        [RaygunRealUserMonitoring sendEvent:@"session_end"];
     }
 }
 
-+ (void)sendPulseEvent:(NSString *)name {
++ (void)sendEvent:(NSString *)name {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     
@@ -157,32 +157,31 @@ static NSMutableSet* _ignoredViews;
     struct utsname systemInfo;
     uname(&systemInfo);
     
-    NSDictionary* userInfo = [Pulse buildUserInfoDictionary];
+    NSDictionary* userInfo = [RaygunRealUserMonitoring buildUserInfoDictionary];
     
-    NSDictionary* raygunPulseData = @{
-                                      @"sessionId": _sessionId,
-                                      @"timestamp": result,
-                                      @"type": name,
-                                      @"user": userInfo,
-                                      @"version": bundleVersion,
-                                      @"os": @"iOS",
-                                      @"osVersion": [[UIDevice currentDevice] systemVersion],
-                                      @"platform": [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding]};
+    NSDictionary* eventData = @{
+                              @"sessionId": _sessionId,
+                              @"timestamp": result,
+                              @"type": name,
+                              @"user": userInfo,
+                              @"version": bundleVersion,
+                              @"os": @"iOS",
+                              @"osVersion": [[UIDevice currentDevice] systemVersion],
+                              @"platform": [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding]};
     
-    NSDictionary* raygunPulseMessage = @{@"eventData": @[raygunPulseData]};
+    NSDictionary* message = @{@"eventData": @[eventData]};
     
-    [Pulse encodeAndSendPulseData:raygunPulseMessage];
+    [RaygunRealUserMonitoring encodeAndSendData:message];
     
     if ([@"session_end" isEqualToString:name])
     {
         _sessionId = nil;
-        
         [_timers removeAllObjects];
     }
 }
 
-+ (void)sendPulseEvent:(NSString *)name withType:(NSString *)type withDuration:(NSNumber *)duration {
-    [Pulse checkForSessionStart];
++ (void)sendEvent:(NSString *)name withType:(NSString *)type withDuration:(NSNumber *)duration {
+    [RaygunRealUserMonitoring checkForSessionStart];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
@@ -208,34 +207,27 @@ static NSMutableSet* _ignoredViews;
     range.length = [result length];
     result = [result stringByReplacingOccurrencesOfString:@"m" withString:@"" options:NSCaseInsensitiveSearch range:range];
     
-    NSBundle* bundle = [NSBundle mainBundle];
+    NSBundle *bundle = [NSBundle mainBundle];
     NSDictionary *infoDictionary = [bundle infoDictionary];
-    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    NSString *version       = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *build         = [infoDictionary objectForKey:@"CFBundleVersion"];
     NSString *bundleVersion = [NSString stringWithFormat:@"%@ (%@)", version, build];
     
     struct utsname systemInfo;
     uname(&systemInfo);
     
-    NSDictionary* userInfo = [Pulse buildUserInfoDictionary];
+    NSDictionary *userInfo = [RaygunRealUserMonitoring buildUserInfoDictionary];
     
-    NSDictionary* pulseTimingData = @{
-                                      @"type": type,
-                                      @"duration": duration
-                                      };
+    NSDictionary  *eventData = @{ @"type": type, @"duration": duration };
+    NSDictionary *timingData = @{ @"name": name, @"timing": eventData };
     
-    NSDictionary* pulseData = @{
-                                @"name": name,
-                                @"timing": pulseTimingData
-                                };
+    NSArray *pulseDataArray = @[timingData];
     
-    NSArray* pulseDataArray = @[pulseData];
-    
-    NSData *finalPulseData = [NSJSONSerialization dataWithJSONObject:pulseDataArray options:NSJSONWritingPrettyPrinted error:nil];
-    NSString* pulseDataString = [[NSString alloc] initWithData:finalPulseData encoding:NSUTF8StringEncoding];
+    NSData    *finalPulseData = [NSJSONSerialization dataWithJSONObject:pulseDataArray options:0 error:nil];
+    NSString *pulseDataString = [[NSString alloc] initWithData:finalPulseData encoding:NSUTF8StringEncoding];
     
     NSString* osVersion = [[UIDevice currentDevice] systemVersion];
-    NSString* platform = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    NSString*  platform = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     
     NSDictionary* raygunPulseData = @{
                                       @"sessionId": _sessionId,
@@ -248,8 +240,7 @@ static NSMutableSet* _ignoredViews;
                                       @"platform": platform != nil ? platform : @"",
                                       @"data": pulseDataString};
     
-    NSDictionary* raygunPulseMessage = @{@"eventData": @[raygunPulseData]};
-    [Pulse encodeAndSendPulseData:raygunPulseMessage];
+    [RaygunRealUserMonitoring encodeAndSendData:@{@"eventData": @[raygunPulseData]}];
 }
 
 + (NSDictionary *) buildUserInfoDictionary {
@@ -257,7 +248,7 @@ static NSMutableSet* _ignoredViews;
     
     if (_userInfo == nil) {
         // This should never be reached, but just in case
-        NSString* identifier = [Pulse getAnonymousIdentifier];
+        NSString* identifier = [RaygunRealUserMonitoring getAnonymousIdentifier];
         userInfo = @{
                      @"identifier": identifier,
                      @"firstName": @"",
@@ -280,13 +271,13 @@ static NSMutableSet* _ignoredViews;
 
 + (NSString *)getAnonymousIdentifier {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
     
     if (!identifier) {
         if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
             identifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        } else {
+        }
+        else {
             CFUUIDRef theUUID = CFUUIDCreate(NULL);
             identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
             CFRelease(theUUID);
@@ -300,24 +291,22 @@ static NSMutableSet* _ignoredViews;
     return identifier;
 }
 
-+ (void)encodeAndSendPulseData:(NSDictionary *) data {
-    
-    NSData *finalPulseData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-    
-    [Pulse sendPulseData:finalPulseData completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
++ (void)encodeAndSendData:(NSDictionary *)data {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
+    [RaygunRealUserMonitoring sendData:jsonData completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         // no op
     }];
 }
 
-+ (void)sendPulseData:(NSData *)pulseData completionHandler:(void (^)(NSURLResponse *, NSData *, NSError *))handler {
++ (void)sendData:(NSData *)data completionHandler:(void (^)(NSURLResponse *, NSData *, NSError *))handler {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
     
     request.HTTPMethod = @"POST";
     [request setValue:_apiKey forHTTPHeaderField:@"X-ApiKey"];
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%tu", [pulseData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[NSString stringWithFormat:@"%tu", [data length]] forHTTPHeaderField:@"Content-Length"];
     
-    [request setHTTPBody:pulseData];
+    [request setHTTPBody:data];
     [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:handler];
 }
 
@@ -443,9 +432,9 @@ static NSMutableSet* _ignoredViews;
             viewName = [viewName substringToIndex:index];
         }
         
-        if (![Pulse shouldIgnoreView:viewName]) {
+        if (![RaygunRealUserMonitoring shouldIgnoreView:viewName]) {
             _lastViewName = viewName;
-            [Pulse sendPulseEvent:viewName withType:@"p" withDuration:[NSNumber numberWithInteger:duration]];
+            [RaygunRealUserMonitoring sendEvent:viewName withType:@"p" withDuration:[NSNumber numberWithInteger:duration]];
         }
     }
 }

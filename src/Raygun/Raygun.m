@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 #import "Raygun.h"
-#import "Pulse.h"
 #import "KSCrash.h"
 #import "RaygunCrashInstallation.h"
 #import "RaygunOnBeforeSendDelegate.h"
 #import "RaygunCrashReportCustomSink.h"
+#import "RaygunRealUserMonitoring.h"
 
 static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString * const kApiEndPoint = @"https://api.raygun.com/entries";
@@ -25,6 +25,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 @property (nonatomic, readwrite, copy) NSString *apiKey;
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
+@property (nonatomic, readwrite, retain) RaygunRealUserMonitoring *rum;
 
 @end
 
@@ -75,6 +76,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     if ((self = [super init])) {
         self.apiKey = apiKey;
         self.queue  = [[NSOperationQueue alloc] init];
+        self.rum    = [[RaygunRealUserMonitoring alloc] initWithApiKey:apiKey];
     }
     return self;
 }
@@ -199,7 +201,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)enableRealUserMonitoring {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        // TODO
+        [self.rum enable];
     });
 }
 
@@ -220,7 +222,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     if (eventType == NetworkCall) {
         type = @"n";
     }
-    [Pulse sendPulseEvent:name withType:type withDuration:[NSNumber numberWithInteger:milliseconds]];
+    [RaygunRealUserMonitoring sendEvent:name withType:type withDuration:[NSNumber numberWithInteger:milliseconds]];
 }
 
 #pragma mark - Unique User Tracking -
