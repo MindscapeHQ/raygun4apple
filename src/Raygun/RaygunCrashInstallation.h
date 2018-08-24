@@ -12,5 +12,6 @@
 @interface RaygunCrashInstallation : KSCrashInstallation
 
 - (void)sendAllReports;
+- (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink;
 
 @end
