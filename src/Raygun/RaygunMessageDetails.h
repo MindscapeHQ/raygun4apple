@@ -26,7 +26,7 @@
 @property (nonatomic, readwrite, strong) RaygunErrorMessage *error;
 @property (nonatomic, readwrite, strong) RaygunUserInformation *user;
 @property (nonatomic, readwrite, strong) NSArray *tags;
-@property (nonatomic, readwrite, strong) NSDictionary *userCustomData;
+@property (nonatomic, readwrite, strong) NSDictionary *customData;
 @property (nonatomic, strong) NSArray<RaygunThread *> *threads;
 @property (nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
 
