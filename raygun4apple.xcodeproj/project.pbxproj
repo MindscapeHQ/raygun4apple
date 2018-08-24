@@ -320,6 +320,8 @@
 		A2E4AE1921003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
 		A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
+		A2F38CDC212FAEA5008346D9 /* RaygunCrashReportCustomSink.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F38CDA212FAEA4008346D9 /* RaygunCrashReportCustomSink.m */; };
+		A2F38CDD212FAEA5008346D9 /* RaygunCrashReportCustomSink.h in Headers */ = {isa = PBXBuildFile; fileRef = A2F38CDB212FAEA5008346D9 /* RaygunCrashReportCustomSink.h */; };
 		DC5EFA31210E8130002C0713 /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5EFA28210E812F002C0713 /* raygun4apple.framework */; };
 		DC5EFA36210E8130002C0713 /* raygun4apple_macOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5EFA35210E8130002C0713 /* raygun4apple_macOSTests.m */; };
 		DC5EFA38210E8130002C0713 /* raygun4apple_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFA2A210E812F002C0713 /* raygun4apple_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -609,6 +611,8 @@
 		A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftStrings.h; sourceTree = "<group>"; };
 		A2E4AE1C210040E80003C8B4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		A2F38CDA212FAEA4008346D9 /* RaygunCrashReportCustomSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunCrashReportCustomSink.m; sourceTree = "<group>"; };
+		A2F38CDB212FAEA5008346D9 /* RaygunCrashReportCustomSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaygunCrashReportCustomSink.h; sourceTree = "<group>"; };
 		DC5EFA28210E812F002C0713 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EFA2A210E812F002C0713 /* raygun4apple_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raygun4apple_macOS.h; sourceTree = "<group>"; };
 		DC5EFA2B210E812F002C0713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1066,6 +1070,8 @@
 				DC5EFAB5211148AA002C0713 /* RaygunCrashReportConverter.m */,
 				DC5EFAA9211015A3002C0713 /* RaygunCrashReportSink.h */,
 				DC5EFAAD21101C95002C0713 /* RaygunCrashReportSink.m */,
+				A2F38CDB212FAEA5008346D9 /* RaygunCrashReportCustomSink.h */,
+				A2F38CDA212FAEA4008346D9 /* RaygunCrashReportCustomSink.m */,
 				DC5EFA4F210FFA79002C0713 /* RaygunEnvironmentMessage.h */,
 				DC5EFA50210FFA79002C0713 /* RaygunEnvironmentMessage.m */,
 				DC5EFA5C210FFA7A002C0713 /* RaygunErrorMessage.h */,
@@ -1150,6 +1156,7 @@
 				A2E4AD7021003DAA0003C8B4 /* KSJSONCodecObjC.h in Headers */,
 				A2E4ACEC21003DAA0003C8B4 /* Compiler.h in Headers */,
 				A2E4AD5A21003DAA0003C8B4 /* KSDemangle_CPP.h in Headers */,
+				A2F38CDD212FAEA5008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2E4AD8421003DAA0003C8B4 /* KSMemory.h in Headers */,
 				A2E4AD0C21003DAA0003C8B4 /* KSCrashReportStore.h in Headers */,
 				A2E4AD6A21003DAA0003C8B4 /* KSID.h in Headers */,
@@ -1618,6 +1625,7 @@
 				DC5EFA77210FFA7A002C0713 /* RaygunMessage.m in Sources */,
 				DC5EFAA62110141C002C0713 /* RaygunCrashInstallation.m in Sources */,
 				A2E4ADA021003DAA0003C8B4 /* KSString.c in Sources */,
+				A2F38CDC212FAEA5008346D9 /* RaygunCrashReportCustomSink.m in Sources */,
 				A2E4AD2221003DAA0003C8B4 /* KSCrashMonitor_Deadlock.m in Sources */,
 				A2E4AD8C21003DAA0003C8B4 /* KSSignalInfo.c in Sources */,
 				A2E4ADC021003DAA0003C8B4 /* KSCrashReportFilterBasic.m in Sources */,
