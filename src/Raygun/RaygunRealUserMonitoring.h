@@ -17,7 +17,7 @@
 
 - (void)attachWithNetworkLogging:(bool)networkLogging;
 
-- (void)identifyWithUserInfo:(RaygunUserInformation *)userInformation;
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
 - (void)ignoreViews:(NSArray *)viewNames;
 

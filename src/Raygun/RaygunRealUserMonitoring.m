@@ -29,7 +29,7 @@ static NSString* _sessionId;
 
 static bool _enabled;
 static NSString* _lastViewName;
-static RaygunUserInformation* _userInfo;
+static RaygunUserInformation* _userInformation;
 static NSOperationQueue* _queue;
 static NSMutableDictionary* _timers;
 static RaygunNetworkLogger* _networkLogger;
@@ -68,22 +68,22 @@ static NSMutableSet* _ignoredViews;
     });
 }
 
-- (void)identifyWithUserInfo:(RaygunUserInformation *)userInfo {
-    if (userInfo == nil || userInfo.identifier == nil || [[userInfo.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0){
-        userInfo = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunRealUserMonitoring getAnonymousIdentifier]];
-        userInfo.isAnonymous = true;
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
+    if (userInformation == nil || userInformation.identifier == nil || [[userInformation.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+        userInformation = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunRealUserMonitoring getAnonymousIdentifier]];
+        userInformation.isAnonymous = true;
     }
     
-    if (_userInfo != nil){
+    if (_userInformation != nil) {
         NSString* uuid = [RaygunRealUserMonitoring getAnonymousIdentifier];
-        if (![uuid isEqualToString:_userInfo.identifier] && ![_userInfo.identifier isEqualToString:userInfo.identifier]) {
+        if (![uuid isEqualToString:_userInformation.identifier] && ![_userInformation.identifier isEqualToString:userInformation.identifier]) {
             if (_sessionId != nil) {
                 [RaygunRealUserMonitoring sendEvent:@"session_end"];
             }
         }
     }
 
-    _userInfo = userInfo;
+    _userInformation = userInformation;
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
@@ -246,7 +246,7 @@ static NSMutableSet* _ignoredViews;
 + (NSDictionary *) buildUserInfoDictionary {
     NSDictionary* userInfo = nil;
     
-    if (_userInfo == nil) {
+    if (_userInformation == nil) {
         // This should never be reached, but just in case
         NSString* identifier = [RaygunRealUserMonitoring getAnonymousIdentifier];
         userInfo = @{
@@ -258,11 +258,11 @@ static NSMutableSet* _ignoredViews;
     } else {
         // The identify function ensures that the static _userInfo identifier is never nil
         userInfo = @{
-                     @"identifier": _userInfo.identifier,
-                     @"firstName": _userInfo.firstName != nil ? _userInfo.firstName : @"",
-                     @"fullName": _userInfo.fullName != nil ? _userInfo.fullName : @"",
-                     @"email": _userInfo.email != nil ? _userInfo.email : @"",
-                     @"isAnonymous": (_userInfo.isAnonymous ? @"True" : @"False")
+                     @"identifier":   _userInformation.identifier,
+                     @"firstName":    _userInformation.firstName != nil ? _userInformation.firstName : @"",
+                     @"fullName":     _userInformation.fullName != nil ? _userInformation.fullName : @"",
+                     @"email":        _userInformation.email != nil ? _userInformation.email : @"",
+                     @"isAnonymous": (_userInformation.isAnonymous ? @"True" : @"False")
                      };
     }
     

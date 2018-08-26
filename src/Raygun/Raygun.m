@@ -271,7 +271,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
     _userInformation = userInformation;
     
-    //[self.pulse identifyWithUserInfo:userInfo];
+    [self.rum identifyWithUserInformation:userInformation];
     [self updateCrashReportUserInfo];
 }
 
