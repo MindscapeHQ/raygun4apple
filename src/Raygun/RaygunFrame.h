@@ -3,7 +3,7 @@
 //  raygun4apple
 //
 //  Created by raygundev on 8/2/18.
-//  Copyright © 2018 Mindscape. All rights reserved.
+//  Copyright © 2018 Raygun. All rights reserved.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
