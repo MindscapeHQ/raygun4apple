@@ -161,7 +161,11 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     }
     
     if (send) {
-        [self sendCrashData:[message convertToJson] completionHandler:NULL];
+        [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Error sending: %@", [error localizedDescription]);
+            }
+        }];
     }
 }
 
@@ -198,7 +202,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     [request setHTTPBody:crashData];
     
     NSURLSession *session = [NSURLSession sharedSession];
-    [session dataTaskWithRequest:request completionHandler:completionHandler];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
+    [dataTask resume];
 }
 
 #pragma mark - Real User Monitoring -
@@ -215,11 +220,11 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
-    // TODO
+    [self.rum ignoreViews:viewNames];
 }
 
 - (void)ignoreURLs:(NSArray *)urls {
-    // TODO
+    [self.rum ignoreURLs:urls];
 }
 
 - (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds {
@@ -281,4 +286,3 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 @end
-

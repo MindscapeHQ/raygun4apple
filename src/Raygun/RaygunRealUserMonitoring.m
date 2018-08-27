@@ -90,7 +90,7 @@ static NSMutableSet* _ignoredViews;
             }
         }
     }
-
+    
     _userInformation = userInformation;
 }
 
@@ -168,14 +168,14 @@ static NSMutableSet* _ignoredViews;
     NSDictionary* userInfo = [RaygunRealUserMonitoring buildUserInfoDictionary];
     
     NSDictionary* eventData = @{
-                              @"sessionId": _sessionId,
-                              @"timestamp": result,
-                              @"type": name,
-                              @"user": userInfo,
-                              @"version": bundleVersion,
-                              @"os": @"iOS",
-                              @"osVersion": [[UIDevice currentDevice] systemVersion],
-                              @"platform": [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding]};
+                                @"sessionId": _sessionId,
+                                @"timestamp": result,
+                                @"type": name,
+                                @"user": userInfo,
+                                @"version": bundleVersion,
+                                @"os": @"iOS",
+                                @"osVersion": [[UIDevice currentDevice] systemVersion],
+                                @"platform": [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding]};
     
     NSDictionary* message = @{@"eventData": @[eventData]};
     
@@ -319,7 +319,8 @@ static NSMutableSet* _ignoredViews;
     [request setHTTPBody:data];
     
     NSURLSession *session = [NSURLSession sharedSession];
-    [session dataTaskWithRequest:request completionHandler:completionHandler];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
+    [dataTask resume];
 }
 
 + (bool)shouldIgnoreView:(NSString *)viewName {
