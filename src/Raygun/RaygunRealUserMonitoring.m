@@ -1,9 +1,17 @@
 //
 //  RaygunRealUserMonitoring.m
-//  Raygun4iOS
+//  raygun4apple
 //
 //  Created by Jason Fauchelle on 27/04/16.
-//  Copyright © 2016 Raygun. All rights reserved.
+//  Copyright © 2018 Mindscape. All rights reserved.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 #import <Foundation/Foundation.h>
@@ -295,6 +303,9 @@ static NSMutableSet* _ignoredViews;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
     [RaygunRealUserMonitoring sendData:jsonData completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         // no op
+        if (error != nil) {
+            NSLog(@"Error sending: %@", [error localizedDescription]);
+        }
     }];
 }
 
