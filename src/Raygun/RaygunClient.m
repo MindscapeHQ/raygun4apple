@@ -188,7 +188,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     [KSCrash.sharedInstance setUserInfo:userInfo];
 }
 
-- (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSURLResponse*, NSData*, NSError*))handler {
+- (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
     
     request.HTTPMethod = @"POST";
@@ -197,7 +197,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     [request setValue:[NSString stringWithFormat:@"%tu", [crashData length]] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:crashData];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:self.queue completionHandler:handler];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [session dataTaskWithRequest:request completionHandler:completionHandler];
 }
 
 #pragma mark - Real User Monitoring -

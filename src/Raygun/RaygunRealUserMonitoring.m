@@ -301,15 +301,14 @@ static NSMutableSet* _ignoredViews;
 
 + (void)encodeAndSendData:(NSDictionary *)data {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
-    [RaygunRealUserMonitoring sendData:jsonData completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        // no op
+    [RaygunRealUserMonitoring sendData:jsonData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             NSLog(@"Error sending: %@", [error localizedDescription]);
         }
     }];
 }
 
-+ (void)sendData:(NSData *)data completionHandler:(void (^)(NSURLResponse *, NSData *, NSError *))handler {
++ (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
     
     request.HTTPMethod = @"POST";
@@ -318,7 +317,9 @@ static NSMutableSet* _ignoredViews;
     [request setValue:[NSString stringWithFormat:@"%tu", [data length]] forHTTPHeaderField:@"Content-Length"];
     
     [request setHTTPBody:data];
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:handler];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    [session dataTaskWithRequest:request completionHandler:completionHandler];
 }
 
 + (bool)shouldIgnoreView:(NSString *)viewName {
