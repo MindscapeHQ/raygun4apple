@@ -1,27 +1,36 @@
 //
-//  Raygun.m
-//  CrashReporter
+//  RaygunClient.m
+//  raygun4apple
 //
-//  Created by Martin on 25/09/13.
+//  Created by raygundev on 7/31/18.
+//  Copyright © 2018 Mindscape. All rights reserved.
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 #import <UIKit/UIKit.h>
 
-#import "Raygun.h"
+#import "RaygunClient.h"
+
 #import "KSCrash.h"
 #import "RaygunCrashInstallation.h"
-#import "RaygunOnBeforeSendDelegate.h"
 #import "RaygunCrashReportCustomSink.h"
 #import "RaygunRealUserMonitoring.h"
+#import "RaygunMessage.h"
 
 static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString * const kApiEndPoint = @"https://api.raygun.com/entries";
 
-static Raygun *sharedRaygunInstance = nil;
+static RaygunClient *sharedRaygunInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
-@interface Raygun()
+@interface RaygunClient()
 
 @property (nonatomic, readwrite, copy) NSString *apiKey;
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
@@ -29,13 +38,12 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 @end
 
-@implementation Raygun
+@implementation RaygunClient
 
-@synthesize applicationVersion   = _applicationVersion;
-@synthesize tags                 = _tags;
-@synthesize customData           = _customData;
-@synthesize onBeforeSendDelegate = _onBeforeSendDelegate;
-@synthesize userInformation      = _userInformation;
+@synthesize applicationVersion = _applicationVersion;
+@synthesize tags               = _tags;
+@synthesize customData         = _customData;
+@synthesize userInformation    = _userInformation;
 
 #pragma mark - Setters -
 
@@ -52,10 +60,6 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)setCustomData:(NSDictionary *)customData {
     _customData = customData;
     [self updateCrashReportUserInfo];
-}
-
-- (void)setOnBeforeSendDelegate:(id)delegate {
-    _onBeforeSendDelegate = delegate;
 }
 
 #pragma mark - Initialising Methods -
@@ -150,10 +154,10 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)sendMessage:(RaygunMessage *)message {
-    bool send = true;
+    BOOL send = YES;
     
-    if (_onBeforeSendDelegate != nil) {
-        send = [_onBeforeSendDelegate onBeforeSend:message];
+    if (self.beforeSendMessage != nil) {
+        send = self.beforeSendMessage(message);
     }
     
     if (send) {

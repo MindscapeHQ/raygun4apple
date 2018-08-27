@@ -1,18 +1,27 @@
 //
 //  RaygunCrashReportCustomSink.m
-//  TestiOSWithSrc
+//  raygun4apple
 //
 //  Created by Mitchell Duncan on 24/08/18.
-//  Copyright © 2018 Raygun. All rights reserved.
+//  Copyright © 2018 Mindscape. All rights reserved.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 #import <Foundation/Foundation.h>
 
-#import "Raygun.h"
+#import "RaygunCrashReportCustomSink.h"
+
+#import "KSCrash.h"
+#import "RaygunClient.h"
 #import "RaygunMessage.h"
 #import "RaygunCrashReportConverter.h"
-#import "RaygunCrashReportCustomSink.h"
-#import "KSCrash.h"
 
 @interface RaygunCrashReportCustomSink()
 
@@ -38,7 +47,7 @@
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
         
         for (NSDictionary *report in reports) {
-            if (nil != Raygun.sharedClient) {
+            if (nil != RaygunClient.sharedClient) {
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
                 // Add tags
@@ -55,7 +64,7 @@
                     message.details.customData = combinedCustomData;
                 }
                 
-                [Raygun.sharedClient sendMessage:message];
+                [RaygunClient.sharedClient sendMessage:message];
                 [sentReports addObject:report];
             }
         }
