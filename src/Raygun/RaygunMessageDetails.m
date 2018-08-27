@@ -1,9 +1,27 @@
 //
 //  RaygunMessageDetails.m
-//  Raygun4iOS
+//  raygun4apple
 //
 //  Created by Mitchell Duncan on 11/09/17.
-//  Copyright © 2017 Mindscape. All rights reserved.
+//  Copyright © 2018 Raygun Limited. All rights reserved.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall remain in place
+// in this source code.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 #import "RaygunMessageDetails.h"
@@ -18,7 +36,7 @@
 @synthesize error          = _error;
 @synthesize user           = _user;
 @synthesize tags           = _tags;
-@synthesize userCustomData = _userCustomData;
+@synthesize customData     = _customData;
 @synthesize threads        = _threads;
 
 -(void)setEnvironment:(RaygunEnvironmentMessage *)environment {
@@ -29,7 +47,7 @@
     _error = error;
 }
 
--(void)setUser:(RaygunUserInfo *)user {
+-(void)setUser:(RaygunUserInformation *)user {
     _user = user;
 }
 
@@ -37,8 +55,8 @@
     _tags = tags;
 }
 
--(void)setUserCustomData:(NSDictionary *)userCustomData {
-    _userCustomData = userCustomData;
+-(void)setCustomData:(NSDictionary *)customData {
+    _customData = customData;
 }
 
 -(void)setThreads:(NSArray<RaygunThread *> *)threads {
@@ -76,8 +94,8 @@
         dict[@"tags"] = _tags;
     }
     
-    if (_userCustomData) {
-        dict[@"userCustomData"] = _userCustomData;
+    if (_customData) {
+        dict[@"userCustomData"] = _customData;
     }
     
     if (_threads && _threads.count > 0) {

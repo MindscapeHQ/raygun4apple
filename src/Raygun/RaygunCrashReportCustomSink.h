@@ -1,8 +1,8 @@
 //
-//  RaygunBinaryImage.h
+//  RaygunCrashReportCustomSink.h
 //  raygun4apple
 //
-//  Created by raygundev on 8/3/18.
+//  Created by Mitchell Duncan on 24/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,16 @@
 // THE SOFTWARE.
 //
 
-#ifndef RaygunBinaryImage_h
-#define RaygunBinaryImage_h
+#ifndef RaygunCrashReportCustomSink_h
+#define RaygunCrashReportCustomSink_h
 
 #import <Foundation/Foundation.h>
+#import "KSCrash.h"
 
-@interface RaygunBinaryImage : NSObject
+@interface RaygunCrashReportCustomSink : NSObject <KSCrashReportFilter>
 
-@property(nonatomic, readwrite, copy) NSNumber *cpuType;
-@property(nonatomic, readwrite, copy) NSNumber *cpuSubtype;
-@property(nonatomic, readwrite, copy) NSNumber *imageAddress;
-@property(nonatomic, readwrite, copy) NSNumber *imageSize;
-@property(nonatomic, readwrite, copy) NSString *name;
-@property(nonatomic, readwrite, copy) NSString *uuid;
-
-/**
- * Initializes a RaygunBinaryImage
- 
- * @return RaygunBinaryImage
- */
-- (id)initWithUuId:(NSString *)uuid
-          withName:(NSString *)name
-       withCpuType:(NSNumber *)cpuType
-    withCpuSubType:(NSNumber *)cpuSubType
-  withImageAddress:(NSNumber *)imageAddress
-     withImageSize:(NSNumber *)imageSize;
-
-/**
- Creates and returns a dictionary with the binary image properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the binary image properties and their values.
- */
--(NSDictionary *)convertToDictionary;
+-(id)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
 
 @end
 
-#endif /* RaygunBinaryImage_h */
+#endif /* RaygunCrashReportCustomSink_h */

@@ -1,8 +1,8 @@
 //
-//  RaygunCrashReportSink.m
+//  RaygunCrashReportCustomSink.m
 //  raygun4apple
 //
-//  Created by raygundev on 7/31/18.
+//  Created by Mitchell Duncan on 24/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,26 +26,54 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RaygunCrashReportSink.h"
+#import "RaygunCrashReportCustomSink.h"
 
 #import "KSCrash.h"
 #import "RaygunClient.h"
 #import "RaygunMessage.h"
 #import "RaygunCrashReportConverter.h"
 
-@implementation RaygunCrashReportSink
+@interface RaygunCrashReportCustomSink()
+
+@property (nonatomic, readwrite, retain) NSArray *tags;
+@property (nonatomic, readwrite, retain) NSDictionary *customData;
+
+@end
+
+@implementation RaygunCrashReportCustomSink
+
+-(id)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+    if ((self = [super init])) {
+        self.tags = tags;
+        self.customData = customData;
+    }
+    return self;
+}
 
 - (void) filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSMutableArray *sentReports = [NSMutableArray new];
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
+        
         for (NSDictionary *report in reports) {
             if (nil != RaygunClient.sharedClient) {
-                // Take the information from the KSCrash report and put it into our own format.
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
-                // Send it to the Raygun API endpoint
+                // Add tags
+                if (self.tags && self.tags.count > 0) {
+                    NSMutableArray *combinedTags = [NSMutableArray arrayWithArray:message.details.tags];
+                    [combinedTags addObjectsFromArray:self.tags];
+                    message.details.tags = combinedTags;
+                }
+
+                // Add custom data
+                if (self.customData && self.customData.count > 0) {
+                    NSMutableDictionary *combinedCustomData = [NSMutableDictionary dictionaryWithDictionary:message.details.customData];
+                    [combinedCustomData addEntriesFromDictionary:self.customData];
+                    message.details.customData = combinedCustomData;
+                }
+                
                 [RaygunClient.sharedClient sendMessage:message];
                 [sentReports addObject:report];
             }

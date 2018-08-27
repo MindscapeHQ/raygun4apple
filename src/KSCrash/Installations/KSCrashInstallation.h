@@ -61,6 +61,8 @@
  */
 - (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion;
 
+- (void) sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion) onCompletion;
+
 /** Add a filter that gets executed before all normal filters.
  * Prepended filters will be executed in the order in which they were added.
  *

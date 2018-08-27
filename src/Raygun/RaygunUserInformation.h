@@ -1,15 +1,33 @@
 //
-//  RaygunUserInfo.h
-//  Raygun4iOS
+//  RaygunUserInformation.h
+//  raygun4apple
 //
 //  Created by Jason Fauchelle on 16/06/15.
-//  Copyright (c) 2015 Mindscape. All rights reserved.
+//  Copyright © 2018 Raygun Limited. All rights reserved.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall remain in place
+// in this source code.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
-#ifndef Raygun4iOS_RaygunUserInfo_h
-#define Raygun4iOS_RaygunUserInfo_h
+#ifndef Raygun4Apple_RaygunUserInformation_h
+#define Raygun4Apple_RaygunUserInformation_h
 
-@interface RaygunUserInfo : NSObject
+@interface RaygunUserInformation : NSObject
 
 /**
  Unique Identifier for this user. Set this to the identifier you use internally to look up users,
@@ -48,23 +66,23 @@
 @property (nonatomic, readwrite, strong) NSString *firstName;
 
 /**
- Creates and returns a RaygunUserInfo object.
+ Creates and returns a RaygunUserInformation object.
  
  @param identifier The unique user identifier that you use internally to look up users.
  
- @return a new RaygunUserInfo object.
+ @return a new RaygunUserInformation object.
  */
 - (id)initWithIdentifier:(NSString *)identifier;
 
 /**
- Creates and returns a RaygunUserInfo object.
+ Creates and returns a RaygunUserInformation object.
  
  @param identifier The unique user identifier that you use internally to look up users.
  @param email The user's email address.
  @param fullName The user's full name.
  @param firstName The user's first or preferred name.
  
- @return a new RaygunUserInfo object.
+ @return a new RaygunUserInformation object.
  */
 - (id)initWithIdentifier:(NSString *)identifier
                withEmail:(NSString *)email
@@ -72,7 +90,7 @@
            withFirstName:(NSString *)firstName;
 
 /**
- Creates and returns a RaygunUserInfo object.
+ Creates and returns a RaygunUserInformation object.
  
  @param identifier The unique user identifier that you use internally to look up users.
  @param email The user's email address.
@@ -80,7 +98,7 @@
  @param firstName The user's first or preferred name.
  @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
  
- @return a new RaygunUserInfo object.
+ @return a new RaygunUserInformation object.
  */
 - (id)initWithIdentifier:(NSString *)identifier
                withEmail:(NSString *)email
@@ -89,7 +107,7 @@
          withIsAnonymous:(BOOL) isAnonymous;
 
 /**
- Creates and returns a RaygunUserInfo object.
+ Creates and returns a RaygunUserInformation object.
  
  @param identifier The unique user identifier that you use internally to look up users.
  @param email The user's email address.
@@ -98,7 +116,7 @@
  @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
  @param uuid Device identifier.
  
- @return a new RaygunUserInfo object.
+ @return a new RaygunUserInformation object.
  */
 - (id)initWithIdentifier:(NSString *)identifier
                withEmail:(NSString *)email

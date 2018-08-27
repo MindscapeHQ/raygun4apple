@@ -1,8 +1,8 @@
 //
-//  RaygunBinaryImage.h
+//  RaygunRealUserMonitoring.h
 //  raygun4apple
 //
-//  Created by raygundev on 8/3/18.
+//  Created by Jason Fauchelle on 27/04/16.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,23 @@
 // THE SOFTWARE.
 //
 
-#ifndef RaygunBinaryImage_h
-#define RaygunBinaryImage_h
-
 #import <Foundation/Foundation.h>
+#import "RaygunUserInformation.h"
 
-@interface RaygunBinaryImage : NSObject
+@interface RaygunRealUserMonitoring : NSObject
 
-@property(nonatomic, readwrite, copy) NSNumber *cpuType;
-@property(nonatomic, readwrite, copy) NSNumber *cpuSubtype;
-@property(nonatomic, readwrite, copy) NSNumber *imageAddress;
-@property(nonatomic, readwrite, copy) NSNumber *imageSize;
-@property(nonatomic, readwrite, copy) NSString *name;
-@property(nonatomic, readwrite, copy) NSString *uuid;
+- (id)initWithApiKey:(NSString *)apiKey;
 
-/**
- * Initializes a RaygunBinaryImage
- 
- * @return RaygunBinaryImage
- */
-- (id)initWithUuId:(NSString *)uuid
-          withName:(NSString *)name
-       withCpuType:(NSNumber *)cpuType
-    withCpuSubType:(NSNumber *)cpuSubType
-  withImageAddress:(NSNumber *)imageAddress
-     withImageSize:(NSNumber *)imageSize;
+- (void)enable;
 
-/**
- Creates and returns a dictionary with the binary image properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the binary image properties and their values.
- */
--(NSDictionary *)convertToDictionary;
+- (void)attachWithNetworkLogging:(bool)networkLogging;
+
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
+
+- (void)ignoreViews:(NSArray *)viewNames;
+
+- (void)ignoreURLs:(NSArray *)urls;
+
++ (void)sendEvent:(NSString*)name withType:(NSString*)type withDuration:(NSNumber*)duration;
 
 @end
-
-#endif /* RaygunBinaryImage_h */

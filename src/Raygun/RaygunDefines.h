@@ -1,8 +1,8 @@
 //
-//  RaygunBinaryImage.h
+//  RaygunDefines.h
 //  raygun4apple
 //
-//  Created by raygundev on 8/3/18.
+//  Created by Mitchell Duncan on 27/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,40 +24,34 @@
 // THE SOFTWARE.
 //
 
-#ifndef RaygunBinaryImage_h
-#define RaygunBinaryImage_h
+#ifndef RaygunDefines_h
+#define RaygunDefines_h
 
 #import <Foundation/Foundation.h>
 
-@interface RaygunBinaryImage : NSObject
+#if TARGET_OS_IOS || TARGET_OS_TV
+#define RAYGUN_CAN_USE_UIDEVICE 1
+#else
+#define RAYGUN_CAN_USE_UIDEVICE 0
+#endif
 
-@property(nonatomic, readwrite, copy) NSNumber *cpuType;
-@property(nonatomic, readwrite, copy) NSNumber *cpuSubtype;
-@property(nonatomic, readwrite, copy) NSNumber *imageAddress;
-@property(nonatomic, readwrite, copy) NSNumber *imageSize;
-@property(nonatomic, readwrite, copy) NSString *name;
-@property(nonatomic, readwrite, copy) NSString *uuid;
+#if RAYGUN_CAN_USE_UIDEVICE
+#define RAYGUN_CAN_USE_UIKIT 1
+#else
+#define RAYGUN_CAN_USE_UIKIT 0
+#endif
 
-/**
- * Initializes a RaygunBinaryImage
- 
- * @return RaygunBinaryImage
- */
-- (id)initWithUuId:(NSString *)uuid
-          withName:(NSString *)name
-       withCpuType:(NSNumber *)cpuType
-    withCpuSubType:(NSNumber *)cpuSubType
-  withImageAddress:(NSNumber *)imageAddress
-     withImageSize:(NSNumber *)imageSize;
+@class RaygunMessage;
 
 /**
- Creates and returns a dictionary with the binary image properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the binary image properties and their values.
+ * Block can be used to modify the crash report before it is sent to Raygun.
  */
--(NSDictionary *)convertToDictionary;
+typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 
-@end
+typedef enum {
+    ViewLoaded,
+    NetworkCall
+} RaygunEventType;
 
-#endif /* RaygunBinaryImage_h */
+#endif /* RaygunDefines_h */
+
