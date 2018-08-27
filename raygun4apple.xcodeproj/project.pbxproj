@@ -314,9 +314,9 @@
 		A2E4AE1921003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
 		A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
-		A2EA9FB32133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; };
-		A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; };
-		A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; };
+		A2EA9FB32133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2F38CDC212FAEA5008346D9 /* RaygunCrashReportCustomSink.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F38CDA212FAEA4008346D9 /* RaygunCrashReportCustomSink.m */; };
 		A2F38CDD212FAEA5008346D9 /* RaygunCrashReportCustomSink.h in Headers */ = {isa = PBXBuildFile; fileRef = A2F38CDB212FAEA5008346D9 /* RaygunCrashReportCustomSink.h */; };
 		A2F38CDE212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */ = {isa = PBXBuildFile; fileRef = A2F38CDB212FAEA5008346D9 /* RaygunCrashReportCustomSink.h */; };
@@ -1100,16 +1100,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */,
-				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
+				DC5EFA89210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFA95210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
-				DC5EFA80210FFA7A002C0713 /* RaygunMessageDetails.h in Headers */,
-				DC5EFA8C210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
+				A2EA9FB32133568C00217D41 /* RaygunDefines.h in Headers */,
 				DC5EFA65210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
+				DC5EFA8C210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
+				DC5EFADD2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFA83210FFA7A002C0713 /* RaygunMessage.h in Headers */,
+				DC5EFA80210FFA7A002C0713 /* RaygunMessageDetails.h in Headers */,
+				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFA8F210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
-				DC5EFA89210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				A2E4ACE821003DAA0003C8B4 /* AlignOf.h in Headers */,
 				A2E4AE0C21003DAA0003C8B4 /* DemangleNodes.h in Headers */,
 				A2E4ACF621003DAA0003C8B4 /* KSCrashC.h in Headers */,
@@ -1187,7 +1188,6 @@
 				A2E4ACEE21003DAA0003C8B4 /* type_traits.h in Headers */,
 				A2E4AD1E21003DAA0003C8B4 /* KSCrashMonitor_CPPException.h in Headers */,
 				A2E4ACFC21003DAA0003C8B4 /* KSCrashDoctor.h in Headers */,
-				A2EA9FB32133568C00217D41 /* RaygunDefines.h in Headers */,
 				A2E4ACC621003DAA0003C8B4 /* KSCrashInstallation.h in Headers */,
 				A2E4AD2E21003DAA0003C8B4 /* KSCrashMonitor_Signal.h in Headers */,
 				A2E4AD1A21003DAA0003C8B4 /* KSCrashMonitor_AppState.h in Headers */,
@@ -1199,6 +1199,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */,
 				DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFAF62113A831002C0713 /* RaygunBinaryImage.h in Headers */,
@@ -1286,7 +1287,6 @@
 				A2E4ACEF21003DAA0003C8B4 /* type_traits.h in Headers */,
 				A2E4AD1F21003DAA0003C8B4 /* KSCrashMonitor_CPPException.h in Headers */,
 				A2E4ACFD21003DAA0003C8B4 /* KSCrashDoctor.h in Headers */,
-				A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */,
 				A2E4ACC721003DAA0003C8B4 /* KSCrashInstallation.h in Headers */,
 				A2E4AD2F21003DAA0003C8B4 /* KSCrashMonitor_Signal.h in Headers */,
 				A2E4AD1B21003DAA0003C8B4 /* KSCrashMonitor_AppState.h in Headers */,
@@ -1298,6 +1298,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */,
 				DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DCD5C2052117E8BF002623B7 /* RaygunNetworkLogger.h in Headers */,
 				DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */,
@@ -1305,7 +1306,6 @@
 				DC5EFA8E210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
 				DC5EFA67210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
 				A2F38CDF212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
-				A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */,
 				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
 				DC5EFA8B210FFA7A002C0713 /* RaygunClient.h in Headers */,

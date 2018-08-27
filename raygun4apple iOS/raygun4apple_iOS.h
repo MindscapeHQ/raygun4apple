@@ -34,7 +34,7 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_iOSVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <raygun4apple_iOS/PublicHeader.h>
 
-#import "Raygun.h"
+#import "RaygunClient.h"
 #import "RaygunBinaryImage.h"
 #import "RaygunClientMessage.h"
 #import "RaygunDefines.h"
