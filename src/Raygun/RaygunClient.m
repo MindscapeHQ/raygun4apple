@@ -34,9 +34,6 @@
 #import "RaygunRealUserMonitoring.h"
 #import "RaygunMessage.h"
 
-static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
-static NSString * const kApiEndPoint = @"https://api.raygun.com/entries";
-
 static RaygunClient *sharedRaygunInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
@@ -203,7 +200,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForCR]];
     
     request.HTTPMethod = @"POST";
     [request setValue:self.apiKey forHTTPHeaderField:@"X-ApiKey"];
@@ -226,7 +223,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 }
 
 - (void)enableAutomaticNetworkLogging:(bool)networkLogging {
-    // TODO
+    [self.rum enableNetworkLogging:networkLogging];
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
@@ -237,12 +234,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     [self.rum ignoreURLs:urls];
 }
 
-- (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds {
-    NSString* type = @"p";
-    if (eventType == NetworkCall) {
-        type = @"n";
-    }
-    [RaygunRealUserMonitoring sendEvent:name withType:type withDuration:[NSNumber numberWithInteger:milliseconds]];
+- (void)sendTimingEvent:(RaygunEventType)type withName:(NSString *)name withDuration:(int)milliseconds {
+    [RaygunRealUserMonitoring sendEvent:name withType:RaygunEventTypeShortNames[type] withDuration:[NSNumber numberWithInteger:milliseconds]];
 }
 
 #pragma mark - Unique User Tracking -

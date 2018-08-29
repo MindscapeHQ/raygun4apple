@@ -33,7 +33,7 @@
 
 - (void)enable;
 
-- (void)attachWithNetworkLogging:(bool)networkLogging;
+- (void)enableNetworkLogging:(bool)networkLogging;
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 

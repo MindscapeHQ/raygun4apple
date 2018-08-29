@@ -41,6 +41,10 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
+static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
+static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
+static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
+
 @class RaygunMessage;
 
 /**
@@ -48,10 +52,18 @@
  */
 typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 
-typedef enum {
-    ViewLoaded,
+typedef NS_ENUM(NSInteger, RaygunEventType) {
+    ViewLoaded = 0,
     NetworkCall
-} RaygunEventType;
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunEventTypeShortNames[] = {
+    @"p",
+    @"n"
+};
 
 #endif /* RaygunDefines_h */
 

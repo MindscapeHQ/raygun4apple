@@ -32,15 +32,13 @@
 
 #import "RaygunNetworkLogger.h"
 #import "RaygunUserInformation.h"
+#import "RaygunDefines.h"
 
 #import "RaygunRealUserMonitoring.h"
 
 #pragma mark - RaygunRealUserMonitoring
 
 @implementation RaygunRealUserMonitoring
-
-static NSString* const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
-static NSString* const kApiEndPoint = @"https://api.raygun.com/events";
 
 static NSString* _apiKey;
 static NSString* _sessionId;
@@ -53,37 +51,32 @@ static NSMutableDictionary* _timers;
 static RaygunNetworkLogger* _networkLogger;
 static NSMutableSet* _ignoredViews;
 
-
 - (id)initWithApiKey:(NSString *)apiKey {
     if (self = [super init]) {
         _apiKey = apiKey;
     }
-    
     return self;
 }
 
 - (void)enable {
-    [self attachWithNetworkLogging:true];
-}
-
-- (void)attachWithNetworkLogging:(bool)networkLogging {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _enabled = true;
-        _timers = [[NSMutableDictionary alloc] init];
-        
+        _enabled       = true;
+        _timers        = [[NSMutableDictionary alloc] init];
         _networkLogger = [[RaygunNetworkLogger alloc] init];
-        [_networkLogger setEnabled:networkLogging];
+        _queue         = [[NSOperationQueue alloc] init];
+        _ignoredViews  = [[NSMutableSet alloc] init];
         
-        _queue = [[NSOperationQueue alloc] init];
-        
-        _ignoredViews = [[NSMutableSet alloc] init];
         [_ignoredViews addObject:@"UINavigationController"];
         [_ignoredViews addObject:@"UIInputWindowController"];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
+}
+
+- (void)enableNetworkLogging:(bool)networkLogging {
+    [_networkLogger setEnabled:networkLogging];
 }
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
@@ -319,7 +312,7 @@ static NSMutableSet* _ignoredViews;
 }
 
 + (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForRUM]];
     
     request.HTTPMethod = @"POST";
     [request setValue:_apiKey forHTTPHeaderField:@"X-ApiKey"];
