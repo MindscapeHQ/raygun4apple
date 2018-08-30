@@ -33,35 +33,46 @@
 #import "RaygunNetworkLogger.h"
 #import "RaygunUserInformation.h"
 #import "RaygunDefines.h"
+#import "RaygunEventMessage.h"
+#import "RaygunEventData.h"
+#import "RaygunClient.h"
 
 #import "RaygunRealUserMonitoring.h"
 
-#pragma mark - RaygunRealUserMonitoring
+@interface RaygunRealUserMonitoring()
+
+// Go over properties properties
+@property (nonatomic, copy) NSString *sessionId;
+@property (nonatomic) bool enabled;
+@property (nonatomic, copy) NSString *lastViewName;
+@property (nonatomic, copy) NSString *lastUserIdentifier;
+@property (nonatomic, copy) NSOperationQueue *queue;
+@property (nonatomic, copy) NSMutableDictionary *timers;
+@property (nonatomic, copy) RaygunNetworkLogger * networkLogger;
+@property (nonatomic, copy) NSMutableSet *ignoredViews;
+
+@end
 
 @implementation RaygunRealUserMonitoring
 
-static NSString* _apiKey;
-static NSString* _sessionId;
+static RaygunRealUserMonitoring *sharedInstance = nil;
 
-static bool _enabled;
-static NSString* _lastViewName;
-static RaygunUserInformation* _userInformation;
-static NSOperationQueue* _queue;
-static NSMutableDictionary* _timers;
-static RaygunNetworkLogger* _networkLogger;
-static NSMutableSet* _ignoredViews;
+@synthesize sessionId     = _sessionId;
+@synthesize enabled       = _enabled;
+@synthesize lastViewName  = _lastViewName;
+@synthesize queue         = _queue;
+@synthesize timers        = _timers;
+@synthesize networkLogger = _networkLogger;
+@synthesize ignoredViews  = _ignoredViews;
 
-- (id)initWithApiKey:(NSString *)apiKey {
-    if (self = [super init]) {
-        _apiKey = apiKey;
-    }
-    return self;
++ (instancetype)sharedInstance {
+    return sharedInstance;
 }
 
-- (void)enable {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _enabled       = true;
+#pragma mark - Initialising Methods  -
+
+- (id)init {
+    if (self = [super init]) {
         _timers        = [[NSMutableDictionary alloc] init];
         _networkLogger = [[RaygunNetworkLogger alloc] init];
         _queue         = [[NSOperationQueue alloc] init];
@@ -69,7 +80,14 @@ static NSMutableSet* _ignoredViews;
         
         [_ignoredViews addObject:@"UINavigationController"];
         [_ignoredViews addObject:@"UIInputWindowController"];
-        
+    }
+    return self;
+}
+
+- (void)enable {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        self.enabled = true;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
@@ -79,23 +97,142 @@ static NSMutableSet* _ignoredViews;
     [_networkLogger setEnabled:networkLogging];
 }
 
+#pragma mark - Session Tracking Methods -
+
+- (void)checkForSessionStart {
+    if (_sessionId == nil) {
+        _sessionId = [[NSUUID UUID] UUIDString];
+        [self sendEvent:kRaygunEventTypeSessionStart];
+    }
+}
+
+- (void)onDidBecomeActive:(NSNotification *)notification {
+    [self checkForSessionStart];
+    
+    if (![self shouldIgnoreView:_lastViewName]) {
+        [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:[NSNumber numberWithInteger:0]];
+    }
+}
+
+- (void)onDidEnterBackground:(NSNotification *)notification {
+    if (_sessionId != nil) {
+        [self sendEvent:kRaygunEventTypeSessionEnd];
+    }
+}
+
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
-    if (userInformation == nil || userInformation.identifier == nil || [[userInformation.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
-        userInformation = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunRealUserMonitoring getAnonymousIdentifier]];
-        userInformation.isAnonymous = true;
+    
+    // Compare against the lastUserIdentifier for a change in session.
+    
+    /*if (userInfo == nil || userInfo.identifier == nil || [[userInfo.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0){
+        userInfo = [[RaygunUserInfo alloc] initWithIdentifier:[Pulse getAnonymousIdentifier]];
+        userInfo.isAnonymous = true;
     }
     
-    if (_userInformation != nil) {
-        NSString* uuid = [RaygunRealUserMonitoring getAnonymousIdentifier];
-        if (![uuid isEqualToString:_userInformation.identifier] && ![_userInformation.identifier isEqualToString:userInformation.identifier]) {
+    if (_userInfo != nil){
+        NSString* uuid = [Pulse getAnonymousIdentifier];
+        if (![uuid isEqualToString:_userInfo.identifier] && ![_userInfo.identifier isEqualToString:userInfo.identifier]) {
             if (_sessionId != nil) {
-                [RaygunRealUserMonitoring sendEvent:@"session_end"];
+                [Pulse sendPulseEvent:@"session_end"];
             }
         }
     }
     
-    _userInformation = userInformation;
+    [userInfo retain];
+    [_userInfo release];
+    _userInfo = userInfo;*/
 }
+
+#pragma mark - Event Reporting Methods -
+
+- (void)sendEvent:(RaygunEventType)eventType {
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
+        message.occurredOn      = [self currentTime];
+        message.sessionId       = self.sessionId;
+        message.eventType       = eventType;
+        message.userInformation = [[RaygunClient sharedClient] userInformation] != nil ? [[RaygunClient sharedClient] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.version         = [self bundleVersion];
+        message.operatingSystem = @"iOS";
+        message.osVersion       = [[UIDevice currentDevice] systemVersion];
+        message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    }];
+    
+    [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error sending: %@", [error localizedDescription]);
+        }
+    }];
+    
+    if (eventType == kRaygunEventTypeSessionEnd) {
+        _sessionId = nil;
+        [_timers removeAllObjects];
+    }
+}
+
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
+    [self checkForSessionStart];
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
+        message.occurredOn      = [self currentTime];
+        message.sessionId       = self.sessionId;
+        message.eventType       = kRaygunEventTypeTiming;
+        message.userInformation = [[RaygunClient sharedClient] userInformation] != nil ? [[RaygunClient sharedClient] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.version         = [self bundleVersion];
+        message.operatingSystem = @"iOS";
+        message.osVersion       = [[UIDevice currentDevice] systemVersion];
+        message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+        message.eventData       = [[RaygunEventData alloc] initWithType:type withName:name withDuration:duration];
+    }];
+    
+    [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error sending: %@", [error localizedDescription]);
+        }
+    }];
+}
+
+- (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForRUM]];
+    
+    request.HTTPMethod = @"POST";
+    [request setValue:RaygunClient.apiKey forHTTPHeaderField:@"X-ApiKey"];
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%tu", [data length]] forHTTPHeaderField:@"Content-Length"];
+    
+    [request setHTTPBody:data];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
+    [dataTask resume];
+}
+
+- (NSString *)currentTime {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone        *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    [dateFormatter setTimeZone:utcTimeZone];
+    
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:locale];
+    
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
+
+- (NSString *)bundleVersion {
+    NSDictionary *infoDict  = [[NSBundle mainBundle] infoDictionary];
+    NSString *version       = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    NSString *build         = [infoDict objectForKey:@"CFBundleVersion"];
+    return [NSString stringWithFormat:@"%@ (%@)", version, build];
+}
+
+#pragma mark - Event Blacklisting Methods -
 
 - (void)ignoreViews:(NSArray *)viewNames {
     if (viewNames != nil && _ignoredViews != nil) {
@@ -113,220 +250,7 @@ static NSMutableSet* _ignoredViews;
     }
 }
 
-+ (void)checkForSessionStart {
-    if (_sessionId == nil) {
-        _sessionId = [[NSUUID UUID] UUIDString];
-        [RaygunRealUserMonitoring sendEvent:@"session_start"];
-    }
-}
-
-- (void)onDidBecomeActive:(NSNotification *)notification {
-    [RaygunRealUserMonitoring checkForSessionStart];
-    
-    if (![RaygunRealUserMonitoring shouldIgnoreView:_lastViewName]) {
-        [RaygunRealUserMonitoring sendEvent:_lastViewName withType:@"p" withDuration:[NSNumber numberWithInteger:0]];
-    }
-}
-
-- (void)onDidEnterBackground:(NSNotification *)notification {
-    if (_sessionId != nil) {
-        [RaygunRealUserMonitoring sendEvent:@"session_end"];
-    }
-}
-
-+ (void)sendEvent:(NSString *)name {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-    [dateFormatter setTimeZone:utcTimeZone];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:locale];
-    
-    NSString *result = [dateFormatter stringFromDate:[NSDate date]];
-    
-    result = [result stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSRange range = {0, [result length]};
-    result = [result stringByReplacingOccurrencesOfString:@"a." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"a" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    
-    NSBundle* bundle = [NSBundle mainBundle];
-    NSDictionary *infoDictionary = [bundle infoDictionary];
-    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    NSString *bundleVersion = [NSString stringWithFormat:@"%@ (%@)", version, build];
-    
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    NSDictionary* userInfo = [RaygunRealUserMonitoring buildUserInfoDictionary];
-    
-    NSDictionary* eventData = @{
-                                @"sessionId": _sessionId,
-                                @"timestamp": result,
-                                @"type": name,
-                                @"user": userInfo,
-                                @"version": bundleVersion,
-                                @"os": @"iOS",
-                                @"osVersion": [[UIDevice currentDevice] systemVersion],
-                                @"platform": [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding]};
-    
-    NSDictionary* message = @{@"eventData": @[eventData]};
-    
-    [RaygunRealUserMonitoring encodeAndSendData:message];
-    
-    if ([@"session_end" isEqualToString:name])
-    {
-        _sessionId = nil;
-        [_timers removeAllObjects];
-    }
-}
-
-+ (void)sendEvent:(NSString *)name withType:(NSString *)type withDuration:(NSNumber *)duration {
-    [RaygunRealUserMonitoring checkForSessionStart];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-    [dateFormatter setTimeZone:utcTimeZone];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:locale];
-    
-    NSString *result = [dateFormatter stringFromDate:[NSDate date]];
-    
-    result = [result stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSRange range = {0, [result length]};
-    result = [result stringByReplacingOccurrencesOfString:@"a." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"a" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"p" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m." withString:@"" options:NSCaseInsensitiveSearch range:range];
-    range.length = [result length];
-    result = [result stringByReplacingOccurrencesOfString:@"m" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSDictionary *infoDictionary = [bundle infoDictionary];
-    NSString *version       = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *build         = [infoDictionary objectForKey:@"CFBundleVersion"];
-    NSString *bundleVersion = [NSString stringWithFormat:@"%@ (%@)", version, build];
-    
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    NSDictionary *userInfo = [RaygunRealUserMonitoring buildUserInfoDictionary];
-    
-    NSDictionary  *eventData = @{ @"type": type, @"duration": duration };
-    NSDictionary *timingData = @{ @"name": name, @"timing": eventData };
-    
-    NSArray *pulseDataArray = @[timingData];
-    
-    NSData    *finalPulseData = [NSJSONSerialization dataWithJSONObject:pulseDataArray options:0 error:nil];
-    NSString *pulseDataString = [[NSString alloc] initWithData:finalPulseData encoding:NSUTF8StringEncoding];
-    
-    NSString* osVersion = [[UIDevice currentDevice] systemVersion];
-    NSString*  platform = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    
-    NSDictionary* raygunPulseData = @{
-                                      @"sessionId": _sessionId,
-                                      @"timestamp": result,
-                                      @"type": @"mobile_event_timing",
-                                      @"user": userInfo,
-                                      @"version": bundleVersion,
-                                      @"os": @"iOS",
-                                      @"osVersion": osVersion != nil ? osVersion : @"",
-                                      @"platform": platform != nil ? platform : @"",
-                                      @"data": pulseDataString};
-    
-    [RaygunRealUserMonitoring encodeAndSendData:@{@"eventData": @[raygunPulseData]}];
-}
-
-+ (NSDictionary *) buildUserInfoDictionary {
-    NSDictionary* userInfo = nil;
-    
-    if (_userInformation == nil) {
-        // This should never be reached, but just in case
-        NSString* identifier = [RaygunRealUserMonitoring getAnonymousIdentifier];
-        userInfo = @{
-                     @"identifier": identifier,
-                     @"firstName": @"",
-                     @"fullName": @"",
-                     @"isAnonymous": @"True"
-                     };
-    } else {
-        // The identify function ensures that the static _userInfo identifier is never nil
-        userInfo = @{
-                     @"identifier":   _userInformation.identifier,
-                     @"firstName":    _userInformation.firstName != nil ? _userInformation.firstName : @"",
-                     @"fullName":     _userInformation.fullName != nil ? _userInformation.fullName : @"",
-                     @"email":        _userInformation.email != nil ? _userInformation.email : @"",
-                     @"isAnonymous": (_userInformation.isAnonymous ? @"True" : @"False")
-                     };
-    }
-    
-    return userInfo;
-}
-
-+ (NSString *)getAnonymousIdentifier {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
-    
-    if (!identifier) {
-        if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-            identifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        }
-        else {
-            CFUUIDRef theUUID = CFUUIDCreate(NULL);
-            identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
-            CFRelease(theUUID);
-        }
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
-        [defaults synchronize];
-    }
-    
-    return identifier;
-}
-
-+ (void)encodeAndSendData:(NSDictionary *)data {
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
-    [RaygunRealUserMonitoring sendData:jsonData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error sending: %@", [error localizedDescription]);
-        }
-    }];
-}
-
-+ (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForRUM]];
-    
-    request.HTTPMethod = @"POST";
-    [request setValue:_apiKey forHTTPHeaderField:@"X-ApiKey"];
-    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%tu", [data length]] forHTTPHeaderField:@"Content-Length"];
-    
-    [request setHTTPBody:data];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
-    [dataTask resume];
-}
-
-+ (bool)shouldIgnoreView:(NSString *)viewName {
+- (bool)shouldIgnoreView:(NSString *)viewName {
     if (!_enabled) {
         return true;
     }
@@ -346,7 +270,7 @@ static NSMutableSet* _ignoredViews;
 
 @end
 
-#pragma mark - ViewController
+#pragma mark - ViewController Swizzles -
 
 @implementation UIViewController (RaygunPulse)
 
@@ -389,37 +313,40 @@ static NSMutableSet* _ignoredViews;
 }
 
 - (void)loadViewCapture {
-    if (_enabled) {
+    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
+    if (rum.enabled) {
         NSString* viewName = [self description];
-        NSNumber* start = [_timers objectForKey:viewName];
-        if(start == nil) {
+        NSNumber* start = [rum.timers objectForKey:viewName];
+        if (start == nil) {
             double startDouble = CACurrentMediaTime();
             start = [NSNumber numberWithDouble:startDouble];
-            [_timers setObject:start forKey:viewName];
+            [rum.timers setObject:start forKey:viewName];
         }
     }
     [self loadViewCapture];
 }
 
 - (void)viewDidLoadCapture {
-    if (_enabled) {
+    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
+    if (rum.enabled) {
         NSString* viewName = [self description];
-        NSNumber* start = [_timers objectForKey:viewName];
-        if(start == nil) {
+        NSNumber* start = [rum.timers objectForKey:viewName];
+        if (start == nil) {
             start = [NSNumber numberWithDouble:CACurrentMediaTime()];
-            [_timers setObject:start forKey:viewName];
+            [rum.timers setObject:start forKey:viewName];
         }
     }
     [self viewDidLoadCapture];
 }
 
 - (void)viewWillAppearCapture:(BOOL)animated {
-    if (_enabled) {
+    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
+    if (rum.enabled) {
         NSString* viewName = [self description];
-        NSNumber* start = [_timers objectForKey:viewName];
+        NSNumber* start = [rum.timers objectForKey:viewName];
         if (start == nil) {
             start = [NSNumber numberWithDouble:CACurrentMediaTime()];
-            [_timers setObject:start forKey:viewName];
+            [rum.timers setObject:start forKey:viewName];
         }
     }
     [self viewWillAppearCapture:animated];
@@ -428,10 +355,11 @@ static NSMutableSet* _ignoredViews;
 - (void)viewDidAppearCapture:(BOOL)animated {
     [self viewDidAppearCapture:animated];
     
-    if (_enabled) {
+    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
+    if (rum.enabled) {
         NSString* viewName = [self description];
         
-        NSNumber* start = [_timers objectForKey:viewName];
+        NSNumber* start = [rum.timers objectForKey:viewName];
         
         int duration = 0;
         if (start != nil) {
@@ -439,7 +367,7 @@ static NSMutableSet* _ignoredViews;
             duration = interval * 1000;
         }
         
-        [_timers removeObjectForKey:viewName];
+        [rum.timers removeObjectForKey:viewName];
         
         // Cleanup the view name so when only have the class name.
         viewName = [viewName stringByReplacingOccurrencesOfString:@"<" withString:@""];
@@ -448,9 +376,9 @@ static NSMutableSet* _ignoredViews;
             viewName = [viewName substringToIndex:index];
         }
         
-        if (![RaygunRealUserMonitoring shouldIgnoreView:viewName]) {
-            _lastViewName = viewName;
-            [RaygunRealUserMonitoring sendEvent:viewName withType:@"p" withDuration:[NSNumber numberWithInteger:duration]];
+        if (![rum shouldIgnoreView:viewName]) {
+            rum.lastViewName = viewName;
+            [rum sendTimingEvent:kRaygunEventTimingViewLoaded withName:viewName withDuration:[NSNumber numberWithInteger:duration]];
         }
     }
 }

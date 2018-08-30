@@ -25,11 +25,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RaygunUserInformation.h"
+
+#import "RaygunDefines.h"
+
+@class RaygunUserInformation;
 
 @interface RaygunRealUserMonitoring : NSObject
 
-- (id)initWithApiKey:(NSString *)apiKey;
++ (instancetype)sharedInstance;
+
+- (instancetype)init;
 
 - (void)enable;
 
@@ -37,10 +42,10 @@
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString*)name withDuration:(NSNumber*)duration;
+
 - (void)ignoreViews:(NSArray *)viewNames;
 
 - (void)ignoreURLs:(NSArray *)urls;
-
-+ (void)sendEvent:(NSString*)name withType:(NSString*)type withDuration:(NSNumber*)duration;
 
 @end

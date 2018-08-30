@@ -31,17 +31,17 @@
 
 @interface RaygunClient : NSObject
 
-@property(nonatomic, readonly, copy) NSString *apiKey;
+@property(nonatomic, class, readonly, copy) NSString *apiKey;
 @property(nonatomic, readwrite, copy) NSString *applicationVersion;
 @property(nonatomic, strong) NSArray *tags;
 @property(nonatomic, strong) NSDictionary<NSString *, id> *customData;
 @property(nonatomic, strong) RaygunUserInformation *userInformation;
 @property(nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
 
-+ (id)sharedClient;
-+ (id)sharedClientWithApiKey:(NSString *)apiKey;
++ (instancetype)sharedClient;
++ (instancetype)sharedClientWithApiKey:(NSString *)apiKey;
 
-- (id)initWithApiKey:(NSString *)apiKey;
+- (instancetype)initWithApiKey:(NSString *)apiKey;
 
 // Crash Reporting
 
@@ -60,7 +60,7 @@
 - (void)enableAutomaticNetworkLogging:(bool)networkLogging;
 - (void)ignoreViews:(NSArray *)viewNames;
 - (void)ignoreURLs:(NSArray *)urls;
-- (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds;
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds;
 
 // Unique User Tracking
 
