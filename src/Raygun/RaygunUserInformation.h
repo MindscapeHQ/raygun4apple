@@ -29,6 +29,8 @@
 
 @interface RaygunUserInformation : NSObject
 
+@property (nonatomic, class, readonly, copy) RaygunUserInformation *anonymousUser;
+
 /**
  Unique Identifier for this user. Set this to the identifier you use internally to look up users,
  or a correlation id for anonymous users if you have one. It doesn't have to be unique, but we will
@@ -131,7 +133,7 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary * )convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

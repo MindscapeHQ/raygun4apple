@@ -25,7 +25,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "RaygunUserInformation.h"
+#import "RaygunDefines.h"
+
+static RaygunUserInformation *sharedAnonymousUser = nil;
 
 @implementation RaygunUserInformation
 
@@ -35,6 +40,38 @@
 @synthesize email       = _email;
 @synthesize fullName    = _fullName;
 @synthesize firstName   = _firstName;
+
++ (RaygunUserInformation *)anonymousUser {
+    if (sharedAnonymousUser == nil) {
+        sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation anonymousIdentifier]];
+        sharedAnonymousUser.isAnonymous = @YES;
+    }
+    return sharedAnonymousUser;
+}
+
++ (NSString *)anonymousIdentifier {
+    // Check if we have stored one before
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
+    
+    if (!identifier) {
+        if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
+            identifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        }
+        else {
+            CFUUIDRef theUUID = CFUUIDCreate(NULL);
+            identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
+            CFRelease(theUUID);
+        }
+        
+        // Store the identifier
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
+        [defaults synchronize];
+    }
+    
+    return identifier;
+}
 
 - (id)initWithIdentifier:(NSString *)identifier {
     return [self initWithIdentifier:identifier withEmail:nil withFullName:nil withFirstName:nil];
@@ -72,7 +109,7 @@
     return self;
 }
 
--(NSDictionary * )convertToDictionary {
+- (NSDictionary * )convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@YES:@NO}];
     
     if (_identifier) {
