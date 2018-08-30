@@ -53,14 +53,29 @@ static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/ev
 typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 
 typedef NS_ENUM(NSInteger, RaygunEventType) {
-    ViewLoaded = 0,
-    NetworkCall
+    kRaygunEventTypeSessionStart = 0,
+    kRaygunEventTypeSessionEnd,
+    kRaygunEventTypeTiming
 };
 
 /**
  * Static internal helper to convert enum to string
  */
-static NSString *_Nonnull const RaygunEventTypeShortNames[] = {
+static NSString *_Nonnull const RaygunEventTypeNames[] = {
+    @"session_start",
+    @"session_end",
+    @"mobile_event_timing"
+};
+
+typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
+    kRaygunEventTimingViewLoaded = 0,
+    kRaygunEventTimingNetworkCall
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
     @"p",
     @"n"
 };
