@@ -50,7 +50,7 @@ static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/ev
 /**
  * Block can be used to modify the crash report before it is sent to Raygun.
  */
-typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
+typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *_Nonnull message);
 
 typedef NS_ENUM(NSInteger, RaygunEventType) {
     kRaygunEventTypeSessionStart = 0,
