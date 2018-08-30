@@ -42,12 +42,6 @@
 @synthesize platform        = _platform;
 @synthesize eventData       = _eventData;
 
-
-/* TODO: Setters
- @"osVersion": osVersion != nil ? osVersion : @"",
- @"platform": platform != nil ? platform : @"",
- */
-
 + (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
 {
     return [[self alloc] initWithBlock:block];
@@ -78,8 +72,8 @@
     [message setValue:_occurredOn      forKey:@"timestamp"];
     [message setValue:_version         forKey:@"version"];
     [message setValue:_operatingSystem forKey:@"os"];
-    [message setValue:_osVersion       forKey:@"osVersion"];
-    [message setValue:_platform        forKey:@"platform"];
+    [message setValue:_osVersion != nil ? _osVersion : @"" forKey:@"osVersion"];
+    [message setValue:_platform  != nil ? _platform  : @"" forKey:@"platform"];
 
     if (_eventData != nil) {
         [message setValue:@[[_eventData convertToDictionary]] forKey:@"data"];

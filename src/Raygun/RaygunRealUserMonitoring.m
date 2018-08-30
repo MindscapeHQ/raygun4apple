@@ -175,6 +175,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     [self checkForSessionStart];
     
+    if (IsNullOrEmpty(name)) {
+        return;
+    }
+    
     struct utsname systemInfo;
     uname(&systemInfo);
     
