@@ -162,7 +162,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.eventType       = eventType;
         message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
-        message.operatingSystem = @"iOS";
+        message.operatingSystem = [self operatingSystemName];
         message.osVersion       = [[UIDevice currentDevice] systemVersion];
         message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     }];
@@ -177,6 +177,14 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         _sessionId = nil;
         [_timers removeAllObjects];
     }
+}
+
+- (NSString *)operatingSystemName {
+#if RAYGUN_CAN_USE_UIDEVICE
+    return [UIDevice currentDevice].systemName;
+#else
+    return @"macOS";
+#endif
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
@@ -195,7 +203,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.eventType       = kRaygunEventTypeTiming;
         message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
-        message.operatingSystem = @"iOS";
+        message.operatingSystem = [self operatingSystemName];
         message.osVersion       = [[UIDevice currentDevice] systemVersion];
         message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
         message.eventData       = [[RaygunEventData alloc] initWithType:type withName:name withDuration:duration];
