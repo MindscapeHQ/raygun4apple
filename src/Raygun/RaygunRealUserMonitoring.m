@@ -36,6 +36,7 @@
 #import "RaygunEventMessage.h"
 #import "RaygunEventData.h"
 #import "RaygunClient.h"
+#import "RaygunLogger.h"
 
 #import "RaygunRealUserMonitoring.h"
 
@@ -87,6 +88,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)enable {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        [RaygunLogger logDebug:@"enabling real user monitoring"];
         self.enabled = true;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -100,6 +102,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #pragma mark - Session Tracking Methods -
 
 - (void)checkForSessionStart {
+    [RaygunLogger logDebug:@"checking for a new session"];
     if (_sessionId == nil) {
         _sessionId = [[NSUUID UUID] UUIDString];
         [self sendEvent:kRaygunEventTypeSessionStart];
@@ -162,7 +165,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            NSLog(@"Error sending: %@", [error localizedDescription]);
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
         }
     }];
     
@@ -196,12 +199,17 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            NSLog(@"Error sending: %@", [error localizedDescription]);
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
         }
     }];
 }
 
 - (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
+    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+        [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
+        [RaygunLogger logDebug:[NSString stringWithFormat:@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]]];
+        [RaygunLogger logDebug:@"--------------------------------------------"];
+    }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForRUM]];
     
     request.HTTPMethod = @"POST";

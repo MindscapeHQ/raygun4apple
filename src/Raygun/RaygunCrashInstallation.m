@@ -29,6 +29,7 @@
 
 #import "KSCrash.h"
 #import "KSCrashInstallation+Private.h"
+#import "RaygunLogger.h"
 
 @implementation RaygunCrashInstallation
 
@@ -47,9 +48,10 @@
 - (void)sendAllReportsWithCompletion:(KSCrashReportFilterCompletion)onCompletion {
     [super sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error != nil) {
-            NSLog(@"Error sending: %@", [error localizedDescription]);
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
         }
-        NSLog(@"%@", [NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]);
+
+        [RaygunLogger logDebug:[NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]];
         if (completed && onCompletion) {
             onCompletion(filteredReports, completed, error);
         }
@@ -63,9 +65,10 @@
 - (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion)onCompletion {
     [super sendAllReportsWithSink:sink withCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error != nil) {
-            NSLog(@"Error sending: %@", [error localizedDescription]);
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
         }
-        NSLog(@"%@", [NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]);
+        
+        [RaygunLogger logDebug:[NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]];
         if (completed && onCompletion) {
             onCompletion(filteredReports, completed, error);
         }

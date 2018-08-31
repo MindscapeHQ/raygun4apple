@@ -31,6 +31,7 @@
 #import "RaygunCrashReportCustomSink.h"
 #import "RaygunRealUserMonitoring.h"
 #import "RaygunMessage.h"
+#import "RaygunLogger.h"
 
 @interface RaygunClient()
 
@@ -108,6 +109,8 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 - (void)enableCrashReporting {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        [RaygunLogger logDebug:@"Enabling crash reporting"];
+        
         // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
         [sharedCrashInstallation install];
@@ -178,7 +181,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                NSLog(@"Error sending: %@", [error localizedDescription]);
+                [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
             }
         }];
     }
@@ -211,6 +214,12 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
+    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+        [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
+        [RaygunLogger logDebug:[NSString stringWithFormat:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]]];
+        [RaygunLogger logDebug:@"--------------------------------------------"];
+    }
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForCR]];
     
     request.HTTPMethod = @"POST";
