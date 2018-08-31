@@ -42,20 +42,7 @@
 }
 
 - (void)sendAllReports {
-    [self sendAllReportsWithCompletion:nil];
-}
-
-- (void)sendAllReportsWithCompletion:(KSCrashReportFilterCompletion)onCompletion {
-    [super sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
-        if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
-        }
-
-        [RaygunLogger logDebug:[NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]];
-        if (completed && onCompletion) {
-            onCompletion(filteredReports, completed, error);
-        }
-    }];
+    [super sendAllReportsWithCompletion:nil];
 }
 
 - (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink {
