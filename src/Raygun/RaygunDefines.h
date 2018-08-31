@@ -80,6 +80,25 @@ static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
     @"n"
 };
 
+typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
+    kRaygunLoggingLevelNone = 0,
+    kRaygunLoggingLevelError,
+    kRaygunLoggingLevelWarning,
+    kRaygunLoggingLevelDebug,
+    kRaygunLoggingLevelVerbose,
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
+    @"None",
+    @"Error",
+    @"Warning",
+    @"Debug",
+    @"Verbose"
+};
+
 static inline BOOL IsNullOrEmpty(id thing) {
     return thing == nil || ([thing respondsToSelector:@selector(length)] && [(NSData *)thing length] == 0)
                         || ([thing respondsToSelector:@selector(count)] && [(NSArray *)thing count] == 0);

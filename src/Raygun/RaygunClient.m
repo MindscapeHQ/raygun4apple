@@ -43,11 +43,13 @@
 static NSString *sharedApiKey = nil;
 static RaygunClient *sharedRaygunInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
+static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
 @synthesize applicationVersion = _applicationVersion;
 @synthesize tags               = _tags;
 @synthesize customData         = _customData;
 @synthesize userInformation    = _userInformation;
+@dynamic logLevel;
 
 #pragma mark - Setters -
 
@@ -68,6 +70,15 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)setCustomData:(NSDictionary *)customData {
     _customData = customData;
     [self updateCrashReportUserInfo];
+}
+
++ (void)setLogLevel:(RaygunLoggingLevel)level {
+    NSParameterAssert(level);
+    logLevel = level;
+}
+
++ (RaygunLoggingLevel)logLevel {
+    return logLevel;
 }
 
 #pragma mark - Initialising Methods -

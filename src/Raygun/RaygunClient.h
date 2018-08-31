@@ -37,10 +37,10 @@
 @property(nonatomic, strong) NSDictionary<NSString *, id> *customData;
 @property(nonatomic, strong) RaygunUserInformation *userInformation;
 @property(nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
+@property(nonatomic, class) RaygunLoggingLevel logLevel;
 
 + (instancetype)sharedClient;
 + (instancetype)sharedClientWithApiKey:(NSString *)apiKey;
-
 - (instancetype)initWithApiKey:(NSString *)apiKey;
 
 // Crash Reporting
