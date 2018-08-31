@@ -39,8 +39,8 @@
 @property(nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
 @property(nonatomic, class) RaygunLoggingLevel logLevel;
 
-+ (instancetype)sharedClient;
-+ (instancetype)sharedClientWithApiKey:(NSString *)apiKey;
++ (instancetype)sharedInstance;
++ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
 - (instancetype)initWithApiKey:(NSString *)apiKey;
 
 // Crash Reporting

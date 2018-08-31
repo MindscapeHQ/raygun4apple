@@ -41,12 +41,12 @@
         NSMutableArray *sentReports = [NSMutableArray new];
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
         for (NSDictionary *report in reports) {
-            if (nil != RaygunClient.sharedClient) {
+            if (nil != RaygunClient.sharedInstance) {
                 // Take the information from the KSCrash report and put it into our own format.
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
                 // Send it to the Raygun API endpoint
-                [RaygunClient.sharedClient sendMessage:message];
+                [RaygunClient.sharedInstance sendMessage:message];
                 [sentReports addObject:report];
             }
         }

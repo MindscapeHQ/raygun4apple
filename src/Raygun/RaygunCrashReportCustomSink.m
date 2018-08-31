@@ -57,7 +57,7 @@
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
         
         for (NSDictionary *report in reports) {
-            if (nil != RaygunClient.sharedClient) {
+            if (nil != RaygunClient.sharedInstance) {
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
                 // Add tags
@@ -74,7 +74,7 @@
                     message.details.customData = combinedCustomData;
                 }
                 
-                [RaygunClient.sharedClient sendMessage:message];
+                [RaygunClient.sharedInstance sendMessage:message];
                 [sentReports addObject:report];
             }
         }

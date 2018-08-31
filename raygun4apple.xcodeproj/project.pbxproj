@@ -1080,10 +1080,10 @@
 		DC5EFA4D210FF0FA002C0713 /* Raygun */ = {
 			isa = PBXGroup;
 			children = (
-				DC5EFA5B210FFA7A002C0713 /* RaygunClient.h */,
-				DC5EFA56210FFA79002C0713 /* RaygunClient.m */,
 				DC5EFAF42113A831002C0713 /* RaygunBinaryImage.h */,
 				DC5EFAF82113C29B002C0713 /* RaygunBinaryImage.m */,
+				DC5EFA5B210FFA7A002C0713 /* RaygunClient.h */,
+				DC5EFA56210FFA79002C0713 /* RaygunClient.m */,
 				DC5EFA5F210FFA7A002C0713 /* RaygunClientMessage.h */,
 				DC5EFA53210FFA79002C0713 /* RaygunClientMessage.m */,
 				DC5EFAA1211013FB002C0713 /* RaygunCrashInstallation.h */,
@@ -1105,6 +1105,8 @@
 				A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */,
 				DC5EFADC2112AF02002C0713 /* RaygunFrame.h */,
 				DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */,
+				A23A1DDD2138A7B90026046C /* RaygunLogger.h */,
+				A23A1DE12138A7D80026046C /* RaygunLogger.m */,
 				DC5EFA59210FFA79002C0713 /* RaygunMessage.h */,
 				DC5EFA55210FFA79002C0713 /* RaygunMessage.m */,
 				DC5EFA58210FFA79002C0713 /* RaygunMessageDetails.h */,
@@ -1117,8 +1119,6 @@
 				DC5EFAEC2112BCF8002C0713 /* RaygunThread.m */,
 				DC5EFA5D210FFA7A002C0713 /* RaygunUserInformation.h */,
 				DC5EFA5A210FFA79002C0713 /* RaygunUserInformation.m */,
-				A23A1DDD2138A7B90026046C /* RaygunLogger.h */,
-				A23A1DE12138A7D80026046C /* RaygunLogger.m */,
 			);
 			path = Raygun;
 			sourceTree = "<group>";

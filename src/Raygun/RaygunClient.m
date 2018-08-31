@@ -42,7 +42,7 @@
 @implementation RaygunClient
 
 static NSString *sharedApiKey = nil;
-static RaygunClient *sharedRaygunInstance = nil;
+static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
 static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
@@ -84,16 +84,16 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
 #pragma mark - Initialising Methods -
 
-+ (instancetype)sharedClient {
-    return sharedRaygunInstance;
++ (instancetype)sharedInstance {
+    return sharedClientInstance;
 }
 
-+ (instancetype)sharedClientWithApiKey:(NSString *)apiKey {
++ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedRaygunInstance = [[self alloc] initWithApiKey:apiKey];
+        sharedClientInstance = [[RaygunClient alloc] initWithApiKey:apiKey];
     });
-    return sharedRaygunInstance;
+    return sharedClientInstance;
 }
 
 - (instancetype)initWithApiKey:(NSString *)apiKey {

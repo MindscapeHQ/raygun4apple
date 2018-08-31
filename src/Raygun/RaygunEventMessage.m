@@ -44,7 +44,7 @@
 
 + (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
 {
-    return [[self alloc] initWithBlock:block];
+    return [[RaygunEventMessage alloc] initWithBlock:block];
 }
 
 - (instancetype)init;

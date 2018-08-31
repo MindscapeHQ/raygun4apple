@@ -67,6 +67,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 @synthesize ignoredViews  = _ignoredViews;
 
 + (instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[RaygunRealUserMonitoring alloc] init];
+    });
     return sharedInstance;
 }
 
@@ -88,7 +92,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)enable {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [RaygunLogger logDebug:@"enabling real user monitoring"];
+        [RaygunLogger logDebug:@"Enabling Real User Monitoring (RUM)"];
         self.enabled = true;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -156,7 +160,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.occurredOn      = [self currentTime];
         message.sessionId       = self.sessionId;
         message.eventType       = eventType;
-        message.userInformation = [[RaygunClient sharedClient] userInformation] != nil ? [[RaygunClient sharedClient] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
         message.operatingSystem = @"iOS";
         message.osVersion       = [[UIDevice currentDevice] systemVersion];
@@ -189,7 +193,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.occurredOn      = [self currentTime];
         message.sessionId       = self.sessionId;
         message.eventType       = kRaygunEventTypeTiming;
-        message.userInformation = [[RaygunClient sharedClient] userInformation] != nil ? [[RaygunClient sharedClient] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
         message.operatingSystem = @"iOS";
         message.osVersion       = [[UIDevice currentDevice] systemVersion];
