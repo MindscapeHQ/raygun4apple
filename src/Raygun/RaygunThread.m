@@ -33,23 +33,23 @@
 
 - (instancetype)initWithIndex:(NSNumber *)threadIndex {
     if (self = [super init]) {
-        self.threadIndex = threadIndex;
+        _threadIndex = threadIndex;
     }
     return self;
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{@"threadNumber":self.threadIndex}];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{@"threadNumber":_threadIndex}];
     
-    dict[@"crashed"] = self.crashed ? @YES : @NO;
-    dict[@"current"] = self.current ? @YES : @NO;
+    dict[@"crashed"] = _crashed ? @YES : @NO;
+    dict[@"current"] = _current ? @YES : @NO;
     
-    if (!IsNullOrEmpty(self.name)) {
-        dict[@"name"] = self.name;
+    if (!IsNullOrEmpty(_name)) {
+        dict[@"name"] = _name;
     }
     
     NSMutableArray *frames = [NSMutableArray new];
-    for (RaygunFrame *frame in self.frames) {
+    for (RaygunFrame *frame in _frames) {
         NSDictionary *serialized = [frame convertToDictionary];
         if (serialized.allKeys.count > 0) {
             [frames addObject:serialized];

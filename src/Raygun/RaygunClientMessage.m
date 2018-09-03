@@ -32,15 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunClientMessage
 
-@synthesize name      = _name;
-@synthesize version   = _version;
-@synthesize clientUrl = _clientUrl;
-
 - (instancetype)initWithName:(NSString *)name withVersion:(NSString *)version withUrl:(NSString *)url {
     if ((self = [super init])) {
-        self.name      = name;
-        self.version   = version;
-        self.clientUrl = url;
+        _name      = name;
+        _version   = version;
+        _clientUrl = url;
     }
     
     return self;

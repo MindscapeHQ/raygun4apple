@@ -31,16 +31,6 @@
 
 @implementation RaygunEventMessage
 
-@synthesize occurredOn      = _occurredOn;
-@synthesize sessionId       = _sessionId;
-@synthesize eventType       = _eventType;
-@synthesize userInformation = _userInformation;
-@synthesize version         = _version;
-@synthesize operatingSystem = _operatingSystem;
-@synthesize osVersion       = _osVersion;
-@synthesize platform        = _platform;
-@synthesize eventData       = _eventData;
-
 + (instancetype)messageWithBlock:(RaygunEventMessageBlock)block {
     return [[RaygunEventMessage alloc] initWithBlock:block];
 }

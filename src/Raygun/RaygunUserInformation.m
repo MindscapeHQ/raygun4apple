@@ -32,13 +32,6 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 
 @implementation RaygunUserInformation
 
-@synthesize identifier  = _identifier;
-@synthesize uuid        = _uuid;
-@synthesize isAnonymous = _isAnonymous;
-@synthesize email       = _email;
-@synthesize fullName    = _fullName;
-@synthesize firstName   = _firstName;
-
 + (RaygunUserInformation *)anonymousUser {
     if (sharedAnonymousUser == nil) {
         sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation anonymousIdentifier]];

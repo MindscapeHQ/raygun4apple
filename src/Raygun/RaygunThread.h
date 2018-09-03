@@ -33,11 +33,11 @@
 
 @interface RaygunThread : NSObject
 
-@property(nonatomic, readwrite, copy) NSNumber *threadIndex;
-@property(nonatomic, readwrite, copy) NSString *name;
-@property(nonatomic, strong) NSArray<RaygunFrame *> *frames;
-@property(nonatomic, readwrite) BOOL crashed;
-@property(nonatomic, readwrite) BOOL current;
+@property (nonatomic, copy) NSNumber *threadIndex;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSArray<RaygunFrame *> *frames;
+@property (nonatomic) BOOL crashed;
+@property (nonatomic) BOOL current;
 
 - (instancetype)init NS_UNAVAILABLE;
 

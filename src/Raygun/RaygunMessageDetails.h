@@ -33,15 +33,15 @@
 
 @interface RaygunMessageDetails : NSObject
 
-@property (nonatomic, readwrite, copy) NSString *groupingKey;
-@property (nonatomic, readwrite, copy) NSString *machineName;
-@property (nonatomic, readwrite, copy) NSString *version;
-@property (nonatomic, readwrite, strong) RaygunClientMessage *client;
-@property (nonatomic, readwrite, strong) RaygunEnvironmentMessage *environment;
-@property (nonatomic, readwrite, strong) RaygunErrorMessage *error;
-@property (nonatomic, readwrite, strong) RaygunUserInformation *user;
-@property (nonatomic, readwrite, strong) NSArray *tags;
-@property (nonatomic, readwrite, strong) NSDictionary *customData;
+@property (nonatomic, copy) NSString *groupingKey;
+@property (nonatomic, copy) NSString *machineName;
+@property (nonatomic, copy) NSString *version;
+@property (nonatomic, strong) RaygunClientMessage *client;
+@property (nonatomic, strong) RaygunEnvironmentMessage *environment;
+@property (nonatomic, strong) RaygunErrorMessage *error;
+@property (nonatomic, strong) RaygunUserInformation *user;
+@property (nonatomic, strong) NSArray *tags;
+@property (nonatomic, strong) NSDictionary *customData;
 @property (nonatomic, strong) NSArray<RaygunThread *> *threads;
 @property (nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
 

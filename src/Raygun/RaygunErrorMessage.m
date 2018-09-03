@@ -30,23 +30,17 @@
 
 @implementation RaygunErrorMessage
 
-@synthesize className  = _className;
-@synthesize message    = _message;
-@synthesize signalName = _signalName;
-@synthesize signalCode = _signalCode;
-@synthesize stackTrace = _stackTrace;
-
 - (instancetype)init:(NSString *)className
          withMessage:(NSString *)message
       withSignalName:(NSString *)signalName
       withSignalCode:(NSString *)signalCode
       withStackTrace:(NSArray *)stacktrace {
     if ((self = [super init])) {
-        self.className  = className;
-        self.message    = message;
-        self.signalName = signalName;
-        self.signalCode = signalCode;
-        self.stackTrace = stacktrace;
+        _className  = className;
+        _message    = message;
+        _signalName = signalName;
+        _signalCode = signalCode;
+        _stackTrace = stacktrace;
     }
     
     return self;

@@ -31,19 +31,19 @@
 
 @interface RaygunEnvironmentMessage : NSObject
 
-@property (nonatomic, readwrite, copy) NSNumber *processorCount;
-@property (nonatomic, readwrite, copy) NSString *oSVersion;
-@property (nonatomic, readwrite, copy) NSString *model;
-@property (nonatomic, readwrite, copy) NSNumber *windowsBoundWidth;
-@property (nonatomic, readwrite, copy) NSNumber *windowsBoundHeight;
-@property (nonatomic, readwrite, copy) NSNumber *resolutionScale;
-@property (nonatomic, readwrite, copy) NSString *cpu;
-@property (nonatomic, readwrite, copy) NSNumber *utcOffset;
-@property (nonatomic, readwrite, copy) NSString *locale;
-@property (nonatomic, readwrite, copy) NSString *kernelVersion;
-@property (nonatomic, readwrite, copy) NSNumber *memoryFree;
-@property (nonatomic, readwrite, copy) NSNumber *memorySize;
-@property (nonatomic, readwrite) BOOL jailBroken;
+@property (nonatomic, copy) NSNumber *processorCount;
+@property (nonatomic, copy) NSString *oSVersion;
+@property (nonatomic, copy) NSString *model;
+@property (nonatomic, copy) NSNumber *windowsBoundWidth;
+@property (nonatomic, copy) NSNumber *windowsBoundHeight;
+@property (nonatomic, copy) NSNumber *resolutionScale;
+@property (nonatomic, copy) NSString *cpu;
+@property (nonatomic, copy) NSNumber *utcOffset;
+@property (nonatomic, copy) NSString *locale;
+@property (nonatomic, copy) NSString *kernelVersion;
+@property (nonatomic, copy) NSNumber *memoryFree;
+@property (nonatomic, copy) NSNumber *memorySize;
+@property (nonatomic) BOOL jailBroken;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

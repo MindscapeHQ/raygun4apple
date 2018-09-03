@@ -42,33 +42,33 @@
  
  @warning The identifier must be set in order for any of the other fields to be sent.
  */
-@property (nonatomic, readwrite, strong) NSString *identifier;
+@property (nonatomic, strong) NSString *identifier;
 
 /**
  * Device Identifier.
  */
-@property (nonatomic, readwrite, strong) NSString *uuid;
+@property (nonatomic, strong) NSString *uuid;
 
 /**
  Flag indicating whether a user is anonymous or not.
  Generally, set this to true if the user is not logged in.
  */
-@property (nonatomic, readwrite) BOOL isAnonymous;
+@property (nonatomic) BOOL isAnonymous;
 
 /**
  User's email address
  */
-@property (nonatomic, readwrite, strong) NSString *email;
+@property (nonatomic, strong) NSString *email;
 
 /**
  User's full name.
  */
-@property (nonatomic, readwrite, strong) NSString *fullName;
+@property (nonatomic, strong) NSString *fullName;
 
 /**
  User's first or preferred name.
  */
-@property (nonatomic, readwrite, strong) NSString *firstName;
+@property (nonatomic, strong) NSString *firstName;
 
 - (instancetype)init NS_UNAVAILABLE;
 

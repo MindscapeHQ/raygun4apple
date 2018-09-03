@@ -34,15 +34,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTimestamp:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details {
     if ((self = [super init])) {
-        self.occurredOn = occurredOn;
-        self.details = details;
+        _occurredOn = occurredOn;
+        _details = details;
     }
     
     return self;
 }
 
 - (NSData *)convertToJson {
-    NSMutableDictionary *report = [NSMutableDictionary dictionaryWithDictionary: @{ @"occurredOn": self.occurredOn, @"details": [self.details convertToDictionary] }];
+    NSMutableDictionary *report = [NSMutableDictionary dictionaryWithDictionary: @{ @"occurredOn": _occurredOn, @"details": [_details convertToDictionary] }];
     return [NSJSONSerialization dataWithJSONObject:report options:0 error:nil];
 }
 

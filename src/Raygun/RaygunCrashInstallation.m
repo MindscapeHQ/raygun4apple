@@ -32,7 +32,7 @@
 
 @implementation RaygunCrashInstallation
 
-- (id)init {
+- (instancetype)init {
     return [super initWithRequiredProperties:[NSArray new]];
 }
 

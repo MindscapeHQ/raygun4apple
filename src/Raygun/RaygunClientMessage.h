@@ -33,9 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunClientMessage : NSObject
 
-@property (nonatomic, readwrite, copy) NSString *name;
-@property (nonatomic, readwrite, copy) NSString *version;
-@property (nonatomic, readwrite, copy) NSString *clientUrl;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *version;
+@property (nonatomic, copy) NSString *clientUrl;
 
 - (instancetype)init NS_UNAVAILABLE;
 

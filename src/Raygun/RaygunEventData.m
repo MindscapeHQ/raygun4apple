@@ -30,15 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunEventData
 
-@synthesize name       = _name;
-@synthesize timingType = _timingType;
-@synthesize duration   = _duration;
-
 - (instancetype)initWithType:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     if ((self = [super init])) {
-        self.name       = name;
-        self.timingType = type;
-        self.duration   = duration;
+        _name       = name;
+        _timingType = type;
+        _duration   = duration;
     }
     return self;
 }

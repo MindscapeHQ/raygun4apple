@@ -47,12 +47,6 @@ static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
 static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
-@synthesize applicationVersion = _applicationVersion;
-@synthesize tags               = _tags;
-@synthesize customData         = _customData;
-@synthesize userInformation    = _userInformation;
-@dynamic logLevel;
-
 #pragma mark - Setters -
 
 + (NSString *)apiKey {

@@ -30,20 +30,6 @@
 
 @implementation RaygunEnvironmentMessage
 
-@synthesize processorCount     = _processorCount;
-@synthesize oSVersion          = _oSVersion;
-@synthesize model              = _model;
-@synthesize windowsBoundWidth  = _windowsBoundWidth;
-@synthesize windowsBoundHeight = _windowsBoundHeight;
-@synthesize resolutionScale    = _resolutionScale;
-@synthesize cpu                = _cpu;
-@synthesize utcOffset          = _utcOffset;
-@synthesize locale             = _locale;
-@synthesize kernelVersion      = _kernelVersion;
-@synthesize jailBroken         = _jailBroken;
-@synthesize memoryFree         = _memoryFree;
-@synthesize memorySize         = _memorySize;
-
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     

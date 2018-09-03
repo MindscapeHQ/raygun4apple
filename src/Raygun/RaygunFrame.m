@@ -38,14 +38,14 @@
     
     dict[@"symbol"] = [NSMutableDictionary new];
     
-    if (self.symbolName) {
-        dict[@"symbol"][@"name"] = self.symbolName;
+    if (_symbolName) {
+        dict[@"symbol"][@"name"] = _symbolName;
     }
-    if (self.symbolAddress) {
-        dict[@"symbol"][@"startAddress"] = self.symbolAddress;
+    if (_symbolAddress) {
+        dict[@"symbol"][@"startAddress"] = _symbolAddress;
     }
-    if (self.instructionAddress) {
-        dict[@"programCounter"] = self.instructionAddress;
+    if (_instructionAddress) {
+        dict[@"programCounter"] = _instructionAddress;
     }
     
     return dict;

@@ -35,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunMessage : NSObject
 
-@property (nonatomic, readwrite, copy) NSString *occurredOn;
-@property (nonatomic, readwrite, strong) RaygunMessageDetails *details;
+@property (nonatomic, copy) NSString *occurredOn;
+@property (nonatomic, strong) RaygunMessageDetails *details;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

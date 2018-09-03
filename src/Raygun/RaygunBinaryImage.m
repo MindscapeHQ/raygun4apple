@@ -29,19 +29,19 @@
 @implementation RaygunBinaryImage
 
 - (instancetype)initWithUuId:(NSString *)uuid
-          withName:(NSString *)name
-       withCpuType:(NSNumber *)cpuType
-    withCpuSubType:(NSNumber *)cpuSubType
-  withImageAddress:(NSNumber *)imageAddress
-     withImageSize:(NSNumber *)imageSize
+                    withName:(NSString *)name
+                 withCpuType:(NSNumber *)cpuType
+              withCpuSubType:(NSNumber *)cpuSubType
+            withImageAddress:(NSNumber *)imageAddress
+               withImageSize:(NSNumber *)imageSize
 {
     if ((self = [super init])) {
-        self.uuid = uuid;
-        self.name = name;
-        self.cpuType = cpuType;
-        self.cpuSubtype = cpuSubType;
-        self.imageAddress = imageAddress;
-        self.imageSize= imageSize;
+        _uuid         = uuid;
+        _name         = name;
+        _cpuType      = cpuType;
+        _cpuSubtype   = cpuSubType;
+        _imageAddress = imageAddress;
+        _imageSize    = imageSize;
     }
     return self;
 }
@@ -51,23 +51,23 @@
     
     dict[@"processor"] = [NSMutableDictionary new];
     
-    if (self.uuid) {
-        dict[@"uuid"] = self.uuid;
+    if (_uuid) {
+        dict[@"uuid"] = _uuid;
     }
-    if (self.name) {
-        dict[@"name"] = self.name;
+    if (_name) {
+        dict[@"name"] = _name;
     }
-    if (self.cpuType) {
-        dict[@"processor"][@"type"] = self.cpuType;
+    if (_cpuType) {
+        dict[@"processor"][@"type"] = _cpuType;
     }
-    if (self.cpuSubtype) {
-        dict[@"processor"][@"subType"] = self.cpuSubtype;
+    if (_cpuSubtype) {
+        dict[@"processor"][@"subType"] = _cpuSubtype;
     }
-    if (self.imageAddress) {
-        dict[@"baseAddress"] = self.imageAddress;
+    if (_imageAddress) {
+        dict[@"baseAddress"] = _imageAddress;
     }
-    if (self.imageSize) {
-        dict[@"size"] = self.imageSize;
+    if (_imageSize) {
+        dict[@"size"] = _imageSize;
     }
     
     return dict;

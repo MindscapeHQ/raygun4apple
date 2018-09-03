@@ -31,11 +31,11 @@
 
 @interface RaygunErrorMessage : NSObject
 
-@property (nonatomic, readwrite, copy) NSString *className;
-@property (nonatomic, readwrite, copy) NSString *message;
-@property (nonatomic, readwrite, copy) NSString *signalName;
-@property (nonatomic, readwrite, copy) NSString *signalCode;
-@property (nonatomic, readwrite, strong) NSArray *stackTrace;
+@property (nonatomic, copy) NSString *className;
+@property (nonatomic, copy) NSString *message;
+@property (nonatomic, copy) NSString *signalName;
+@property (nonatomic, copy) NSString *signalCode;
+@property (nonatomic, strong) NSArray *stackTrace;
 
 - (instancetype)init NS_UNAVAILABLE;
 
