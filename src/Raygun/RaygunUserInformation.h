@@ -92,9 +92,9 @@
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName;
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -108,10 +108,10 @@
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isAnonymous;
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL) isAnonymous;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -126,11 +126,11 @@
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isAnonymous
-                withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER;
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL) isAnonymous
+                          withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the classes properties and their values. 

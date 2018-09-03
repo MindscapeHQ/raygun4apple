@@ -53,8 +53,8 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
     
     if (!identifier) {
-        if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-            identifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
+        if ([UIDevice.currentDevice respondsToSelector:@selector(identifierForVendor)]) {
+            identifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
         }
         else {
             CFUUIDRef theUUID = CFUUIDCreate(NULL);
