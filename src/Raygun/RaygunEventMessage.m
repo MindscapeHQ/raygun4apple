@@ -62,7 +62,11 @@
     message[@"platform"]  = _platform  != nil ? _platform  : @"";
     
     if (_eventData != nil) {
-        message[@"data"] = @[[_eventData convertToDictionary]];
+        // The current format requires the data to be translated to a string.
+        NSArray   *dataArray = @[[_eventData convertToDictionary]];
+        NSData    *eventData = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil];
+        NSString *dataString = [[NSString alloc] initWithData:eventData encoding:NSUTF8StringEncoding];
+        message[@"data"] = dataString;
     }
     
     return [NSJSONSerialization dataWithJSONObject:@{@"eventData":@[message]} options:0 error:nil];

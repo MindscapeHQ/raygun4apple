@@ -101,7 +101,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@YES:@NO}];
+    NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
     if (_identifier) {
         details[@"identifier"] = _identifier;
