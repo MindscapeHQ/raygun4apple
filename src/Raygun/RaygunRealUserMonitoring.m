@@ -216,7 +216,13 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (NSString *)operatingSystemName {
 #if RAYGUN_CAN_USE_UIDEVICE
-    return [UIDevice currentDevice].systemName;
+    NSString *systemName = [UIDevice currentDevice].systemName;
+    if ([systemName isEqualToString:@"iPhone OS"]) {
+        return @"iOS";
+    }
+    else {
+        return systemName;
+    }
 #else
     return @"macOS";
 #endif
@@ -238,7 +244,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.occurredOn      = [self currentTime];
         message.sessionId       = self.sessionId;
         message.eventType       = kRaygunEventTypeTiming;
-        message.userInformation = RaygunClient.sharedInstance.userInformation != nil ? RaygunClient.sharedInstance.userInformation : RaygunUserInformation.anonymousUser; // TODO: Make user info statically accessed?
+        message.userInformation = self.currentSessionUserInformation;
         message.version         = [self bundleVersion];
         message.operatingSystem = [self operatingSystemName];
         message.osVersion       = [UIDevice currentDevice].systemVersion;
