@@ -30,6 +30,7 @@
 
 #import "RaygunClient.h"
 #import "RaygunMessage.h"
+#import "RaygunMessageDetails.h"
 #import "RaygunCrashReportConverter.h"
 
 @implementation RaygunCrashReportSink
@@ -43,6 +44,11 @@
             if (nil != RaygunClient.sharedInstance) {
                 // Take the information from the KSCrash report and put it into our own format.
                 RaygunMessage *message = [converter convertReportToMessage:report];
+                
+                // Add "Unhandled Exception" tag
+                NSMutableArray *combinedTags = [NSMutableArray arrayWithArray:message.details.tags];
+                [combinedTags addObject:@"UnhandledException"];
+                message.details.tags = combinedTags;
                 
                 // Send it to the Raygun API endpoint
                 [RaygunClient.sharedInstance sendMessage:message];
