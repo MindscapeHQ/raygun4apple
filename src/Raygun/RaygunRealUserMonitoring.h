@@ -32,6 +32,9 @@
 
 @interface RaygunRealUserMonitoring : NSObject
 
+@property (nonatomic) bool enabled;
+@property (nonatomic, copy) NSMutableDictionary *timers;
+
 + (instancetype)sharedInstance;
 
 - (instancetype)init;
@@ -47,5 +50,7 @@
 - (void)ignoreViews:(NSArray *)viewNames;
 
 - (void)ignoreURLs:(NSArray *)urls;
+
+- (BOOL)shouldIgnoreView:(NSString *)viewName;
 
 @end

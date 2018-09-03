@@ -24,10 +24,9 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "RaygunRealUserMonitoring.h"
 
-#import <objc/runtime.h>
+#import <UIKit/UIKit.h>
 #import <sys/utsname.h>
 
 #import "RaygunNetworkLogger.h"
@@ -38,17 +37,12 @@
 #import "RaygunClient.h"
 #import "RaygunLogger.h"
 
-#import "RaygunRealUserMonitoring.h"
-
 @interface RaygunRealUserMonitoring()
 
-// Go over properties properties
 @property (nonatomic, copy) NSString *sessionId;
-@property (nonatomic) bool enabled;
 @property (nonatomic, copy) NSString *lastViewName;
 @property (nonatomic, copy) NSString *lastUserIdentifier;
 @property (nonatomic, copy) NSOperationQueue *queue;
-@property (nonatomic, copy) NSMutableDictionary *timers;
 @property (nonatomic, copy) RaygunNetworkLogger * networkLogger;
 @property (nonatomic, copy) NSMutableSet *ignoredViews;
 
@@ -108,7 +102,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)checkForSessionStart {
     [RaygunLogger logDebug:@"checking for a new session"];
     if (_sessionId == nil) {
-        _sessionId = [[NSUUID UUID] UUIDString];
+        _sessionId = [NSUUID UUID].UUIDString;
         [self sendEvent:kRaygunEventTypeSessionStart];
     }
 }
@@ -117,7 +111,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     [self checkForSessionStart];
     
     if (![self shouldIgnoreView:_lastViewName]) {
-        [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:[NSNumber numberWithInteger:0]];
+        [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:@0];
     }
 }
 
@@ -160,16 +154,16 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.occurredOn      = [self currentTime];
         message.sessionId       = self.sessionId;
         message.eventType       = eventType;
-        message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.userInformation = [RaygunClient sharedInstance].userInformation != nil ? [RaygunClient sharedInstance].userInformation : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
         message.operatingSystem = [self operatingSystemName];
-        message.osVersion       = [[UIDevice currentDevice] systemVersion];
-        message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+        message.osVersion       = [UIDevice currentDevice].systemVersion;
+        message.platform        = @(systemInfo.machine);
     }];
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
         }
     }];
     
@@ -194,6 +188,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
+    if (type == kRaygunEventTimingViewLoaded) {
+        _lastViewName = name;
+    }
+    
     struct utsname systemInfo;
     uname(&systemInfo);
     
@@ -201,17 +199,17 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         message.occurredOn      = [self currentTime];
         message.sessionId       = self.sessionId;
         message.eventType       = kRaygunEventTypeTiming;
-        message.userInformation = [[RaygunClient sharedInstance] userInformation] != nil ? [[RaygunClient sharedInstance] userInformation] : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
+        message.userInformation = [RaygunClient sharedInstance].userInformation != nil ? [RaygunClient sharedInstance].userInformation : [RaygunUserInformation anonymousUser]; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
         message.operatingSystem = [self operatingSystemName];
-        message.osVersion       = [[UIDevice currentDevice] systemVersion];
-        message.platform        = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+        message.osVersion       = [UIDevice currentDevice].systemVersion;
+        message.platform        = @(systemInfo.machine);
         message.eventData       = [[RaygunEventData alloc] initWithType:type withName:name withDuration:duration];
     }];
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
         }
     }];
 }
@@ -227,9 +225,9 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     request.HTTPMethod = @"POST";
     [request setValue:RaygunClient.apiKey forHTTPHeaderField:@"X-ApiKey"];
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%tu", [data length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[NSString stringWithFormat:@"%tu", data.length] forHTTPHeaderField:@"Content-Length"];
     
-    [request setHTTPBody:data];
+    request.HTTPBody = data;
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
@@ -240,19 +238,19 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone        *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-    [dateFormatter setTimeZone:utcTimeZone];
+    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    dateFormatter.timeZone = utcTimeZone;
     
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:locale];
+    dateFormatter.locale = locale;
     
     return [dateFormatter stringFromDate:[NSDate date]];
 }
 
 - (NSString *)bundleVersion {
-    NSDictionary *infoDict  = [[NSBundle mainBundle] infoDictionary];
-    NSString *version       = [infoDict objectForKey:@"CFBundleShortVersionString"];
-    NSString *build         = [infoDict objectForKey:@"CFBundleVersion"];
+    NSDictionary *infoDict  = [NSBundle mainBundle].infoDictionary;
+    NSString *version       = infoDict[@"CFBundleShortVersionString"];
+    NSString *build         = infoDict[@"CFBundleVersion"];
     return [NSString stringWithFormat:@"%@ (%@)", version, build];
 }
 
@@ -274,138 +272,18 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
 }
 
-- (bool)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled) {
-        return true;
+- (BOOL)shouldIgnoreView:(NSString *)viewName {
+    if (!_enabled || IsNullOrEmpty(viewName)) {
+        return YES;
     }
     
-    if (!viewName) {
-        return true;
-    }
-    
-    for (NSString* ignoredView in _ignoredViews) {
+    for (NSString *ignoredView in _ignoredViews) {
         if ([ignoredView containsString:viewName] || [viewName containsString:ignoredView]) {
-            return true;
+            return YES;
         }
     }
     
-    return false;
+    return NO;
 }
 
 @end
-
-#pragma mark - ViewController Swizzles -
-
-@implementation UIViewController (RaygunPulse)
-
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        // loadView
-        SEL originalSelector = @selector(loadView);
-        SEL swizzledSelector = @selector(loadViewCapture);
-        [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
-        // viewDidLoad
-        originalSelector = @selector(viewDidLoad);
-        swizzledSelector = @selector(viewDidLoadCapture);
-        [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
-        // viewWillAppear
-        originalSelector = @selector(viewWillAppear:);
-        swizzledSelector = @selector(viewWillAppearCapture:);
-        [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
-        // viewDidAppear
-        originalSelector = @selector(viewDidAppear:);
-        swizzledSelector = @selector(viewDidAppearCapture:);
-        [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
-    });
-}
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector {
-    Class class = [self class];
-    
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    
-    BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-    
-    if (didAddMethod) {
-        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-    }
-    else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-}
-
-- (void)loadViewCapture {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = [self description];
-        NSNumber* start = [rum.timers objectForKey:viewName];
-        if (start == nil) {
-            double startDouble = CACurrentMediaTime();
-            start = [NSNumber numberWithDouble:startDouble];
-            [rum.timers setObject:start forKey:viewName];
-        }
-    }
-    [self loadViewCapture];
-}
-
-- (void)viewDidLoadCapture {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = [self description];
-        NSNumber* start = [rum.timers objectForKey:viewName];
-        if (start == nil) {
-            start = [NSNumber numberWithDouble:CACurrentMediaTime()];
-            [rum.timers setObject:start forKey:viewName];
-        }
-    }
-    [self viewDidLoadCapture];
-}
-
-- (void)viewWillAppearCapture:(BOOL)animated {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = [self description];
-        NSNumber* start = [rum.timers objectForKey:viewName];
-        if (start == nil) {
-            start = [NSNumber numberWithDouble:CACurrentMediaTime()];
-            [rum.timers setObject:start forKey:viewName];
-        }
-    }
-    [self viewWillAppearCapture:animated];
-}
-
-- (void)viewDidAppearCapture:(BOOL)animated {
-    [self viewDidAppearCapture:animated];
-    
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = [self description];
-        
-        NSNumber* start = [rum.timers objectForKey:viewName];
-        
-        int duration = 0;
-        if (start != nil) {
-            double interval = CACurrentMediaTime() - [start doubleValue];
-            duration = interval * 1000;
-        }
-        
-        [rum.timers removeObjectForKey:viewName];
-        
-        // Cleanup the view name so when only have the class name.
-        viewName = [viewName stringByReplacingOccurrencesOfString:@"<" withString:@""];
-        NSUInteger index = [viewName rangeOfString:@":"].location;
-        if (index != NSNotFound) {
-            viewName = [viewName substringToIndex:index];
-        }
-        
-        if (![rum shouldIgnoreView:viewName]) {
-            rum.lastViewName = viewName;
-            [rum sendTimingEvent:kRaygunEventTimingViewLoaded withName:viewName withDuration:[NSNumber numberWithInteger:duration]];
-        }
-    }
-}
-
-@end
-
