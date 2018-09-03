@@ -28,7 +28,8 @@
 #define RaygunThread_h
 
 #import <Foundation/Foundation.h>
-#import "RaygunFrame.h"
+
+@class RaygunFrame;
 
 @interface RaygunThread : NSObject
 
@@ -38,12 +39,14 @@
 @property(nonatomic, readwrite) BOOL crashed;
 @property(nonatomic, readwrite) BOOL current;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 /**
  * Initializes a RaygunThread with its index
 
  * @return RaygunThread
  */
-- (id)init:(NSNumber *)threadIndex;
+- (instancetype)initWithIndex:(NSNumber *)threadIndex NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the thread properties and their values.
@@ -51,7 +54,7 @@
  
  @return a new Dictionary with the thread properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

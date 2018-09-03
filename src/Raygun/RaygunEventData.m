@@ -24,9 +24,9 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunEventData.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunEventData
 
@@ -45,9 +45,11 @@
 
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *eventData = [NSMutableDictionary new];
-    [eventData setValue:_name forKey:@"name"];
-    [eventData setValue:@{ @"type":RaygunEventTimingTypeShortNames[_timingType], @"duration":_duration } forKey:@"timing"];
+    eventData[@"name"]   = _name;
+    eventData[@"timing"] = @{ @"type":RaygunEventTimingTypeShortNames[_timingType], @"duration":_duration };
     return eventData;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

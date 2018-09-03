@@ -24,13 +24,11 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunCrashReportCustomSink.h"
 
-#import "KSCrash.h"
 #import "RaygunClient.h"
 #import "RaygunMessage.h"
+#import "RaygunMessageDetails.h"
 #import "RaygunCrashReportConverter.h"
 
 @interface RaygunCrashReportCustomSink()
@@ -42,7 +40,7 @@
 
 @implementation RaygunCrashReportCustomSink
 
--(id)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+- (instancetype)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     if ((self = [super init])) {
         self.tags = tags;
         self.customData = customData;
@@ -50,7 +48,7 @@
     return self;
 }
 
-- (void) filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
+- (void)filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSMutableArray *sentReports = [NSMutableArray new];

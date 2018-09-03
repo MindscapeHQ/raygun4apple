@@ -26,12 +26,13 @@
 
 #import "RaygunMessage.h"
 
+#import "RaygunMessageDetails.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunMessage
 
-@synthesize occurredOn = _occurredOn;
-@synthesize details    = _details;
-
-- (id)init:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details {
+- (instancetype)initWithTimestamp:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details {
     if ((self = [super init])) {
         self.occurredOn = occurredOn;
         self.details = details;
@@ -41,8 +42,10 @@
 }
 
 - (NSData *)convertToJson {
-    NSMutableDictionary *report = [NSMutableDictionary dictionaryWithDictionary: @{ @"occurredOn": _occurredOn, @"details": [_details convertToDictionary] }];
+    NSMutableDictionary *report = [NSMutableDictionary dictionaryWithDictionary: @{ @"occurredOn": self.occurredOn, @"details": [self.details convertToDictionary] }];
     return [NSJSONSerialization dataWithJSONObject:report options:0 error:nil];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

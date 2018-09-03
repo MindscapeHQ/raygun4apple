@@ -24,7 +24,8 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "RaygunNetworkLogger.h"
+
 #import <Foundation/NSURLSession.h>
 
 #import <UIKit/UIKit.h>
@@ -34,8 +35,6 @@
 #import <sys/utsname.h>
 
 #import "RaygunRealUserMonitoring.h"
-
-#import "RaygunNetworkLogger.h"
 
 #pragma mark - NSURLSessionTask Swizzle Declarations
 
@@ -49,7 +48,7 @@ void _swizzle_cancel(id, SEL);
 static IMP _original_sendAsynchronousRequest_imp;
 static IMP _original_sendSynchronousRequest_imp;
 
-void _swizzle_sendAsynchronousRequest(id, SEL, NSURLRequest*, NSOperationQueue*, void (^)(NSURLResponse*, NSData*, NSError*));
+void    _swizzle_sendAsynchronousRequest(id, SEL, NSURLRequest*, NSOperationQueue*, void (^)(NSURLResponse*, NSData*, NSError*));
 NSData* _swizzle_sendSynchronousRequest(id, SEL, NSURLRequest*, NSURLResponse* _Nullable*, NSError* _Nullable*);
 
 #pragma mark - NSURLSession Swizzle Declarations
@@ -65,15 +64,15 @@ static IMP _original_uploadTaskWithRequestFromData_imp;
 static IMP _original_uploadTaskWithRequestFromFileNoHandler_imp;
 static IMP _original_uploadTaskWithRequestFromFile_imp;
 
-void _swizzle_didCompleteWithError(id, SEL, NSURLSession*, NSURLSessionTask*, NSError*);
-NSURLSession* _swizzle_sessionWithConfiguration(id, SEL, NSURLSessionConfiguration*, id, NSOperationQueue*);
-NSURLSessionDataTask* _swizzle_dataTaskWithRequestAsync(id, SEL, NSURLRequest*, void (^)(NSData*, NSURLResponse*, NSError*));
+void                      _swizzle_didCompleteWithError(id, SEL, NSURLSession*, NSURLSessionTask*, NSError*);
+NSURLSession*             _swizzle_sessionWithConfiguration(id, SEL, NSURLSessionConfiguration*, id, NSOperationQueue*);
+NSURLSessionDataTask*     _swizzle_dataTaskWithRequestAsync(id, SEL, NSURLRequest*, void (^)(NSData*, NSURLResponse*, NSError*));
 NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestNoHandlerAsync(id, SEL, NSURLRequest*);
 NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestAsync(id, SEL, NSURLRequest*, void (^)(NSURL*, NSURLResponse*, NSError*));
-NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromDataNoHandler(id, SEL, NSURLRequest*, NSData*);
-NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromData(id, SEL, NSURLRequest*, NSData*, void (^)(NSData*, NSURLResponse*, NSError*));
-NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFileNoHandler(id, SEL, NSURLRequest*, NSURL*);
-NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFile(id, SEL, NSURLRequest*, NSURL*, void (^)(NSData*, NSURLResponse*, NSError*));
+NSURLSessionUploadTask*   _swizzle_uploadTaskWithRequestFromDataNoHandler(id, SEL, NSURLRequest*, NSData*);
+NSURLSessionUploadTask*   _swizzle_uploadTaskWithRequestFromData(id, SEL, NSURLRequest*, NSData*, void (^)(NSData*, NSURLResponse*, NSError*));
+NSURLSessionUploadTask*   _swizzle_uploadTaskWithRequestFromFileNoHandler(id, SEL, NSURLRequest*, NSURL*);
+NSURLSessionUploadTask*   _swizzle_uploadTaskWithRequestFromFile(id, SEL, NSURLRequest*, NSURL*, void (^)(NSData*, NSURLResponse*, NSError*));
 
 #pragma mark - RaygunNetworkLogger
 
@@ -84,15 +83,15 @@ static NSMutableDictionary* timers;
 static NSMutableSet* ignoredUrls;
 static RaygunSessionTaskDelegate* sessionDelegate;
 
-- (void)setEnabled:(bool)isEnabled {
-    enabled = isEnabled;
+- (void)setEnabled:(BOOL)enable {
+    enabled = enable;
     
     if (enabled) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            timers = [[NSMutableDictionary alloc] init];
+            timers          = [[NSMutableDictionary alloc] init];
             sessionDelegate = [[RaygunSessionTaskDelegate alloc] init];
-            ignoredUrls = [[NSMutableSet alloc] init];
+            ignoredUrls     = [[NSMutableSet alloc] init];
             [ignoredUrls addObject:@"api.raygun.com"];
             
             [RaygunNetworkLogger swizzleUrlSessionTaskMethods];
@@ -121,7 +120,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURLSessionDataTask *dataTask = [[NSURLSession sessionWithConfiguration:nil] dataTaskWithURL:nil];
-        Class taskClass = [dataTask superclass];
+        Class taskClass = dataTask.superclass;
         
         Method m1 = class_getInstanceMethod(taskClass, @selector(resume));
         _original_resume_imp = method_setImplementation(m1, (IMP)_swizzle_resume);
@@ -217,20 +216,20 @@ static RaygunSessionTaskDelegate* sessionDelegate;
 }
 
 + (void)networkRequestStarted:(NSURLSessionTask *)task {
-    if (![RaygunNetworkLogger shouldIgnore:[task originalRequest]]) {
-        NSNumber* start = [NSNumber numberWithDouble:CACurrentMediaTime()];
+    if (![RaygunNetworkLogger shouldIgnore:task.originalRequest]) {
+        NSNumber* start = @(CACurrentMediaTime());
         NSString* taskId = objc_getAssociatedObject(task, kSessionTaskIdKey);
         if (taskId != nil) {
-            [timers setObject:start forKey:taskId];
+            timers[taskId] = start;
         }
     }
 }
 
 + (void)networkRequestEnded:(NSURLRequest *)request withTaskId:(NSString *)taskId {
     if(request != nil && taskId != nil){
-        NSNumber* start = [timers objectForKey:taskId];
+        NSNumber* start = timers[taskId];
         if (start != nil) {
-            double interval = CACurrentMediaTime() - [start doubleValue];
+            double interval = CACurrentMediaTime() - start.doubleValue;
             [RaygunNetworkLogger sendTimingEvent:request withDuration:interval * 1000];
         }
         [timers removeObjectForKey:taskId];
@@ -245,8 +244,8 @@ static RaygunSessionTaskDelegate* sessionDelegate;
 
 + (void)sendTimingEvent:(NSURLRequest *)request withDuration:(double)milliseconds {
     if (![RaygunNetworkLogger shouldIgnore:request]) {
-        NSString* urlString  = [[request URL] relativeString];
-        NSString* httpMethod = [request HTTPMethod];
+        NSString* urlString  = request.URL.relativeString;
+        NSString* httpMethod = request.HTTPMethod;
         
         urlString = [RaygunNetworkLogger sanitiseURL:urlString];
         
@@ -267,13 +266,13 @@ static RaygunSessionTaskDelegate* sessionDelegate;
         return true;
     }
     
-    NSURL* url = [request URL];
+    NSURL* url = request.URL;
     
     if (url == nil) {
         return true;
     }
     
-    NSString* urlString = [url relativeString];
+    NSString* urlString = url.relativeString;
     
     if (urlString == nil) {
         return true;
@@ -290,7 +289,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
 
 + (NSString*)sanitiseURL:(NSString*)urlString {
     NSArray* splitURL = [urlString componentsSeparatedByString:@"?"];
-    return [splitURL objectAtIndex:(0)];
+    return splitURL[(0)];
 }
 
 + (id)getSessionTaskDelegate {
@@ -370,7 +369,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
     NSString* taskId = objc_getAssociatedObject(task, kSessionTaskIdKey);
     
     if (error == nil) {
-        [RaygunNetworkLogger networkRequestEnded:[task originalRequest] withTaskId:taskId];
+        [RaygunNetworkLogger networkRequestEnded:task.originalRequest withTaskId:taskId];
     }
     else {
         [RaygunNetworkLogger networkRequestCanceled:taskId];
@@ -488,7 +487,7 @@ NSURLSessionDataTask* _swizzle_dataTaskWithRequestAsync(id slf, SEL _cmd, NSURLR
         return ((NSURLSessionDataTask*(*)(id, SEL, NSURLRequest*, void (^)(NSData*, NSURLResponse*, NSError*)))_original_dataTaskWithRequestAsync_imp)(slf, _cmd, request, handler);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     if (handler != nil) {
         NSURLSessionDataTask* task = ((NSURLSessionDataTask*(*)(id, SEL, NSURLRequest*, void (^)(NSData*, NSURLResponse*, NSError*)))
@@ -529,7 +528,7 @@ NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestNoHandlerAsync(id slf,
     
     NSURLSessionDownloadTask* task = ((NSURLSessionDownloadTask*(*)(id, SEL, NSURLRequest*))_original_downloadTaskWithRequestNoHandlerAsync_imp)(slf, _cmd, request);
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     objc_setAssociatedObject(task, kSessionTaskIdKey, taskId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
@@ -541,7 +540,7 @@ NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestAsync(id slf, SEL _cmd
         return ((NSURLSessionDownloadTask*(*)(id, SEL, NSURLRequest*, void (^)(NSURL*, NSURLResponse*, NSError*)))_original_downloadTaskWithRequestAsync_imp)(slf, _cmd, request, handler);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     if (handler != nil) {
         NSURLSessionDownloadTask* task = ((NSURLSessionDownloadTask*(*)(id, SEL, NSURLRequest*, void (^)(NSURL*, NSURLResponse*, NSError*)))
@@ -579,7 +578,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromDataNoHandler(id slf, 
         return ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSData*))_original_uploadTaskWithRequestFromDataNoHandler_imp)(slf, _cmd, request, bodyData);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     NSURLSessionUploadTask* task = ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSData*))_original_uploadTaskWithRequestFromDataNoHandler_imp)(slf, _cmd, request, bodyData);
     
@@ -593,7 +592,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromData(id slf, SEL _cmd,
         return ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSData*, void (^)(NSData*, NSURLResponse*, NSError*)))_original_uploadTaskWithRequestFromData_imp)(slf, _cmd, request, bodyData, handler);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     NSURLSessionUploadTask* task = ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSData*, void (^)(NSData*, NSURLResponse*, NSError*)))
                                     _original_uploadTaskWithRequestFromData_imp)(slf, _cmd, request, bodyData, ^(NSData* data, NSURLResponse* response, NSError* error)
@@ -620,7 +619,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFileNoHandler(id slf, 
         return ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSURL*))_original_uploadTaskWithRequestFromFileNoHandler_imp)(slf, _cmd, request, fileURL);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     NSURLSessionUploadTask* task = ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSURL*))_original_uploadTaskWithRequestFromFileNoHandler_imp)(slf, _cmd, request, fileURL);
     
@@ -634,7 +633,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFile(id slf, SEL _cmd,
         return ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSURL*, void (^)(NSData*, NSURLResponse*, NSError*)))_original_uploadTaskWithRequestFromFile_imp)(slf, _cmd, request, fileURL, handler);
     }
     
-    NSString* taskId = [[NSUUID UUID] UUIDString];
+    NSString* taskId = [NSUUID UUID].UUIDString;
     
     NSURLSessionUploadTask* task = ((NSURLSessionUploadTask*(*)(id, SEL, NSURLRequest*, NSURL*, void (^)(NSData*, NSURLResponse*, NSError*)))
                                     _original_uploadTaskWithRequestFromFile_imp)(slf, _cmd, request, fileURL, ^(NSData* data, NSURLResponse* response, NSError* error)
@@ -668,7 +667,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFile(id slf, SEL _cmd,
     NSString* taskId = objc_getAssociatedObject(task, kSessionTaskIdKey);
     
     if (error == nil) {
-        [RaygunNetworkLogger networkRequestEnded:[task originalRequest] withTaskId:taskId];
+        [RaygunNetworkLogger networkRequestEnded:task.originalRequest withTaskId:taskId];
     }
     else {
         [RaygunNetworkLogger networkRequestCanceled:taskId];

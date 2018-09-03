@@ -27,9 +27,11 @@
 #ifndef Raygun4iOS_RaygunNetworkLogger_h
 #define Raygun4iOS_RaygunNetworkLogger_h
 
+#import <Foundation/Foundation.h>
+
 @interface RaygunNetworkLogger : NSObject
 
-- (void)setEnabled:(bool)enabled;
+- (void)setEnabled:(BOOL)enabled;
 - (void)ignoreURLs:(NSArray *)urls;
 
 @end

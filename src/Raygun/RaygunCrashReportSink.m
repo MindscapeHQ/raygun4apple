@@ -24,18 +24,17 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunCrashReportSink.h"
 
-#import "KSCrash.h"
+#import <Foundation/Foundation.h>
+
 #import "RaygunClient.h"
 #import "RaygunMessage.h"
 #import "RaygunCrashReportConverter.h"
 
 @implementation RaygunCrashReportSink
 
-- (void) filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
+- (void)filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSMutableArray *sentReports = [NSMutableArray new];

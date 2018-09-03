@@ -41,7 +41,10 @@
 
 + (instancetype)sharedInstance;
 + (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
-- (instancetype)initWithApiKey:(NSString *)apiKey;
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)initWithApiKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
 // Crash Reporting
 

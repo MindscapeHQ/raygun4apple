@@ -24,9 +24,8 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunEventMessage.h"
+
 #import "RaygunUserInformation.h"
 #import "RaygunEventData.h"
 
@@ -42,18 +41,15 @@
 @synthesize platform        = _platform;
 @synthesize eventData       = _eventData;
 
-+ (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
-{
++ (instancetype)messageWithBlock:(RaygunEventMessageBlock)block {
     return [[RaygunEventMessage alloc] initWithBlock:block];
 }
 
-- (instancetype)init;
-{
+- (instancetype)init {
     return [self initWithBlock:nil];
 }
 
-- (instancetype)initWithBlock:(RaygunEventMessageBlock)block;
-{
+- (instancetype)initWithBlock:(RaygunEventMessageBlock)block {
     NSParameterAssert(block);
     self = [super init];
     if (self) {
@@ -66,17 +62,17 @@
 - (NSData *)convertToJson {
     NSMutableDictionary *message = [NSMutableDictionary new];
     
-    [message setValue:[_userInformation convertToDictionary] forKey:@"user"];
-    [message setValue:RaygunEventTypeNames[_eventType]       forKey:@"type"];
-    [message setValue:_sessionId       forKey:@"sessionId"];
-    [message setValue:_occurredOn      forKey:@"timestamp"];
-    [message setValue:_version         forKey:@"version"];
-    [message setValue:_operatingSystem forKey:@"os"];
-    [message setValue:_osVersion != nil ? _osVersion : @"" forKey:@"osVersion"];
-    [message setValue:_platform  != nil ? _platform  : @"" forKey:@"platform"];
-
+    message[@"user"]      = [_userInformation convertToDictionary];
+    message[@"type"]      = RaygunEventTypeNames[_eventType];
+    message[@"sessionId"] = _sessionId;
+    message[@"timestamp"] = _occurredOn;
+    message[@"version"]   = _version;
+    message[@"os"]        = _operatingSystem;
+    message[@"osVersion"] = _osVersion != nil ? _osVersion : @"";
+    message[@"platform"]  = _platform  != nil ? _platform  : @"";
+    
     if (_eventData != nil) {
-        [message setValue:@[[_eventData convertToDictionary]] forKey:@"data"];
+        message[@"data"] = @[[_eventData convertToDictionary]];
     }
     
     return [NSJSONSerialization dataWithJSONObject:@{@"eventData":@[message]} options:0 error:nil];

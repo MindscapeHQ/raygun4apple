@@ -38,17 +38,19 @@
 @property(nonatomic, readwrite, copy) NSString *name;
 @property(nonatomic, readwrite, copy) NSString *uuid;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 /**
  * Initializes a RaygunBinaryImage
  
  * @return RaygunBinaryImage
  */
-- (id)initWithUuId:(NSString *)uuid
-          withName:(NSString *)name
-       withCpuType:(NSNumber *)cpuType
-    withCpuSubType:(NSNumber *)cpuSubType
-  withImageAddress:(NSNumber *)imageAddress
-     withImageSize:(NSNumber *)imageSize;
+- (instancetype)initWithUuId:(NSString *)uuid
+                    withName:(NSString *)name
+                 withCpuType:(NSNumber *)cpuType
+              withCpuSubType:(NSNumber *)cpuSubType
+            withImageAddress:(NSNumber *)imageAddress
+               withImageSize:(NSNumber *)imageSize NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the binary image properties and their values.
@@ -56,7 +58,7 @@
  
  @return a new Dictionary with the binary image properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

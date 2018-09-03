@@ -24,12 +24,11 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
 #import "RaygunBinaryImage.h"
 
 @implementation RaygunBinaryImage
 
-- (id)initWithUuId:(NSString *)uuid
+- (instancetype)initWithUuId:(NSString *)uuid
           withName:(NSString *)name
        withCpuType:(NSNumber *)cpuType
     withCpuSubType:(NSNumber *)cpuSubType
@@ -47,7 +46,7 @@
     return self;
 }
 
--(NSDictionary *)convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     
     dict[@"processor"] = [NSMutableDictionary new];

@@ -26,6 +26,8 @@
 
 #import "RaygunErrorMessage.h"
 
+#import "RaygunDefines.h"
+
 @implementation RaygunErrorMessage
 
 @synthesize className  = _className;
@@ -34,14 +36,11 @@
 @synthesize signalCode = _signalCode;
 @synthesize stackTrace = _stackTrace;
 
--(void)setStackTrace:(NSArray *)stackTrace {
-    _stackTrace = stackTrace;
-}
-
--(id)init:(NSString *)className withMessage:(NSString *)message
-                             withSignalName:(NSString *)signalName
-                             withSignalCode:(NSString *)signalCode
-                             withStackTrace:(NSArray *)stacktrace {
+- (instancetype)init:(NSString *)className
+         withMessage:(NSString *)message
+      withSignalName:(NSString *)signalName
+      withSignalCode:(NSString *)signalCode
+      withStackTrace:(NSArray *)stacktrace {
     if ((self = [super init])) {
         self.className  = className;
         self.message    = message;
@@ -53,18 +52,18 @@
     return self;
 }
 
--(NSDictionary *)convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"className": _className, @"message": _message }];
     
-    if (_signalName) {
+    if (!IsNullOrEmpty(_signalName)) {
         dict[@"signalName"] = _signalName;
     }
     
-    if (_signalCode) {
+    if (!IsNullOrEmpty(_signalCode)) {
         dict[@"signalCode"] = _signalCode;
     }
     
-    if (_stackTrace) {
+    if (!IsNullOrEmpty(_stackTrace)) {
         dict[@"managedStackTrace"] = _stackTrace;
     }
     

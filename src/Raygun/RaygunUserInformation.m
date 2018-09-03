@@ -24,10 +24,8 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 #import "RaygunUserInformation.h"
+
 #import "RaygunDefines.h"
 
 static RaygunUserInformation *sharedAnonymousUser = nil;
@@ -56,7 +54,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     
     if (!identifier) {
         if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-            identifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+            identifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
         }
         else {
             CFUUIDRef theUUID = CFUUIDCreate(NULL);
@@ -73,31 +71,31 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     return identifier;
 }
 
-- (id)initWithIdentifier:(NSString *)identifier {
+- (instancetype)initWithIdentifier:(NSString *)identifier {
     return [self initWithIdentifier:identifier withEmail:nil withFullName:nil withFirstName:nil];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName {
     return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:NO];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isAnonymous {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL)isAnonymous {
     return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:isAnonymous withUuid:nil];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isAnonymous
-                withUuid:(NSString *)uuid {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL)isAnonymous
+                          withUuid:(NSString *)uuid {
     if ((self = [super init])) {
         self.identifier  = identifier;
         self.email       = email;
@@ -109,7 +107,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     return self;
 }
 
-- (NSDictionary * )convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@YES:@NO}];
     
     if (_identifier) {

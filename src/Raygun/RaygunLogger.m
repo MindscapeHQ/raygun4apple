@@ -5,10 +5,12 @@
 //  Created by Mitchell Duncan on 31/08/18.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunLogger.h"
+
 #import "RaygunClient.h"
+#import "RaygunDefines.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunLogger
 
@@ -31,3 +33,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

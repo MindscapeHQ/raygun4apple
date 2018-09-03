@@ -27,12 +27,9 @@
 #ifndef RaygunMessageDetails_h
 #define RaygunMessageDetails_h
 
-#import "RaygunClientMessage.h"
-#import "RaygunEnvironmentMessage.h"
-#import "RaygunErrorMessage.h"
-#import "RaygunUserInformation.h"
-#import "RaygunThread.h"
-#import "RaygunBinaryImage.h"
+#import <Foundation/Foundation.h>
+
+@class RaygunClientMessage, RaygunEnvironmentMessage, RaygunErrorMessage, RaygunUserInformation, RaygunThread, RaygunBinaryImage;
 
 @interface RaygunMessageDetails : NSObject
 
@@ -54,7 +51,7 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

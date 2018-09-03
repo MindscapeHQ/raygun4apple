@@ -32,7 +32,9 @@
 
 @interface RaygunCrashReportCustomSink : NSObject <KSCrashReportFilter>
 
--(id)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData NS_DESIGNATED_INITIALIZER;
 
 @end
 

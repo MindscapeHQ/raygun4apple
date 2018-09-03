@@ -32,6 +32,7 @@
 #import "RaygunRealUserMonitoring.h"
 #import "RaygunMessage.h"
 #import "RaygunLogger.h"
+#import "RaygunUserInformation.h"
 
 @interface RaygunClient()
 
@@ -116,7 +117,10 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
         [sharedCrashInstallation install];
         
         // Configure KSCrash settings.
-        [KSCrash.sharedInstance setMaxReportCount:10]; // TODO: Allow this to be configured
+        (KSCrash.sharedInstance).maxReportCount = 10; // TODO: Allow this to be configured
+        
+        // TODO Set client version.
+        // @"1.0.0 beta 2"
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
@@ -136,7 +140,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
                                          reason:exception.reason
                                        language:@""
                                      lineOfCode:nil
-                                     stackTrace:[exception callStackSymbols]
+                                     stackTrace:exception.callStackSymbols
                                   logAllThreads:NO
                                terminateProgram:NO];
     
@@ -156,7 +160,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     NSError *innerError = [self getInnerError:error];
-    NSString *reason = [innerError localizedDescription];
+    NSString *reason = innerError.localizedDescription;
     if (!reason) {
         reason = @"Unknown";
     }
@@ -181,7 +185,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
+                [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
             }
         }];
     }
@@ -210,7 +214,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
         userInfo[@"userInfo"] = [_userInformation convertToDictionary];
     }
 
-    [KSCrash.sharedInstance setUserInfo:userInfo];
+    (KSCrash.sharedInstance).userInfo = userInfo;
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
@@ -225,8 +229,8 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     request.HTTPMethod = @"POST";
     [request setValue:sharedApiKey forHTTPHeaderField:@"X-ApiKey"];
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%tu", [crashData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody:crashData];
+    [request setValue:[NSString stringWithFormat:@"%tu", crashData.length] forHTTPHeaderField:@"Content-Length"];
+    request.HTTPBody = crashData;
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
@@ -252,7 +256,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds {
-    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:[NSNumber numberWithInteger:milliseconds]];
+    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(milliseconds)];
 }
 
 #pragma mark - Unique User Tracking -

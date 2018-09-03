@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RaygunDefines.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunLogger : NSObject
 
@@ -21,5 +21,7 @@
 + (void)logDebug:(NSString *)message;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunLogger_h */

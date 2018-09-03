@@ -25,9 +25,8 @@
 //
 
 #import "RaygunCrashInstallation.h"
-#import "RaygunCrashReportSink.h"
 
-#import "KSCrash.h"
+#import "RaygunCrashReportSink.h"
 #import "KSCrashInstallation+Private.h"
 #import "RaygunLogger.h"
 
@@ -52,7 +51,7 @@
 - (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion)onCompletion {
     [super sendAllReportsWithSink:sink withCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", [error localizedDescription]]];
+            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
         }
         
         [RaygunLogger logDebug:[NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]];

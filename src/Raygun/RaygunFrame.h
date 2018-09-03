@@ -35,7 +35,7 @@
 @property(nonatomic, readwrite, copy) NSNumber *instructionAddress;
 @property(nonatomic, readwrite, copy) NSString *symbolName;
 
-- (id)init;
+- (instancetype)init;
 
 /**
  Creates and returns a dictionary with the frame properties and their values.
@@ -43,7 +43,7 @@
  
  @return a new Dictionary with the frame properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

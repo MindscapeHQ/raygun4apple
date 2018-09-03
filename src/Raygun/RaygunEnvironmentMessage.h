@@ -51,7 +51,7 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

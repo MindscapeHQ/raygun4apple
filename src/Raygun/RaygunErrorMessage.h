@@ -37,10 +37,13 @@
 @property (nonatomic, readwrite, copy) NSString *signalCode;
 @property (nonatomic, readwrite, strong) NSArray *stackTrace;
 
--(id) init:(NSString *)className withMessage:(NSString *)message
-                              withSignalName:(NSString *)signalName
-                              withSignalCode:(NSString *)signalCode
-                              withStackTrace:(NSArray *)stacktrace;
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)init:(NSString *)className
+         withMessage:(NSString *)message
+      withSignalName:(NSString *)signalName
+      withSignalCode:(NSString *)signalCode
+      withStackTrace:(NSArray *)stacktrace NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.
@@ -48,7 +51,7 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

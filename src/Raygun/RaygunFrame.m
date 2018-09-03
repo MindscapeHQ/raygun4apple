@@ -28,12 +28,12 @@
 
 @implementation RaygunFrame
 
--(id)init {
+- (instancetype)init {
     self = [super init];
     return self;
 }
 
--(NSDictionary *)convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     
     dict[@"symbol"] = [NSMutableDictionary new];
