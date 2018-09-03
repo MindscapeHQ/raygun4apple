@@ -64,6 +64,12 @@
 		A2660FDE20FE931100C12A69 /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2660FD520FE931100C12A69 /* raygun4apple.framework */; };
 		A2660FE320FE931100C12A69 /* raygun4apple_tvOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */; };
 		A2660FE520FE931100C12A69 /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A2660FD720FE931100C12A69 /* raygun4apple_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A29F0000213C945700A0018F /* UIViewController+RaygunRUM.m in Sources */ = {isa = PBXBuildFile; fileRef = A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */; };
+		A29F0001213C945700A0018F /* UIViewController+RaygunRUM.m in Sources */ = {isa = PBXBuildFile; fileRef = A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */; };
+		A29F0003213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */ = {isa = PBXBuildFile; fileRef = A29F0002213C9CDA00A0018F /* UIViewController+RaygunRUM.h */; };
+		A29F0004213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */ = {isa = PBXBuildFile; fileRef = A29F0002213C9CDA00A0018F /* UIViewController+RaygunRUM.h */; };
+		A29F0005213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */ = {isa = PBXBuildFile; fileRef = A29F0002213C9CDA00A0018F /* UIViewController+RaygunRUM.h */; };
+		A29FFFFF213C945600A0018F /* UIViewController+RaygunRUM.m in Sources */ = {isa = PBXBuildFile; fileRef = A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */; };
 		A2A6D2A72136601700AFC48E /* RaygunEventMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */; };
 		A2A6D2A82136601700AFC48E /* RaygunEventMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */; };
 		A2A6D2A92136601700AFC48E /* RaygunEventMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */; };
@@ -498,6 +504,8 @@
 		A2660FDD20FE931100C12A69 /* raygun4apple tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = raygun4apple_tvOSTests.m; sourceTree = "<group>"; };
 		A2660FE420FE931100C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A29F0002213C9CDA00A0018F /* UIViewController+RaygunRUM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RaygunRUM.h"; sourceTree = "<group>"; };
+		A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RaygunRUM.m"; sourceTree = "<group>"; };
 		A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunEventMessage.h; sourceTree = "<group>"; };
 		A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunEventMessage.m; sourceTree = "<group>"; };
 		A2E4ABD920FFF96E0003C8B4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
@@ -1119,6 +1127,8 @@
 				DC5EFAEC2112BCF8002C0713 /* RaygunThread.m */,
 				DC5EFA5D210FFA7A002C0713 /* RaygunUserInformation.h */,
 				DC5EFA5A210FFA79002C0713 /* RaygunUserInformation.m */,
+				A29F0002213C9CDA00A0018F /* UIViewController+RaygunRUM.h */,
+				A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */,
 			);
 			path = Raygun;
 			sourceTree = "<group>";
@@ -1166,6 +1176,7 @@
 				A2E4ADBE21003DAA0003C8B4 /* KSCrashReportFilterBasic.h in Headers */,
 				A2E4ADF021003DAA0003C8B4 /* KSCString.h in Headers */,
 				A2E4AD5221003DAA0003C8B4 /* KSDate.h in Headers */,
+				A29F0003213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */,
 				A2E4ACE421003DAA0003C8B4 /* llvm-config.h in Headers */,
 				A2E4AD9621003DAA0003C8B4 /* KSStackCursor_Backtrace.h in Headers */,
 				A2A6D2A72136601700AFC48E /* RaygunEventMessage.h in Headers */,
@@ -1268,6 +1279,7 @@
 				A2E4AD7721003DAA0003C8B4 /* KSLogger.h in Headers */,
 				A2E4ADBF21003DAA0003C8B4 /* KSCrashReportFilterBasic.h in Headers */,
 				A2E4ADF121003DAA0003C8B4 /* KSCString.h in Headers */,
+				A29F0004213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */,
 				A2E4AD5321003DAA0003C8B4 /* KSDate.h in Headers */,
 				A2E4ACE521003DAA0003C8B4 /* llvm-config.h in Headers */,
 				A2A6D2A82136601700AFC48E /* RaygunEventMessage.h in Headers */,
@@ -1348,6 +1360,7 @@
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
 				DC5EFA8B210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				A23A1DE02138A7B90026046C /* RaygunLogger.h in Headers */,
+				A29F0005213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */,
 				DC5EFA82210FFA7A002C0713 /* RaygunMessageDetails.h in Headers */,
 				DC5EFA85210FFA7A002C0713 /* RaygunMessage.h in Headers */,
 				DC5EFAAC211015A9002C0713 /* RaygunCrashReportSink.h in Headers */,
@@ -1705,6 +1718,7 @@
 				A2E4AD2A21003DAA0003C8B4 /* KSCrashMonitor_NSException.m in Sources */,
 				A2E4AD7C21003DAA0003C8B4 /* KSMachineContext.c in Sources */,
 				A2E4AD6821003DAA0003C8B4 /* KSID.c in Sources */,
+				A29FFFFF213C945600A0018F /* UIViewController+RaygunRUM.m in Sources */,
 				A2E4AD5421003DAA0003C8B4 /* KSDebug.c in Sources */,
 				A2E4AD3821003DAA0003C8B4 /* KSCrashMonitor_Zombie.c in Sources */,
 				A2A6D2AB2136603200AFC48E /* RaygunEventMessage.m in Sources */,
@@ -1793,6 +1807,7 @@
 				A2E4AD2B21003DAA0003C8B4 /* KSCrashMonitor_NSException.m in Sources */,
 				A2E4AD7D21003DAA0003C8B4 /* KSMachineContext.c in Sources */,
 				A2E4AD6921003DAA0003C8B4 /* KSID.c in Sources */,
+				A29F0000213C945700A0018F /* UIViewController+RaygunRUM.m in Sources */,
 				A2E4AD5521003DAA0003C8B4 /* KSDebug.c in Sources */,
 				A2E4AD3921003DAA0003C8B4 /* KSCrashMonitor_Zombie.c in Sources */,
 				A2A6D2AC2136603200AFC48E /* RaygunEventMessage.m in Sources */,
@@ -1829,6 +1844,7 @@
 				DC5EFA7C210FFA7A002C0713 /* RaygunClient.m in Sources */,
 				DC5EFAB021101C95002C0713 /* RaygunCrashReportSink.m in Sources */,
 				A2F38CE1212FB364008346D9 /* RaygunCrashReportCustomSink.m in Sources */,
+				A29F0001213C945700A0018F /* UIViewController+RaygunRUM.m in Sources */,
 				DC5EFA88210FFA7A002C0713 /* RaygunUserInformation.m in Sources */,
 				DC5EFAA82110141C002C0713 /* RaygunCrashInstallation.m in Sources */,
 				A2A6D2AD2136603200AFC48E /* RaygunEventMessage.m in Sources */,
