@@ -82,6 +82,16 @@ static NSMutableDictionary* timers;
 static NSMutableSet* ignoredUrls;
 static RaygunSessionTaskDelegate* sessionDelegate;
 
+- (instancetype)init {
+    if ((self = [super init])) {
+        timers          = [[NSMutableDictionary alloc] init];
+        sessionDelegate = [[RaygunSessionTaskDelegate alloc] init];
+        ignoredUrls     = [[NSMutableSet alloc] init];
+        [ignoredUrls addObject:@"api.raygun.com"];
+    }
+    return self;
+}
+
 - (void)setEnabled:(BOOL)enable {
     enabled = enable;
     
@@ -89,12 +99,6 @@ static RaygunSessionTaskDelegate* sessionDelegate;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             [RaygunLogger logDebug:@"Enabling network performance monitoring"];
-            
-            timers          = [[NSMutableDictionary alloc] init];
-            sessionDelegate = [[RaygunSessionTaskDelegate alloc] init];
-            ignoredUrls     = [[NSMutableSet alloc] init];
-            [ignoredUrls addObject:@"api.raygun.com"];
-            
             [RaygunNetworkPerformanceMonitor swizzleUrlSessionTaskMethods];
             [RaygunNetworkPerformanceMonitor swizzleUrlSessionMethods];
             [RaygunNetworkPerformanceMonitor swizzleUrlConnectionMethods];
@@ -414,9 +418,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
 
 @end
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#pragma mark - NSURLSession Swizzle Imp
+#pragma mark - NSURLSession Swizzle Imp -
 
 NSURLSession* _swizzle_sessionWithConfiguration(id slf, SEL _cmd, NSURLSessionConfiguration* config, id delegate, NSOperationQueue* queue) {
     [RaygunNetworkPerformanceMonitor checkForDelegateImp:[delegate class]];
@@ -429,7 +431,7 @@ NSURLSession* _swizzle_sessionWithConfiguration(id slf, SEL _cmd, NSURLSessionCo
     }
 }
 
-#pragma mark - NSURLSessionTask Swizzle Imp
+#pragma mark - NSURLSessionTask Swizzle Imp -
 
 void _swizzle_resume(id slf, SEL _cmd) {
     [RaygunNetworkPerformanceMonitor networkRequestStarted:slf];
@@ -444,7 +446,7 @@ void _swizzle_cancel(id slf, SEL _cmd) {
     ((void(*)(id, SEL))_original_cancel_imp)(slf, _cmd);
 }
 
-#pragma mark - NSURLConnection Swizzle Imp
+#pragma mark - NSURLConnection Swizzle Imp -
 
 void _swizzle_sendAsynchronousRequest(id slf, SEL _cmd, NSURLRequest* request, NSOperationQueue* queue, void (^handler)(NSURLResponse*, NSData*, NSError*)) {
     if ([RaygunNetworkPerformanceMonitor shouldIgnore:request]) {
@@ -481,7 +483,7 @@ NSData* _swizzle_sendSynchronousRequest(id slf, SEL _cmd, NSURLRequest* request,
     return result;
 }
 
-#pragma mark - NSURLSession Data Swizzle Imp
+#pragma mark - NSURLSession Data Swizzle Imp -
 
 NSURLSessionDataTask* _swizzle_dataTaskWithRequestAsync(id slf, SEL _cmd, NSURLRequest* request, void (^handler)(NSData*, NSURLResponse*, NSError*)) {
     if ([RaygunNetworkPerformanceMonitor shouldIgnore:request]) {
@@ -519,7 +521,7 @@ NSURLSessionDataTask* _swizzle_dataTaskWithRequestAsync(id slf, SEL _cmd, NSURLR
     }
 }
 
-#pragma mark - NSURLSession Download Swizzle Imp
+#pragma mark - NSURLSession Download Swizzle Imp -
 
 NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestNoHandlerAsync(id slf, SEL _cmd, NSURLRequest* request) {
     
@@ -572,7 +574,7 @@ NSURLSessionDownloadTask* _swizzle_downloadTaskWithRequestAsync(id slf, SEL _cmd
     }
 }
 
-#pragma mark - NSURLSession Upload Swizzle Imp
+#pragma mark - NSURLSession Upload Swizzle Imp -
 
 NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromDataNoHandler(id slf, SEL _cmd, NSURLRequest* request, NSData* bodyData) {
     if ([RaygunNetworkPerformanceMonitor shouldIgnore:request]) {
@@ -656,7 +658,7 @@ NSURLSessionUploadTask* _swizzle_uploadTaskWithRequestFromFile(id slf, SEL _cmd,
     return task;
 }
 
-#pragma mark - RaygunSessionTaskDelegate
+#pragma mark - RaygunSessionTaskDelegate -
 
 @interface RaygunSessionTaskDelegate () <NSURLSessionTaskDelegate>
 

@@ -31,6 +31,8 @@
 
 @interface RaygunNetworkPerformanceMonitor : NSObject
 
+- (instancetype)init;
+
 - (void)setEnabled:(BOOL)enabled;
 - (void)ignoreURLs:(NSArray *)urls;
 
