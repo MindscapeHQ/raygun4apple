@@ -83,6 +83,10 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     return logLevel;
 }
 
+- (void)setUser:(RaygunUserInformation *)userInformation {
+    [self identifyWithUserInformation:userInformation];
+}
+
 #pragma mark - Initialising Methods -
 
 + (instancetype)sharedInstance {
@@ -118,9 +122,6 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
         
         // Configure KSCrash settings.
         (KSCrash.sharedInstance).maxReportCount = 10; // TODO: Allow this to be configured
-        
-        // TODO Set client version.
-        // @"1.0.0 beta 2"
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
@@ -209,6 +210,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     userInfo[@"applicationVersion"] = _applicationVersion;
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
+    userInfo[@"clientVersion"]      = kRaygunClientVersion;
     
     if (_userInformation != nil) {
         userInfo[@"userInfo"] = [_userInformation convertToDictionary];
@@ -262,13 +264,12 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 #pragma mark - Unique User Tracking -
 
 - (void)identifyWithIdentifier:(NSString *)userId {
-    _userInformation = [[RaygunUserInformation alloc] initWithIdentifier:userId];
-    [self identifyWithUserInformation:_userInformation];
+    [self identifyWithUserInformation:[[RaygunUserInformation alloc] initWithIdentifier:userId]];
 }
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
     _userInformation = userInformation;
-    [[RaygunRealUserMonitoring sharedInstance] identifyWithUserInformation:userInformation];
+    [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
     [self updateCrashReportUserInfo];
 }
 

@@ -31,13 +31,13 @@
 
 @interface RaygunClient : NSObject
 
+@property(nonatomic, class) RaygunLoggingLevel logLevel;
 @property(nonatomic, class, readonly, copy) NSString *apiKey;
-@property(nonatomic, readwrite, copy) NSString *applicationVersion;
+@property(nonatomic, copy) NSString *applicationVersion;
 @property(nonatomic, strong) NSArray *tags;
 @property(nonatomic, strong) NSDictionary<NSString *, id> *customData;
 @property(nonatomic, strong) RaygunUserInformation *userInformation;
 @property(nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
-@property(nonatomic, class) RaygunLoggingLevel logLevel;
 
 + (instancetype)sharedInstance;
 + (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
@@ -68,6 +68,5 @@
 // Unique User Tracking
 
 - (void)identifyWithIdentifier:(NSString *)identifier;
-- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
 @end
