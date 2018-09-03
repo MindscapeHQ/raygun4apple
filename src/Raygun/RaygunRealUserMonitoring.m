@@ -165,9 +165,11 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         //  Known user ->  Anon user = YES.
         //  Known user -> Different Known user = YES.
         
-        //RaygunUserInformation *anonUser = [RaygunUserInformation anonymousUser];
+        RaygunUserInformation *anonUser = [RaygunUserInformation anonymousUser];
+        BOOL currentSessionUserIsAnon = [_currentSessionUserInformation.identifier isEqualToString:anonUser.identifier];;
+        BOOL usersAreTheSameUser      = [_currentSessionUserInformation.identifier isEqualToString:userInformation.identifier];
         
-        BOOL changedUser = NO;
+        BOOL changedUser = !usersAreTheSameUser && !currentSessionUserIsAnon;
         
         if (changedUser) {
             [RaygunLogger logDebug:@"Detected change in user"];
@@ -179,25 +181,9 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         }
     }
     else {
-        // This is no current session
+        // This is no current session so we can start one.
         [self startSessionWithUserInformation:userInformation];
     }
-
-    /*if (userInformation == nil || userInformation.identifier == nil || [[userInformation.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
-        userInformation = RaygunUserInformation.anonymousUser;
-    }
-    
-    if (_userInfo != nil) {
-        NSString* uuid = [Pulse getAnonymousIdentifier];
-        
-        // If currently NOT anonymous AND the identifier has changed AND there is a current session
-        
-        if (![uuid isEqualToString:_userInfo.identifier] && ![_userInfo.identifier isEqualToString:userInfo.identifier]) {
-            if (_sessionId != nil) {
-                [Pulse sendPulseEvent:@"session_end"];
-            }
-        }
-    }*/
 }
 
 #pragma mark - Event Reporting Methods -
