@@ -42,8 +42,8 @@
 
 - (instancetype)initWithTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     if ((self = [super init])) {
-        self.tags = tags;
-        self.customData = customData;
+        _tags = tags;
+        _customData = customData;
     }
     return self;
 }

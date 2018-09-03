@@ -14,16 +14,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunLogger
 
-+ (void)logError:(NSString *)message {
-    [RaygunLogger log:message withLevel:kRaygunLoggingLevelError];
++ (void)logError:(NSString *)message, ... {
+    va_list args;
+    va_start(args, message);
+    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+    va_end(args);
+    [RaygunLogger log:formattedMessage withLevel:kRaygunLoggingLevelError];
 }
 
-+ (void)logWarning:(NSString *)message {
-    [RaygunLogger log:message withLevel:kRaygunLoggingLevelWarning];
++ (void)logWarning:(NSString *)message, ... {
+    va_list args;
+    va_start(args, message);
+    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+    va_end(args);
+    [RaygunLogger log:formattedMessage withLevel:kRaygunLoggingLevelWarning];
 }
 
-+ (void)logDebug:(NSString *)message {
-    [RaygunLogger log:message withLevel:kRaygunLoggingLevelDebug];
++ (void)logDebug:(NSString *)message, ... {
+    va_list args;
+    va_start(args, message);
+    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+    va_end(args);
+    [RaygunLogger log:formattedMessage withLevel:kRaygunLoggingLevelDebug];
 }
 
 + (void)log:(NSString *)message withLevel:(RaygunLoggingLevel)level {

@@ -1,5 +1,5 @@
 //
-//  RaygunNetworkLogger.h
+//  RaygunNetworkPerformanceMonitor.h
 //  raygun4apple
 //
 //  Created by Mitchell Duncan on 17/10/16.
@@ -24,12 +24,12 @@
 // THE SOFTWARE.
 //
 
-#ifndef Raygun4iOS_RaygunNetworkLogger_h
-#define Raygun4iOS_RaygunNetworkLogger_h
+#ifndef Raygun4iOS_RaygunNetworkPerformanceMonitor_h
+#define Raygun4iOS_RaygunNetworkPerformanceMonitor_h
 
 #import <Foundation/Foundation.h>
 
-@interface RaygunNetworkLogger : NSObject
+@interface RaygunNetworkPerformanceMonitor : NSObject
 
 - (void)setEnabled:(BOOL)enabled;
 - (void)ignoreURLs:(NSArray *)urls;

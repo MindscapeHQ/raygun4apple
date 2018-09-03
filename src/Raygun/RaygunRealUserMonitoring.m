@@ -29,7 +29,7 @@
 #import <UIKit/UIKit.h>
 #import <sys/utsname.h>
 
-#import "RaygunNetworkLogger.h"
+#import "RaygunNetworkPerformanceMonitor.h"
 #import "RaygunUserInformation.h"
 #import "RaygunDefines.h"
 #import "RaygunEventMessage.h"
@@ -41,10 +41,10 @@
 
 @property (nonatomic, copy) NSString *sessionId;
 @property (nonatomic, copy) NSString *lastViewName;
-@property (nonatomic, copy) NSString *lastUserIdentifier;
 @property (nonatomic, copy) NSOperationQueue *queue;
-@property (nonatomic, copy) RaygunNetworkLogger * networkLogger;
+@property (nonatomic, copy) RaygunNetworkPerformanceMonitor * networkMonitor;
 @property (nonatomic, copy) NSMutableSet *ignoredViews;
+@property (nonatomic, copy) RaygunUserInformation *currentSessionUserInformation;
 
 @end
 
@@ -64,10 +64,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (id)init {
     if (self = [super init]) {
-        _timers        = [[NSMutableDictionary alloc] init];
-        _networkLogger = [[RaygunNetworkLogger alloc] init];
-        _queue         = [[NSOperationQueue alloc] init];
-        _ignoredViews  = [[NSMutableSet alloc] init];
+        _timers         = [[NSMutableDictionary alloc] init];
+        _networkMonitor = [[RaygunNetworkPerformanceMonitor alloc] init];
+        _queue          = [[NSOperationQueue alloc] init];
+        _ignoredViews   = [[NSMutableSet alloc] init];
         
         [_ignoredViews addObject:@"UINavigationController"];
         [_ignoredViews addObject:@"UIInputWindowController"];
@@ -79,28 +79,29 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [RaygunLogger logDebug:@"Enabling Real User Monitoring (RUM)"];
-        _enabled = true;
+        
+        self.enabled = true;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
     });
 }
 
-- (void)enableNetworkLogging:(bool)networkLogging {
-    [_networkLogger setEnabled:networkLogging];
-}
-
-#pragma mark - Session Tracking Methods -
-
-- (void)checkForSessionStart {
-    [RaygunLogger logDebug:@"checking for a new session"];
-    if (_sessionId == nil) {
-        _sessionId = [NSUUID UUID].UUIDString;
-        [self sendEvent:kRaygunEventTypeSessionStart];
+- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
+    if (!_enabled) {
+        [RaygunLogger logError:@"Must enable RUM before enabling network performance monitoring"];
+        return;
     }
+    [_networkMonitor setEnabled:enableMonitoring];
 }
+
+#pragma mark - Application Events -
 
 - (void)onDidBecomeActive:(NSNotification *)notification {
-    [self checkForSessionStart];
+    // TODO: Check if we are returning after a sufficient period of time we should consider it a new session
+    [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
     
     if (![self shouldIgnoreView:_lastViewName]) {
         [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:@0];
@@ -108,45 +109,112 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)onDidEnterBackground:(NSNotification *)notification {
-    if (_sessionId != nil) {
-        [self sendEvent:kRaygunEventTypeSessionEnd];
+    // TODO: Record the current time for comparison when becoming active again
+    [self endSession];
+}
+
+#pragma mark - Session Tracking Methods -
+
+- (void)startSessionWithUserInformation:(RaygunUserInformation *)userInformation {
+    if (!_enabled) {
+        return; // RUM must be enabled.
+    }
+    
+    if (_sessionId == nil) {
+        // Generate a new session identifier
+        _sessionId = [NSUUID UUID].UUIDString;
+        
+        [RaygunLogger logDebug:@"Starting RUM session with id: %@", _sessionId];
+        
+        // Keep a copy of the user information so we can detect a change in sessions.
+        _currentSessionUserInformation = userInformation;
+        
+        // Tell the API a new session has started for this user.
+        [self sendEvent:kRaygunEventTypeSessionStart withUserInformation:_currentSessionUserInformation];
     }
 }
 
-- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
-    
-    // Compare against the lastUserIdentifier for a change in session.
-    
-    /*if (userInfo == nil || userInfo.identifier == nil || [[userInfo.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0){
-        userInfo = [[RaygunUserInfo alloc] initWithIdentifier:[Pulse getAnonymousIdentifier]];
-        userInfo.isAnonymous = true;
+- (void)endSession {
+    if (!_enabled) {
+        return; // RUM must be enabled.
     }
     
-    if (_userInfo != nil){
+    if (_sessionId != nil) {
+        [RaygunLogger logDebug:@"Ending RUM session with id: %@", _sessionId];
+        [self sendEvent:kRaygunEventTypeSessionEnd withUserInformation:_currentSessionUserInformation];
+    }
+    
+    _sessionId = nil;
+    [_timers removeAllObjects];
+}
+
+- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
+    if (!_enabled) {
+        return; // RUM must be enabled.
+    }
+    
+    // If there is a current session we need to determine if we should
+    // end it and start a new one with the user information passed in.
+    if (_sessionId) {
+        
+        // Going from an anonymous user to a known user does NOT warrant a change in session.
+        // Instead the user associated with the current session will be updated.
+        
+        // Conditions for a change in session:
+        //   Anon user -> Known user = NO.
+        //  Known user ->  Anon user = YES.
+        //  Known user -> Different Known user = YES.
+        
+        //RaygunUserInformation *anonUser = [RaygunUserInformation anonymousUser];
+        
+        BOOL changedUser = NO;
+        
+        if (changedUser) {
+            [RaygunLogger logDebug:@"Detected change in user"];
+            [self endSession];
+            [self startSessionWithUserInformation:userInformation];
+        }
+        else {
+            _currentSessionUserInformation = userInformation;
+        }
+    }
+    else {
+        // This is no current session
+        [self startSessionWithUserInformation:userInformation];
+    }
+
+    /*if (userInformation == nil || userInformation.identifier == nil || [[userInformation.identifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+        userInformation = RaygunUserInformation.anonymousUser;
+    }
+    
+    if (_userInfo != nil) {
         NSString* uuid = [Pulse getAnonymousIdentifier];
+        
+        // If currently NOT anonymous AND the identifier has changed AND there is a current session
+        
         if (![uuid isEqualToString:_userInfo.identifier] && ![_userInfo.identifier isEqualToString:userInfo.identifier]) {
             if (_sessionId != nil) {
                 [Pulse sendPulseEvent:@"session_end"];
             }
         }
-    }
-    
-    [userInfo retain];
-    [_userInfo release];
-    _userInfo = userInfo;*/
+    }*/
 }
 
 #pragma mark - Event Reporting Methods -
 
-- (void)sendEvent:(RaygunEventType)eventType {
+- (void)sendEvent:(RaygunEventType)eventType withUserInformation:(RaygunUserInformation *)userInformation {
+    if (!_enabled) {
+        return; // RUM must be enabled.
+    }
+    
     struct utsname systemInfo;
     uname(&systemInfo);
     
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
         message.occurredOn      = [self currentTime];
-        message.sessionId       = _sessionId;
+        message.sessionId       = self.sessionId;
         message.eventType       = eventType;
-        message.userInformation = RaygunClient.sharedInstance.userInformation != nil ? RaygunClient.sharedInstance.userInformation : RaygunUserInformation.anonymousUser; // TODO: Make user info statically accessed?
+        message.userInformation = userInformation;
         message.version         = [self bundleVersion];
         message.operatingSystem = [self operatingSystemName];
         message.osVersion       = [UIDevice currentDevice].systemVersion;
@@ -158,11 +226,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
             [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
         }
     }];
-    
-    if (eventType == kRaygunEventTypeSessionEnd) {
-        _sessionId = nil;
-        [_timers removeAllObjects];
-    }
 }
 
 - (NSString *)operatingSystemName {
@@ -174,9 +237,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
-    [self checkForSessionStart];
-    
-    if (IsNullOrEmpty(name)) {
+    if (!_enabled || IsNullOrEmpty(name)) {
         return;
     }
     
@@ -189,7 +250,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
         message.occurredOn      = [self currentTime];
-        message.sessionId       = _sessionId;
+        message.sessionId       = self.sessionId;
         message.eventType       = kRaygunEventTypeTiming;
         message.userInformation = RaygunClient.sharedInstance.userInformation != nil ? RaygunClient.sharedInstance.userInformation : RaygunUserInformation.anonymousUser; // TODO: Make user info statically accessed?
         message.version         = [self bundleVersion];
@@ -201,7 +262,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
+            [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
         }
     }];
 }
@@ -209,7 +270,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
     if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
         [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
-        [RaygunLogger logDebug:[NSString stringWithFormat:@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]]];
+        [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
         [RaygunLogger logDebug:@"--------------------------------------------"];
     }
     
@@ -260,8 +321,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)ignoreURLs:(NSArray *)urls {
-    if (_networkLogger != nil) {
-        [_networkLogger ignoreURLs:urls];
+    if (_networkMonitor != nil) {
+        [_networkMonitor ignoreURLs:urls];
     }
 }
 

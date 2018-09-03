@@ -250,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (RaygunUserInformation *)userInfoFromCrashReportUserData:(NSDictionary *)userData {
-    NSDictionary *userInfo = userData[@"userInfo"];
+    NSDictionary *userInfo = userData[@"userInformation"];
     
     if (userInfo != nil) {
         return [[RaygunUserInformation alloc] initWithIdentifier:userInfo[@"identifier"]

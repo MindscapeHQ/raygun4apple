@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunLogger : NSObject
 
-+ (void)logError:(NSString *)message;
++ (void)logError:(NSString *)message, ...;
 
-+ (void)logWarning:(NSString *)message;
++ (void)logWarning:(NSString *)message, ...;
 
-+ (void)logDebug:(NSString *)message;
++ (void)logDebug:(NSString *)message, ...;
 
 @end
 

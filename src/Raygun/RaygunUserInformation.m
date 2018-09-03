@@ -90,12 +90,12 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
                    withIsAnonymous:(BOOL)isAnonymous
                           withUuid:(NSString *)uuid {
     if ((self = [super init])) {
-        self.identifier  = identifier;
-        self.email       = email;
-        self.fullName    = fullName;
-        self.firstName   = firstName;
-        self.isAnonymous = isAnonymous;
-        self.uuid        = uuid;
+        _identifier  = identifier;
+        _email       = email;
+        _fullName    = fullName;
+        _firstName   = firstName;
+        _isAnonymous = isAnonymous;
+        _uuid        = uuid;
     }
     return self;
 }

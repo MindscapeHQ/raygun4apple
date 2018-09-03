@@ -51,10 +51,10 @@
 - (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion)onCompletion {
     [super sendAllReportsWithSink:sink withCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
+            [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
         }
         
-        [RaygunLogger logDebug:[NSString stringWithFormat:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count]];
+        [RaygunLogger logDebug:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count];
         if (completed && onCompletion) {
             onCompletion(filteredReports, completed, error);
         }

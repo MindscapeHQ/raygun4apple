@@ -45,9 +45,20 @@
 static NSString *sharedApiKey = nil;
 static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
-static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
+static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
+
+@synthesize userInformation = _userInformation;
 
 #pragma mark - Setters -
+
++ (void)setLogLevel:(RaygunLoggingLevel)level {
+    NSParameterAssert(level);
+    sharedLogLevel = level;
+}
+
++ (RaygunLoggingLevel)logLevel {
+    return sharedLogLevel;
+}
 
 + (NSString *)apiKey {
     return sharedApiKey;
@@ -55,30 +66,25 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
 - (void)setApplicationVersion:(NSString *)applicationVersion {
     _applicationVersion = applicationVersion;
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
 }
 
--(void)setTags:(NSArray *)tags {
+- (void)setTags:(NSArray *)tags {
     _tags = tags;
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
 }
 
 - (void)setCustomData:(NSDictionary *)customData {
     _customData = customData;
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
 }
 
-+ (void)setLogLevel:(RaygunLoggingLevel)level {
-    NSParameterAssert(level);
-    logLevel = level;
-}
-
-+ (RaygunLoggingLevel)logLevel {
-    return logLevel;
-}
-
-- (void)setUser:(RaygunUserInformation *)userInformation {
+- (void)setUserInformation:(RaygunUserInformation *)userInformation {
     [self identifyWithUserInformation:userInformation];
+}
+
+- (RaygunUserInformation *)userInformation {
+    return _userInformation == nil ? [RaygunUserInformation anonymousUser] : _userInformation;
 }
 
 #pragma mark - Initialising Methods -
@@ -98,7 +104,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 - (instancetype)initWithApiKey:(NSString *)apiKey {
     if ((self = [super init])) {
         sharedApiKey = apiKey;
-        self.queue   = [[NSOperationQueue alloc] init];
+        _queue       = [[NSOperationQueue alloc] init];
     }
     return self;
 }
@@ -173,14 +179,14 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 - (void)sendMessage:(RaygunMessage *)message {
     BOOL send = YES;
     
-    if (self.beforeSendMessage != nil) {
-        send = self.beforeSendMessage(message);
+    if (_beforeSendMessage != nil) {
+        send = _beforeSendMessage(message);
     }
     
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
+                [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
             }
         }];
     }
@@ -199,15 +205,15 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     return error;
 }
 
-- (void)updateCrashReportUserInfo {
+- (void)updateCrashReportUserInformation {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-    userInfo[@"applicationVersion"] = _applicationVersion;
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
     userInfo[@"clientVersion"]      = kRaygunClientVersion;
+    userInfo[@"applicationVersion"] = _applicationVersion;
     
     if (_userInformation != nil) {
-        userInfo[@"userInfo"] = [_userInformation convertToDictionary];
+        userInfo[@"userInformation"] = [_userInformation convertToDictionary];
     }
 
     (KSCrash.sharedInstance).userInfo = userInfo;
@@ -216,7 +222,7 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
     if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
         [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
-        [RaygunLogger logDebug:[NSString stringWithFormat:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]]];
+        [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]];
         [RaygunLogger logDebug:@"--------------------------------------------"];
     }
     
@@ -239,8 +245,8 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
     [[RaygunRealUserMonitoring sharedInstance] enable];
 }
 
-- (void)enableAutomaticNetworkLogging:(bool)networkLogging {
-    [[RaygunRealUserMonitoring sharedInstance] enableNetworkLogging:networkLogging];
+- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
+    [[RaygunRealUserMonitoring sharedInstance] enableNetworkPerformanceMonitoring:enableMonitoring];
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
@@ -263,8 +269,8 @@ static RaygunLoggingLevel logLevel = kRaygunLoggingLevelError;
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
     _userInformation = userInformation;
+    [self updateCrashReportUserInformation];
     [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
-    [self updateCrashReportUserInfo];
 }
 
 @end
