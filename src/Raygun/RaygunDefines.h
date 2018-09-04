@@ -41,7 +41,7 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
-static NSString *_Nonnull const kRaygunClientVersion = @"1.0.0 beta 2";
+static NSString *_Nonnull const kRaygunClientVersion = @"1.0.0";
 
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
