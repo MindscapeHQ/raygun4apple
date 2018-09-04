@@ -92,7 +92,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
     if (!_enabled) {
-        [RaygunLogger logError:@"Must enable RUM before enabling network performance monitoring"];
+        [RaygunLogger logError:@"RUM must be enabled before enabling network performance monitoring"];
         return;
     }
     [_networkMonitor setEnabled:enableMonitoring];
@@ -101,8 +101,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #pragma mark - Application Events -
 
 - (void)applicationWillEnterForeground {
-    [RaygunLogger logError:@"Detected application entering foreground"];
-    
     NSNumber *lastSeenTime = [[NSUserDefaults standardUserDefaults] objectForKey:kRaygunSessionLastSeenDefaultsKey];
     
     if (lastSeenTime) {
@@ -118,13 +116,11 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)applicationDidEnterBackground {
-    [RaygunLogger logError:@"Detected application entering background"];
     [[NSUserDefaults standardUserDefaults] setObject:@(CACurrentMediaTime()) forKey:kRaygunSessionLastSeenDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillTerminate {
-    [RaygunLogger logError:@"Detected application will terminate"];
     [self endSession];
 }
 
@@ -248,7 +244,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
-    if (!_enabled || IsNullOrEmpty(name)) {
+    if (!_enabled || IsNullOrEmpty(name) || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
         return;
     }
     
