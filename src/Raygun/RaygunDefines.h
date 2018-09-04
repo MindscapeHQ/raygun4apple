@@ -41,17 +41,74 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
+static NSString *_Nonnull const kRaygunClientVersion = @"1.0.0";
+
+static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
+static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
+
+static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
+static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
+
+static double kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
+
 @class RaygunMessage;
 
 /**
  * Block can be used to modify the crash report before it is sent to Raygun.
  */
-typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
+typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *_Nonnull message);
 
-typedef enum {
-    ViewLoaded,
-    NetworkCall
-} RaygunEventType;
+typedef NS_ENUM(NSInteger, RaygunEventType) {
+    kRaygunEventTypeSessionStart = 0,
+    kRaygunEventTypeSessionEnd,
+    kRaygunEventTypeTiming
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunEventTypeNames[] = {
+    @"session_start",
+    @"session_end",
+    @"mobile_event_timing"
+};
+
+typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
+    kRaygunEventTimingViewLoaded = 0,
+    kRaygunEventTimingNetworkCall
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
+    @"p",
+    @"n"
+};
+
+typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
+    kRaygunLoggingLevelNone = 0,
+    kRaygunLoggingLevelError,
+    kRaygunLoggingLevelWarning,
+    kRaygunLoggingLevelDebug,
+    kRaygunLoggingLevelVerbose,
+};
+
+/**
+ * Static internal helper to convert enum to string
+ */
+static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
+    @"None",
+    @"Error",
+    @"Warning",
+    @"Debug",
+    @"Verbose"
+};
+
+static inline BOOL IsNullOrEmpty(id _Nullable thing) {
+    return thing == nil || ([thing respondsToSelector:@selector(length)] && ((NSData *)thing).length == 0)
+                        || ([thing respondsToSelector:@selector(count)] && ((NSArray *)thing).count == 0);
+}
 
 #endif /* RaygunDefines_h */
 

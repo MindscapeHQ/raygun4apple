@@ -1,8 +1,8 @@
 //
-//  RaygunNetworkLogger.h
+//  RaygunEventData.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 17/10/16.
+//  Created by Mitchell Duncan on 30/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,18 +24,35 @@
 // THE SOFTWARE.
 //
 
-#ifndef Raygun4iOS_RaygunNetworkLogger_h
-#define Raygun4iOS_RaygunNetworkLogger_h
+#ifndef RaygunEventData_h
+#define RaygunEventData_h
 
-@interface RaygunNetworkLogger : NSObject
+#import <Foundation/Foundation.h>
 
-- (void)setEnabled:(bool)enabled;
-- (void)ignoreURLs:(NSArray *)urls;
+#import "RaygunDefines.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface RaygunEventData : NSObject
+
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic) enum  RaygunEventTimingType timingType;
+@property (nonatomic, copy) NSNumber *duration;
+
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)initWithType:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration NS_DESIGNATED_INITIALIZER;
+
+/**
+ Creates and returns a dictionary with the classes properties and their values.
+ Used when constructing the crash report that is sent to Raygun.
+ 
+ @return a new Dictionary with the classes properties and their values.
+ */
+- (NSDictionary *)convertToDictionary;//  [{ "name": name, "timing": { "type": type, "duration": duration } }]
 
 @end
 
-@interface RaygunSessionTaskDelegate: NSObject
+NS_ASSUME_NONNULL_END
 
-@end
-
-#endif
+#endif /* RaygunEventData_h */

@@ -27,7 +27,12 @@
 #ifndef Raygun4Apple_RaygunUserInformation_h
 #define Raygun4Apple_RaygunUserInformation_h
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 @interface RaygunUserInformation : NSObject
+
+@property (nonatomic, class, readonly, copy) RaygunUserInformation *anonymousUser;
 
 /**
  Unique Identifier for this user. Set this to the identifier you use internally to look up users,
@@ -37,33 +42,35 @@
  
  @warning The identifier must be set in order for any of the other fields to be sent.
  */
-@property (nonatomic, readwrite, strong) NSString *identifier;
+@property (nonatomic, strong) NSString *identifier;
 
 /**
  * Device Identifier.
  */
-@property (nonatomic, readwrite, strong) NSString *uuid;
+@property (nonatomic, strong) NSString *uuid;
 
 /**
  Flag indicating whether a user is anonymous or not.
  Generally, set this to true if the user is not logged in.
  */
-@property (nonatomic, readwrite) BOOL isAnonymous;
+@property (nonatomic) BOOL isAnonymous;
 
 /**
  User's email address
  */
-@property (nonatomic, readwrite, strong) NSString *email;
+@property (nonatomic, strong) NSString *email;
 
 /**
  User's full name.
  */
-@property (nonatomic, readwrite, strong) NSString *fullName;
+@property (nonatomic, strong) NSString *fullName;
 
 /**
  User's first or preferred name.
  */
-@property (nonatomic, readwrite, strong) NSString *firstName;
+@property (nonatomic, strong) NSString *firstName;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -72,7 +79,7 @@
  
  @return a new RaygunUserInformation object.
  */
-- (id)initWithIdentifier:(NSString *)identifier;
+- (instancetype)initWithIdentifier:(NSString *)identifier;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -84,10 +91,10 @@
  
  @return a new RaygunUserInformation object.
  */
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -100,11 +107,11 @@
  
  @return a new RaygunUserInformation object.
  */
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isAnonymous;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL) isAnonymous;
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -118,12 +125,12 @@
  
  @return a new RaygunUserInformation object.
  */
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL) isAnonymous
-                withUuid:(NSString *)uuid;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL) isAnonymous
+                          withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the classes properties and their values. 
@@ -131,7 +138,7 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary * )convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
 

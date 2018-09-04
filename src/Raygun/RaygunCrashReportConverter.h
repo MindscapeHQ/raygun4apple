@@ -28,8 +28,12 @@
 
 @class RaygunMessage;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunCrashReportConverter : NSObject
 
 - (RaygunMessage *)convertReportToMessage:(NSDictionary *)report;
 
 @end
+
+NS_ASSUME_NONNULL_END

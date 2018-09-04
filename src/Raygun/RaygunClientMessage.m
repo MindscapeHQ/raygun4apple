@@ -26,34 +26,34 @@
 
 #import "RaygunClientMessage.h"
 
+#import "RaygunDefines.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunClientMessage
 
-@synthesize name = _name;
-@synthesize version = _version;
-@synthesize clientUrl = _clientUrl;
-
-- (id)init:(NSString *)name withVersion:(NSString *)version withUrl:(NSString *)url {
+- (instancetype)initWithName:(NSString *)name withVersion:(NSString *)version withUrl:(NSString *)url {
     if ((self = [super init])) {
-        self.name = name;
-        self.version = version;
-        self.clientUrl = url;
+        _name      = name;
+        _version   = version;
+        _clientUrl = url;
     }
     
     return self;
 }
 
--(NSDictionary *)convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    if (_name) {
+    if (!IsNullOrEmpty(_name)) {
         dict[@"name"] = _name;
     }
     
-    if (_version) {
+    if (!IsNullOrEmpty(_version)) {
         dict[@"version"] = _version;
     }
     
-    if (_clientUrl) {
+    if (!IsNullOrEmpty(_clientUrl)) {
         dict[@"clientUrl"] = _clientUrl;
     }
     
@@ -61,3 +61,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

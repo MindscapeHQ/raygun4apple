@@ -24,16 +24,24 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
-#import "RaygunDefines.h"
+#import "RaygunCrashReportConverter.h"
 
 #if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
 #endif
 
-#import "RaygunCrashReportConverter.h"
+#import "RaygunDefines.h"
 #import "RaygunMessage.h"
+#import "RaygunMessageDetails.h"
+#import "RaygunClientMessage.h"
+#import "RaygunEnvironmentMessage.h"
+#import "RaygunErrorMessage.h"
+#import "RaygunUserInformation.h"
+#import "RaygunBinaryImage.h"
+#import "RaygunFrame.h"
+#import "RaygunThread.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunCrashReportConverter ()
 
@@ -44,7 +52,7 @@
 - (RaygunMessage *)convertReportToMessage:(NSDictionary *)report {
     NSString *occurredOn = [self occurredOn:report];
     RaygunMessageDetails *details = [self messageDetailsFromReport:report];
-    RaygunMessage *message = [[RaygunMessage alloc] init:occurredOn withDetails:details];
+    RaygunMessage *message = [[RaygunMessage alloc] initWithTimestamp:occurredOn withDetails:details];
     
     return message;
 }
@@ -56,10 +64,10 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
         
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-        [dateFormatter setTimeZone:utcTimeZone];
+        dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        dateFormatter.timeZone = utcTimeZone;
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        [dateFormatter setLocale:locale];
+        dateFormatter.locale = locale;
         
         occurredOn = [dateFormatter stringFromDate:[NSDate date]];
     }
@@ -95,7 +103,7 @@
     
     // Machine Name
     #if RAYGUN_CAN_USE_UIDEVICE
-    details.machineName = [[UIDevice currentDevice] name];
+    details.machineName = [UIDevice currentDevice].name;
     #endif
     
     // User, Tags & Custom Data
@@ -130,11 +138,8 @@
 }
 
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
-    NSString *clientName    = @"Raygun4Apple";
-    NSString *clientUrl     = @"https://github.com/mindscapehq/raygun4apple";
-    NSString *clientVersion = @"1.0.0 beta 2";
-    
-    return [[RaygunClientMessage alloc] init:clientName withVersion:clientVersion withUrl:clientUrl];
+    NSString *clientVersion = report[@"user"][@"clientVersion"];
+    return [[RaygunClientMessage alloc] initWithName:@"Raygun4Apple" withVersion:clientVersion withUrl:@"https://github.com/mindscapehq/raygun4apple"];
 }
 
 - (RaygunEnvironmentMessage *)environmentDetailsFromCrashReport:(NSDictionary *)report {
@@ -152,26 +157,26 @@
     }
     
     NSLocale *locale = [NSLocale currentLocale];
-    NSString *localeStr = [locale displayNameForKey:NSLocaleIdentifier value: [locale localeIdentifier]];
+    NSString *localeStr = [locale displayNameForKey:NSLocaleIdentifier value: locale.localeIdentifier];
     
     if (!localeStr) {
-        localeStr = [locale localeIdentifier];
+        localeStr = locale.localeIdentifier;
     }
     
     if (!localeStr) {
         localeStr = @"Unknown";
     }
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect screenBounds = [UIScreen mainScreen].bounds;
     
     environment.processorCount     = nil;
     environment.oSVersion          = osVersion;
     environment.model              = systemData[@"machine"];
     environment.windowsBoundWidth  = @(screenBounds.size.width);
     environment.windowsBoundHeight = @(screenBounds.size.height);
-    environment.resolutionScale    = @([[UIScreen mainScreen] scale]);
+    environment.resolutionScale    = @([UIScreen mainScreen].scale);
     environment.cpu                = systemData[@"cpu_arch"];
-    environment.utcOffset          = @([[NSTimeZone systemTimeZone] secondsFromGMT] / 3600);
+    environment.utcOffset          = @([NSTimeZone systemTimeZone].secondsFromGMT / 3600);
     environment.locale             = localeStr;
     environment.kernelVersion      = systemData[@"kernel_version"];
     environment.memorySize         = systemData[@"memory"][@"size"];
@@ -241,11 +246,11 @@
 }
 
 - (NSString *)nullCoalesce:(NSDictionary *)data withProperty:(NSString *)property withFallback:(NSString *) fallback {
-    return [data objectForKey:property] ? [data objectForKey:property] : [data objectForKey:fallback];
+    return data[property] ? data[property] : data[fallback];
 }
 
 - (RaygunUserInformation *)userInfoFromCrashReportUserData:(NSDictionary *)userData {
-    NSDictionary *userInfo = userData[@"userInfo"];
+    NSDictionary *userInfo = userData[@"userInformation"];
     
     if (userInfo != nil) {
         return [[RaygunUserInformation alloc] initWithIdentifier:userInfo[@"identifier"]
@@ -301,7 +306,7 @@
     NSMutableArray *raygunThreads = [NSMutableArray new];
     
     for (NSDictionary *thread in threadData) {
-        RaygunThread *raygunThread = [[RaygunThread alloc] init:thread[@"index"]];
+        RaygunThread *raygunThread = [[RaygunThread alloc] initWithIndex:thread[@"index"]];
         raygunThread.frames  = [self stackFramesForThread:thread];
         raygunThread.crashed = [thread[@"crashed"] boolValue];
         raygunThread.current = [thread[@"current_thread"] boolValue];
@@ -325,7 +330,7 @@
     
     NSMutableArray *frames = [NSMutableArray arrayWithCapacity:frameCount];
     for (NSInteger i = frameCount - 1; i >= 0; i--) {
-        [frames addObject:[self stackFrameFromFrameData:[frameData objectAtIndex:i]]];
+        [frames addObject:[self stackFrameFromFrameData:frameData[i]]];
     }
     return frames;
 }
@@ -342,3 +347,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END

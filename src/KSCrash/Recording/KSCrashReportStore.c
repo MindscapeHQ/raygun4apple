@@ -39,7 +39,7 @@
 #include <unistd.h>
 
 
-static int g_maxReportCount = 5;
+static int g_maxReportCount = 10;
 // Have to use max 32-bit atomics because of MIPS.
 static _Atomic(uint32_t) g_nextUniqueIDLow;
 static int64_t g_nextUniqueIDHigh;

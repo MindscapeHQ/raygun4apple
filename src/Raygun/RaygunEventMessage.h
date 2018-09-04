@@ -1,8 +1,8 @@
 //
-//  RaygunThread.h
+//  RaygunEventMessage.h
 //  raygun4apple
 //
-//  Created by raygundev on 8/2/18.
+//  Created by Mitchell Duncan on 29/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,38 +24,39 @@
 // THE SOFTWARE.
 //
 
-#ifndef RaygunThread_h
-#define RaygunThread_h
+#ifndef RaygunEventMessage_h
+#define RaygunEventMessage_h
 
 #import <Foundation/Foundation.h>
 
-@class RaygunFrame;
+#import "RaygunDefines.h"
 
-@interface RaygunThread : NSObject
+@class RaygunEventMessage, RaygunUserInformation, RaygunEventData;
 
-@property (nonatomic, copy) NSNumber *threadIndex;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) NSArray<RaygunFrame *> *frames;
-@property (nonatomic) BOOL crashed;
-@property (nonatomic) BOOL current;
+typedef void(^RaygunEventMessageBlock)(RaygunEventMessage *message);
 
-- (instancetype)init NS_UNAVAILABLE;
+@interface RaygunEventMessage : NSObject
+
+@property (nonatomic, copy)   NSString *occurredOn;
+@property (nonatomic, copy)   NSString *sessionId;
+@property (nonatomic) enum    RaygunEventType eventType;
+@property (nonatomic, strong) RaygunUserInformation *userInformation;
+@property (nonatomic, copy)   NSString *version;
+@property (nonatomic, copy)   NSString *operatingSystem;
+@property (nonatomic, copy)   NSString *osVersion;
+@property (nonatomic, copy)   NSString *platform;
+@property (nonatomic, strong) RaygunEventData *eventData;
+
++ (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
+- (instancetype)initWithBlock:(RaygunEventMessageBlock)block NS_DESIGNATED_INITIALIZER;
 
 /**
- * Initializes a RaygunThread with its index
-
- * @return RaygunThread
- */
-- (instancetype)initWithIndex:(NSNumber *)threadIndex NS_DESIGNATED_INITIALIZER;
-
-/**
- Creates and returns a dictionary with the thread properties and their values.
- Used when constructing the crash report that is sent to Raygun.
+ Creates and returns the json payload to be sent to Raygun.
  
- @return a new Dictionary with the thread properties and their values.
+ @return a data object containing the RaygunEventMessage properties in a json format.
  */
-- (NSDictionary *)convertToDictionary;
+- (NSData *)convertToJson;
 
 @end
 
-#endif /* RaygunThread_h */
+#endif /* RaygunEventMessage_h */

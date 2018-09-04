@@ -24,8 +24,6 @@
 // THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "RaygunClient.h"
 
 #import "KSCrash.h"
@@ -33,64 +31,85 @@
 #import "RaygunCrashReportCustomSink.h"
 #import "RaygunRealUserMonitoring.h"
 #import "RaygunMessage.h"
-
-static NSString * const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
-static NSString * const kApiEndPoint = @"https://api.raygun.com/entries";
-
-static RaygunClient *sharedRaygunInstance = nil;
-static RaygunCrashInstallation *sharedCrashInstallation = nil;
+#import "RaygunLogger.h"
+#import "RaygunUserInformation.h"
 
 @interface RaygunClient()
 
-@property (nonatomic, readwrite, copy) NSString *apiKey;
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
-@property (nonatomic, readwrite, retain) RaygunRealUserMonitoring *rum;
 
 @end
 
 @implementation RaygunClient
 
-@synthesize applicationVersion = _applicationVersion;
-@synthesize tags               = _tags;
-@synthesize customData         = _customData;
-@synthesize userInformation    = _userInformation;
+static NSString *sharedApiKey = nil;
+static RaygunClient *sharedClientInstance = nil;
+static RaygunCrashInstallation *sharedCrashInstallation = nil;
+static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
+
+@synthesize userInformation = _userInformation;
 
 #pragma mark - Setters -
 
-- (void)setApplicationVersion:(NSString *)applicationVersion {
-    _applicationVersion = applicationVersion;
-    [self updateCrashReportUserInfo];
++ (void)setLogLevel:(RaygunLoggingLevel)level {
+    NSParameterAssert(level);
+    sharedLogLevel = level;
 }
 
--(void)setTags:(NSArray *)tags {
++ (RaygunLoggingLevel)logLevel {
+    return sharedLogLevel;
+}
+
++ (NSString *)apiKey {
+    return sharedApiKey;
+}
+
+- (void)setApplicationVersion:(NSString *)applicationVersion {
+    _applicationVersion = applicationVersion;
+    [self updateCrashReportUserInformation];
+}
+
+- (void)setTags:(NSArray *)tags {
     _tags = tags;
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
 }
 
 - (void)setCustomData:(NSDictionary *)customData {
     _customData = customData;
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
+}
+
+- (void)setUserInformation:(RaygunUserInformation *)userInformation {
+    [self identifyWithUserInformation:userInformation];
+}
+
+- (RaygunUserInformation *)userInformation {
+    return _userInformation == nil ? RaygunUserInformation.anonymousUser : _userInformation;
+}
+
+- (void)maxReportsStoredOnDevice:(int)number {
+    _maxReportsStoredOnDevice = number;
+    (KSCrash.sharedInstance).maxReportCount = number;
 }
 
 #pragma mark - Initialising Methods -
 
-+ (id)sharedClient {
-    return sharedRaygunInstance;
++ (instancetype)sharedInstance {
+    return sharedClientInstance;
 }
 
-+ (id)sharedClientWithApiKey:(NSString *)apiKey {
++ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedRaygunInstance = [[self alloc] initWithApiKey:apiKey];
+        sharedClientInstance = [[RaygunClient alloc] initWithApiKey:apiKey];
     });
-    return sharedRaygunInstance;
+    return sharedClientInstance;
 }
 
-- (id)initWithApiKey:(NSString *)apiKey {
+- (instancetype)initWithApiKey:(NSString *)apiKey {
     if ((self = [super init])) {
-        self.apiKey = apiKey;
-        self.queue  = [[NSOperationQueue alloc] init];
-        self.rum    = [[RaygunRealUserMonitoring alloc] initWithApiKey:apiKey];
+        sharedApiKey = apiKey;
+        _queue       = [[NSOperationQueue alloc] init];
     }
     return self;
 }
@@ -100,15 +119,11 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)enableCrashReporting {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        [RaygunLogger logDebug:@"Enabling crash reporting"];
+        
         // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
         [sharedCrashInstallation install];
-        
-        // Configure KSCrash settings.
-        [KSCrash.sharedInstance setMaxReportCount:10]; // TODO: Allow this to be configured
-        
-        // Set an anonymous user for any new reports.
-        [self assignAnonymousUser];
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
@@ -128,7 +143,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
                                          reason:exception.reason
                                        language:@""
                                      lineOfCode:nil
-                                     stackTrace:[exception callStackSymbols]
+                                     stackTrace:exception.callStackSymbols
                                   logAllThreads:NO
                                terminateProgram:NO];
     
@@ -148,7 +163,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     NSError *innerError = [self getInnerError:error];
-    NSString *reason = [innerError localizedDescription];
+    NSString *reason = innerError.localizedDescription;
     if (!reason) {
         reason = @"Unknown";
     }
@@ -166,14 +181,14 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 - (void)sendMessage:(RaygunMessage *)message {
     BOOL send = YES;
     
-    if (self.beforeSendMessage != nil) {
-        send = self.beforeSendMessage(message);
+    if (_beforeSendMessage != nil) {
+        send = _beforeSendMessage(message);
     }
     
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                NSLog(@"Error sending: %@", [error localizedDescription]);
+                [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
             }
         }];
     }
@@ -192,24 +207,34 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
     return error;
 }
 
-- (void)updateCrashReportUserInfo {
+- (void)updateCrashReportUserInformation {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-    userInfo[@"applicationVersion"] = _applicationVersion;
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
-    userInfo[@"userInfo"]           = [_userInformation convertToDictionary];
+    userInfo[@"clientVersion"]      = kRaygunClientVersion;
+    userInfo[@"applicationVersion"] = _applicationVersion;
     
-    [KSCrash.sharedInstance setUserInfo:userInfo];
+    if (_userInformation != nil) {
+        userInfo[@"userInformation"] = [_userInformation convertToDictionary];
+    }
+
+    (KSCrash.sharedInstance).userInfo = userInfo;
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPoint]];
+    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+        [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
+        [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]];
+        [RaygunLogger logDebug:@"--------------------------------------------"];
+    }
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForCR]];
     
     request.HTTPMethod = @"POST";
-    [request setValue:self.apiKey forHTTPHeaderField:@"X-ApiKey"];
+    [request setValue:sharedApiKey forHTTPHeaderField:@"X-ApiKey"];
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%tu", [crashData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody:crashData];
+    [request setValue:[NSString stringWithFormat:@"%tu", crashData.length] forHTTPHeaderField:@"Content-Length"];
+    request.HTTPBody = crashData;
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
@@ -219,80 +244,35 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 #pragma mark - Real User Monitoring -
 
 - (void)enableRealUserMonitoring {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self.rum enable];
-    });
+    [[RaygunRealUserMonitoring sharedInstance] enable];
 }
 
-- (void)enableAutomaticNetworkLogging:(bool)networkLogging {
-    // TODO
+- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
+    [[RaygunRealUserMonitoring sharedInstance] enableNetworkPerformanceMonitoring:enableMonitoring];
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
-    [self.rum ignoreViews:viewNames];
+    [[RaygunRealUserMonitoring sharedInstance] ignoreViews:viewNames];
 }
 
 - (void)ignoreURLs:(NSArray *)urls {
-    [self.rum ignoreURLs:urls];
+    [[RaygunRealUserMonitoring sharedInstance] ignoreURLs:urls];
 }
 
-- (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds {
-    NSString* type = @"p";
-    if (eventType == NetworkCall) {
-        type = @"n";
-    }
-    [RaygunRealUserMonitoring sendEvent:name withType:type withDuration:[NSNumber numberWithInteger:milliseconds]];
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds {
+    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(milliseconds)];
 }
 
 #pragma mark - Unique User Tracking -
 
-- (void)assignAnonymousUser {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
-    
-    if (!identifier) {
-        identifier = [self generateAnonymousIdentifier];
-        [self storeIdentifier:identifier];
-    }
-    
-    RaygunUserInformation *userInfo = [[RaygunUserInformation alloc] initWithIdentifier:identifier];
-    userInfo.isAnonymous = true;
-    
-    [self identifyWithUserInformation:userInfo];
-}
-
-- (NSString *)generateAnonymousIdentifier {
-    NSString *identifier;
-    
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-        identifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    }
-    else {
-        CFUUIDRef theUUID = CFUUIDCreate(NULL);
-        identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
-        CFRelease(theUUID);
-    }
-    
-    return identifier;
-}
-
-- (void)storeIdentifier:(NSString *)identifier {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
-    [defaults synchronize];
-}
-
 - (void)identifyWithIdentifier:(NSString *)userId {
-    _userInformation = [[RaygunUserInformation alloc] initWithIdentifier:userId];
-    [self identifyWithUserInformation:_userInformation];
+    [self identifyWithUserInformation:[[RaygunUserInformation alloc] initWithIdentifier:userId]];
 }
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
     _userInformation = userInformation;
-    
-    [self.rum identifyWithUserInformation:userInformation];
-    [self updateCrashReportUserInfo];
+    [self updateCrashReportUserInformation];
+    [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
 }
 
 @end

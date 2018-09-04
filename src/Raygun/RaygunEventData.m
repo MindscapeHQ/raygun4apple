@@ -1,8 +1,8 @@
 //
-//  RaygunErrorMessage.m
+//  RaygunEventData.m
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 11/09/17.
+//  Created by Mitchell Duncan on 30/08/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,44 +24,28 @@
 // THE SOFTWARE.
 //
 
-#import "RaygunErrorMessage.h"
+#import "RaygunEventData.h"
 
-#import "RaygunDefines.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@implementation RaygunErrorMessage
+@implementation RaygunEventData
 
-- (instancetype)init:(NSString *)className
-         withMessage:(NSString *)message
-      withSignalName:(NSString *)signalName
-      withSignalCode:(NSString *)signalCode
-      withStackTrace:(NSArray *)stacktrace {
+- (instancetype)initWithType:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     if ((self = [super init])) {
-        _className  = className;
-        _message    = message;
-        _signalName = signalName;
-        _signalCode = signalCode;
-        _stackTrace = stacktrace;
+        _name       = name;
+        _timingType = type;
+        _duration   = duration;
     }
-    
     return self;
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"className": _className, @"message": _message }];
-    
-    if (!IsNullOrEmpty(_signalName)) {
-        dict[@"signalName"] = _signalName;
-    }
-    
-    if (!IsNullOrEmpty(_signalCode)) {
-        dict[@"signalCode"] = _signalCode;
-    }
-    
-    if (!IsNullOrEmpty(_stackTrace)) {
-        dict[@"managedStackTrace"] = _stackTrace;
-    }
-    
-    return dict;
+    NSMutableDictionary *eventData = [NSMutableDictionary new];
+    eventData[@"name"]   = _name;
+    eventData[@"timing"] = @{ @"type":RaygunEventTimingTypeShortNames[_timingType], @"duration":_duration };
+    return eventData;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

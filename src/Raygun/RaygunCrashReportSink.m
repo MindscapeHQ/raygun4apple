@@ -24,29 +24,34 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RaygunCrashReportSink.h"
 
-#import "KSCrash.h"
+#import <Foundation/Foundation.h>
+
 #import "RaygunClient.h"
 #import "RaygunMessage.h"
+#import "RaygunMessageDetails.h"
 #import "RaygunCrashReportConverter.h"
 
 @implementation RaygunCrashReportSink
 
-- (void) filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
+- (void)filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSMutableArray *sentReports = [NSMutableArray new];
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
         for (NSDictionary *report in reports) {
-            if (nil != RaygunClient.sharedClient) {
+            if (nil != RaygunClient.sharedInstance) {
                 // Take the information from the KSCrash report and put it into our own format.
                 RaygunMessage *message = [converter convertReportToMessage:report];
                 
+                // Add "Unhandled Exception" tag
+                NSMutableArray *combinedTags = [NSMutableArray arrayWithArray:message.details.tags];
+                [combinedTags addObject:@"UnhandledException"];
+                message.details.tags = combinedTags;
+                
                 // Send it to the Raygun API endpoint
-                [RaygunClient.sharedClient sendMessage:message];
+                [RaygunClient.sharedInstance sendMessage:message];
                 [sentReports addObject:report];
             }
         }

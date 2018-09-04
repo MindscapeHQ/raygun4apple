@@ -31,17 +31,21 @@
 
 @interface RaygunClient : NSObject
 
-@property(nonatomic, readonly, copy) NSString *apiKey;
-@property(nonatomic, readwrite, copy) NSString *applicationVersion;
-@property(nonatomic, strong) NSArray *tags;
-@property(nonatomic, strong) NSDictionary<NSString *, id> *customData;
-@property(nonatomic, strong) RaygunUserInformation *userInformation;
-@property(nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
+@property (nonatomic, class) RaygunLoggingLevel logLevel;
+@property (nonatomic, class, readonly, copy) NSString *apiKey;
+@property (nonatomic, copy) NSString *applicationVersion;
+@property (nonatomic, strong) NSArray *tags;
+@property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
+@property (nonatomic, strong) RaygunUserInformation *userInformation;
+@property (nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
+@property (nonatomic, assign) int maxReportsStoredOnDevice;
 
-+ (id)sharedClient;
-+ (id)sharedClientWithApiKey:(NSString *)apiKey;
++ (instancetype)sharedInstance;
++ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
 
-- (id)initWithApiKey:(NSString *)apiKey;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)initWithApiKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
 // Crash Reporting
 
@@ -57,14 +61,13 @@
 // Real User Monitoring (RUM)
 
 - (void)enableRealUserMonitoring;
-- (void)enableAutomaticNetworkLogging:(bool)networkLogging;
+- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring;
 - (void)ignoreViews:(NSArray *)viewNames;
 - (void)ignoreURLs:(NSArray *)urls;
-- (void)sendTimingEvent:(RaygunEventType)eventType withName:(NSString *)name withDuration:(int)milliseconds;
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds;
 
 // Unique User Tracking
 
 - (void)identifyWithIdentifier:(NSString *)identifier;
-- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
 @end

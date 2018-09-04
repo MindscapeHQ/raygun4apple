@@ -26,35 +26,22 @@
 
 #import "RaygunEnvironmentMessage.h"
 
+#import "RaygunDefines.h"
+
 @implementation RaygunEnvironmentMessage
 
-@synthesize processorCount     = _processorCount;
-@synthesize oSVersion          = _oSVersion;
-@synthesize model              = _model;
-@synthesize windowsBoundWidth  = _windowsBoundWidth;
-@synthesize windowsBoundHeight = _windowsBoundHeight;
-@synthesize resolutionScale    = _resolutionScale;
-@synthesize cpu                = _cpu;
-@synthesize utcOffset          = _utcOffset;
-@synthesize locale             = _locale;
-@synthesize kernelVersion      = _kernelVersion;
-@synthesize jailBroken         = _jailBroken;
-@synthesize memoryFree         = _memoryFree;
-@synthesize memorySize         = _memorySize;
-
-
--(NSDictionary *)convertToDictionary {
+- (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     if (_processorCount) {
         dict[@"processorCount"] = _processorCount;
     }
     
-    if (_oSVersion) {
+    if (!IsNullOrEmpty(_oSVersion)) {
         dict[@"oSVersion"] = _oSVersion;
     }
     
-    if (_model) {
+    if (!IsNullOrEmpty(_model)) {
         dict[@"model"] = _model;
     }
     
@@ -70,7 +57,7 @@
         dict[@"resolutionScale"] = _resolutionScale;
     }
     
-    if (_cpu) {
+    if (!IsNullOrEmpty(_cpu)) {
         dict[@"cpu"] = _cpu;
     }
     
@@ -78,11 +65,11 @@
         dict[@"utcOffset"] = _utcOffset;
     }
     
-    if (_locale) {
+    if (!IsNullOrEmpty(_locale)) {
         dict[@"locale"] = _locale;
     }
     
-    if (_kernelVersion) {
+    if (!IsNullOrEmpty(_kernelVersion)) {
         dict[@"kernelVersion"] = _kernelVersion;
     }
     

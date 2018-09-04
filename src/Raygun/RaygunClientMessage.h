@@ -29,13 +29,19 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunClientMessage : NSObject
 
-@property (nonatomic, readwrite, copy) NSString *name;
-@property (nonatomic, readwrite, copy) NSString *version;
-@property (nonatomic, readwrite, copy) NSString *clientUrl;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *version;
+@property (nonatomic, copy) NSString *clientUrl;
 
-- (id)init:(NSString *)name withVersion:(NSString *)version withUrl:(NSString *)url;
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)initWithName:(NSString *)name
+                 withVersion:(NSString *)version
+                     withUrl:(NSString *)url NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.
@@ -43,8 +49,10 @@
  
  @return a new Dictionary with the classes properties and their values.
  */
--(NSDictionary *)convertToDictionary;
+- (NSDictionary *)convertToDictionary;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunClientMessage_h */

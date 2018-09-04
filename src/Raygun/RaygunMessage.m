@@ -26,15 +26,16 @@
 
 #import "RaygunMessage.h"
 
+#import "RaygunMessageDetails.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunMessage
 
-@synthesize occurredOn = _occurredOn;
-@synthesize details    = _details;
-
-- (id)init:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details {
+- (instancetype)initWithTimestamp:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details {
     if ((self = [super init])) {
-        self.occurredOn = occurredOn;
-        self.details = details;
+        _occurredOn = occurredOn;
+        _details = details;
     }
     
     return self;
@@ -46,3 +47,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

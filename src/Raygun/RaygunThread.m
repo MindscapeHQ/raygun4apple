@@ -26,29 +26,30 @@
 
 #import "RaygunThread.h"
 
+#import "RaygunDefines.h"
+#import "RaygunFrame.h"
+
 @implementation RaygunThread
 
-- (instancetype)init:(NSNumber *)threadIndex {
-    self = [super init];
-    if (self) {
-        self.threadIndex = threadIndex;
+- (instancetype)initWithIndex:(NSNumber *)threadIndex {
+    if (self = [super init]) {
+        _threadIndex = threadIndex;
     }
     return self;
 }
 
--(NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"threadNumber":self.threadIndex,
-                                                                                @"crashed":self.crashed?@YES:@NO,
-                                                                                @"current":self.current?@YES:@NO
-                                                                                }];
+- (NSDictionary *)convertToDictionary {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:@{@"threadNumber":_threadIndex}];
     
-    if (self.name){
-        dict[@"name"] = self.name;
+    dict[@"crashed"] = _crashed ? @YES : @NO;
+    dict[@"current"] = _current ? @YES : @NO;
+    
+    if (!IsNullOrEmpty(_name)) {
+        dict[@"name"] = _name;
     }
     
     NSMutableArray *frames = [NSMutableArray new];
-    for (RaygunFrame *frame in self.frames) {
+    for (RaygunFrame *frame in _frames) {
         NSDictionary *serialized = [frame convertToDictionary];
         if (serialized.allKeys.count > 0) {
             [frames addObject:serialized];

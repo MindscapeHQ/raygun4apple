@@ -24,56 +24,84 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
 #import "RaygunUserInformation.h"
+
+#import "RaygunDefines.h"
+
+static RaygunUserInformation *sharedAnonymousUser = nil;
 
 @implementation RaygunUserInformation
 
-@synthesize identifier  = _identifier;
-@synthesize uuid        = _uuid;
-@synthesize isAnonymous = _isAnonymous;
-@synthesize email       = _email;
-@synthesize fullName    = _fullName;
-@synthesize firstName   = _firstName;
++ (RaygunUserInformation *)anonymousUser {
+    if (sharedAnonymousUser == nil) {
+        sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation anonymousIdentifier]];
+        sharedAnonymousUser.isAnonymous = @YES;
+    }
+    return sharedAnonymousUser;
+}
 
-- (id)initWithIdentifier:(NSString *)identifier {
++ (NSString *)anonymousIdentifier {
+    // Check if we have stored one before
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
+    
+    if (!identifier) {
+        if ([UIDevice.currentDevice respondsToSelector:@selector(identifierForVendor)]) {
+            identifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
+        }
+        else {
+            CFUUIDRef theUUID = CFUUIDCreate(NULL);
+            identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
+            CFRelease(theUUID);
+        }
+        
+        // Store the identifier
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
+        [defaults synchronize];
+    }
+    
+    return identifier;
+}
+
+- (instancetype)initWithIdentifier:(NSString *)identifier {
     return [self initWithIdentifier:identifier withEmail:nil withFullName:nil withFirstName:nil];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName {
     return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:NO];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isAnonymous {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL)isAnonymous {
     return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:isAnonymous withUuid:nil];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier
-               withEmail:(NSString *)email
-            withFullName:(NSString *)fullName
-           withFirstName:(NSString *)firstName
-         withIsAnonymous:(BOOL)isAnonymous
-                withUuid:(NSString *)uuid {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         withEmail:(NSString *)email
+                      withFullName:(NSString *)fullName
+                     withFirstName:(NSString *)firstName
+                   withIsAnonymous:(BOOL)isAnonymous
+                          withUuid:(NSString *)uuid {
     if ((self = [super init])) {
-        self.identifier  = identifier;
-        self.email       = email;
-        self.fullName    = fullName;
-        self.firstName   = firstName;
-        self.isAnonymous = isAnonymous;
-        self.uuid        = uuid;
+        _identifier  = identifier;
+        _email       = email;
+        _fullName    = fullName;
+        _firstName   = firstName;
+        _isAnonymous = isAnonymous;
+        _uuid        = uuid;
     }
     return self;
 }
 
--(NSDictionary * )convertToDictionary {
-    NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@YES:@NO}];
+- (NSDictionary *)convertToDictionary {
+    NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
     if (_identifier) {
         details[@"identifier"] = _identifier;

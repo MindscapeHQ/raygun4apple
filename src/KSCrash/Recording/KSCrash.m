@@ -147,7 +147,7 @@ static NSString* getBasePath()
         self.deleteBehaviorAfterSendAll = KSCDeleteAlways;
         self.introspectMemory = YES;
         self.catchZombies = NO;
-        self.maxReportCount = 5;
+        self.maxReportCount = 10;
         self.monitoring = KSCrashMonitorTypeProductionSafeMinimal;
     }
     return self;

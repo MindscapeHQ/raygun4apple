@@ -1,8 +1,8 @@
 //
-//  RaygunEnvironmentMessage.h
+//  RaygunNetworkPerformanceMonitor.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 11/09/17.
+//  Created by Mitchell Duncan on 17/10/16.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,35 +24,23 @@
 // THE SOFTWARE.
 //
 
-#ifndef RaygunEnvironmentMessage_h
-#define RaygunEnvironmentMessage_h
+#ifndef Raygun4iOS_RaygunNetworkPerformanceMonitor_h
+#define Raygun4iOS_RaygunNetworkPerformanceMonitor_h
 
 #import <Foundation/Foundation.h>
 
-@interface RaygunEnvironmentMessage : NSObject
+@interface RaygunNetworkPerformanceMonitor : NSObject
 
-@property (nonatomic, copy) NSNumber *processorCount;
-@property (nonatomic, copy) NSString *oSVersion;
-@property (nonatomic, copy) NSString *model;
-@property (nonatomic, copy) NSNumber *windowsBoundWidth;
-@property (nonatomic, copy) NSNumber *windowsBoundHeight;
-@property (nonatomic, copy) NSNumber *resolutionScale;
-@property (nonatomic, copy) NSString *cpu;
-@property (nonatomic, copy) NSNumber *utcOffset;
-@property (nonatomic, copy) NSString *locale;
-@property (nonatomic, copy) NSString *kernelVersion;
-@property (nonatomic, copy) NSNumber *memoryFree;
-@property (nonatomic, copy) NSNumber *memorySize;
-@property (nonatomic) BOOL jailBroken;
+- (instancetype)init;
 
-/**
- Creates and returns a dictionary with the classes properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the classes properties and their values.
- */
-- (NSDictionary *)convertToDictionary;
+- (void)setEnabled:(BOOL)enabled;
+
+- (void)ignoreURLs:(NSArray *)urls;
 
 @end
 
-#endif /* RaygunEnvironmentMessage_h */
+@interface RaygunSessionTaskDelegate: NSObject
+
+@end
+
+#endif
