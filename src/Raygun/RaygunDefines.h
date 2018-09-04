@@ -42,9 +42,14 @@
 #endif
 
 static NSString *_Nonnull const kRaygunClientVersion = @"1.0.0 beta 2";
+
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
+static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
+
 static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
 static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
+
+static double kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 
 @class RaygunMessage;
 

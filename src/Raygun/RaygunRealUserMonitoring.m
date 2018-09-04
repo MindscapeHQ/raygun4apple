@@ -82,8 +82,9 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         
         self.enabled = true;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
         
         [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
     });
@@ -99,18 +100,36 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 #pragma mark - Application Events -
 
-- (void)onDidBecomeActive:(NSNotification *)notification {
-    // TODO: Check if we are returning after a sufficient period of time we should consider it a new session
-    [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
+- (void)applicationWillEnterForeground {
+    [RaygunLogger logError:@"Detected application entering foreground"];
+    
+    NSNumber *lastSeenTime = [[NSUserDefaults standardUserDefaults] objectForKey:kRaygunSessionLastSeenDefaultsKey];
+    
+    if (lastSeenTime) {
+        if ([self timeBetween:lastSeenTime] >= kSessionExpiryPeriodInSeconds) {
+            [self endSession];
+            [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
+        }
+    }
     
     if (![self shouldIgnoreView:_lastViewName]) {
         [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:@0];
     }
 }
 
-- (void)onDidEnterBackground:(NSNotification *)notification {
-    // TODO: Record the current time for comparison when becoming active again
+- (void)applicationDidEnterBackground {
+    [RaygunLogger logError:@"Detected application entering background"];
+    [[NSUserDefaults standardUserDefaults] setObject:@(CACurrentMediaTime()) forKey:kRaygunSessionLastSeenDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)applicationWillTerminate {
+    [RaygunLogger logError:@"Detected application will terminate"];
     [self endSession];
+}
+
+- (double)timeBetween:(NSNumber *)lastTime {
+    return CACurrentMediaTime() - lastTime.doubleValue;
 }
 
 #pragma mark - Session Tracking Methods -
