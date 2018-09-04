@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
 @property (nonatomic, strong) RaygunUserInformation *userInformation;
 @property (nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
+@property (nonatomic, assign) int maxReportsStoredOnDevice;
 
 + (instancetype)sharedInstance;
 + (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;

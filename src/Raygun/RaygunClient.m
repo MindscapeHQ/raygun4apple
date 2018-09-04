@@ -84,7 +84,12 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (RaygunUserInformation *)userInformation {
-    return _userInformation == nil ? [RaygunUserInformation anonymousUser] : _userInformation;
+    return _userInformation == nil ? RaygunUserInformation.anonymousUser : _userInformation;
+}
+
+- (void)maxReportsStoredOnDevice:(int)number {
+    _maxReportsStoredOnDevice = number;
+    (KSCrash.sharedInstance).maxReportCount = number;
 }
 
 #pragma mark - Initialising Methods -
@@ -119,9 +124,6 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
         // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
         [sharedCrashInstallation install];
-        
-        // Configure KSCrash settings.
-        (KSCrash.sharedInstance).maxReportCount = 10; // TODO: Allow this to be configured
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
