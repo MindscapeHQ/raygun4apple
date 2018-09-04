@@ -1,7 +1,7 @@
 Raygun4Apple
 ==========
 
-The worlds best iOS, tvOS and macOS crash reporter
+The worlds best iOS, tvOS crash reporter
 
 Build and release
 =================
