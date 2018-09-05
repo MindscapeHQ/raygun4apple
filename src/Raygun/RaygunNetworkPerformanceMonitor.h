@@ -33,7 +33,7 @@
 
 - (instancetype)init;
 
-- (void)setEnabled:(BOOL)enabled;
+- (void)enable;
 
 - (void)ignoreURLs:(NSArray *)urls;
 

@@ -42,8 +42,8 @@
 @property (nonatomic, copy) NSString *sessionId;
 @property (nonatomic, copy) NSString *lastViewName;
 @property (nonatomic, copy) NSOperationQueue *queue;
-@property (nonatomic, copy) RaygunNetworkPerformanceMonitor * networkMonitor;
 @property (nonatomic, copy) NSMutableSet *ignoredViews;
+@property (nonatomic, copy) RaygunNetworkPerformanceMonitor * networkMonitor;
 @property (nonatomic, copy) RaygunUserInformation *currentSessionUserInformation;
 
 @end
@@ -65,9 +65,9 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (id)init {
     if (self = [super init]) {
         _timers         = [[NSMutableDictionary alloc] init];
-        _networkMonitor = [[RaygunNetworkPerformanceMonitor alloc] init];
         _queue          = [[NSOperationQueue alloc] init];
         _ignoredViews   = [[NSMutableSet alloc] init];
+        _networkMonitor = [[RaygunNetworkPerformanceMonitor alloc] init];
         
         [_ignoredViews addObject:@"UINavigationController"];
         [_ignoredViews addObject:@"UIInputWindowController"];
@@ -90,12 +90,12 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     });
 }
 
-- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
+- (void)enableNetworkPerformanceMonitoring {
     if (!_enabled) {
         [RaygunLogger logError:@"RUM must be enabled before enabling network performance monitoring"];
         return;
     }
-    [_networkMonitor setEnabled:enableMonitoring];
+    [_networkMonitor enable];
 }
 
 #pragma mark - Application Events -

@@ -247,8 +247,8 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     [[RaygunRealUserMonitoring sharedInstance] enable];
 }
 
-- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring {
-    [[RaygunRealUserMonitoring sharedInstance] enableNetworkPerformanceMonitoring:enableMonitoring];
+- (void)enableNetworkPerformanceMonitoring {
+    [[RaygunRealUserMonitoring sharedInstance] enableNetworkPerformanceMonitoring];
 }
 
 - (void)ignoreViews:(NSArray *)viewNames {
