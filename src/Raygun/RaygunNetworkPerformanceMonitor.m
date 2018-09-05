@@ -92,19 +92,17 @@ static RaygunSessionTaskDelegate* sessionDelegate;
     return self;
 }
 
-- (void)setEnabled:(BOOL)enable {
-    enabled = enable;
+- (void)enable {
+    enabled = true;
     
-    if (enabled) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [RaygunLogger logDebug:@"Enabling network performance monitoring"];
-            [RaygunNetworkPerformanceMonitor swizzleUrlSessionTaskMethods];
-            [RaygunNetworkPerformanceMonitor swizzleUrlSessionMethods];
-            [RaygunNetworkPerformanceMonitor swizzleUrlConnectionMethods];
-            [RaygunNetworkPerformanceMonitor swizzleUrlSessionDelegateMethods];
-        });
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [RaygunLogger logDebug:@"Enabling network performance monitoring"];
+        [RaygunNetworkPerformanceMonitor swizzleUrlSessionTaskMethods];
+        [RaygunNetworkPerformanceMonitor swizzleUrlSessionMethods];
+        [RaygunNetworkPerformanceMonitor swizzleUrlConnectionMethods];
+        [RaygunNetworkPerformanceMonitor swizzleUrlSessionDelegateMethods];
+    });
 }
 
 - (void)ignoreURLs:(NSArray *)urls {

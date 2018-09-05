@@ -61,7 +61,7 @@
 // Real User Monitoring (RUM)
 
 - (void)enableRealUserMonitoring;
-- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring;
+- (void)enableNetworkPerformanceMonitoring;
 - (void)ignoreViews:(NSArray *)viewNames;
 - (void)ignoreURLs:(NSArray *)urls;
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds;

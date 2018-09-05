@@ -41,7 +41,7 @@
 
 - (void)enable;
 
-- (void)enableNetworkPerformanceMonitoring:(bool)enableMonitoring;
+- (void)enableNetworkPerformanceMonitoring;
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
