@@ -32,42 +32,59 @@
 @interface RaygunClient : NSObject
 
 @property (nonatomic, class) RaygunLoggingLevel logLevel;
+
 @property (nonatomic, class, readonly, copy) NSString *apiKey;
+
 @property (nonatomic, copy) NSString *applicationVersion;
+
 @property (nonatomic, strong) NSArray *tags;
+
 @property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
+
 @property (nonatomic, strong) RaygunUserInformation *userInformation;
+
 @property (nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
+
 @property (nonatomic, assign) int maxReportsStoredOnDevice;
 
 + (instancetype)sharedInstance;
+
 + (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
 
 - (instancetype)init NS_UNAVAILABLE;
+
 + (instancetype)new NS_UNAVAILABLE;
+
 - (instancetype)initWithApiKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
 // Crash Reporting
 
 - (void)enableCrashReporting;
+
 - (void)sendException:(NSException *)exception;
+
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags;
+
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+
 - (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+
 - (void)sendMessage:(RaygunMessage *)message;
+
 - (void)crash;
 
 // Real User Monitoring (RUM)
 
 - (void)enableRealUserMonitoring;
+
 - (void)enableNetworkPerformanceMonitoring;
+
 - (void)ignoreViews:(NSArray *)viewNames;
+
 - (void)ignoreURLs:(NSArray *)urls;
+
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds;
-
-// Unique User Tracking
-
-- (void)identifyWithIdentifier:(NSString *)identifier;
 
 @end

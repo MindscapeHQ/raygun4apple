@@ -80,6 +80,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (void)setUserInformation:(RaygunUserInformation *)userInformation {
+    _userInformation = userInformation;
     [self identifyWithUserInformation:userInformation];
 }
 
@@ -265,12 +266,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 
 #pragma mark - Unique User Tracking -
 
-- (void)identifyWithIdentifier:(NSString *)userId {
-    [self identifyWithUserInformation:[[RaygunUserInformation alloc] initWithIdentifier:userId]];
-}
-
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
-    _userInformation = userInformation;
     [self updateCrashReportUserInformation];
     [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
 }
