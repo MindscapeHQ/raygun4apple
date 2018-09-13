@@ -244,7 +244,12 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
-    if (!_enabled || IsNullOrEmpty(name) || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
+    if(!_enabled) {
+        [RaygunLogger logError:@"Failed to send timing event - Real User Monitoring has not been enabled"];
+        return;
+    }
+    
+    if (IsNullOrEmpty(name) || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
         return;
     }
     
@@ -270,6 +275,11 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
+        }
+        
+        if (response != nil) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+            [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
         }
     }];
 }

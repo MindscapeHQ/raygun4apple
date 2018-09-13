@@ -38,6 +38,19 @@ NS_ASSUME_NONNULL_BEGIN
     [RaygunLogger log:formattedMessage withLevel:kRaygunLoggingLevelDebug];
 }
 
++ (void)logResponseStatusCode:(NSInteger)statusCode {
+    switch ((RaygunResponseStatusCode)statusCode) {
+        case kRaygunResponseStatusCodeAccepted: [self logDebug:RaygunResponseStatusCodeMessage(statusCode)]; break;
+            
+        case kRaygunResponseStatusCodeBadMessage:    // fall through
+        case kRaygunResponseStatusCodeInvalidApiKey: // fall through
+        case kRaygunResponseStatusCodeLargePayload:  // fall through
+        case kRaygunResponseStatusCodeRateLimited: [self logError:RaygunResponseStatusCodeMessage(statusCode)]; break;
+            
+        default: [self logDebug:RaygunResponseStatusCodeMessage(statusCode)]; break;
+    }
+}
+
 + (void)log:(NSString *)message withLevel:(RaygunLoggingLevel)level {
     if (RaygunClient.logLevel >= level) {
         NSLog(@"Raygun - %@:: %@", RaygunLoggingLevelNames[level], message);

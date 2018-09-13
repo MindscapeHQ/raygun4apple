@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, RaygunEventType) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunEventType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTypeNames[] = {
     @"session_start",
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunEventTimingType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
     @"p",
@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunLoggingLevel enum to a string
  */
 static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"None",
@@ -104,6 +104,28 @@ static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"Debug",
     @"Verbose"
 };
+
+/**
+ * Static internal helper to convert RaygunResponseStatusCode enum to a string
+ */
+typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {
+    kRaygunResponseStatusCodeAccepted      = 202,
+    kRaygunResponseStatusCodeBadMessage    = 400,
+    kRaygunResponseStatusCodeInvalidApiKey = 403,
+    kRaygunResponseStatusCodeLargePayload  = 413,
+    kRaygunResponseStatusCodeRateLimited   = 429,
+};
+
+static NSString* _Nonnull RaygunResponseStatusCodeMessage(NSInteger statusCode) {
+    switch ((RaygunResponseStatusCode)statusCode) {
+        case kRaygunResponseStatusCodeAccepted:      return @"Request succeeded"; break;
+        case kRaygunResponseStatusCodeBadMessage:    return @"Bad message - could not parse the provided JSON. Check all fields are present, especially both occurredOn (ISO 8601 DateTime) and details { } at the top level"; break;
+        case kRaygunResponseStatusCodeInvalidApiKey: return @"Invalid API Key - The value specified in the header X-ApiKey did not match with an application in Raygun"; break;
+        case kRaygunResponseStatusCodeLargePayload:  return @"Request entity too large - The maximum size of a JSON payload is 128KB"; break;
+        case kRaygunResponseStatusCodeRateLimited:   return @"Too Many Requests - Plan limit exceeded for month or plan expired"; break;
+        default: [NSString stringWithFormat:@"Response status code: %ld",(long)statusCode]; break;
+    }
+}
 
 static inline BOOL IsNullOrEmpty(id _Nullable thing) {
     return thing == nil || ([thing respondsToSelector:@selector(length)] && ((NSData *)thing).length == 0)

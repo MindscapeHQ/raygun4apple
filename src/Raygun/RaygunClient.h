@@ -73,8 +73,6 @@
 
 - (void)sendMessage:(RaygunMessage *)message;
 
-- (void)crash;
-
 // Real User Monitoring (RUM)
 
 - (void)enableRealUserMonitoring;
