@@ -116,17 +116,6 @@ typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {
     kRaygunResponseStatusCodeRateLimited   = 429,
 };
 
-static NSString* _Nonnull RaygunResponseStatusCodeMessage(NSInteger statusCode) {
-    switch ((RaygunResponseStatusCode)statusCode) {
-        case kRaygunResponseStatusCodeAccepted:      return @"Request succeeded"; break;
-        case kRaygunResponseStatusCodeBadMessage:    return @"Bad message - could not parse the provided JSON. Check all fields are present, especially both occurredOn (ISO 8601 DateTime) and details { } at the top level"; break;
-        case kRaygunResponseStatusCodeInvalidApiKey: return @"Invalid API Key - The value specified in the header X-ApiKey did not match with an application in Raygun"; break;
-        case kRaygunResponseStatusCodeLargePayload:  return @"Request entity too large - The maximum size of a JSON payload is 128KB"; break;
-        case kRaygunResponseStatusCodeRateLimited:   return @"Too Many Requests - Plan limit exceeded for month or plan expired"; break;
-        default: [NSString stringWithFormat:@"Response status code: %ld",(long)statusCode]; break;
-    }
-}
-
 static inline BOOL IsNullOrEmpty(id _Nullable thing) {
     return thing == nil || ([thing respondsToSelector:@selector(length)] && ((NSData *)thing).length == 0)
                         || ([thing respondsToSelector:@selector(count)] && ((NSArray *)thing).count == 0);
