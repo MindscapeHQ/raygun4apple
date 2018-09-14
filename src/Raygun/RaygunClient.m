@@ -122,7 +122,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [RaygunLogger logDebug:@"Enabling crash reporting"];
-        _crashReportingEnabled = YES;
+        self.crashReportingEnabled = YES;
         
         // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
