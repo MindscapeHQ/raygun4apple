@@ -41,7 +41,7 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
-static NSString *_Nonnull const kRaygunClientVersion = @"1.0.1";
+static NSString *_Nonnull const kRaygunClientVersion = @"1.0.2";
 
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, RaygunEventType) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunEventType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTypeNames[] = {
     @"session_start",
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunEventTimingType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
     @"p",
@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
 };
 
 /**
- * Static internal helper to convert enum to string
+ * Static internal helper to convert RaygunLoggingLevel enum to a string
  */
 static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"None",
@@ -103,6 +103,17 @@ static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"Warning",
     @"Debug",
     @"Verbose"
+};
+
+/**
+ * Static internal helper to convert RaygunResponseStatusCode enum to a string
+ */
+typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {
+    kRaygunResponseStatusCodeAccepted      = 202,
+    kRaygunResponseStatusCodeBadMessage    = 400,
+    kRaygunResponseStatusCodeInvalidApiKey = 403,
+    kRaygunResponseStatusCodeLargePayload  = 413,
+    kRaygunResponseStatusCodeRateLimited   = 429,
 };
 
 static inline BOOL IsNullOrEmpty(id _Nullable thing) {

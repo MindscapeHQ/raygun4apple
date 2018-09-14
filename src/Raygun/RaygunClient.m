@@ -37,6 +37,7 @@
 @interface RaygunClient()
 
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
+@property (nonatomic) bool crashReportingEnabled;
 
 @end
 
@@ -121,6 +122,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [RaygunLogger logDebug:@"Enabling crash reporting"];
+        self.crashReportingEnabled = YES;
         
         // Install the crash reporter.
         sharedCrashInstallation = [[RaygunCrashInstallation alloc] init];
@@ -140,6 +142,11 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+    if (_crashReportingEnabled == NO) {
+        [RaygunLogger logError:@"Failed to send exception - Crash Reporting has not been enabled"];
+        return;
+    }
+    
     [KSCrash.sharedInstance reportUserException:exception.name
                                          reason:exception.reason
                                        language:@""
@@ -191,13 +198,13 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
             if (error != nil) {
                 [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
             }
+            
+            if (response != nil) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+            }
         }];
     }
-}
-
-- (void)crash {
-    char* invalid = (char*)-1;
-    *invalid = 1;
 }
 
 - (NSError *)getInnerError:(NSError *)error {

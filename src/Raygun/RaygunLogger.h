@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)logDebug:(NSString *)message, ...;
 
++ (void)logResponseStatusCode:(NSInteger)statusCode;
+
 @end
 
 NS_ASSUME_NONNULL_END
