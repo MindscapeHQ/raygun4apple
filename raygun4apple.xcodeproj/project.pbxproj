@@ -1902,6 +1902,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = marker;
 				CURRENT_PROJECT_VERSION = 1.0.3;
+				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_Debug";
 				OTHER_CFLAGS = "-fembed-bitcode-marker";
 				SDKROOT = iphoneos;
 			};
@@ -1912,6 +1913,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CURRENT_PROJECT_VERSION = 1.0.3;
+				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode";
 				SDKROOT = iphoneos;
 			};
