@@ -143,7 +143,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 
 - (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
     if (_crashReportingEnabled == NO) {
-        [RaygunLogger logError:@"Failed to send exception - Crash Reporting has not been enabled"];
+        [RaygunLogger logWarning:@"Failed to send exception - Crash Reporting has not been enabled"];
         return;
     }
     
@@ -196,7 +196,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
+                [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
             }
             
             if (response != nil) {
