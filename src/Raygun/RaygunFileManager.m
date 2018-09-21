@@ -35,7 +35,7 @@ NSInteger const maxCrashReports = 64;
         NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
         
         // Create directory to hold all folders
-        self.raygunPath = [cachePath stringByAppendingPathComponent:@"io.raygun"];
+        self.raygunPath = [cachePath stringByAppendingPathComponent:@"com.raygun"];
         if (![fileManager fileExistsAtPath:self.raygunPath]) {
             [self.class createDirectoryAtPath:self.raygunPath withError:nil];
         }
