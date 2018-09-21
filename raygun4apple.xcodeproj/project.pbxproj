@@ -52,6 +52,12 @@
 		A2132B3321373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
 		A2132B3421373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
 		A2132B3521373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
+		A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796C215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796D215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796F21549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
+		A217797021549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
+		A217797121549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
 		A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DDF2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DE02138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
@@ -490,6 +496,8 @@
 /* Begin PBXFileReference section */
 		A2132B2D21373FD60030A3C5 /* RaygunEventData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunEventData.h; sourceTree = "<group>"; };
 		A2132B3221373FF90030A3C5 /* RaygunEventData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunEventData.m; sourceTree = "<group>"; };
+		A217796A215496D2003577E8 /* RaygunFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunFileManager.h; sourceTree = "<group>"; };
+		A217796E21549725003577E8 /* RaygunFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunFileManager.m; sourceTree = "<group>"; };
 		A23A1DDD2138A7B90026046C /* RaygunLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunLogger.h; sourceTree = "<group>"; };
 		A23A1DE12138A7D80026046C /* RaygunLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunLogger.m; sourceTree = "<group>"; };
 		A2660FB820FE914F00C12A69 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1111,6 +1119,8 @@
 				A2132B3221373FF90030A3C5 /* RaygunEventData.m */,
 				A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */,
 				A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */,
+				A217796A215496D2003577E8 /* RaygunFileManager.h */,
+				A217796E21549725003577E8 /* RaygunFileManager.m */,
 				DC5EFADC2112AF02002C0713 /* RaygunFrame.h */,
 				DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */,
 				A23A1DDD2138A7B90026046C /* RaygunLogger.h */,
@@ -1211,6 +1221,7 @@
 				A2E4AD0221003DAA0003C8B4 /* KSCrashReport.h in Headers */,
 				A2E4AD8821003DAA0003C8B4 /* KSObjC.h in Headers */,
 				A2E4AD4621003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3621003DAA0003C8B4 /* KSCrashMonitor_User.h in Headers */,
 				A2E4AD1621003DAA0003C8B4 /* KSCrashMonitor.h in Headers */,
 				A2E4AD5621003DAA0003C8B4 /* KSDebug.h in Headers */,
@@ -1314,6 +1325,7 @@
 				A2E4AD0321003DAA0003C8B4 /* KSCrashReport.h in Headers */,
 				A2E4AD8921003DAA0003C8B4 /* KSObjC.h in Headers */,
 				A2E4AD4721003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A217796C215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3721003DAA0003C8B4 /* KSCrashMonitor_User.h in Headers */,
 				A2E4AD1721003DAA0003C8B4 /* KSCrashMonitor.h in Headers */,
 				A2E4AD5721003DAA0003C8B4 /* KSDebug.h in Headers */,
@@ -1353,6 +1365,7 @@
 				DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFA8E210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
+				A217796D215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				DC5EFA67210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
 				A2F38CDF212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2A6D2A92136601700AFC48E /* RaygunEventMessage.h in Headers */,
@@ -1692,6 +1705,7 @@
 				A23A1DE22138A7D80026046C /* RaygunLogger.m in Sources */,
 				A2E4AD0021003DAA0003C8B4 /* KSCrashReport.c in Sources */,
 				A2E4AD2421003DAA0003C8B4 /* KSCrashMonitor_MachException.c in Sources */,
+				A217796F21549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAE92112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				A2E4AD5021003DAA0003C8B4 /* KSDate.c in Sources */,
 				DC5EFAB6211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */,
@@ -1781,6 +1795,7 @@
 				A23A1DE32138A7D80026046C /* RaygunLogger.m in Sources */,
 				A2E4AD0121003DAA0003C8B4 /* KSCrashReport.c in Sources */,
 				A2E4AD2521003DAA0003C8B4 /* KSCrashMonitor_MachException.c in Sources */,
+				A217797021549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAEA2112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				A2E4AD5121003DAA0003C8B4 /* KSDate.c in Sources */,
 				DC5EFAB7211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */,
@@ -1834,6 +1849,7 @@
 				DCD5C2072117E8C3002623B7 /* RaygunNetworkPerformanceMonitor.m in Sources */,
 				A23A1DE42138A7D80026046C /* RaygunLogger.m in Sources */,
 				DC5EFA9D210FFA7A002C0713 /* RaygunMessageDetails.m in Sources */,
+				A217797121549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAEB2112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				DC5EFAEF2112BCF8002C0713 /* RaygunThread.m in Sources */,
 				DCD5C2032117E65C002623B7 /* RaygunRealUserMonitoring.m in Sources */,
