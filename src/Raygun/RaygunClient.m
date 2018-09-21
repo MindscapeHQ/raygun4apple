@@ -33,11 +33,13 @@
 #import "RaygunMessage.h"
 #import "RaygunLogger.h"
 #import "RaygunUserInformation.h"
+#import "RaygunFileManager.h"
 
 @interface RaygunClient()
 
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 @property (nonatomic) bool crashReportingEnabled;
+@property(nonatomic, strong) RaygunFileManager *fileManager;
 
 @end
 
@@ -112,6 +114,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     if ((self = [super init])) {
         sharedApiKey = apiKey;
         _queue       = [[NSOperationQueue alloc] init];
+        _fileManager = [[RaygunFileManager alloc] init];
     }
     return self;
 }
