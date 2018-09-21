@@ -22,7 +22,7 @@ NSInteger const maxCrashReports = 64;
 
 @implementation RaygunFileManager
 
-+ (BOOL)createDirectoryAtPath:(NSString *)path withError:(NSError **)error {
++ (BOOL)createDirectoryAtPath:(NSString *)path withError:(NSError * __autoreleasing *)error {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     return [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error];
 }
