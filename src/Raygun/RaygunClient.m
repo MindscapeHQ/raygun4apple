@@ -202,9 +202,22 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                 [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
             }
             
-            if (response != nil) {
+            if (response == nil) {
+                // A nil response indicates no internet connection so store the message to be sent later.
+                [self.fileManager storeCrashReport:message];
+            }
+            else {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
                 [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                
+                if (httpResponse.statusCode == kRaygunResponseStatusCodeRateLimited) {
+                    // Customers raygun application is being rate limited currently so store the message to be sent later.
+                    [self.fileManager storeCrashReport:message];
+                }
+            }
+
+            if (response != nil) {
+                
             }
         }];
     }
