@@ -10,7 +10,7 @@
 #import "RaygunMessage.h"
 #import "RaygunLogger.h"
 
-NSInteger const maxCrashReports = 64;
+NSInteger const kMaxCrashReports = 64;
 
 @interface RaygunFileManager ()
 
@@ -52,14 +52,14 @@ NSInteger const maxCrashReports = 64;
 }
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message {
-     return [self storeCrashReport:message maxCount:maxCrashReports];
+     return [self storeCrashReport:message maxCount:kMaxCrashReports];
 }
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message maxCount:(NSUInteger)maxCount {
     @synchronized (self) {
         NSString *result = [self storeData:[message convertToJson] toPath:self.crashesPath];
         
-        [self handleFileManagerLimit:self.crashesPath maxCount:MIN(maxCount, maxCrashReports)];
+        [self handleFileManagerLimit:self.crashesPath maxCount:MIN(maxCount, kMaxCrashReports)];
         return result;
     }
 }
