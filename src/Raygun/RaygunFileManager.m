@@ -9,6 +9,7 @@
 
 #import "RaygunMessage.h"
 #import "RaygunLogger.h"
+#import "RaygunFile.h"
 
 NSInteger const kMaxCrashReports = 64;
 
@@ -57,10 +58,9 @@ NSInteger const kMaxCrashReports = 64;
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message maxCount:(NSUInteger)maxCount {
     @synchronized (self) {
-        NSString *result = [self storeData:[message convertToJson] toPath:self.crashesPath];
-        
+        NSString *path = [self storeData:[message convertToJson] toPath:self.crashesPath];
         [self handleFileManagerLimit:self.crashesPath maxCount:MIN(maxCount, kMaxCrashReports)];
-        return result;
+        return path;
     }
 }
 
@@ -77,8 +77,26 @@ NSInteger const kMaxCrashReports = 64;
     return [NSString stringWithFormat:@"%f-%lu-%@.json", [[NSDate date] timeIntervalSince1970], (unsigned long) self.currentFileCounter++, [NSUUID UUID].UUIDString];
 }
 
-- (NSArray<NSString *> *)getAllStoredCrashReports {
-    return [self allFilesInFolder:self.crashesPath];
+- (NSArray<RaygunFile *> *)getAllStoredCrashReports {
+    return [self allContentInFolder:self.crashesPath];
+}
+
+- (NSArray<RaygunFile *> *)allContentInFolder:(NSString *)path {
+    @synchronized (self) {
+        NSMutableArray *contents = [NSMutableArray new];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        for (NSString *filePath in [self allFilesInFolder:path]) {
+            NSString *finalPath = [path stringByAppendingPathComponent:filePath];
+            
+            NSData *content = [fileManager contentsAtPath:finalPath];
+            
+            if (nil != content) {
+                [contents addObject: [[RaygunFile alloc] initWithPath:finalPath withData:content]];
+            }
+        }
+        return contents;
+    }
 }
 
 - (NSArray<NSString *> *)allFilesInFolder:(NSString *)path {
@@ -92,6 +110,7 @@ NSInteger const kMaxCrashReports = 64;
         return [NSArray new];
     }
     
+    // Sort the files to be in order in which to be sent.
     return [storedFiles sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
@@ -114,6 +133,7 @@ NSInteger const kMaxCrashReports = 64;
 - (void)handleFileManagerLimit:(NSString *)path maxCount:(NSUInteger)maxCount {
     NSArray<NSString *> *files = [self allFilesInFolder:path];
     NSInteger numbersOfFilesToRemove = ((NSInteger)files.count) - maxCount;
+    
     if (numbersOfFilesToRemove > 0) {
         for (NSUInteger i = 0; i < numbersOfFilesToRemove; i++) {
             [self removeFileAtPath:[path stringByAppendingPathComponent:[files objectAtIndex:i]]];

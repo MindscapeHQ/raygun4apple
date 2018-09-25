@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RaygunMessage;
+@class RaygunMessage, RaygunFile;
 
 @interface RaygunFileManager : NSObject
 
@@ -18,7 +18,7 @@
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message;
 
-- (NSArray<NSString *> *)getAllStoredCrashReports;
+- (NSArray<RaygunFile *> *)getAllStoredCrashReports;
 
 - (BOOL)removeFileAtPath:(NSString *)path;
 
