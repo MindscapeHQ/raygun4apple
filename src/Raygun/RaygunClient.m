@@ -255,7 +255,6 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
-    userInfo[@"clientVersion"]      = kRaygunClientVersion;
     userInfo[@"applicationVersion"] = _applicationVersion;
     
     if (_userInformation != nil) {

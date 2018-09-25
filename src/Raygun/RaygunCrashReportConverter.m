@@ -138,8 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (RaygunClientMessage *)clientInfoFromCrashReport:(NSDictionary *)report {
-    NSString *clientVersion = report[@"user"][@"clientVersion"];
-    return [[RaygunClientMessage alloc] initWithName:@"Raygun4Apple" withVersion:clientVersion withUrl:@"https://github.com/mindscapehq/raygun4apple"];
+    return [[RaygunClientMessage alloc] initWithName:@"Raygun4Apple" withVersion:kRaygunClientVersion withUrl:@"https://github.com/mindscapehq/raygun4apple"];
 }
 
 - (RaygunEnvironmentMessage *)environmentDetailsFromCrashReport:(NSDictionary *)report {
