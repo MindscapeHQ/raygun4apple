@@ -34,6 +34,7 @@
 #import "RaygunLogger.h"
 #import "RaygunUserInformation.h"
 #import "RaygunFileManager.h"
+#import "RaygunFile.h"
 
 @interface RaygunClient()
 
@@ -133,7 +134,26 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
         
         // Send any outstanding reports.
         [sharedCrashInstallation sendAllReports];
+        
+        [self sendAllStoredCrashReports];
     });
+}
+
+- (void)sendAllStoredCrashReports {
+    NSArray<RaygunFile *> *storedReports = [_fileManager getAllStoredCrashReports];
+    
+    for (RaygunFile *report in storedReports) {
+        [self sendCrashData:report.data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error != nil) {
+                [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
+            }
+            
+            if (response != nil) {
+                // Attempt to send the report only once
+                [self.fileManager removeFileAtPath:report.path];
+            }
+        }];
+    }
 }
 
 - (void)sendException:(NSException *)exception {
