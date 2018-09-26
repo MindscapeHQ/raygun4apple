@@ -92,11 +92,6 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     return _userInformation == nil ? RaygunUserInformation.anonymousUser : _userInformation;
 }
 
-- (void)maxReportsStoredOnDevice:(int)number {
-    _maxReportsStoredOnDevice = number;
-    (KSCrash.sharedInstance).maxReportCount = number;
-}
-
 #pragma mark - Initialising Methods -
 
 + (instancetype)sharedInstance {
@@ -235,7 +230,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
             
             if (response == nil) {
                 // A nil response indicates no internet connection so store the message to be sent later.
-                NSString *path = [self.fileManager storeCrashReport:message];
+                NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:_maxReportsStoredOnDevice];
                 [RaygunLogger logDebug:@"Saving message to %@", path];
             }
             else {
@@ -244,7 +239,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                 
                 if (httpResponse.statusCode == kRaygunResponseStatusCodeRateLimited) {
                     // This application is being rate limited currently so store the message to be sent later.
-                    NSString *path = [self.fileManager storeCrashReport:message];
+                    NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:_maxReportsStoredOnDevice];
                     [RaygunLogger logDebug:@"Saving message to %@", path];
                 }
             }

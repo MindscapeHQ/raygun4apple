@@ -16,7 +16,7 @@
 
 + (BOOL)createDirectoryAtPath:(NSString *)path;
 
-- (NSString *)storeCrashReport:(RaygunMessage *)message;
+- (NSString *)storeCrashReport:(RaygunMessage *)message withMaxReportsStored:(NSUInteger)maxCount;
 
 - (NSArray<RaygunFile *> *)getAllStoredCrashReports;
 
