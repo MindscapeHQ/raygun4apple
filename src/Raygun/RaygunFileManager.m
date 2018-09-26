@@ -32,7 +32,7 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
         result = [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
         
         if (error != nil) {
-            [RaygunLogger logError:@"Failed to create directory at %@: %@", path, error.localizedDescription];
+            [RaygunLogger logError:@"Failed to create folder <%@> due to error: %@", path.lastPathComponent, error.localizedDescription];
         }
     }
     
@@ -60,9 +60,14 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message withMaxReportsStored:(NSUInteger)maxCount {
     @synchronized (self) {
-        NSString *path = [self storeData:[message convertToJson] toPath:self.crashesPath];
-        [self handleFileManagerLimit:self.crashesPath maxCount:MIN(maxCount, kMaxCrashReportsUpperLimit)];
-        return path;
+        BOOL limitReached = [self isFileLimitReachedInFolder:self.crashesPath withMaxCount:MIN(maxCount, kMaxCrashReportsUpperLimit)];
+        if (limitReached) {
+            [RaygunLogger logWarning:@"Failed to store crash report - Reached max crash reports stored on device"];
+            return nil;
+        }
+        else {
+            return [self storeData:[message convertToJson] toPath:self.crashesPath];
+        }
     }
 }
 
@@ -105,7 +110,7 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
     NSArray<NSString *> *storedFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
     
     if (nil != error) {
-        [RaygunLogger logError:@"Couldn't load files in folder %@: %@", path, error];
+        [RaygunLogger logError:@"Failed to load files in folder <%@> due to error: %@", path.lastPathComponent, error];
         return [NSArray new];
     }
     
@@ -119,7 +124,7 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
         [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
         
         if (nil != error) {
-            [RaygunLogger logError:@"Couldn't delete file %@: %@", path, error];
+            [RaygunLogger logError:@"Failed to delete file <%@> due to error: %@", path.lastPathComponent, error];
             return NO;
         }
     }
@@ -127,16 +132,9 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
     return YES;
 }
 
-- (void)handleFileManagerLimit:(NSString *)path maxCount:(NSUInteger)maxCount {
+- (BOOL)isFileLimitReachedInFolder:(NSString *)path withMaxCount:(NSUInteger)maxCount {
     NSArray<NSString *> *files = [self allFilesInFolder:path];
-    NSInteger numbersOfFilesToRemove = ((NSInteger)files.count) - maxCount;
-    
-    if (numbersOfFilesToRemove > 0) {
-        for (NSUInteger i = 0; i < numbersOfFilesToRemove; i++) {
-            [self removeFileAtPath:[path stringByAppendingPathComponent:[files objectAtIndex:i]]];
-        }
-        [RaygunLogger logDebug:@"Removed %ld file(s) from <%@>", (long)numbersOfFilesToRemove, [path lastPathComponent]];
-    }
+    return (NSInteger)files.count >= maxCount;
 }
 
 @end
