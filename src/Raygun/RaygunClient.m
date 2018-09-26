@@ -141,11 +141,9 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     NSArray<RaygunFile *> *storedReports = [_fileManager getAllStoredCrashReports];
     
     for (RaygunFile *report in storedReports) {
-        [RaygunLogger logDebug:@"Attempting to send message %@", report.path];
-        
         [self sendCrashData:report.data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error != nil) {
-                [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
+                [RaygunLogger logError:@"Failed to send stored crash report due to error: %@", error.localizedDescription];
             }
             
             if (response != nil) {
@@ -183,7 +181,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                                   logAllThreads:NO
                                terminateProgram:NO];
     
-    [RaygunLogger logDebug:@"Attempting to send manual crash report"];
+    [RaygunLogger logDebug:@"Attempting to send a manual crash report"];
     [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
 }
 
@@ -225,13 +223,15 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     if (send) {
         [self sendCrashData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (error) {
-                [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
+                [RaygunLogger logError:@"Failed to send crash report due to error: %@", error.localizedDescription];
             }
             
             if (response == nil) {
                 // A nil response indicates no internet connection so store the message to be sent later.
-                NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
-                [RaygunLogger logDebug:@"Saving message to %@", path];
+                NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:_maxReportsStoredOnDevice];
+                if (path) {
+                    [RaygunLogger logDebug:@"Saved crash report to %@", path];
+                }
             }
             else {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -239,8 +239,10 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                 
                 if (httpResponse.statusCode == kRaygunResponseStatusCodeRateLimited) {
                     // This application is being rate limited currently so store the message to be sent later.
-                    NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
-                    [RaygunLogger logDebug:@"Saving message to %@", path];
+                    NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:_maxReportsStoredOnDevice];
+                    if (path) {
+                        [RaygunLogger logDebug:@"Saved crash report to %@", path];
+                    }
                 }
             }
         }];
