@@ -23,29 +23,35 @@ NSInteger const kMaxCrashReports = 64;
 
 @implementation RaygunFileManager
 
-+ (BOOL)createDirectoryAtPath:(NSString *)path withError:(NSError * __autoreleasing *)error {
++ (BOOL)createDirectoryAtPath:(NSString *)path {
+    BOOL result = YES;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    return [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error];
+    
+    if (![fileManager fileExistsAtPath:path]) {
+        NSError *error = nil;
+        result = [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+        
+        if (error != nil) {
+            [RaygunLogger logError:@"Failed to create directory at %@: %@", path, error.localizedDescription];
+        }
+    }
+    
+    return result;
 }
 
 - (_Nullable instancetype)init {
     self = [super init];
     if (self) {
-        // Get a hold of the file manager and the main directory to hold our files.
-        NSFileManager *fileManager = [NSFileManager defaultManager];
+        // Locate the cache folder
         NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
         
-        // Create directory to hold all folders
+        // Create the directory to hold all folders
         self.raygunPath = [cachePath stringByAppendingPathComponent:@"com.raygun"];
-        if (![fileManager fileExistsAtPath:self.raygunPath]) {
-            [self.class createDirectoryAtPath:self.raygunPath withError:nil];
-        }
+        [self.class createDirectoryAtPath:self.raygunPath];
         
-        // Create directory to hold all the crash reports.
+        // Create the directory to hold all of the crash reports.
         self.crashesPath = [self.raygunPath stringByAppendingPathComponent:@"crashes"];
-        if (![fileManager fileExistsAtPath:self.raygunPath]) {
-            [self.class createDirectoryAtPath:self.raygunPath withError:nil];
-        }
+        [self.class createDirectoryAtPath:self.crashesPath];
         
         self.currentFileCounter = 0;
     }
@@ -67,7 +73,6 @@ NSInteger const kMaxCrashReports = 64;
 - (NSString *)storeData:(NSData *)data toPath:(NSString *)path {
     @synchronized (self) {
         NSString *finalPath = [path stringByAppendingPathComponent:[self uniqueAcendingJsonName]];
-        [RaygunLogger logDebug:@"Saving message to disk: %@", finalPath];
         [data writeToFile:finalPath options:NSDataWritingAtomic error:nil];
         return finalPath;
     }
@@ -100,13 +105,11 @@ NSInteger const kMaxCrashReports = 64;
 }
 
 - (NSArray<NSString *> *)allFilesInFolder:(NSString *)path {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
     NSError *error = nil;
-    NSArray<NSString *> *storedFiles = [fileManager contentsOfDirectoryAtPath:path error:&error];
+    NSArray<NSString *> *storedFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
     
     if (nil != error) {
-        [RaygunLogger logWarning:@"Couldn't load files in folder %@: %@", path, error];
+        [RaygunLogger logError:@"Couldn't load files in folder %@: %@", path, error];
         return [NSArray new];
     }
     
@@ -115,14 +118,12 @@ NSInteger const kMaxCrashReports = 64;
 }
 
 - (BOOL)removeFileAtPath:(NSString *)path {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error = nil;
-    
     @synchronized (self) {
-        [fileManager removeItemAtPath:path error:&error];
+        NSError *error = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
         
         if (nil != error) {
-            [RaygunLogger logWarning:@"Couldn't delete file %@: %@", path, error];
+            [RaygunLogger logError:@"Couldn't delete file %@: %@", path, error];
             return NO;
         }
     }

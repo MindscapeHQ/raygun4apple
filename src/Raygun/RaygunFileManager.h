@@ -14,7 +14,7 @@
 
 @interface RaygunFileManager : NSObject
 
-+ (BOOL)createDirectoryAtPath:(NSString *)path withError:(NSError **)error;
++ (BOOL)createDirectoryAtPath:(NSString *)path;
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message;
 
