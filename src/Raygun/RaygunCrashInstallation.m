@@ -41,6 +41,7 @@
 }
 
 - (void)sendAllReports {
+    [RaygunLogger logDebug:@"Attempting to send new crash reports"];
     [super sendAllReportsWithCompletion:nil];
 }
 
@@ -54,7 +55,7 @@
             [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
         }
         
-        [RaygunLogger logDebug:@"Sent %lu crash report(s)", (unsigned long)filteredReports.count];
+        [RaygunLogger logDebug:@"Attempted to send %lu new crash report(s)", (unsigned long)filteredReports.count];
         if (completed && onCompletion) {
             onCompletion(filteredReports, completed, error);
         }
