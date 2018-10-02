@@ -92,7 +92,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (void)enableNetworkPerformanceMonitoring {
     if (!_enabled) {
-        [RaygunLogger logError:@"RUM must be enabled before enabling network performance monitoring"];
+        [RaygunLogger logWarning:@"RUM must be enabled before enabling network performance monitoring"];
         return;
     }
     [_networkMonitor enable];
@@ -224,23 +224,9 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:[NSString stringWithFormat:@"Error sending: %@", error.localizedDescription]];
+            [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
         }
     }];
-}
-
-- (NSString *)operatingSystemName {
-#if RAYGUN_CAN_USE_UIDEVICE
-    NSString *systemName = [UIDevice currentDevice].systemName;
-    if ([systemName isEqualToString:@"iPhone OS"]) {
-        return @"iOS";
-    }
-    else {
-        return systemName;
-    }
-#else
-    return @"macOS";
-#endif
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
@@ -250,6 +236,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
     
     if (IsNullOrEmpty(name) || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
+        [RaygunLogger logError:@"Failed to send timing event - invalid timing name"];
         return;
     }
     
@@ -274,7 +261,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];
+            [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
         }
         
         if (response != nil) {
@@ -303,6 +290,20 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
     [dataTask resume];
+}
+
+- (NSString *)operatingSystemName {
+#if RAYGUN_CAN_USE_UIDEVICE
+    NSString *systemName = [UIDevice currentDevice].systemName;
+    if ([systemName isEqualToString:@"iPhone OS"]) {
+        return @"iOS";
+    }
+    else {
+        return systemName;
+    }
+#else
+    return @"macOS";
+#endif
 }
 
 - (NSString *)currentTime {

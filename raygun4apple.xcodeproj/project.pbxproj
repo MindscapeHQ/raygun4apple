@@ -52,6 +52,12 @@
 		A2132B3321373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
 		A2132B3421373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
 		A2132B3521373FF90030A3C5 /* RaygunEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = A2132B3221373FF90030A3C5 /* RaygunEventData.m */; };
+		A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796C215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796D215496D2003577E8 /* RaygunFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A217796A215496D2003577E8 /* RaygunFileManager.h */; };
+		A217796F21549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
+		A217797021549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
+		A217797121549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
 		A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DDF2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DE02138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
@@ -76,6 +82,12 @@
 		A2A6D2AB2136603200AFC48E /* RaygunEventMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */; };
 		A2A6D2AC2136603200AFC48E /* RaygunEventMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */; };
 		A2A6D2AD2136603200AFC48E /* RaygunEventMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */; };
+		A2D549E92159F581006859AA /* RaygunFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A2D549E82159F581006859AA /* RaygunFile.h */; };
+		A2D549EA2159F581006859AA /* RaygunFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A2D549E82159F581006859AA /* RaygunFile.h */; };
+		A2D549EB2159F581006859AA /* RaygunFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A2D549E82159F581006859AA /* RaygunFile.h */; };
+		A2D549ED2159F63A006859AA /* RaygunFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A2D549EC2159F63A006859AA /* RaygunFile.m */; };
+		A2D549EE2159F63A006859AA /* RaygunFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A2D549EC2159F63A006859AA /* RaygunFile.m */; };
+		A2D549EF2159F63A006859AA /* RaygunFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A2D549EC2159F63A006859AA /* RaygunFile.m */; };
 		A2E4ABDB20FFFA2D0003C8B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E4ABDA20FFFA1B0003C8B4 /* libz.tbd */; };
 		A2E4ABDD20FFFB000003C8B4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E4ABDC20FFFB000003C8B4 /* libc++.tbd */; };
 		A2E4ACC421003DAA0003C8B4 /* KSCrashInstallation+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC0621003DA90003C8B4 /* KSCrashInstallation+Private.h */; };
@@ -490,6 +502,8 @@
 /* Begin PBXFileReference section */
 		A2132B2D21373FD60030A3C5 /* RaygunEventData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunEventData.h; sourceTree = "<group>"; };
 		A2132B3221373FF90030A3C5 /* RaygunEventData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunEventData.m; sourceTree = "<group>"; };
+		A217796A215496D2003577E8 /* RaygunFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunFileManager.h; sourceTree = "<group>"; };
+		A217796E21549725003577E8 /* RaygunFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunFileManager.m; sourceTree = "<group>"; };
 		A23A1DDD2138A7B90026046C /* RaygunLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunLogger.h; sourceTree = "<group>"; };
 		A23A1DE12138A7D80026046C /* RaygunLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunLogger.m; sourceTree = "<group>"; };
 		A2660FB820FE914F00C12A69 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -508,6 +522,8 @@
 		A29FFFFE213C945600A0018F /* UIViewController+RaygunRUM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RaygunRUM.m"; sourceTree = "<group>"; };
 		A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunEventMessage.h; sourceTree = "<group>"; };
 		A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunEventMessage.m; sourceTree = "<group>"; };
+		A2D549E82159F581006859AA /* RaygunFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunFile.h; sourceTree = "<group>"; };
+		A2D549EC2159F63A006859AA /* RaygunFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunFile.m; sourceTree = "<group>"; };
 		A2E4ABD920FFF96E0003C8B4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		A2E4ABDA20FFFA1B0003C8B4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		A2E4ABDC20FFFB000003C8B4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
@@ -1111,6 +1127,10 @@
 				A2132B3221373FF90030A3C5 /* RaygunEventData.m */,
 				A2A6D2A62136601700AFC48E /* RaygunEventMessage.h */,
 				A2A6D2AA2136603200AFC48E /* RaygunEventMessage.m */,
+				A2D549E82159F581006859AA /* RaygunFile.h */,
+				A2D549EC2159F63A006859AA /* RaygunFile.m */,
+				A217796A215496D2003577E8 /* RaygunFileManager.h */,
+				A217796E21549725003577E8 /* RaygunFileManager.m */,
 				DC5EFADC2112AF02002C0713 /* RaygunFrame.h */,
 				DC5EFAE82112BCAC002C0713 /* RaygunFrame.m */,
 				A23A1DDD2138A7B90026046C /* RaygunLogger.h */,
@@ -1211,6 +1231,7 @@
 				A2E4AD0221003DAA0003C8B4 /* KSCrashReport.h in Headers */,
 				A2E4AD8821003DAA0003C8B4 /* KSObjC.h in Headers */,
 				A2E4AD4621003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3621003DAA0003C8B4 /* KSCrashMonitor_User.h in Headers */,
 				A2E4AD1621003DAA0003C8B4 /* KSCrashMonitor.h in Headers */,
 				A2E4AD5621003DAA0003C8B4 /* KSDebug.h in Headers */,
@@ -1223,6 +1244,7 @@
 				A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
 				A2E4ADAE21003DAA0003C8B4 /* KSThread.h in Headers */,
 				A2E4AD3021003DAA0003C8B4 /* KSCrashMonitor_System.h in Headers */,
+				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7E21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
 				A2E4AD1221003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */,
 				A2E4ACF021003DAA0003C8B4 /* KSCrash.h in Headers */,
@@ -1314,6 +1336,7 @@
 				A2E4AD0321003DAA0003C8B4 /* KSCrashReport.h in Headers */,
 				A2E4AD8921003DAA0003C8B4 /* KSObjC.h in Headers */,
 				A2E4AD4721003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A217796C215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3721003DAA0003C8B4 /* KSCrashMonitor_User.h in Headers */,
 				A2E4AD1721003DAA0003C8B4 /* KSCrashMonitor.h in Headers */,
 				A2E4AD5721003DAA0003C8B4 /* KSDebug.h in Headers */,
@@ -1326,6 +1349,7 @@
 				A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
 				A2E4ADAF21003DAA0003C8B4 /* KSThread.h in Headers */,
 				A2E4AD3121003DAA0003C8B4 /* KSCrashMonitor_System.h in Headers */,
+				A2D549EA2159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7F21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
 				A2E4AD1321003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */,
 				A2E4ACF121003DAA0003C8B4 /* KSCrash.h in Headers */,
@@ -1353,6 +1377,8 @@
 				DC5EFAF72113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFADF2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFA8E210FFA7A002C0713 /* RaygunErrorMessage.h in Headers */,
+				A217796D215496D2003577E8 /* RaygunFileManager.h in Headers */,
+				A2D549EB2159F581006859AA /* RaygunFile.h in Headers */,
 				DC5EFA67210FFA7A002C0713 /* RaygunEnvironmentMessage.h in Headers */,
 				A2F38CDF212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2A6D2A92136601700AFC48E /* RaygunEventMessage.h in Headers */,
@@ -1615,7 +1641,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"";
+			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS} -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"\n";
 		};
 		A266102E20FEE0C600C12A69 /* Make Universal Library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1629,7 +1655,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"FULL_VERSION\"\n\nUNIVERSAL_TARGET=\"tvOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"appletvos\"\nDEVICE_SIMULATOR=\"appletvsimulator\"\n\n# Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 6. Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# KKM - Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"";
+			shellScript = "#!/bin/sh\n\n# Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"FULL_VERSION\"\n\nUNIVERSAL_TARGET=\"tvOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"appletvos\"\nDEVICE_SIMULATOR=\"appletvsimulator\"\n\n# Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS} -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 6. Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# KKM - Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"\n";
 		};
 		DC5EFA43210E81C7002C0713 /* Make Universal Library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1643,7 +1669,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"FULL_VERSION\"\n\nUNIVERSAL_TARGET=\"macOS\"\nDEVICE_OS=\"macosx\"\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\n\n# Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\n\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 3. Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"";
+			shellScript = "#!/bin/sh\n\n# Define Macros\nRELEASE_TYPE=\"\"\nFRAMEWORK_VERSION=\"FULL_VERSION\"\n\nUNIVERSAL_TARGET=\"macOS\"\nDEVICE_OS=\"macosx\"\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\n\n# Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS} -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OTHER_SWIFT_FLAGS=\"-D ${FRAMEWORK_VERSION}\" clean build\n\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 3. Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1677,6 +1703,7 @@
 				A2E4ADA021003DAA0003C8B4 /* KSString.c in Sources */,
 				A2F38CDC212FAEA5008346D9 /* RaygunCrashReportCustomSink.m in Sources */,
 				A2E4AD2221003DAA0003C8B4 /* KSCrashMonitor_Deadlock.m in Sources */,
+				A2D549ED2159F63A006859AA /* RaygunFile.m in Sources */,
 				A2E4AD8C21003DAA0003C8B4 /* KSSignalInfo.c in Sources */,
 				A2E4ADC021003DAA0003C8B4 /* KSCrashReportFilterBasic.m in Sources */,
 				A2E4AD0A21003DAA0003C8B4 /* KSCrashReportStore.c in Sources */,
@@ -1692,6 +1719,7 @@
 				A23A1DE22138A7D80026046C /* RaygunLogger.m in Sources */,
 				A2E4AD0021003DAA0003C8B4 /* KSCrashReport.c in Sources */,
 				A2E4AD2421003DAA0003C8B4 /* KSCrashMonitor_MachException.c in Sources */,
+				A217796F21549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAE92112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				A2E4AD5021003DAA0003C8B4 /* KSDate.c in Sources */,
 				DC5EFAB6211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */,
@@ -1766,6 +1794,7 @@
 				DC5EFAA72110141C002C0713 /* RaygunCrashInstallation.m in Sources */,
 				A2F38CE0212FB363008346D9 /* RaygunCrashReportCustomSink.m in Sources */,
 				A2E4ADA121003DAA0003C8B4 /* KSString.c in Sources */,
+				A2D549EE2159F63A006859AA /* RaygunFile.m in Sources */,
 				A2E4AD2321003DAA0003C8B4 /* KSCrashMonitor_Deadlock.m in Sources */,
 				A2E4AD8D21003DAA0003C8B4 /* KSSignalInfo.c in Sources */,
 				A2E4ADC121003DAA0003C8B4 /* KSCrashReportFilterBasic.m in Sources */,
@@ -1781,6 +1810,7 @@
 				A23A1DE32138A7D80026046C /* RaygunLogger.m in Sources */,
 				A2E4AD0121003DAA0003C8B4 /* KSCrashReport.c in Sources */,
 				A2E4AD2521003DAA0003C8B4 /* KSCrashMonitor_MachException.c in Sources */,
+				A217797021549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAEA2112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				A2E4AD5121003DAA0003C8B4 /* KSDate.c in Sources */,
 				DC5EFAB7211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */,
@@ -1834,12 +1864,14 @@
 				DCD5C2072117E8C3002623B7 /* RaygunNetworkPerformanceMonitor.m in Sources */,
 				A23A1DE42138A7D80026046C /* RaygunLogger.m in Sources */,
 				DC5EFA9D210FFA7A002C0713 /* RaygunMessageDetails.m in Sources */,
+				A217797121549725003577E8 /* RaygunFileManager.m in Sources */,
 				DC5EFAEB2112BCAC002C0713 /* RaygunFrame.m in Sources */,
 				DC5EFAEF2112BCF8002C0713 /* RaygunThread.m in Sources */,
 				DCD5C2032117E65C002623B7 /* RaygunRealUserMonitoring.m in Sources */,
 				DC5EFAFB2113C29B002C0713 /* RaygunBinaryImage.m in Sources */,
 				DC5EFA79210FFA7A002C0713 /* RaygunMessage.m in Sources */,
 				DC5EFA76210FFA7A002C0713 /* RaygunErrorMessage.m in Sources */,
+				A2D549EF2159F63A006859AA /* RaygunFile.m in Sources */,
 				DC5EFAB8211148AA002C0713 /* RaygunCrashReportConverter.m in Sources */,
 				DC5EFA7C210FFA7A002C0713 /* RaygunClient.m in Sources */,
 				DC5EFAB021101C95002C0713 /* RaygunCrashReportSink.m in Sources */,
@@ -1901,7 +1933,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = marker;
-				CURRENT_PROJECT_VERSION = 1.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.4;
+				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_Debug";
 				OTHER_CFLAGS = "-fembed-bitcode-marker";
 				SDKROOT = iphoneos;
 			};
@@ -1911,7 +1944,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
-				CURRENT_PROJECT_VERSION = 1.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.4;
+				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode";
 				SDKROOT = iphoneos;
 			};
