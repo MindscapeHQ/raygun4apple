@@ -10,8 +10,7 @@
 #import "RaygunMessage.h"
 #import "RaygunLogger.h"
 #import "RaygunFile.h"
-
-NSInteger const kMaxCrashReportsUpperLimit = 64;
+#import "RaygunDefines.h"
 
 @interface RaygunFileManager ()
 
@@ -60,7 +59,7 @@ NSInteger const kMaxCrashReportsUpperLimit = 64;
 
 - (NSString *)storeCrashReport:(RaygunMessage *)message withMaxReportsStored:(NSUInteger)maxCount {
     @synchronized (self) {
-        BOOL limitReached = [self isFileLimitReachedInFolder:self.crashesPath withMaxCount:MIN(maxCount, kMaxCrashReportsUpperLimit)];
+        BOOL limitReached = [self isFileLimitReachedInFolder:self.crashesPath withMaxCount:MIN(maxCount, kMaxCrashReportsOnDeviceUpperLimit)];
         if (limitReached) {
             [RaygunLogger logWarning:@"Failed to store crash report - Reached max crash reports stored on device"];
             return nil;
