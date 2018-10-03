@@ -49,7 +49,8 @@ static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun
 static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
 static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
 
-static double kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
+static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
+static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
 
 @class RaygunMessage;
 

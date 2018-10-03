@@ -112,6 +112,8 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
         sharedApiKey = apiKey;
         _queue       = [[NSOperationQueue alloc] init];
         _fileManager = [[RaygunFileManager alloc] init];
+        
+        self.maxReportsStoredOnDevice = kMaxCrashReportsOnDeviceUpperLimit;
     }
     return self;
 }
