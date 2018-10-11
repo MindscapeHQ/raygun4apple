@@ -26,24 +26,25 @@
 
 #import "RaygunMessageDetails.h"
 
-#import "RaygunDefines.h"
 #import "RaygunClientMessage.h"
 #import "RaygunEnvironmentMessage.h"
 #import "RaygunErrorMessage.h"
 #import "RaygunUserInformation.h"
 #import "RaygunThread.h"
 #import "RaygunBinaryImage.h"
+#import "RaygunBreadcrumb.h"
+#import "RaygunUtils.h"
 
 @implementation RaygunMessageDetails
 
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"version": _version }];
     
-    if (!IsNullOrEmpty(_groupingKey)) {
+    if (![RaygunUtils IsNullOrEmpty:_groupingKey]) {
         dict[@"groupingKey"] = _groupingKey;
     }
     
-    if (!IsNullOrEmpty(_machineName)) {
+    if (![RaygunUtils IsNullOrEmpty:_machineName]) {
         dict[@"machineName"] = _machineName;
     }
     
@@ -63,15 +64,15 @@
         dict[@"user"] = [_user convertToDictionary];
     }
     
-    if (!IsNullOrEmpty(_tags)) {
+    if (![RaygunUtils IsNullOrEmpty:_tags]) {
         dict[@"tags"] = _tags;
     }
     
-    if (!IsNullOrEmpty(_customData)) {
+    if (![RaygunUtils IsNullOrEmpty:_customData]) {
         dict[@"userCustomData"] = _customData;
     }
     
-    if (!IsNullOrEmpty(_threads)) {
+    if (![RaygunUtils IsNullOrEmpty:_threads]) {
         NSMutableArray *threads = [NSMutableArray new];
         for (RaygunThread *thread in _threads) {
             [threads addObject:[thread convertToDictionary]];
@@ -79,7 +80,7 @@
         dict[@"threads"] = threads;
     }
     
-    if (!IsNullOrEmpty(_binaryImages)) {
+    if (![RaygunUtils IsNullOrEmpty:_binaryImages ]) {
         NSMutableArray *binaryImages = [NSMutableArray new];
         for (RaygunBinaryImage *binaryImage in _binaryImages) {
             [binaryImages addObject:[binaryImage convertToDictionary]];

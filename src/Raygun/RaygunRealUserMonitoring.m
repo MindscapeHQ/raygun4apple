@@ -36,6 +36,7 @@
 #import "RaygunEventData.h"
 #import "RaygunClient.h"
 #import "RaygunLogger.h"
+#import "RaygunUtils.h"
 
 @interface RaygunRealUserMonitoring()
 
@@ -212,7 +213,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     uname(&systemInfo);
     
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
-        message.occurredOn      = [self currentTime];
+        message.occurredOn      = [RaygunUtils currentDateTime];
         message.sessionId       = self.sessionId;
         message.eventType       = eventType;
         message.userInformation = userInformation;
@@ -235,7 +236,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
-    if (IsNullOrEmpty(name) || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
+    if ([RaygunUtils IsNullOrEmpty:name] || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
         [RaygunLogger logError:@"Failed to send timing event - invalid timing name"];
         return;
     }
@@ -248,7 +249,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     uname(&systemInfo);
     
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
-        message.occurredOn      = [self currentTime];
+        message.occurredOn      = [RaygunUtils currentDateTime];
         message.sessionId       = self.sessionId;
         message.eventType       = kRaygunEventTypeTiming;
         message.userInformation = self.currentSessionUserInformation;
@@ -306,19 +307,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #endif
 }
 
-- (NSString *)currentTime {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone        *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-    
-    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    dateFormatter.timeZone = utcTimeZone;
-    
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    dateFormatter.locale = locale;
-    
-    return [dateFormatter stringFromDate:[NSDate date]];
-}
-
 - (NSString *)bundleVersion {
     NSDictionary *infoDict  = [NSBundle mainBundle].infoDictionary;
     NSString *version       = infoDict[@"CFBundleShortVersionString"];
@@ -345,7 +333,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled || IsNullOrEmpty(viewName)) {
+    if (!_enabled || [RaygunUtils IsNullOrEmpty:viewName]) {
         return YES;
     }
     

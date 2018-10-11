@@ -26,8 +26,8 @@
 
 #import "RaygunThread.h"
 
-#import "RaygunDefines.h"
 #import "RaygunFrame.h"
+#import "RaygunUtils.h"
 
 @implementation RaygunThread
 
@@ -44,7 +44,7 @@
     dict[@"crashed"] = _crashed ? @YES : @NO;
     dict[@"current"] = _current ? @YES : @NO;
     
-    if (!IsNullOrEmpty(_name)) {
+    if (![RaygunUtils IsNullOrEmpty:_name]) {
         dict[@"name"] = _name;
     }
     
