@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RaygunClientMessage, RaygunEnvironmentMessage, RaygunErrorMessage, RaygunUserInformation, RaygunThread, RaygunBinaryImage;
+@class RaygunClientMessage, RaygunEnvironmentMessage, RaygunErrorMessage, RaygunUserInformation, RaygunThread, RaygunBinaryImage, RaygunBreadcrumb;
 
 @interface RaygunMessageDetails : NSObject
 
@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSDictionary *customData;
 @property (nonatomic, strong) NSArray<RaygunThread *> *threads;
 @property (nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
+@property (nonatomic, strong) NSArray<RaygunBreadcrumb *> *breadcrumbs;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

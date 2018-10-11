@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 #import "RaygunDefines.h"
 
-@class RaygunUserInformation, RaygunMessage;
+@class RaygunUserInformation, RaygunMessage, RaygunBreadcrumb;
 
 @interface RaygunClient : NSObject
 
@@ -46,6 +46,8 @@
 @property (nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
 
 @property (nonatomic, assign) int maxReportsStoredOnDevice;
+
+@property (nonatomic, readonly, copy) NSArray<RaygunBreadcrumb *> *breadcrumbs;
 
 + (instancetype)sharedInstance;
 
@@ -72,6 +74,12 @@
 - (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
 
 - (void)sendMessage:(RaygunMessage *)message;
+
+- (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb;
+
+- (void)recordBreadcrumb:(NSString *)message withCategory:(NSString *)category withLevel:(RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData;
+
+- (void)clearBreadcrumbs;
 
 // Real User Monitoring (RUM)
 

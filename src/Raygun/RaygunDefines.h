@@ -117,10 +117,27 @@ typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {
     kRaygunResponseStatusCodeRateLimited   = 429,
 };
 
-static inline BOOL IsNullOrEmpty(id _Nullable thing) {
-    return thing == nil || ([thing respondsToSelector:@selector(length)] && ((NSData *)thing).length == 0)
-                        || ([thing respondsToSelector:@selector(count)] && ((NSArray *)thing).count == 0);
-}
+typedef NS_ENUM(NSInteger, RaygunBreadcrumbType) {
+    kRaygunBreadcrumbTypeManual = 0,
+};
+
+static NSString *_Nonnull const RaygunBreadcrumbTypeNames[] = {
+    @"manual"
+};
+
+typedef NS_ENUM(NSInteger, RaygunBreadcrumbLevel) {
+    kRaygunBreadcrumbLevelDebug = 0,
+    kRaygunBreadcrumbLevelInfo,
+    kRaygunBreadcrumbLevelWarning,
+    kRaygunBreadcrumbLevelError
+};
+
+static NSString *_Nonnull const RaygunBreadcrumbLevelNames[] = {
+    @"debug",
+    @"info",
+    @"warning",
+    @"error"
+};
 
 #endif /* RaygunDefines_h */
 

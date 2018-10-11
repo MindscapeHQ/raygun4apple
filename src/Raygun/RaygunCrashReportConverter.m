@@ -40,6 +40,7 @@
 #import "RaygunBinaryImage.h"
 #import "RaygunFrame.h"
 #import "RaygunThread.h"
+#import "RaygunBreadcrumb.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -105,6 +106,10 @@ NS_ASSUME_NONNULL_BEGIN
     #if RAYGUN_CAN_USE_UIDEVICE
     details.machineName = [UIDevice currentDevice].name;
     #endif
+    
+    // Breadcrumbs
+    NSArray<RaygunBreadcrumb *> *breadcrumbs = [self breadcrumbsFromCrashReport:report];
+    details.breadcrumbs = breadcrumbs;
     
     // User, Tags & Custom Data
     NSDictionary *userData = report[@"user"];
@@ -342,6 +347,19 @@ NS_ASSUME_NONNULL_BEGIN
         frame.symbolName = frameData[@"symbol_name"];
     }
     return frame;
+}
+
+- (NSArray<RaygunBreadcrumb *> *)breadcrumbsFromCrashReport:(NSDictionary *)report {
+    NSMutableArray *reportBreadcrumbs = [NSMutableArray new];
+    NSArray *userBreadcrumbs = report[@"user"][@"breadcrumbs"];
+    
+    if (userBreadcrumbs != nil) {
+        for (NSDictionary *crumb in userBreadcrumbs) {
+            [reportBreadcrumbs addObject:[RaygunBreadcrumb breadcrumbWithInformation:crumb]];
+        }
+    }
+    
+    return reportBreadcrumbs;
 }
 
 @end

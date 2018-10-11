@@ -88,6 +88,14 @@
         dict[@"binaryImages"] = binaryImages;
     }
     
+    if (![RaygunUtils IsNullOrEmpty:_breadcrumbs]) {
+        NSMutableArray *breadcrumbs = [NSMutableArray new];
+        for (RaygunBreadcrumb *breadcrumb in _breadcrumbs) {
+            [breadcrumbs addObject:[breadcrumb convertToDictionary]];
+        }
+        dict[@"breadcrumbs"] = breadcrumbs;
+    }
+    
     return dict;
 }
 
