@@ -83,7 +83,7 @@
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
-               description:@"Breacrumb must have a valid occurred on time stamp"];
+               description:@"Breacrumb time stamp cannot be nil"];
         return NO;
     }
     
