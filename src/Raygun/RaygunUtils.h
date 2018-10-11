@@ -1,0 +1,23 @@
+//
+//  RaygunUtils.h
+//  raygun4apple
+//
+//  Created by Mitchell Duncan on 10/10/18.
+//
+
+#ifndef RaygunUtils_h
+#define RaygunUtils_h
+
+#import <Foundation/Foundation.h>
+
+@interface RaygunUtils : NSObject
+
++ (BOOL)IsNullOrEmpty:(id _Nullable)thing;
+
++ (NSString *)currentTimeStamp;
+
++ (NSNumber *)timeSinceEpochInMilliseconds;
+
+@end
+
+#endif /* RaygunUtils_h */
