@@ -40,7 +40,7 @@
         breadcrumb.category   = information[@"category"];
         breadcrumb.level      = [RaygunBreadcrumb levelEnumFromString:information[@"level"]];
         breadcrumb.type       = [RaygunBreadcrumb typeEnumFromString:information[@"type"]];
-        breadcrumb.timestamp  = information[@"timeStamp"];
+        breadcrumb.timestamp  = information[@"timestamp"];
         breadcrumb.className  = information[@"className"];
         breadcrumb.methodName = information[@"methodName"];
         breadcrumb.lineNumber = information[@"lineNumber"];
@@ -96,7 +96,7 @@
     dict[@"message"]   = _message;
     dict[@"level"]     = RaygunBreadcrumbLevelNames[_level];
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
-    dict[@"timeStamp"] = @([_timestamp longValue]);
+    dict[@"timestamp"] = @([_timestamp longValue]);
     
     if (![RaygunUtils IsNullOrEmpty:_category]) {
         dict[@"category"] = _category;
