@@ -646,7 +646,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>Readme.rtf</string>
+							<string>Changelog.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -661,7 +661,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>raygun4apple 1.0.5</string>
+						<string>raygun4apple 1.1.0</string>
 					</dict>
 				</array>
 			</dict>
