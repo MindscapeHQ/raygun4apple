@@ -40,7 +40,7 @@ typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
 /**
  Milliseconds since the Unix Epoch (required)
  */
-@property (nonatomic, copy) NSNumber *occurredOn;
+@property (nonatomic, copy) NSNumber *timeStamp;
 
 /**
  If relevant, a class name from where the breadcrumb was recorded

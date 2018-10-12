@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         // Set default values
-        _occurredOn = [RaygunUtils timeSinceEpochInMilliseconds];
+        _timeStamp = [RaygunUtils timeSinceEpochInMilliseconds];
         _type = kRaygunBreadcrumbTypeManual;
         
         block(self);
@@ -40,7 +40,7 @@
         breadcrumb.category   = information[@"category"];
         breadcrumb.level      = [RaygunBreadcrumb levelEnumFromString:information[@"level"]];
         breadcrumb.type       = [RaygunBreadcrumb typeEnumFromString:information[@"type"]];
-        breadcrumb.occurredOn = information[@"timeStamp"];
+        breadcrumb.timeStamp  = information[@"timeStamp"];
         breadcrumb.className  = information[@"className"];
         breadcrumb.methodName = information[@"methodName"];
         breadcrumb.lineNumber = information[@"lineNumber"];
@@ -79,7 +79,7 @@
         return NO;
     }
     
-    if (breadcrumb.occurredOn == nil) {
+    if (breadcrumb.timeStamp == nil) {
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
@@ -96,7 +96,7 @@
     dict[@"message"]   = _message;
     dict[@"level"]     = RaygunBreadcrumbLevelNames[_level];
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
-    dict[@"timeStamp"] = @([_occurredOn longValue]);
+    dict[@"timeStamp"] = @([_timeStamp longValue]);
     
     if (![RaygunUtils IsNullOrEmpty:_category]) {
         dict[@"category"] = _category;
