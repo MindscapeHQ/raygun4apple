@@ -280,7 +280,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     
     NSMutableArray<NSDictionary *> *userBreadcrumbs = [[NSMutableArray alloc] init];
     
-    if (![RaygunUtils IsNullOrEmpty:_mutableBreadcrumbs]) {
+    if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
         for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
             [userBreadcrumbs addObject:[crumb convertToDictionary]];
         }

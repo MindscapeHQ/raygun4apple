@@ -12,7 +12,7 @@
 
 @interface RaygunUtils : NSObject
 
-+ (BOOL)IsNullOrEmpty:(id _Nullable)thing;
++ (BOOL)isNullOrEmpty:(id _Nullable)thing;
 
 + (NSString *)currentDateTime;
 

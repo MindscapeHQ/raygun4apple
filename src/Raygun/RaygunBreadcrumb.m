@@ -98,15 +98,15 @@
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
     dict[@"timestamp"] = @([_timestamp longValue]);
     
-    if (![RaygunUtils IsNullOrEmpty:_category]) {
+    if (![RaygunUtils isNullOrEmpty:_category]) {
         dict[@"category"] = _category;
     }
 
-    if (![RaygunUtils IsNullOrEmpty:_className]) {
+    if (![RaygunUtils isNullOrEmpty:_className]) {
         dict[@"className"] = _className;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_methodName]) {
+    if (![RaygunUtils isNullOrEmpty:_methodName]) {
         dict[@"methodName"] = _methodName;
     }
     
@@ -114,7 +114,7 @@
         dict[@"lineNumber"] = _lineNumber;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_customData]) {
+    if (![RaygunUtils isNullOrEmpty:_customData]) {
         dict[@"customData"] = _customData;
     }
     

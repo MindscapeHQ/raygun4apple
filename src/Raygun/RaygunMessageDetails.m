@@ -40,11 +40,11 @@
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"version": _version }];
     
-    if (![RaygunUtils IsNullOrEmpty:_groupingKey]) {
+    if (![RaygunUtils isNullOrEmpty:_groupingKey]) {
         dict[@"groupingKey"] = _groupingKey;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_machineName]) {
+    if (![RaygunUtils isNullOrEmpty:_machineName]) {
         dict[@"machineName"] = _machineName;
     }
     
@@ -64,15 +64,15 @@
         dict[@"user"] = [_user convertToDictionary];
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_tags]) {
+    if (![RaygunUtils isNullOrEmpty:_tags]) {
         dict[@"tags"] = _tags;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_customData]) {
+    if (![RaygunUtils isNullOrEmpty:_customData]) {
         dict[@"userCustomData"] = _customData;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_threads]) {
+    if (![RaygunUtils isNullOrEmpty:_threads]) {
         NSMutableArray *threads = [NSMutableArray new];
         for (RaygunThread *thread in _threads) {
             [threads addObject:[thread convertToDictionary]];
@@ -80,7 +80,7 @@
         dict[@"threads"] = threads;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_binaryImages ]) {
+    if (![RaygunUtils isNullOrEmpty:_binaryImages ]) {
         NSMutableArray *binaryImages = [NSMutableArray new];
         for (RaygunBinaryImage *binaryImage in _binaryImages) {
             [binaryImages addObject:[binaryImage convertToDictionary]];
@@ -88,7 +88,7 @@
         dict[@"binaryImages"] = binaryImages;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_breadcrumbs]) {
+    if (![RaygunUtils isNullOrEmpty:_breadcrumbs]) {
         NSMutableArray *breadcrumbs = [NSMutableArray new];
         for (RaygunBreadcrumb *breadcrumb in _breadcrumbs) {
             [breadcrumbs addObject:[breadcrumb convertToDictionary]];

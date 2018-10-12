@@ -49,15 +49,15 @@
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"className": _className, @"message": _message }];
     
-    if (![RaygunUtils IsNullOrEmpty:_signalName]) {
+    if (![RaygunUtils isNullOrEmpty:_signalName]) {
         dict[@"signalName"] = _signalName;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_signalCode]) {
+    if (![RaygunUtils isNullOrEmpty:_signalCode]) {
         dict[@"signalCode"] = _signalCode;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_stackTrace]) {
+    if (![RaygunUtils isNullOrEmpty:_stackTrace]) {
         dict[@"managedStackTrace"] = _stackTrace;
     }
     

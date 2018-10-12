@@ -236,7 +236,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
-    if ([RaygunUtils IsNullOrEmpty:name] || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
+    if ([RaygunUtils isNullOrEmpty:name] || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
         [RaygunLogger logError:@"Failed to send timing event - invalid timing name"];
         return;
     }
@@ -333,7 +333,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled || [RaygunUtils IsNullOrEmpty:viewName]) {
+    if (!_enabled || [RaygunUtils isNullOrEmpty:viewName]) {
         return YES;
     }
     

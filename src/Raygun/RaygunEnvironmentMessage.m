@@ -37,11 +37,11 @@
         dict[@"processorCount"] = _processorCount;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_oSVersion]) {
+    if (![RaygunUtils isNullOrEmpty:_oSVersion]) {
         dict[@"oSVersion"] = _oSVersion;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_model]) {
+    if (![RaygunUtils isNullOrEmpty:_model]) {
         dict[@"model"] = _model;
     }
     
@@ -57,7 +57,7 @@
         dict[@"resolutionScale"] = _resolutionScale;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_cpu]) {
+    if (![RaygunUtils isNullOrEmpty:_cpu]) {
         dict[@"cpu"] = _cpu;
     }
     
@@ -65,11 +65,11 @@
         dict[@"utcOffset"] = _utcOffset;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_locale]) {
+    if (![RaygunUtils isNullOrEmpty:_locale]) {
         dict[@"locale"] = _locale;
     }
     
-    if (![RaygunUtils IsNullOrEmpty:_kernelVersion]) {
+    if (![RaygunUtils isNullOrEmpty:_kernelVersion]) {
         dict[@"kernelVersion"] = _kernelVersion;
     }
     
