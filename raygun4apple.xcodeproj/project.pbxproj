@@ -70,9 +70,9 @@
 		A2660FDE20FE931100C12A69 /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2660FD520FE931100C12A69 /* raygun4apple.framework */; };
 		A2660FE320FE931100C12A69 /* raygun4apple_tvOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */; };
 		A2660FE520FE931100C12A69 /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A2660FD720FE931100C12A69 /* raygun4apple_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A29D6739216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; };
-		A29D673A216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; };
-		A29D673B216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; };
+		A29D6739216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A29D673A216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A29D673B216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A29D673D216D677100BAC934 /* RaygunBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = A29D673C216D677100BAC934 /* RaygunBreadcrumb.m */; };
 		A29D673E216D677100BAC934 /* RaygunBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = A29D673C216D677100BAC934 /* RaygunBreadcrumb.m */; };
 		A29D673F216D677100BAC934 /* RaygunBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = A29D673C216D677100BAC934 /* RaygunBreadcrumb.m */; };
@@ -1180,6 +1180,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29D6739216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				DC5EFA89210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				DC5EFAF52113A831002C0713 /* RaygunBinaryImage.h in Headers */,
 				DC5EFA95210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
@@ -1268,7 +1269,6 @@
 				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7E21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
 				A2E4AD1221003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */,
-				A29D6739216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				A2E4ACF021003DAA0003C8B4 /* KSCrash.h in Headers */,
 				A2E4ACC421003DAA0003C8B4 /* KSCrashInstallation+Private.h in Headers */,
 				A2E4AD8021003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */,
@@ -1287,6 +1287,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29D673A216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */,
 				DC5EFADE2112AF02002C0713 /* RaygunFrame.h in Headers */,
 				DC5EFAE62112B6C0002C0713 /* RaygunThread.h in Headers */,
@@ -1375,7 +1376,6 @@
 				A2D549EA2159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7F21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
 				A2E4AD1321003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */,
-				A29D673A216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				A2E4ACF121003DAA0003C8B4 /* KSCrash.h in Headers */,
 				A2E4ACC521003DAA0003C8B4 /* KSCrashInstallation+Private.h in Headers */,
 				A2E4AD8121003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */,
@@ -1394,6 +1394,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29D673B216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */,
 				A2132B3021373FD60030A3C5 /* RaygunEventData.h in Headers */,
 				DC5EFAE72112B6C0002C0713 /* RaygunThread.h in Headers */,
@@ -1407,7 +1408,6 @@
 				A2F38CDF212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2A6D2A92136601700AFC48E /* RaygunEventMessage.h in Headers */,
 				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
-				A29D673B216D675700BAC934 /* RaygunBreadcrumb.h in Headers */,
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
 				DC5EFA8B210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				A23A1DE02138A7B90026046C /* RaygunLogger.h in Headers */,
