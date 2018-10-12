@@ -331,7 +331,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
         breadcrumb.level      = level;
         breadcrumb.type       = kRaygunBreadcrumbTypeManual;
         breadcrumb.customData = customData;
-        breadcrumb.timeStamp  = [RaygunUtils timeSinceEpochInMilliseconds];
+        breadcrumb.timestamp  = [RaygunUtils timeSinceEpochInMilliseconds];
     }];
     
     [self recordBreadcrumb:breadcrumb];

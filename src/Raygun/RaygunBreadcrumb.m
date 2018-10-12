@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         // Set default values
-        _timeStamp = [RaygunUtils timeSinceEpochInMilliseconds];
+        _timestamp = [RaygunUtils timeSinceEpochInMilliseconds];
         _type = kRaygunBreadcrumbTypeManual;
         
         block(self);
@@ -40,7 +40,7 @@
         breadcrumb.category   = information[@"category"];
         breadcrumb.level      = [RaygunBreadcrumb levelEnumFromString:information[@"level"]];
         breadcrumb.type       = [RaygunBreadcrumb typeEnumFromString:information[@"type"]];
-        breadcrumb.timeStamp  = information[@"timeStamp"];
+        breadcrumb.timestamp  = information[@"timeStamp"];
         breadcrumb.className  = information[@"className"];
         breadcrumb.methodName = information[@"methodName"];
         breadcrumb.lineNumber = information[@"lineNumber"];
@@ -75,15 +75,15 @@
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
-               description:@"Breacrumb cannot be nil"];
+               description:@"Breadcrumb cannot be nil"];
         return NO;
     }
     
-    if (breadcrumb.timeStamp == nil) {
+    if (breadcrumb.timestamp == nil) {
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
-               description:@"Breacrumb time stamp cannot be nil"];
+               description:@"Breadcrumb time stamp cannot be nil"];
         return NO;
     }
     
@@ -96,7 +96,7 @@
     dict[@"message"]   = _message;
     dict[@"level"]     = RaygunBreadcrumbLevelNames[_level];
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
-    dict[@"timeStamp"] = @([_timeStamp longValue]);
+    dict[@"timeStamp"] = @([_timestamp longValue]);
     
     if (![RaygunUtils IsNullOrEmpty:_category]) {
         dict[@"category"] = _category;
