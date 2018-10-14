@@ -41,7 +41,6 @@
 }
 
 - (void)sendAllReports {
-    [RaygunLogger logDebug:@"Attempting to send new crash reports"];
     [super sendAllReportsWithCompletion:nil];
 }
 

@@ -35,12 +35,15 @@
 #import "RaygunUserInformation.h"
 #import "RaygunFileManager.h"
 #import "RaygunFile.h"
+#import "RaygunBreadcrumb.h"
+#import "RaygunUtils.h"
 
 @interface RaygunClient()
 
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 @property (nonatomic) bool crashReportingEnabled;
 @property(nonatomic, strong) RaygunFileManager *fileManager;
+@property(nonatomic, strong) NSMutableArray* mutableBreadcrumbs;
 
 @end
 
@@ -92,6 +95,10 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     return _userInformation == nil ? RaygunUserInformation.anonymousUser : _userInformation;
 }
 
+- (NSArray *)breadcrumbs {
+    return [NSArray arrayWithArray:_mutableBreadcrumbs];
+}
+
 #pragma mark - Initialising Methods -
 
 + (instancetype)sharedInstance {
@@ -109,9 +116,10 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 
 - (instancetype)initWithApiKey:(NSString *)apiKey {
     if ((self = [super init])) {
-        sharedApiKey = apiKey;
-        _queue       = [[NSOperationQueue alloc] init];
-        _fileManager = [[RaygunFileManager alloc] init];
+        sharedApiKey        = apiKey;
+        _queue              = [[NSOperationQueue alloc] init];
+        _fileManager        = [[RaygunFileManager alloc] init];
+        _mutableBreadcrumbs = [[NSMutableArray alloc] init];
         
         self.maxReportsStoredOnDevice = kMaxCrashReportsOnDeviceUpperLimit;
     }
@@ -139,7 +147,6 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (void)sendAllStoredCrashReports {
-    [RaygunLogger logDebug:@"Attempting to send stored crash reports"];
     NSArray<RaygunFile *> *storedReports = [_fileManager getAllStoredCrashReports];
     
     for (RaygunFile *report in storedReports) {
@@ -183,7 +190,6 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                                   logAllThreads:NO
                                terminateProgram:NO];
     
-    [RaygunLogger logDebug:@"Attempting to send a manual crash report"];
     [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
 }
 
@@ -259,6 +265,9 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     return error;
 }
 
+/**
+ We update KSCrash with information so when the app crashes it keeps the state from the crashed session.
+ */
 - (void)updateCrashReportUserInformation {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     userInfo[@"tags"]               = _tags;
@@ -268,6 +277,16 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     if (_userInformation != nil) {
         userInfo[@"userInformation"] = [_userInformation convertToDictionary];
     }
+    
+    NSMutableArray<NSDictionary *> *userBreadcrumbs = [[NSMutableArray alloc] init];
+    
+    if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
+        for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
+            [userBreadcrumbs addObject:[crumb convertToDictionary]];
+        }
+    }
+    
+    userInfo[@"breadcrumbs"] = userBreadcrumbs;
 
     (KSCrash.sharedInstance).userInfo = userInfo;
 }
@@ -290,6 +309,37 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
     [dataTask resume];
+}
+
+- (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb {
+    NSError *error = nil;
+    if ([RaygunBreadcrumb validate:breadcrumb withError:&error]) {
+        [_mutableBreadcrumbs addObject:breadcrumb];
+        [self updateCrashReportUserInformation];
+        
+        [RaygunLogger logDebug:@"Recorded breadcrumb with message: %@", breadcrumb.message];
+    }
+    else if (error) {
+        [RaygunLogger logWarning:@"Failed to record breadcrumb due to error: %@", error.localizedDescription];
+    }
+}
+
+- (void)recordBreadcrumb:(NSString *)message withCategory:(NSString *)category withLevel:(RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData {
+    RaygunBreadcrumb *breadcrumb = [RaygunBreadcrumb breadcrumbWithBlock:^(RaygunBreadcrumb *breadcrumb) {
+        breadcrumb.message    = message;
+        breadcrumb.category   = category;
+        breadcrumb.level      = level;
+        breadcrumb.type       = kRaygunBreadcrumbTypeManual;
+        breadcrumb.customData = customData;
+        breadcrumb.timestamp  = [RaygunUtils timeSinceEpochInMilliseconds];
+    }];
+    
+    [self recordBreadcrumb:breadcrumb];
+}
+
+- (void)clearBreadcrumbs {
+    [_mutableBreadcrumbs removeAllObjects];
+    [self updateCrashReportUserInformation];
 }
 
 #pragma mark - Real User Monitoring -

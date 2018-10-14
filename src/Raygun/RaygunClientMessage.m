@@ -26,7 +26,7 @@
 
 #import "RaygunClientMessage.h"
 
-#import "RaygunDefines.h"
+#import "RaygunUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,15 +45,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    if (!IsNullOrEmpty(_name)) {
+    if (![RaygunUtils isNullOrEmpty:_name]) {
         dict[@"name"] = _name;
     }
     
-    if (!IsNullOrEmpty(_version)) {
+    if (![RaygunUtils isNullOrEmpty:_version]) {
         dict[@"version"] = _version;
     }
     
-    if (!IsNullOrEmpty(_clientUrl)) {
+    if (![RaygunUtils isNullOrEmpty:_clientUrl]) {
         dict[@"clientUrl"] = _clientUrl;
     }
     
