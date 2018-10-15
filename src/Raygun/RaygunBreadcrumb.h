@@ -18,7 +18,7 @@ typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
 @interface RaygunBreadcrumb : NSObject
 
 /**
- The message you want to record for this breadcrumb
+ The message you want to record for this breadcrumb (required)
  */
 @property (nonatomic, copy) NSString *message;
 

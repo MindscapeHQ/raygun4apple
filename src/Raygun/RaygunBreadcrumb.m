@@ -79,6 +79,14 @@
         return NO;
     }
     
+    if ([RaygunUtils isNullOrEmptyString:breadcrumb.message]) {
+        [NSError fillError:error
+                withDomain:[[self class] description]
+                      code:0
+               description:@"Breadcrumb message cannot be nil or empty"];
+        return NO;
+    }
+    
     if (breadcrumb.timestamp == nil) {
         [NSError fillError:error
                 withDomain:[[self class] description]
@@ -98,15 +106,15 @@
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
     dict[@"timestamp"] = @([_timestamp longValue]);
     
-    if (![RaygunUtils isNullOrEmpty:_category]) {
+    if (![RaygunUtils isNullOrEmptyString:_category]) {
         dict[@"category"] = _category;
     }
 
-    if (![RaygunUtils isNullOrEmpty:_className]) {
+    if (![RaygunUtils isNullOrEmptyString:_className]) {
         dict[@"className"] = _className;
     }
     
-    if (![RaygunUtils isNullOrEmpty:_methodName]) {
+    if (![RaygunUtils isNullOrEmptyString:_methodName]) {
         dict[@"methodName"] = _methodName;
     }
     
