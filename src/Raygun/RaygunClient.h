@@ -51,7 +51,8 @@
 
 + (instancetype)sharedInstance;
 
-+ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey;
++ (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey
+NS_SWIFT_NAME(sharedInstance(apiKey:));
 
 - (instancetype)init NS_UNAVAILABLE;
 
