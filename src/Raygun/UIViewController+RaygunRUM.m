@@ -118,7 +118,7 @@
         }
         
         if (![rum shouldIgnoreView:viewName]) {
-            [rum sendTimingEvent:kRaygunEventTimingViewLoaded withName:viewName withDuration:@(duration)];
+            [rum sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:viewName withDuration:@(duration)];
         }
     }
 }

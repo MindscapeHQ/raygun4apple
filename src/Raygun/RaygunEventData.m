@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunEventData
 
-- (instancetype)initWithType:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
+- (instancetype)initWithType:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     if ((self = [super init])) {
         _name       = name;
         _timingType = type;

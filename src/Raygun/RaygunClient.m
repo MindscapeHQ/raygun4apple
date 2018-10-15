@@ -52,18 +52,18 @@
 static NSString *sharedApiKey = nil;
 static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
-static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
+static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelError;
 
 @synthesize userInformation = _userInformation;
 
 #pragma mark - Setters -
 
-+ (void)setLogLevel:(RaygunLoggingLevel)level {
++ (void)setLogLevel:(enum RaygunLoggingLevel)level {
     NSParameterAssert(level);
     sharedLogLevel = level;
 }
 
-+ (RaygunLoggingLevel)logLevel {
++ (enum RaygunLoggingLevel)logLevel {
     return sharedLogLevel;
 }
 
@@ -253,7 +253,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
                 [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
                 
-                if (httpResponse.statusCode == kRaygunResponseStatusCodeRateLimited) {
+                if (httpResponse.statusCode == RaygunResponseStatusCodeRateLimited) {
                     // This application is being rate limited currently so store the message to be sent later.
                     NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
                     if (path) {
@@ -300,7 +300,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
-    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+    if (RaygunClient.logLevel == RaygunLoggingLevelVerbose) {
         [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
         [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]];
         [RaygunLogger logDebug:@"--------------------------------------------"];
@@ -332,12 +332,12 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     }
 }
 
-- (void)recordBreadcrumb:(NSString *)message withCategory:(NSString *)category withLevel:(RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData {
+- (void)recordBreadcrumbWithMessage:(NSString *)message withCategory:(NSString *)category withLevel:(enum RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData {
     RaygunBreadcrumb *breadcrumb = [RaygunBreadcrumb breadcrumbWithBlock:^(RaygunBreadcrumb *breadcrumb) {
         breadcrumb.message    = message;
         breadcrumb.category   = category;
         breadcrumb.level      = level;
-        breadcrumb.type       = kRaygunBreadcrumbTypeManual;
+        breadcrumb.type       = RaygunBreadcrumbTypeManual;
         breadcrumb.customData = customData;
         breadcrumb.timestamp  = [RaygunUtils timeSinceEpochInMilliseconds];
     }];
@@ -368,7 +368,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     [[RaygunRealUserMonitoring sharedInstance] ignoreURLs:urls];
 }
 
-- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds {
+- (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds {
     [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(milliseconds)];
 }
 

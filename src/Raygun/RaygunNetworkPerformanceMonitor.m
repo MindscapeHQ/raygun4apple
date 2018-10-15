@@ -256,7 +256,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
             urlString = [NSString stringWithFormat:@"%@ %@", httpMethod, urlString];
         }
         
-        [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:kRaygunEventTimingNetworkCall withName:urlString withDuration:[NSNumber numberWithInteger:milliseconds]];
+        [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:RaygunEventTimingTypeNetworkCall withName:urlString withDuration:[NSNumber numberWithInteger:milliseconds]];
     }
 }
 

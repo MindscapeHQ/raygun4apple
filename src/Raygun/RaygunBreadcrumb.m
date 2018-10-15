@@ -26,7 +26,7 @@
     if (self) {
         // Set default values
         _timestamp = [RaygunUtils timeSinceEpochInMilliseconds];
-        _type = kRaygunBreadcrumbTypeManual;
+        _type = RaygunBreadcrumbTypeManual;
         
         block(self);
     }
@@ -49,22 +49,22 @@
     return breadcrumb;
 }
 
-+ (RaygunBreadcrumbLevel)levelEnumFromString:(NSString *)level {
++ (enum RaygunBreadcrumbLevel)levelEnumFromString:(NSString *)level {
     static NSDictionary *levelDict = nil;
     if (levelDict == nil) {
-        levelDict = @{ RaygunBreadcrumbLevelNames[kRaygunBreadcrumbLevelDebug]:   [[NSNumber alloc] initWithInt:kRaygunBreadcrumbLevelDebug],
-                       RaygunBreadcrumbLevelNames[kRaygunBreadcrumbLevelInfo]:    [[NSNumber alloc] initWithInt:kRaygunBreadcrumbLevelInfo],
-                       RaygunBreadcrumbLevelNames[kRaygunBreadcrumbLevelWarning]: [[NSNumber alloc] initWithInt:kRaygunBreadcrumbLevelWarning],
-                       RaygunBreadcrumbLevelNames[kRaygunBreadcrumbLevelError]:   [[NSNumber alloc] initWithInt:kRaygunBreadcrumbLevelError] };
+        levelDict = @{ RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelDebug]:   [[NSNumber alloc] initWithInt:RaygunBreadcrumbLevelDebug],
+                       RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelInfo]:    [[NSNumber alloc] initWithInt:RaygunBreadcrumbLevelInfo],
+                       RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelWarning]: [[NSNumber alloc] initWithInt:RaygunBreadcrumbLevelWarning],
+                       RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelError]:   [[NSNumber alloc] initWithInt:RaygunBreadcrumbLevelError] };
     }
     
     return [levelDict[level] intValue];
 }
 
-+ (RaygunBreadcrumbType)typeEnumFromString:(NSString *)type {
++ (enum RaygunBreadcrumbType)typeEnumFromString:(NSString *)type {
     static NSDictionary *typeDict = nil;
     if (typeDict == nil) {
-        typeDict = @{ RaygunBreadcrumbTypeNames[kRaygunBreadcrumbTypeManual]: [[NSNumber alloc] initWithInt:kRaygunBreadcrumbTypeManual] };
+        typeDict = @{ RaygunBreadcrumbTypeNames[RaygunBreadcrumbTypeManual]: [[NSNumber alloc] initWithInt:RaygunBreadcrumbTypeManual] };
     }
     
     return [typeDict[type] intValue];

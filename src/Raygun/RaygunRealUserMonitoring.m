@@ -112,7 +112,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
     
     if (![self shouldIgnoreView:_lastViewName]) {
-        [self sendTimingEvent:kRaygunEventTimingViewLoaded withName:_lastViewName withDuration:@0];
+        [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:_lastViewName withDuration:@0];
     }
 }
 
@@ -146,7 +146,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         _currentSessionUserInformation = userInformation;
         
         // Tell the API a new session has started for this user.
-        [self sendEvent:kRaygunEventTypeSessionStart withUserInformation:_currentSessionUserInformation];
+        [self sendEvent:RaygunEventTypeSessionStart withUserInformation:_currentSessionUserInformation];
     }
 }
 
@@ -157,7 +157,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     
     if (_sessionId != nil) {
         [RaygunLogger logDebug:@"Ending RUM session with id: %@", _sessionId];
-        [self sendEvent:kRaygunEventTypeSessionEnd withUserInformation:_currentSessionUserInformation];
+        [self sendEvent:RaygunEventTypeSessionEnd withUserInformation:_currentSessionUserInformation];
     }
     
     _sessionId = nil;
@@ -204,7 +204,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 #pragma mark - Event Reporting Methods -
 
-- (void)sendEvent:(RaygunEventType)eventType withUserInformation:(RaygunUserInformation *)userInformation {
+- (void)sendEvent:(enum RaygunEventType)eventType withUserInformation:(RaygunUserInformation *)userInformation {
     if (!_enabled) {
         return; // RUM must be enabled.
     }
@@ -235,7 +235,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
 }
 
-- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
+- (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     if(!_enabled) {
         [RaygunLogger logError:@"Failed to send RUM timing event - Real User Monitoring has not been enabled"];
         return;
@@ -246,14 +246,14 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
-    if (type == kRaygunEventTimingViewLoaded) {
+    if (type == RaygunEventTimingTypeViewLoaded) {
         _lastViewName = name;
     }
 
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
         message.occurredOn         = [RaygunUtils currentDateTime];
         message.sessionId          = self.sessionId;
-        message.eventType          = kRaygunEventTypeTiming;
+        message.eventType          = RaygunEventTypeTiming;
         message.userInformation    = self.currentSessionUserInformation;
         message.applicationVersion = [self applicationVersion];
         message.operatingSystem    = [self operatingSystemName];
@@ -283,7 +283,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
-    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+    if (RaygunClient.logLevel == RaygunLoggingLevelVerbose) {
         [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
         [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
         [RaygunLogger logDebug:@"--------------------------------------------"];
