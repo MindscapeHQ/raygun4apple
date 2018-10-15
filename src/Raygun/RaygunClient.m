@@ -87,8 +87,16 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 }
 
 - (void)setUserInformation:(RaygunUserInformation *)userInformation {
-    _userInformation = userInformation;
-    [self identifyWithUserInformation:userInformation];
+    NSError *error = nil;
+    if ([RaygunUserInformation validate:userInformation withError:&error]) {
+        _userInformation = userInformation;
+        [self identifyWithUserInformation:userInformation];
+        
+        [RaygunLogger logDebug:@"Set new user: %@", userInformation.identifier];
+    }
+    else if (error) {
+        [RaygunLogger logWarning:@"Failed to set user due to error: %@", error.localizedDescription];
+    }
 }
 
 - (RaygunUserInformation *)userInformation {
