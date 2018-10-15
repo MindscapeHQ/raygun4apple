@@ -208,7 +208,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     NSError *innerError = [self getInnerError:error];
     NSString *reason = innerError.localizedDescription;
     if (reason == nil) {
-        reason = @"Unknown";
+        reason = kValueNotKnown;
     }
     
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"%@ [code: %ld]", innerError.domain, (long)innerError.code] reason:reason userInfo:nil];

@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (appVersion == nil) {
-        appVersion = @"Unknown";
+        appVersion = kValueNotKnown;
     }
     return appVersion;
 }
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
                            systemData[@"os_version"]];
     
     if (!osVersion) {
-        osVersion = @"Unknown";
+        osVersion = kValueNotKnown;
     }
     
     NSLocale *locale = [NSLocale currentLocale];
@@ -168,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (!localeStr) {
-        localeStr = @"Unknown";
+        localeStr = kValueNotKnown;
     }
     
     CGRect screenBounds = [UIScreen mainScreen].bounds;
@@ -194,9 +194,9 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSDictionary *errorData  = report[@"crash"][@"error"];
     NSString     *diagnosis  = report[@"crash"][@"diagnosis"];
-    NSString     *signalName = @"Unknown";
-    NSString     *signalCode = @"Unknown";
-    NSString     *className  = @"Unknown";
+    NSString     *signalName = kValueNotKnown;
+    NSString     *signalCode = kValueNotKnown;
+    NSString     *className  = kValueNotKnown;
     NSString     *message    = nil;
     
     if (errorData != nil) {
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
         
         if (message == nil && (diagnosis == nil || diagnosis.length == 0)) {
             // No message and no diagnosis either
-            message = @"Unknown";
+            message = kValueNotKnown;
         }
         else if (message == nil && diagnosis != nil && diagnosis.length > 0) {
             // No message but we have a diagnosis
