@@ -45,15 +45,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    if (![RaygunUtils isNullOrEmpty:_name]) {
+    if (![RaygunUtils isNullOrEmptyString:_name]) {
         dict[@"name"] = _name;
     }
     
-    if (![RaygunUtils isNullOrEmpty:_version]) {
+    if (![RaygunUtils isNullOrEmptyString:_version]) {
         dict[@"version"] = _version;
     }
     
-    if (![RaygunUtils isNullOrEmpty:_clientUrl]) {
+    if (![RaygunUtils isNullOrEmptyString:_clientUrl]) {
         dict[@"clientUrl"] = _clientUrl;
     }
     

@@ -44,7 +44,7 @@
     dict[@"crashed"] = _crashed ? @YES : @NO;
     dict[@"current"] = _current ? @YES : @NO;
     
-    if (![RaygunUtils isNullOrEmpty:_name]) {
+    if (![RaygunUtils isNullOrEmptyString:_name]) {
         dict[@"name"] = _name;
     }
     

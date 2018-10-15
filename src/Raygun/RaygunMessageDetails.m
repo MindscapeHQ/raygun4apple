@@ -40,11 +40,11 @@
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"version": _version }];
     
-    if (![RaygunUtils isNullOrEmpty:_groupingKey]) {
+    if (![RaygunUtils isNullOrEmptyString:_groupingKey]) {
         dict[@"groupingKey"] = _groupingKey;
     }
     
-    if (![RaygunUtils isNullOrEmpty:_machineName]) {
+    if (![RaygunUtils isNullOrEmptyString:_machineName]) {
         dict[@"machineName"] = _machineName;
     }
     

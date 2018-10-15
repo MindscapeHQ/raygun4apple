@@ -49,11 +49,11 @@
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"className": _className, @"message": _message }];
     
-    if (![RaygunUtils isNullOrEmpty:_signalName]) {
+    if (![RaygunUtils isNullOrEmptyString:_signalName]) {
         dict[@"signalName"] = _signalName;
     }
     
-    if (![RaygunUtils isNullOrEmpty:_signalCode]) {
+    if (![RaygunUtils isNullOrEmptyString:_signalCode]) {
         dict[@"signalCode"] = _signalCode;
     }
     
