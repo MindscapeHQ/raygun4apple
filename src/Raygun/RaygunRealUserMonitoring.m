@@ -182,13 +182,13 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         //  Known user -> Different Known user = YES.
         
         RaygunUserInformation *anonUser = [RaygunUserInformation anonymousUser];
-        BOOL currentSessionUserIsAnon = [_currentSessionUserInformation.identifier isEqualToString:anonUser.identifier];;
-        BOOL usersAreTheSameUser      = [_currentSessionUserInformation.identifier isEqualToString:userInformation.identifier];
+        BOOL currentSessionUserIsAnon   = [_currentSessionUserInformation.identifier isEqualToString:anonUser.identifier];;
+        BOOL usersAreTheSameUser        = [_currentSessionUserInformation.identifier isEqualToString:userInformation.identifier];
         
         BOOL changedUser = !usersAreTheSameUser && !currentSessionUserIsAnon;
         
         if (changedUser) {
-            [RaygunLogger logDebug:@"Detected change in user"];
+            [RaygunLogger logDebug:@"RUM detected change in user"];
             [self endSession];
             [self startSessionWithUserInformation:userInformation];
         }
@@ -209,67 +209,77 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return; // RUM must be enabled.
     }
     
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
-        message.occurredOn      = [RaygunUtils currentDateTime];
-        message.sessionId       = self.sessionId;
-        message.eventType       = eventType;
-        message.userInformation = userInformation;
-        message.version         = [self bundleVersion];
-        message.operatingSystem = [self operatingSystemName];
-        message.osVersion       = [UIDevice currentDevice].systemVersion;
-        message.platform        = @(systemInfo.machine);
+        message.occurredOn         = [RaygunUtils currentDateTime];
+        message.sessionId          = self.sessionId;
+        message.eventType          = eventType;
+        message.userInformation    = userInformation;
+        message.applicationVersion = [self applicationVersion];
+        message.operatingSystem    = [self operatingSystemName];
+        message.osVersion          = [self operatingSystemVersion];
+        message.platform           = [self platform];
     }];
     
-    [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
-        }
-    }];
+    NSError *error = nil;
+    NSData  *json  = [message convertToJsonWithError:&error];
+    
+    if (json) {
+        [self sendData:json completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error != nil) {
+                [RaygunLogger logError:@"Error sending RUM event: %@", error.localizedDescription];
+            }
+        }];
+    }
+    else if (error) {
+        [RaygunLogger logError:@"Error constructing RUM event: %@", error.localizedDescription];
+    }
 }
 
 - (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
     if(!_enabled) {
-        [RaygunLogger logError:@"Failed to send timing event - Real User Monitoring has not been enabled"];
+        [RaygunLogger logError:@"Failed to send RUM timing event - Real User Monitoring has not been enabled"];
         return;
     }
     
-    if ([RaygunUtils isNullOrEmpty:name] || [name stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0) {
-        [RaygunLogger logError:@"Failed to send timing event - invalid timing name"];
+    if ([RaygunUtils isNullOrEmptyString:name]) {
+        [RaygunLogger logError:@"Failed to send RUM timing event - Invalid timing name"];
         return;
     }
     
     if (type == kRaygunEventTimingViewLoaded) {
         _lastViewName = name;
     }
-    
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
+
     RaygunEventMessage *message = [RaygunEventMessage messageWithBlock:^(RaygunEventMessage *message) {
-        message.occurredOn      = [RaygunUtils currentDateTime];
-        message.sessionId       = self.sessionId;
-        message.eventType       = kRaygunEventTypeTiming;
-        message.userInformation = self.currentSessionUserInformation;
-        message.version         = [self bundleVersion];
-        message.operatingSystem = [self operatingSystemName];
-        message.osVersion       = [UIDevice currentDevice].systemVersion;
-        message.platform        = @(systemInfo.machine);
-        message.eventData       = [[RaygunEventData alloc] initWithType:type withName:name withDuration:duration];
+        message.occurredOn         = [RaygunUtils currentDateTime];
+        message.sessionId          = self.sessionId;
+        message.eventType          = kRaygunEventTypeTiming;
+        message.userInformation    = self.currentSessionUserInformation;
+        message.applicationVersion = [self applicationVersion];
+        message.operatingSystem    = [self operatingSystemName];
+        message.osVersion          = [self operatingSystemVersion];
+        message.platform           = [self platform];
+        message.eventData          = [[RaygunEventData alloc] initWithType:type withName:name withDuration:duration];
     }];
     
-    [self sendData:[message convertToJson] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-            [RaygunLogger logError:@"Error sending message: %@", error.localizedDescription];
-        }
-        
-        if (response != nil) {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-            [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
-        }
-    }];
+    NSError *error = nil;
+    NSData  *json  = [message convertToJsonWithError:&error];
+    
+    if (json) {
+        [self sendData:json completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error != nil) {
+                [RaygunLogger logError:@"Error sending RUM event: %@", error.localizedDescription];
+            }
+            
+            if (response != nil) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+            }
+        }];
+    }
+    else if (error) {
+        [RaygunLogger logError:@"Error constructing RUM event: %@", error.localizedDescription];
+    }
 }
 
 - (void)sendData:(NSData *)data completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))completionHandler {
@@ -307,11 +317,25 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #endif
 }
 
-- (NSString *)bundleVersion {
-    NSDictionary *infoDict  = [NSBundle mainBundle].infoDictionary;
-    NSString *version       = infoDict[@"CFBundleShortVersionString"];
-    NSString *build         = infoDict[@"CFBundleVersion"];
+- (NSString *)operatingSystemVersion {
+#if RAYGUN_CAN_USE_UIDEVICE
+    return [UIDevice currentDevice].systemVersion;
+#else
+    return kValueNotKnown;
+#endif
+}
+
+- (NSString *)applicationVersion {
+    NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
+    NSString *version      = infoDict[@"CFBundleShortVersionString"];
+    NSString *build        = infoDict[@"CFBundleVersion"];
     return [NSString stringWithFormat:@"%@ (%@)", version, build];
+}
+
+- (NSString *)platform {
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    return @(systemInfo.machine);
 }
 
 #pragma mark - Event Blacklisting Methods -
@@ -319,7 +343,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)ignoreViews:(NSArray *)viewNames {
     if (viewNames != nil && _ignoredViews != nil) {
         for (NSString* name in viewNames) {
-            if (name != nil) {
+            if ([RaygunUtils isNullOrEmpty:name]) {
                 [_ignoredViews addObject:name];
             }
         }
@@ -333,7 +357,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled || [RaygunUtils isNullOrEmpty:viewName]) {
+    if (!_enabled || [RaygunUtils isNullOrEmptyString:viewName]) {
         return YES;
     }
     
