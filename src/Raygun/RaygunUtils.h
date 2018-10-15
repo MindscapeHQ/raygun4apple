@@ -14,6 +14,8 @@
 
 + (BOOL)isNullOrEmpty:(id _Nullable)thing;
 
++ (BOOL)isNullOrEmptyString:(NSString *_Nullable)text;
+
 + (NSString *)currentDateTime;
 
 + (NSNumber *)timeSinceEpochInMilliseconds;

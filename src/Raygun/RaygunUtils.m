@@ -16,6 +16,10 @@
                         || ([thing respondsToSelector:@selector(count)]  && ((NSArray *)thing).count == 0);
 }
 
++ (BOOL)isNullOrEmptyString:(NSString *_Nullable)text {
+    return [RaygunUtils isNullOrEmpty:text] || [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0;
+}
+
 + (NSString *)currentDateTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone        *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
