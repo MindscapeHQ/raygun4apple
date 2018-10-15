@@ -99,7 +99,8 @@
 - (instancetype)initWithIdentifier:(NSString *)identifier
                          withEmail:(NSString *)email
                       withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName;
+                     withFirstName:(NSString *)firstName
+NS_SWIFT_NAME(init(identifier:email:fullName:firstName:));
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -116,7 +117,8 @@
                          withEmail:(NSString *)email
                       withFullName:(NSString *)fullName
                      withFirstName:(NSString *)firstName
-                   withIsAnonymous:(BOOL) isAnonymous;
+                   withIsAnonymous:(BOOL) isAnonymous
+NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:));
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -135,7 +137,8 @@
                       withFullName:(NSString *)fullName
                      withFirstName:(NSString *)firstName
                    withIsAnonymous:(BOOL) isAnonymous
-                          withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER;
+                          withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER
+NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:uuid:));
 
 /**
  Creates and returns a dictionary with the classes properties and their values. 

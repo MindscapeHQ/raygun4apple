@@ -31,7 +31,7 @@
 
 @interface RaygunClient : NSObject
 
-@property (nonatomic, class) RaygunLoggingLevel logLevel;
+@property (nonatomic, class) enum RaygunLoggingLevel logLevel;
 
 @property (nonatomic, class, readonly, copy) NSString *apiKey;
 
@@ -65,19 +65,35 @@
 
 - (void)sendException:(NSException *)exception;
 
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags;
+- (void)sendException:(NSException *)exception
+             withTags:(NSArray *)tags
+NS_SWIFT_NAME(sendException(exception:tags:));
 
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (void)sendException:(NSException *)exception
+             withTags:(NSArray *)tags
+       withCustomData:(NSDictionary *)customData
+NS_SWIFT_NAME(sendException(exception:tags:customData:));
 
-- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (void)sendException:(NSString *)exceptionName
+           withReason:(NSString *)reason
+             withTags:(NSArray *)tags
+       withCustomData:(NSDictionary *)customData
+NS_SWIFT_NAME(sendException(name:reason:tags:customData:));
 
-- (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData;
+- (void)sendError:(NSError *)error
+         withTags:(NSArray *)tags
+   withCustomData:(NSDictionary *)customData
+NS_SWIFT_NAME(sendError(error:tags:customData:));
 
 - (void)sendMessage:(RaygunMessage *)message;
 
 - (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb;
 
-- (void)recordBreadcrumb:(NSString *)message withCategory:(NSString *)category withLevel:(RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData;
+- (void)recordBreadcrumbWithMessage:(NSString *)message
+                       withCategory:(NSString *)category
+                          withLevel:(enum RaygunBreadcrumbLevel)level
+                     withCustomData:(NSDictionary *)customData
+NS_SWIFT_NAME(recordBreadcrumb(message:category:level:customData:));
 
 - (void)clearBreadcrumbs;
 
@@ -91,6 +107,7 @@
 
 - (void)ignoreURLs:(NSArray *)urls;
 
-- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds;
+- (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds
+NS_SWIFT_NAME(sendTimingEvent(type:name:duration:));
 
 @end
