@@ -29,19 +29,21 @@
 
 @class RaygunUserInformation, RaygunMessage, RaygunBreadcrumb;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunClient : NSObject
 
 @property (nonatomic, class) enum RaygunLoggingLevel logLevel;
 
 @property (nonatomic, class, readonly, copy) NSString *apiKey;
 
-@property (nonatomic, copy) NSString *applicationVersion;
+@property (nullable, nonatomic, copy) NSString *applicationVersion;
 
-@property (nonatomic, strong) NSArray *tags;
+@property (nullable, nonatomic, strong) NSArray *tags;
 
-@property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
+@property (nullable, nonatomic, strong) NSDictionary<NSString *, id> *customData;
 
-@property (nonatomic, strong) RaygunUserInformation *userInformation;
+@property (nullable, nonatomic, strong) RaygunUserInformation *userInformation;
 
 @property (nonatomic, copy) RaygunBeforeSendMessage beforeSendMessage;
 
@@ -54,9 +56,9 @@
 + (instancetype)sharedInstanceWithApiKey:(NSString *)apiKey
 NS_SWIFT_NAME(sharedInstance(apiKey:));
 
-- (instancetype)init NS_UNAVAILABLE;
-
 + (instancetype)new NS_UNAVAILABLE;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 - (instancetype)initWithApiKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
@@ -67,23 +69,23 @@ NS_SWIFT_NAME(sharedInstance(apiKey:));
 - (void)sendException:(NSException *)exception;
 
 - (void)sendException:(NSException *)exception
-             withTags:(NSArray *)tags
+             withTags:(nullable NSArray *)tags
 NS_SWIFT_NAME(sendException(exception:tags:));
 
 - (void)sendException:(NSException *)exception
-             withTags:(NSArray *)tags
-       withCustomData:(NSDictionary *)customData
+             withTags:(nullable NSArray *)tags
+       withCustomData:(nullable NSDictionary *)customData
 NS_SWIFT_NAME(sendException(exception:tags:customData:));
 
 - (void)sendException:(NSString *)exceptionName
-           withReason:(NSString *)reason
-             withTags:(NSArray *)tags
-       withCustomData:(NSDictionary *)customData
+           withReason:(nullable NSString *)reason
+             withTags:(nullable NSArray *)tags
+       withCustomData:(nullable NSDictionary *)customData
 NS_SWIFT_NAME(sendException(name:reason:tags:customData:));
 
 - (void)sendError:(NSError *)error
-         withTags:(NSArray *)tags
-   withCustomData:(NSDictionary *)customData
+         withTags:(nullable NSArray *)tags
+   withCustomData:(nullable NSDictionary *)customData
 NS_SWIFT_NAME(sendError(error:tags:customData:));
 
 - (void)sendMessage:(RaygunMessage *)message;
@@ -91,9 +93,9 @@ NS_SWIFT_NAME(sendError(error:tags:customData:));
 - (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb;
 
 - (void)recordBreadcrumbWithMessage:(NSString *)message
-                       withCategory:(NSString *)category
+                       withCategory:(nullable NSString *)category
                           withLevel:(enum RaygunBreadcrumbLevel)level
-                     withCustomData:(NSDictionary *)customData
+                     withCustomData:(nullable NSDictionary *)customData
 NS_SWIFT_NAME(recordBreadcrumb(message:category:level:customData:));
 
 - (void)clearBreadcrumbs;
@@ -108,7 +110,11 @@ NS_SWIFT_NAME(recordBreadcrumb(message:category:level:customData:));
 
 - (void)ignoreURLs:(NSArray *)urls;
 
-- (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds
+- (void)sendTimingEvent:(enum RaygunEventTimingType)type
+               withName:(NSString *)name
+           withDuration:(int)milliseconds
 NS_SWIFT_NAME(sendTimingEvent(type:name:duration:));
 
 @end
+
+NS_ASSUME_NONNULL_END
