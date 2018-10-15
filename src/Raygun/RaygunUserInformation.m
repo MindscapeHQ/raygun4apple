@@ -27,10 +27,32 @@
 #import "RaygunUserInformation.h"
 
 #import "RaygunDefines.h"
+#import "RaygunUtils.h"
+#import "NSError+SimpleConstructor.h"
 
 static RaygunUserInformation *sharedAnonymousUser = nil;
 
 @implementation RaygunUserInformation
+
++ (BOOL)validate:(RaygunUserInformation *)userInformation withError:(NSError **)error {
+    if (userInformation == nil) {
+        [NSError fillError:error
+                withDomain:[[self class] description]
+                      code:0
+               description:@"The RaygunUserInformation object cannot be nil"];
+        return NO;
+    }
+    
+    if ([RaygunUtils isNullOrEmptyString:userInformation.identifier]) {
+        [NSError fillError:error
+                withDomain:[[self class] description]
+                      code:0
+               description:@"The user identifier cannot be nil or empty"];
+        return NO;
+    }
+    
+    return YES;
+}
 
 + (RaygunUserInformation *)anonymousUser {
     if (sharedAnonymousUser == nil) {
@@ -103,23 +125,23 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
-    if (_identifier) {
+    if ([RaygunUtils isNullOrEmptyString:_identifier]) {
         details[@"identifier"] = _identifier;
     }
     
-    if (_email) {
+    if ([RaygunUtils isNullOrEmptyString:_email]) {
         details[@"email"] = _email;
     }
     
-    if (_fullName) {
+    if ([RaygunUtils isNullOrEmptyString:_fullName]) {
         details[@"fullName"] = _fullName;
     }
     
-    if (_firstName) {
+    if ([RaygunUtils isNullOrEmptyString:_firstName]) {
         details[@"firstName"] = _firstName;
     }
     
-    if (_uuid) {
+    if ([RaygunUtils isNullOrEmptyString:_uuid]) {
         details[@"uuid"] = _uuid;
     }
     

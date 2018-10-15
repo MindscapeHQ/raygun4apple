@@ -40,7 +40,7 @@
  treat any duplicated values as the same user. If you use the user's email address as the identifier,
  enter it here as well as the email field.
  
- @warning The identifier must be set in order for any of the other fields to be sent.
+ @warning The identifier must be set in order for any of the other fields to be sent. (required)
  */
 @property (nonatomic, strong) NSString *identifier;
 
@@ -69,6 +69,11 @@
  User's first or preferred name.
  */
 @property (nonatomic, strong) NSString *firstName;
+
+/**
+ Checks that the required fields are set and the object is not nil.
+ */
++ (BOOL)validate:(RaygunUserInformation *)userInformation withError:(NSError **)error;
 
 - (instancetype)init NS_UNAVAILABLE;
 
