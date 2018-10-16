@@ -10,14 +10,12 @@
 #import "RaygunUtils.h"
 #import "NSError+SimpleConstructor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunBreadcrumb
 
 + (instancetype)breadcrumbWithBlock:(RaygunBreadcrumbBlock)block {
     return [[RaygunBreadcrumb alloc] initWithBlock:block];
-}
-
-- (instancetype)init {
-    return [self initWithBlock:nil];
 }
 
 - (instancetype)initWithBlock:(RaygunBreadcrumbBlock)block {
@@ -70,7 +68,7 @@
     return [typeDict[type] intValue];
 }
 
-+ (BOOL)validate:(RaygunBreadcrumb *)breadcrumb withError:(NSError* __autoreleasing *)error {
++ (BOOL)validate:(nullable RaygunBreadcrumb *)breadcrumb withError:(NSError* __autoreleasing *)error {
     if (breadcrumb == nil) {
         [NSError fillError:error
                 withDomain:[[self class] description]
@@ -130,3 +128,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,6 +30,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunUserInformation : NSObject
 
 @property (nonatomic, class, readonly, copy) RaygunUserInformation *anonymousUser;
@@ -47,7 +49,7 @@
 /**
  * Device Identifier.
  */
-@property (nonatomic, strong) NSString *uuid;
+@property (nullable, nonatomic, strong) NSString *uuid;
 
 /**
  Flag indicating whether a user is anonymous or not.
@@ -58,22 +60,22 @@
 /**
  User's email address
  */
-@property (nonatomic, strong) NSString *email;
+@property (nullable, nonatomic, strong) NSString *email;
 
 /**
  User's full name.
  */
-@property (nonatomic, strong) NSString *fullName;
+@property (nullable, nonatomic, strong) NSString *fullName;
 
 /**
  User's first or preferred name.
  */
-@property (nonatomic, strong) NSString *firstName;
+@property (nullable, nonatomic, strong) NSString *firstName;
 
 /**
  Checks that the required fields are set and the object is not nil.
  */
-+ (BOOL)validate:(RaygunUserInformation *)userInformation withError:(NSError **)error;
++ (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError **)error;
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -84,7 +86,8 @@
  
  @return a new RaygunUserInformation object.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+NS_SWIFT_NAME(init(identifier:));
 
 /**
  Creates and returns a RaygunUserInformation object.
@@ -97,9 +100,9 @@
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:));
 
 /**
@@ -114,9 +117,9 @@ NS_SWIFT_NAME(init(identifier:email:fullName:firstName:));
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName
                    withIsAnonymous:(BOOL) isAnonymous
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:));
 
@@ -133,11 +136,11 @@ NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:));
  @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName
                    withIsAnonymous:(BOOL) isAnonymous
-                          withUuid:(NSString *)uuid NS_DESIGNATED_INITIALIZER
+                          withUuid:(nullable NSString *)uuid NS_DESIGNATED_INITIALIZER
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:uuid:));
 
 /**
@@ -149,5 +152,7 @@ NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:uuid:));
 - (NSDictionary *)convertToDictionary;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

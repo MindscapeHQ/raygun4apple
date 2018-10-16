@@ -30,11 +30,11 @@
 
 @implementation RaygunErrorMessage
 
-- (instancetype)init:(NSString *)className
-         withMessage:(NSString *)message
-      withSignalName:(NSString *)signalName
-      withSignalCode:(NSString *)signalCode
-      withStackTrace:(NSArray *)stacktrace {
+- (instancetype)init:(nonnull NSString *)className
+         withMessage:(nonnull NSString *)message
+      withSignalName:(nullable NSString *)signalName
+      withSignalCode:(nullable NSString *)signalCode
+      withStackTrace:(nullable NSArray *)stacktrace {
     if ((self = [super init])) {
         _className  = className;
         _message    = message;

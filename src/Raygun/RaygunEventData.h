@@ -41,7 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithType:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithType:(enum RaygunEventTimingType)type
+                    withName:(NSString *)name
+                withDuration:(NSNumber *)duration NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

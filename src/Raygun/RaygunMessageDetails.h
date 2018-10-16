@@ -33,18 +33,18 @@
 
 @interface RaygunMessageDetails : NSObject
 
-@property (nonatomic, copy) NSString *groupingKey;
-@property (nonatomic, copy) NSString *machineName;
-@property (nonatomic, copy) NSString *version;
-@property (nonatomic, strong) RaygunClientMessage *client;
-@property (nonatomic, strong) RaygunEnvironmentMessage *environment;
-@property (nonatomic, strong) RaygunErrorMessage *error;
-@property (nonatomic, strong) RaygunUserInformation *user;
-@property (nonatomic, strong) NSArray *tags;
-@property (nonatomic, strong) NSDictionary *customData;
-@property (nonatomic, strong) NSArray<RaygunThread *> *threads;
-@property (nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
-@property (nonatomic, strong) NSArray<RaygunBreadcrumb *> *breadcrumbs;
+@property (nullable, nonatomic, copy) NSString *groupingKey;
+@property (nullable, nonatomic, copy) NSString *machineName;
+@property (nullable, nonatomic, copy) NSString *version;
+@property (nonnull,  nonatomic, strong) RaygunClientMessage *client;
+@property (nullable, nonatomic, strong) RaygunEnvironmentMessage *environment;
+@property (nonnull,  nonatomic, strong) RaygunErrorMessage *error;
+@property (nullable, nonatomic, strong) RaygunUserInformation *user;
+@property (nullable, nonatomic, strong) NSArray *tags;
+@property (nullable, nonatomic, strong) NSDictionary *customData;
+@property (nullable, nonatomic, strong) NSArray<RaygunThread *> *threads;
+@property (nullable, nonatomic, strong) NSArray<RaygunBinaryImage *> *binaryImages;
+@property (nullable, nonatomic, strong) NSArray<RaygunBreadcrumb *> *breadcrumbs;
 
 /**
  Creates and returns a dictionary with the classes properties and their values.

@@ -35,6 +35,8 @@
 #import "RaygunBreadcrumb.h"
 #import "RaygunUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunMessageDetails
 
 - (NSDictionary *)convertToDictionary {
@@ -100,3 +102,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

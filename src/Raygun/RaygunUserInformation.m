@@ -30,29 +30,11 @@
 #import "RaygunUtils.h"
 #import "NSError+SimpleConstructor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static RaygunUserInformation *sharedAnonymousUser = nil;
 
 @implementation RaygunUserInformation
-
-+ (BOOL)validate:(RaygunUserInformation *)userInformation withError:(NSError **)error {
-    if (userInformation == nil) {
-        [NSError fillError:error
-                withDomain:[[self class] description]
-                      code:0
-               description:@"The RaygunUserInformation object cannot be nil"];
-        return NO;
-    }
-    
-    if ([RaygunUtils isNullOrEmptyString:userInformation.identifier]) {
-        [NSError fillError:error
-                withDomain:[[self class] description]
-                      code:0
-               description:@"The user identifier cannot be nil or empty"];
-        return NO;
-    }
-    
-    return YES;
-}
 
 + (RaygunUserInformation *)anonymousUser {
     if (sharedAnonymousUser == nil) {
@@ -86,31 +68,63 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     return identifier;
 }
 
++ (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError **)error {
+    if (userInformation == nil) {
+        [NSError fillError:error
+                withDomain:[[self class] description]
+                      code:0
+               description:@"The RaygunUserInformation object cannot be nil"];
+        return NO;
+    }
+    
+    if ([RaygunUtils isNullOrEmptyString:userInformation.identifier]) {
+        [NSError fillError:error
+                withDomain:[[self class] description]
+                      code:0
+               description:@"The user identifier cannot be nil or empty"];
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (instancetype)initWithIdentifier:(NSString *)identifier {
-    return [self initWithIdentifier:identifier withEmail:nil withFullName:nil withFirstName:nil];
+    return [self initWithIdentifier:identifier
+                          withEmail:nil
+                       withFullName:nil
+                      withFirstName:nil];
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName {
-    return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:NO];
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName {
+    return [self initWithIdentifier:identifier
+                          withEmail:email
+                       withFullName:fullName
+                      withFirstName:firstName
+                    withIsAnonymous:NO];
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName
                    withIsAnonymous:(BOOL)isAnonymous {
-    return [self initWithIdentifier:identifier withEmail:email withFullName:fullName withFirstName:firstName withIsAnonymous:isAnonymous withUuid:nil];
+    return [self initWithIdentifier:identifier
+                          withEmail:email
+                       withFullName:fullName
+                      withFirstName:firstName
+                    withIsAnonymous:isAnonymous
+                           withUuid:nil];
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
-                         withEmail:(NSString *)email
-                      withFullName:(NSString *)fullName
-                     withFirstName:(NSString *)firstName
+                         withEmail:(nullable NSString *)email
+                      withFullName:(nullable NSString *)fullName
+                     withFirstName:(nullable NSString *)firstName
                    withIsAnonymous:(BOOL)isAnonymous
-                          withUuid:(NSString *)uuid {
+                          withUuid:(nullable NSString *)uuid {
     if ((self = [super init])) {
         _identifier  = identifier;
         _email       = email;
@@ -149,3 +163,5 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

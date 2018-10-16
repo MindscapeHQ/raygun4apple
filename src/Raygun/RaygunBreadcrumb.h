@@ -13,7 +13,9 @@
 
 @class RaygunBreadcrumb;
 
-typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *);
 
 @interface RaygunBreadcrumb : NSObject
 
@@ -25,7 +27,7 @@ typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
 /**
  Any value to categorize your messages
  */
-@property (nonatomic, copy) NSString *category;
+@property (nullable, nonatomic, copy) NSString *category;
 
 /**
  The display level of the message (valid values are Debug, Info, Warning, Error)
@@ -45,22 +47,22 @@ typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
 /**
  If relevant, a class name from where the breadcrumb was recorded
  */
-@property (nonatomic, copy) NSString *className;
+@property (nullable, nonatomic, copy) NSString *className;
 
 /**
  If relevant, a method name from where the breadcrumb was recorded
  */
-@property (nonatomic, copy) NSString *methodName;
+@property (nullable, nonatomic, copy) NSString *methodName;
 
 /**
  If relevant, a line number from where the breadcrumb was recorded
  */
-@property (nonatomic, copy) NSNumber *lineNumber;
+@property (nullable, nonatomic, copy) NSNumber *lineNumber;
 
 /**
  Any custom data you want to record about application state when the breadcrumb was recorded
  */
-@property (nonatomic, strong) NSDictionary *customData;
+@property (nullable, nonatomic, strong) NSDictionary *customData;
 
 + (instancetype)breadcrumbWithBlock:(RaygunBreadcrumbBlock)block;
 
@@ -70,10 +72,12 @@ typedef void(^RaygunBreadcrumbBlock)(RaygunBreadcrumb *breadcrumb);
 
 + (instancetype)breadcrumbWithInformation:(NSDictionary *)information;
 
-+ (BOOL)validate:(RaygunBreadcrumb *)breadcrumb withError:(NSError **)error;
++ (BOOL)validate:(nullable RaygunBreadcrumb *)breadcrumb withError:(NSError **)error;
 
 - (NSDictionary *)convertToDictionary;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunBreadcrumb_h */
