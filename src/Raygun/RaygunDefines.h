@@ -54,13 +54,6 @@ static NSString *_Nonnull const kValueNotKnown = @"Unknown";
 static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
 
-@class RaygunMessage;
-
-/**
- * Block can be used to modify the crash report before it is sent to Raygun.
- */
-typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *_Nonnull message);
-
 typedef NS_ENUM(NSInteger, RaygunEventType) {
     RaygunEventTypeSessionStart = 0,
     RaygunEventTypeSessionEnd,

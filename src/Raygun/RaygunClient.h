@@ -31,6 +31,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * Block can be used to modify the crash report before it is sent to Raygun.
+ */
+typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
+
 @interface RaygunClient : NSObject
 
 @property (nonatomic, class) enum RaygunLoggingLevel logLevel;
@@ -66,31 +71,34 @@ NS_SWIFT_NAME(sharedInstance(apiKey:));
 
 - (void)enableCrashReporting;
 
-- (void)sendException:(NSException *)exception;
+- (void)sendException:(NSException *)exception
+NS_SWIFT_NAME(send(exception:));
 
 - (void)sendException:(NSException *)exception
              withTags:(nullable NSArray *)tags
-NS_SWIFT_NAME(sendException(exception:tags:));
+NS_SWIFT_NAME(send(exception:tags:));
 
 - (void)sendException:(NSException *)exception
              withTags:(nullable NSArray *)tags
        withCustomData:(nullable NSDictionary *)customData
-NS_SWIFT_NAME(sendException(exception:tags:customData:));
+NS_SWIFT_NAME(send(exception:tags:customData:));
 
 - (void)sendException:(NSString *)exceptionName
            withReason:(nullable NSString *)reason
              withTags:(nullable NSArray *)tags
        withCustomData:(nullable NSDictionary *)customData
-NS_SWIFT_NAME(sendException(name:reason:tags:customData:));
+NS_SWIFT_NAME(send(exceptionName:reason:tags:customData:));
 
 - (void)sendError:(NSError *)error
          withTags:(nullable NSArray *)tags
    withCustomData:(nullable NSDictionary *)customData
-NS_SWIFT_NAME(sendError(error:tags:customData:));
+NS_SWIFT_NAME(send(error:tags:customData:));
 
-- (void)sendMessage:(RaygunMessage *)message;
+- (void)sendMessage:(RaygunMessage *)message
+NS_SWIFT_NAME(send(message:));
 
-- (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb;
+- (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb
+NS_SWIFT_NAME(record(breadcrumb:));
 
 - (void)recordBreadcrumbWithMessage:(NSString *)message
                        withCategory:(nullable NSString *)category
