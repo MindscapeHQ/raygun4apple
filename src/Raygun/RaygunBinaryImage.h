@@ -40,9 +40,9 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
+/*
  * Initializes a RaygunBinaryImage
- 
+ *
  * @return RaygunBinaryImage
  */
 - (instancetype)initWithUuId:(NSString *)uuid
@@ -52,11 +52,11 @@
             withImageAddress:(NSNumber *)imageAddress
                withImageSize:(NSNumber *)imageSize NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns a dictionary with the binary image properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the binary image properties and their values.
+/*
+ * Creates and returns a dictionary with the binary image properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the binary image properties and their values.
  */
 - (NSDictionary *)convertToDictionary;
 

@@ -50,10 +50,10 @@ typedef void(^RaygunEventMessageBlock)(RaygunEventMessage *message);
 + (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
 - (instancetype)initWithBlock:(RaygunEventMessageBlock)block NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns the json payload to be sent to Raygun.
- 
- @return a data object containing the RaygunEventMessage properties in a json format.
+/*
+ * Creates and returns the json payload to be sent to Raygun.
+ *
+ * @return a data object containing the RaygunEventMessage properties in a json format.
  */
 - (NSData *)convertToJsonWithError:(NSError **)error;
 

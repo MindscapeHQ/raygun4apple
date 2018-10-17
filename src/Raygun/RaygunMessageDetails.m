@@ -34,13 +34,16 @@
 #import "RaygunBinaryImage.h"
 #import "RaygunBreadcrumb.h"
 #import "RaygunUtils.h"
+#import "RaygunDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation RaygunMessageDetails
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"version": _version }];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[@"version"] = [RaygunUtils isNullOrEmptyString:_version] ? kValueNotKnown : _version;
     
     if (![RaygunUtils isNullOrEmptyString:_groupingKey]) {
         dict[@"groupingKey"] = _groupingKey;
@@ -75,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (![RaygunUtils isNullOrEmpty:_threads]) {
-        NSMutableArray *threads = [NSMutableArray new];
+        NSMutableArray *threads = [NSMutableArray array];
         for (RaygunThread *thread in _threads) {
             [threads addObject:[thread convertToDictionary]];
         }
@@ -83,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (![RaygunUtils isNullOrEmpty:_binaryImages ]) {
-        NSMutableArray *binaryImages = [NSMutableArray new];
+        NSMutableArray *binaryImages = [NSMutableArray array];
         for (RaygunBinaryImage *binaryImage in _binaryImages) {
             [binaryImages addObject:[binaryImage convertToDictionary]];
         }
@@ -91,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (![RaygunUtils isNullOrEmpty:_breadcrumbs]) {
-        NSMutableArray *breadcrumbs = [NSMutableArray new];
+        NSMutableArray *breadcrumbs = [NSMutableArray array];
         for (RaygunBreadcrumb *breadcrumb in _breadcrumbs) {
             [breadcrumbs addObject:[breadcrumb convertToDictionary]];
         }

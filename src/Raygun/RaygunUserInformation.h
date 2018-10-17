@@ -36,68 +36,68 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, class, readonly, copy) RaygunUserInformation *anonymousUser;
 
-/**
- Unique Identifier for this user. Set this to the identifier you use internally to look up users,
- or a correlation id for anonymous users if you have one. It doesn't have to be unique, but we will
- treat any duplicated values as the same user. If you use the user's email address as the identifier,
- enter it here as well as the email field.
- 
- @warning The identifier must be set in order for any of the other fields to be sent. (required)
+/*
+ * Unique Identifier for this user. Set this to the identifier you use internally to look up users,
+ * or a correlation id for anonymous users if you have one. It doesn't have to be unique, but we will
+ * treat any duplicated values as the same user. If you use the user's email address as the identifier,
+ * enter it here as well as the email field.
+ *
+ * @warning The identifier must be set in order for any of the other fields to be sent. (required)
  */
 @property (nonatomic, strong) NSString *identifier;
 
-/**
+/*
  * Device Identifier.
  */
 @property (nullable, nonatomic, strong) NSString *uuid;
 
-/**
- Flag indicating whether a user is anonymous or not.
- Generally, set this to true if the user is not logged in.
+/*
+ * Flag indicating whether a user is anonymous or not.
+ * Generally, set this to true if the user is not logged in.
  */
 @property (nonatomic) BOOL isAnonymous;
 
-/**
- User's email address
+/*
+ * User's email address
  */
 @property (nullable, nonatomic, strong) NSString *email;
 
-/**
- User's full name.
+/*
+ * User's full name.
  */
 @property (nullable, nonatomic, strong) NSString *fullName;
 
-/**
- User's first or preferred name.
+/*
+ * User's first or preferred name.
  */
 @property (nullable, nonatomic, strong) NSString *firstName;
 
-/**
- Checks that the required fields are set and the object is not nil.
+/*
+ * Checks that the required fields are set and the object is not nil.
  */
 + (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError **)error;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
- Creates and returns a RaygunUserInformation object.
- 
- @param identifier The unique user identifier that you use internally to look up users.
- 
- @return a new RaygunUserInformation object.
+/*
+ * Creates and returns a RaygunUserInformation object.
+ *
+ * @param identifier The unique user identifier that you use internally to look up users.
+ *
+ * @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
 NS_SWIFT_NAME(init(identifier:));
 
-/**
- Creates and returns a RaygunUserInformation object.
- 
- @param identifier The unique user identifier that you use internally to look up users.
- @param email The user's email address.
- @param fullName The user's full name.
- @param firstName The user's first or preferred name.
- 
- @return a new RaygunUserInformation object.
+/*
+ * Creates and returns a RaygunUserInformation object.
+ *
+ * @param identifier The unique user identifier that you use internally to look up users.
+ * @param email The user's email address.
+ * @param fullName The user's full name.
+ * @param firstName The user's first or preferred name.
+ *
+ * @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
                          withEmail:(nullable NSString *)email
@@ -105,16 +105,16 @@ NS_SWIFT_NAME(init(identifier:));
                      withFirstName:(nullable NSString *)firstName
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:));
 
-/**
- Creates and returns a RaygunUserInformation object.
- 
- @param identifier The unique user identifier that you use internally to look up users.
- @param email The user's email address.
- @param fullName The user's full name.
- @param firstName The user's first or preferred name.
- @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
- 
- @return a new RaygunUserInformation object.
+/*
+ * Creates and returns a RaygunUserInformation object.
+ *
+ * @param identifier The unique user identifier that you use internally to look up users.
+ * @param email The user's email address.
+ * @param fullName The user's full name.
+ * @param firstName The user's first or preferred name.
+ * @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
+ *
+ * @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
                          withEmail:(nullable NSString *)email
@@ -123,17 +123,17 @@ NS_SWIFT_NAME(init(identifier:email:fullName:firstName:));
                    withIsAnonymous:(BOOL) isAnonymous
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:));
 
-/**
- Creates and returns a RaygunUserInformation object.
- 
- @param identifier The unique user identifier that you use internally to look up users.
- @param email The user's email address.
- @param fullName The user's full name.
- @param firstName The user's first or preferred name.
- @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
- @param uuid Device identifier.
- 
- @return a new RaygunUserInformation object.
+/*
+ * Creates and returns a RaygunUserInformation object.
+ *
+ * @param identifier The unique user identifier that you use internally to look up users.
+ * @param email The user's email address.
+ * @param fullName The user's full name.
+ * @param firstName The user's first or preferred name.
+ * @param isAnonymous True if the user is not logged in, or however you want to define anonymous.
+ * @param uuid Device identifier.
+ *
+ * @return a new RaygunUserInformation object.
  */
 - (instancetype)initWithIdentifier:(NSString *)identifier
                          withEmail:(nullable NSString *)email
@@ -143,11 +143,11 @@ NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:));
                           withUuid:(nullable NSString *)uuid NS_DESIGNATED_INITIALIZER
 NS_SWIFT_NAME(init(identifier:email:fullName:firstName:anonymous:uuid:));
 
-/**
- Creates and returns a dictionary with the classes properties and their values. 
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the classes properties and their values.
+/*
+ * Creates and returns a dictionary with the classes properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the classes properties and their values.
  */
 - (NSDictionary *)convertToDictionary;
 

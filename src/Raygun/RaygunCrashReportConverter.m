@@ -270,7 +270,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)referencedBinaryImagesFromCrashReport:(NSDictionary *)report threads:(NSArray<RaygunThread *> *)threads {
     NSArray *binaryImageData = report[@"binary_images"];
-    NSMutableArray *raygunBinaryImages = [NSMutableArray new];
+    NSMutableArray *raygunBinaryImages = [NSMutableArray array];
     
     for (NSDictionary *binaryImage in binaryImageData) {
         if ([self isBinaryImageReferenced:binaryImage threads:threads]) {
@@ -307,7 +307,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)threadsFromCrashReport:(NSDictionary *)report {
     NSArray *threadData = report[@"crash"][@"threads"];
-    NSMutableArray *raygunThreads = [NSMutableArray new];
+    NSMutableArray *raygunThreads = [NSMutableArray array];
     
     for (NSDictionary *thread in threadData) {
         RaygunThread *raygunThread = [[RaygunThread alloc] initWithIndex:thread[@"index"]];
@@ -329,7 +329,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSArray *frameData = thread[@"backtrace"][@"contents"];
     NSUInteger frameCount = frameData.count;
     if (frameCount <= 0) {
-        return [NSArray new];
+        return [NSArray array];
     }
     
     NSMutableArray *frames = [NSMutableArray arrayWithCapacity:frameCount];
@@ -350,7 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSArray<RaygunBreadcrumb *> *)breadcrumbsFromCrashReport:(NSDictionary *)report {
-    NSMutableArray *reportBreadcrumbs = [NSMutableArray new];
+    NSMutableArray *reportBreadcrumbs = [NSMutableArray array];
     NSArray *userBreadcrumbs = report[@"user"][@"breadcrumbs"];
     
     if (userBreadcrumbs != nil) {

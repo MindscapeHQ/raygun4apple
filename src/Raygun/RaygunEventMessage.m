@@ -53,7 +53,7 @@
 
 - (NSData *)convertToJsonWithError:(NSError **)error {
     @try {
-        NSMutableDictionary *message = [NSMutableDictionary new];
+        NSMutableDictionary *message = [NSMutableDictionary dictionary];
         
         message[@"user"]      = [_userInformation convertToDictionary];
         message[@"type"]      = RaygunEventTypeNames[_eventType];

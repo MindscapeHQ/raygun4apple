@@ -27,6 +27,7 @@
 #import "RaygunErrorMessage.h"
 
 #import "RaygunUtils.h"
+#import "RaygunDefines.h"
 
 @implementation RaygunErrorMessage
 
@@ -47,7 +48,10 @@
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary: @{ @"className": _className, @"message": _message }];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[@"className"] = [RaygunUtils isNullOrEmptyString:_className] ? kValueNotKnown : _className;
+    dict[@"message"]   = [RaygunUtils isNullOrEmptyString:_message]   ? kValueNotKnown : _message;
     
     if (![RaygunUtils isNullOrEmptyString:_signalName]) {
         dict[@"signalName"] = _signalName;

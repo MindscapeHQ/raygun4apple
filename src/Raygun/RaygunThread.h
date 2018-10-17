@@ -41,18 +41,18 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
+/*
  * Initializes a RaygunThread with its index
-
+ *
  * @return RaygunThread
  */
 - (instancetype)initWithIndex:(NSNumber *)threadIndex NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns a dictionary with the thread properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the thread properties and their values.
+/*
+ * Creates and returns a dictionary with the thread properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the thread properties and their values.
  */
 - (NSDictionary *)convertToDictionary;
 

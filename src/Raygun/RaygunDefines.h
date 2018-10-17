@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, RaygunEventType) {
     RaygunEventTypeTiming
 };
 
-/**
+/*
  * Static internal helper to convert RaygunEventType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTypeNames[] = {
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
     RaygunEventTimingTypeNetworkCall
 };
 
-/**
+/*
  * Static internal helper to convert RaygunEventTimingType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
@@ -90,8 +90,7 @@ typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
     RaygunLoggingLevelVerbose = 4,
 };
 
-
-/**
+/*
  * Static internal helper to convert RaygunLoggingLevel enum to a string
  */
 static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
@@ -102,7 +101,7 @@ static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"Verbose"
 };
 
-/**
+/*
  * Static internal helper to convert RaygunResponseStatusCode enum to a string
  */
 typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {

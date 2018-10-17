@@ -45,11 +45,11 @@
       withSignalCode:(nullable NSString *)signalCode
       withStackTrace:(nullable NSArray *)stacktrace NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns a dictionary with the classes properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the classes properties and their values.
+/*
+ * Creates and returns a dictionary with the classes properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the classes properties and their values.
  */
 - (NSDictionary *)convertToDictionary;
 

@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
                     withName:(NSString *)name
                 withDuration:(NSNumber *)duration NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns a dictionary with the classes properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the classes properties and their values.
+/*
+ * Creates and returns a dictionary with the classes properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the classes properties and their values.
  */
 - (NSDictionary *)convertToDictionary;//  [{ "name": name, "timing": { "type": type, "duration": duration } }]
 

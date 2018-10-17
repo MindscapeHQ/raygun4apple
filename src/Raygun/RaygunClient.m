@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 static NSString *sharedApiKey = nil;
 static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
-static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelError;
+static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
 
@@ -294,7 +294,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelError;
  We update KSCrash with information so when the app crashes it keeps the state from the crashed session.
  */
 - (void)updateCrashReportUserInformation {
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
     userInfo[@"applicationVersion"] = _applicationVersion;
@@ -303,7 +303,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelError;
         userInfo[@"userInformation"] = [_userInformation convertToDictionary];
     }
     
-    NSMutableArray<NSDictionary *> *userBreadcrumbs = [[NSMutableArray alloc] init];
+    NSMutableArray<NSDictionary *> *userBreadcrumbs = [NSMutableArray array];
     
     if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
         for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
@@ -391,8 +391,8 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelError;
 
 - (void)sendTimingEvent:(enum RaygunEventTimingType)type
                withName:(NSString *)name
-           withDuration:(int)milliseconds {
-    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(milliseconds)];
+           withDuration:(int)duration {
+    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(duration)];
 }
 
 @end

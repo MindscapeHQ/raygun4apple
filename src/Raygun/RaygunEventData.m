@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *eventData = [NSMutableDictionary new];
+    NSMutableDictionary *eventData = [NSMutableDictionary dictionary];
     eventData[@"name"]   = _name;
     eventData[@"timing"] = @{ @"type":RaygunEventTimingTypeShortNames[_timingType], @"duration":_duration };
     return eventData;
