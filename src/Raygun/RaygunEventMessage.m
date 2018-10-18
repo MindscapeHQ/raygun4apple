@@ -51,7 +51,7 @@
     return self;
 }
 
-- (NSData *)convertToJsonWithError:(NSError **)error {
+- (NSData *)convertToJsonWithError:(NSError * __autoreleasing *)error {
     @try {
         NSMutableDictionary *message = [NSMutableDictionary dictionary];
         

@@ -68,7 +68,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     return identifier;
 }
 
-+ (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError **)error {
++ (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError * __autoreleasing *)error {
     if (userInformation == nil) {
         [NSError fillError:error
                 withDomain:[[self class] description]
