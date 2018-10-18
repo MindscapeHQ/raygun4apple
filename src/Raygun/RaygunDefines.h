@@ -41,7 +41,7 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
-static NSString *_Nonnull const kRaygunClientVersion = @"1.1.0";
+static NSString *_Nonnull const kRaygunClientVersion = @"1.2.0";
 
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
@@ -49,23 +49,18 @@ static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun
 static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
 static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
 
+static NSString *_Nonnull const kValueNotKnown = @"Unknown";
+
 static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
 
-@class RaygunMessage;
-
-/**
- * Block can be used to modify the crash report before it is sent to Raygun.
- */
-typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *_Nonnull message);
-
 typedef NS_ENUM(NSInteger, RaygunEventType) {
-    kRaygunEventTypeSessionStart = 0,
-    kRaygunEventTypeSessionEnd,
-    kRaygunEventTypeTiming
+    RaygunEventTypeSessionStart = 0,
+    RaygunEventTypeSessionEnd,
+    RaygunEventTypeTiming
 };
 
-/**
+/*
  * Static internal helper to convert RaygunEventType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTypeNames[] = {
@@ -75,11 +70,11 @@ static NSString *_Nonnull const RaygunEventTypeNames[] = {
 };
 
 typedef NS_ENUM(NSInteger, RaygunEventTimingType) {
-    kRaygunEventTimingViewLoaded = 0,
-    kRaygunEventTimingNetworkCall
+    RaygunEventTimingTypeViewLoaded = 0,
+    RaygunEventTimingTypeNetworkCall
 };
 
-/**
+/*
  * Static internal helper to convert RaygunEventTimingType enum to a string
  */
 static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
@@ -88,14 +83,14 @@ static NSString *_Nonnull const RaygunEventTimingTypeShortNames[] = {
 };
 
 typedef NS_ENUM(NSInteger, RaygunLoggingLevel) {
-    kRaygunLoggingLevelNone = 0,
-    kRaygunLoggingLevelError,
-    kRaygunLoggingLevelWarning,
-    kRaygunLoggingLevelDebug,
-    kRaygunLoggingLevelVerbose,
+    RaygunLoggingLevelNone    = 0,
+    RaygunLoggingLevelError   = 1,
+    RaygunLoggingLevelWarning = 2,
+    RaygunLoggingLevelDebug   = 3,
+    RaygunLoggingLevelVerbose = 4,
 };
 
-/**
+/*
  * Static internal helper to convert RaygunLoggingLevel enum to a string
  */
 static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
@@ -106,19 +101,19 @@ static NSString *_Nonnull const RaygunLoggingLevelNames[] = {
     @"Verbose"
 };
 
-/**
+/*
  * Static internal helper to convert RaygunResponseStatusCode enum to a string
  */
 typedef NS_ENUM(NSInteger, RaygunResponseStatusCode) {
-    kRaygunResponseStatusCodeAccepted      = 202,
-    kRaygunResponseStatusCodeBadMessage    = 400,
-    kRaygunResponseStatusCodeInvalidApiKey = 403,
-    kRaygunResponseStatusCodeLargePayload  = 413,
-    kRaygunResponseStatusCodeRateLimited   = 429,
+    RaygunResponseStatusCodeAccepted      = 202,
+    RaygunResponseStatusCodeBadMessage    = 400,
+    RaygunResponseStatusCodeInvalidApiKey = 403,
+    RaygunResponseStatusCodeLargePayload  = 413,
+    RaygunResponseStatusCodeRateLimited   = 429,
 };
 
 typedef NS_ENUM(NSInteger, RaygunBreadcrumbType) {
-    kRaygunBreadcrumbTypeManual = 0,
+    RaygunBreadcrumbTypeManual = 0,
 };
 
 static NSString *_Nonnull const RaygunBreadcrumbTypeNames[] = {
@@ -126,10 +121,10 @@ static NSString *_Nonnull const RaygunBreadcrumbTypeNames[] = {
 };
 
 typedef NS_ENUM(NSInteger, RaygunBreadcrumbLevel) {
-    kRaygunBreadcrumbLevelDebug = 0,
-    kRaygunBreadcrumbLevelInfo,
-    kRaygunBreadcrumbLevelWarning,
-    kRaygunBreadcrumbLevelError
+    RaygunBreadcrumbLevelDebug = 0,
+    RaygunBreadcrumbLevelInfo,
+    RaygunBreadcrumbLevelWarning,
+    RaygunBreadcrumbLevelError
 };
 
 static NSString *_Nonnull const RaygunBreadcrumbLevelNames[] = {

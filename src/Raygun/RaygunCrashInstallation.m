@@ -33,7 +33,7 @@
 @implementation RaygunCrashInstallation
 
 - (instancetype)init {
-    return [super initWithRequiredProperties:[NSArray new]];
+    return [super initWithRequiredProperties:[NSArray array]];
 }
 
 - (id<KSCrashReportFilter>)sink {

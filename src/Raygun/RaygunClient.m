@@ -38,12 +38,14 @@
 #import "RaygunBreadcrumb.h"
 #import "RaygunUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunClient()
 
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 @property (nonatomic) bool crashReportingEnabled;
-@property(nonatomic, strong) RaygunFileManager *fileManager;
-@property(nonatomic, strong) NSMutableArray* mutableBreadcrumbs;
+@property (nonatomic, strong) RaygunFileManager *fileManager;
+@property (nonatomic, strong) NSMutableArray* mutableBreadcrumbs;
 
 @end
 
@@ -52,46 +54,56 @@
 static NSString *sharedApiKey = nil;
 static RaygunClient *sharedClientInstance = nil;
 static RaygunCrashInstallation *sharedCrashInstallation = nil;
-static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
+static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
 
 #pragma mark - Setters -
 
-+ (void)setLogLevel:(RaygunLoggingLevel)level {
++ (void)setLogLevel:(enum RaygunLoggingLevel)level {
     NSParameterAssert(level);
     sharedLogLevel = level;
 }
 
-+ (RaygunLoggingLevel)logLevel {
++ (enum RaygunLoggingLevel)logLevel {
     return sharedLogLevel;
 }
 
-+ (NSString *)apiKey {
++ (nonnull NSString *)apiKey {
     return sharedApiKey;
 }
 
-- (void)setApplicationVersion:(NSString *)applicationVersion {
+- (void)setApplicationVersion:(nullable NSString *)applicationVersion {
     _applicationVersion = applicationVersion;
     [self updateCrashReportUserInformation];
 }
 
-- (void)setTags:(NSArray *)tags {
+- (void)setTags:(nullable NSArray *)tags {
     _tags = tags;
     [self updateCrashReportUserInformation];
 }
 
-- (void)setCustomData:(NSDictionary *)customData {
+- (void)setCustomData:(nullable NSDictionary *)customData {
     _customData = customData;
     [self updateCrashReportUserInformation];
 }
 
-- (void)setUserInformation:(RaygunUserInformation *)userInformation {
-    _userInformation = userInformation;
-    [self identifyWithUserInformation:userInformation];
+- (void)setUserInformation:(nullable RaygunUserInformation *)userInformation {
+    NSError *error = nil;
+    if ([RaygunUserInformation validate:userInformation withError:&error]) {
+        _userInformation = userInformation;
+        
+        [self updateCrashReportUserInformation];
+        [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
+        
+        [RaygunLogger logDebug:@"Set new user: %@", userInformation.identifier];
+    }
+    else if (error) {
+        [RaygunLogger logWarning:@"Failed to set user due to error: %@", error.localizedDescription];
+    }
 }
 
-- (RaygunUserInformation *)userInformation {
+- (nullable RaygunUserInformation *)userInformation {
     return _userInformation == nil ? RaygunUserInformation.anonymousUser : _userInformation;
 }
 
@@ -131,7 +143,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
 - (void)enableCrashReporting {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [RaygunLogger logDebug:@"Enabling crash reporting"];
+        [RaygunLogger logDebug:@"Enabling Crash Reporting"];
         self.crashReportingEnabled = YES;
         
         // Install the crash reporter.
@@ -172,13 +184,21 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     [self sendException:exception withTags:nil withCustomData:nil];
 }
 
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags {
+- (void)sendException:(NSException *)exception
+             withTags:(nullable NSArray *)tags {
     [self sendException:exception withTags:tags withCustomData:nil];
 }
 
-- (void)sendException:(NSException *)exception withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+- (void)sendException:(NSException *)exception
+             withTags:(nullable NSArray *)tags
+       withCustomData:(nullable NSDictionary *)customData {
     if (_crashReportingEnabled == NO) {
         [RaygunLogger logWarning:@"Failed to send exception - Crash Reporting has not been enabled"];
+        return;
+    }
+    
+    if (exception == nil) {
+        [RaygunLogger logWarning:@"Failed to send exception - Exception object cannot be nil"];
         return;
     }
     
@@ -193,7 +213,10 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
 }
 
-- (void)sendException:(NSString *)exceptionName withReason:(NSString *)reason withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+- (void)sendException:(NSString *)exceptionName
+           withReason:(nullable NSString *)reason
+             withTags:(nullable NSArray *)tags
+       withCustomData:(nullable NSDictionary *)customData {
     NSException *exception = [NSException exceptionWithName:exceptionName reason:reason userInfo:nil];
     
     @try {
@@ -204,11 +227,13 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     }
 }
 
-- (void)sendError:(NSError *)error withTags:(NSArray *)tags withCustomData:(NSDictionary *)customData {
+- (void)sendError:(NSError *)error
+         withTags:(nullable NSArray *)tags
+   withCustomData:(nullable NSDictionary *)customData {
     NSError *innerError = [self getInnerError:error];
     NSString *reason = innerError.localizedDescription;
     if (reason == nil) {
-        reason = @"Unknown";
+        reason = kValueNotKnown;
     }
     
     NSException *exception = [NSException exceptionWithName:[NSString stringWithFormat:@"%@ [code: %ld]", innerError.domain, (long)innerError.code] reason:reason userInfo:nil];
@@ -245,7 +270,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
                 [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
                 
-                if (httpResponse.statusCode == kRaygunResponseStatusCodeRateLimited) {
+                if (httpResponse.statusCode == RaygunResponseStatusCodeRateLimited) {
                     // This application is being rate limited currently so store the message to be sent later.
                     NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
                     if (path) {
@@ -269,7 +294,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
  We update KSCrash with information so when the app crashes it keeps the state from the crashed session.
  */
 - (void)updateCrashReportUserInformation {
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     userInfo[@"tags"]               = _tags;
     userInfo[@"customData"]         = _customData;
     userInfo[@"applicationVersion"] = _applicationVersion;
@@ -278,7 +303,7 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
         userInfo[@"userInformation"] = [_userInformation convertToDictionary];
     }
     
-    NSMutableArray<NSDictionary *> *userBreadcrumbs = [[NSMutableArray alloc] init];
+    NSMutableArray<NSDictionary *> *userBreadcrumbs = [NSMutableArray array];
     
     if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
         for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
@@ -291,8 +316,9 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     (KSCrash.sharedInstance).userInfo = userInfo;
 }
 
-- (void)sendCrashData:(NSData *)crashData completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
-    if (RaygunClient.logLevel == kRaygunLoggingLevelVerbose) {
+- (void)sendCrashData:(NSData *)crashData
+    completionHandler:(void (^)(NSData*, NSURLResponse*, NSError*))completionHandler {
+    if (RaygunClient.logLevel == RaygunLoggingLevelVerbose) {
         [RaygunLogger logDebug:@"Sending JSON -------------------------------"];
         [RaygunLogger logDebug:@"%@", [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding]];
         [RaygunLogger logDebug:@"--------------------------------------------"];
@@ -324,12 +350,15 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     }
 }
 
-- (void)recordBreadcrumb:(NSString *)message withCategory:(NSString *)category withLevel:(RaygunBreadcrumbLevel)level withCustomData:(NSDictionary *)customData {
+- (void)recordBreadcrumbWithMessage:(NSString *)message
+                       withCategory:(nullable NSString *)category
+                          withLevel:(enum RaygunBreadcrumbLevel)level
+                     withCustomData:(nullable NSDictionary *)customData {
     RaygunBreadcrumb *breadcrumb = [RaygunBreadcrumb breadcrumbWithBlock:^(RaygunBreadcrumb *breadcrumb) {
         breadcrumb.message    = message;
         breadcrumb.category   = category;
         breadcrumb.level      = level;
-        breadcrumb.type       = kRaygunBreadcrumbTypeManual;
+        breadcrumb.type       = RaygunBreadcrumbTypeManual;
         breadcrumb.customData = customData;
         breadcrumb.timestamp  = [RaygunUtils timeSinceEpochInMilliseconds];
     }];
@@ -360,15 +389,12 @@ static RaygunLoggingLevel sharedLogLevel = kRaygunLoggingLevelError;
     [[RaygunRealUserMonitoring sharedInstance] ignoreURLs:urls];
 }
 
-- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(int)milliseconds {
-    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(milliseconds)];
-}
-
-#pragma mark - Unique User Tracking -
-
-- (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
-    [self updateCrashReportUserInformation];
-    [RaygunRealUserMonitoring.sharedInstance identifyWithUserInformation:userInformation];
+- (void)sendTimingEvent:(enum RaygunEventTimingType)type
+               withName:(NSString *)name
+           withDuration:(int)duration {
+    [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:type withName:name withDuration:@(duration)];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

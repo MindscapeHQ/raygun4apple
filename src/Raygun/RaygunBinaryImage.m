@@ -47,9 +47,9 @@
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    dict[@"processor"] = [NSMutableDictionary new];
+    dict[@"processor"] = [NSMutableDictionary dictionary];
     
     if (_uuid) {
         dict[@"uuid"] = _uuid;

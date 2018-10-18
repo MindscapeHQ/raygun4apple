@@ -97,7 +97,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [RaygunLogger logDebug:@"Enabling network performance monitoring"];
+        [RaygunLogger logDebug:@"Enabling Network Performance Monitoring"];
         [RaygunNetworkPerformanceMonitor swizzleUrlSessionTaskMethods];
         [RaygunNetworkPerformanceMonitor swizzleUrlSessionMethods];
         [RaygunNetworkPerformanceMonitor swizzleUrlConnectionMethods];
@@ -256,7 +256,7 @@ static RaygunSessionTaskDelegate* sessionDelegate;
             urlString = [NSString stringWithFormat:@"%@ %@", httpMethod, urlString];
         }
         
-        [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:kRaygunEventTimingNetworkCall withName:urlString withDuration:[NSNumber numberWithInteger:milliseconds]];
+        [[RaygunRealUserMonitoring sharedInstance] sendTimingEvent:RaygunEventTimingTypeNetworkCall withName:urlString withDuration:[NSNumber numberWithInteger:milliseconds]];
     }
 }
 

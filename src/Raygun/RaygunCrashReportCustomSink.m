@@ -51,7 +51,7 @@
 - (void)filterReports:(NSArray *)reports onCompletion:(KSCrashReportFilterCompletion)onCompletion {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
-        NSMutableArray *sentReports = [NSMutableArray new];
+        NSMutableArray *sentReports = [NSMutableArray array];
         RaygunCrashReportConverter *converter = [[RaygunCrashReportConverter alloc] init];
         
         for (NSDictionary *report in reports) {

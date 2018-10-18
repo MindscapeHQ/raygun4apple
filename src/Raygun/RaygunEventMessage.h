@@ -41,7 +41,7 @@ typedef void(^RaygunEventMessageBlock)(RaygunEventMessage *message);
 @property (nonatomic, copy)   NSString *sessionId;
 @property (nonatomic) enum    RaygunEventType eventType;
 @property (nonatomic, strong) RaygunUserInformation *userInformation;
-@property (nonatomic, copy)   NSString *version;
+@property (nonatomic, copy)   NSString *applicationVersion;
 @property (nonatomic, copy)   NSString *operatingSystem;
 @property (nonatomic, copy)   NSString *osVersion;
 @property (nonatomic, copy)   NSString *platform;
@@ -50,12 +50,12 @@ typedef void(^RaygunEventMessageBlock)(RaygunEventMessage *message);
 + (instancetype)messageWithBlock:(RaygunEventMessageBlock)block;
 - (instancetype)initWithBlock:(RaygunEventMessageBlock)block NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns the json payload to be sent to Raygun.
- 
- @return a data object containing the RaygunEventMessage properties in a json format.
+/*
+ * Creates and returns the json payload to be sent to Raygun.
+ *
+ * @return a data object containing the RaygunEventMessage properties in a json format.
  */
-- (NSData *)convertToJson;
+- (NSData *)convertToJsonWithError:(NSError **)error;
 
 @end
 

@@ -28,6 +28,8 @@
 
 #import "RaygunUserInformation.h"
 #import "RaygunEventData.h"
+#import "RaygunUtils.h"
+#import "NSError+SimpleConstructor.h"
 
 @implementation RaygunEventMessage
 
@@ -49,27 +51,35 @@
     return self;
 }
 
-- (NSData *)convertToJson {
-    NSMutableDictionary *message = [NSMutableDictionary new];
-    
-    message[@"user"]      = [_userInformation convertToDictionary];
-    message[@"type"]      = RaygunEventTypeNames[_eventType];
-    message[@"sessionId"] = _sessionId;
-    message[@"timestamp"] = _occurredOn;
-    message[@"version"]   = _version;
-    message[@"os"]        = _operatingSystem;
-    message[@"osVersion"] = _osVersion != nil ? _osVersion : @"";
-    message[@"platform"]  = _platform  != nil ? _platform  : @"";
-    
-    if (_eventData != nil) {
-        // The current format requires the data to be translated to a string.
-        NSArray   *dataArray = @[[_eventData convertToDictionary]];
-        NSData    *eventData = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil];
-        NSString *dataString = [[NSString alloc] initWithData:eventData encoding:NSUTF8StringEncoding];
-        message[@"data"] = dataString;
+- (NSData *)convertToJsonWithError:(NSError * __autoreleasing *)error {
+    @try {
+        NSMutableDictionary *message = [NSMutableDictionary dictionary];
+        
+        message[@"user"]      = [_userInformation convertToDictionary];
+        message[@"type"]      = RaygunEventTypeNames[_eventType];
+        message[@"sessionId"] = _sessionId;
+        message[@"timestamp"] = _occurredOn;
+        message[@"version"]   = [RaygunUtils isNullOrEmptyString:_applicationVersion] ? kValueNotKnown : _applicationVersion;
+        message[@"os"]        = [RaygunUtils isNullOrEmptyString:_operatingSystem] ? kValueNotKnown : _operatingSystem;
+        message[@"osVersion"] = [RaygunUtils isNullOrEmptyString:_osVersion] ? kValueNotKnown : _osVersion;
+        message[@"platform"]  = [RaygunUtils isNullOrEmptyString:_platform] ? kValueNotKnown : _platform;
+        
+        if (_eventData != nil) {
+            // The current format requires the data to be translated to a string.
+            NSArray   *dataArray = @[[_eventData convertToDictionary]];
+            NSData    *eventData = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil];
+            NSString *dataString = [[NSString alloc] initWithData:eventData encoding:NSUTF8StringEncoding];
+            message[@"data"] = dataString;
+        }
+        
+        NSData *json = [NSJSONSerialization dataWithJSONObject:@{@"eventData":@[message]} options:0 error:nil];
+        
+        return json;
+    } @catch (NSException *exception) {
+        [NSError fillError:error withDomain:[[self class] description] code:0 description:@"Exception occurred: %@", exception.description];
     }
     
-    return [NSJSONSerialization dataWithJSONObject:@{@"eventData":@[message]} options:0 error:nil];
+    return nil;
 }
 
 @end

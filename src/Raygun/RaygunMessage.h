@@ -43,10 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTimestamp:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns the json payload to be sent to Raygun.
- 
- @return a data object containing the RaygunMessage properties in a json format.
+/*
+ * Creates and returns the json payload to be sent to Raygun.
+ *
+ * @return a data object containing the RaygunMessage properties in a json format.
  */
 - (NSData *)convertToJson;
 

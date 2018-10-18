@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (appVersion == nil) {
-        appVersion = @"Unknown";
+        appVersion = kValueNotKnown;
     }
     return appVersion;
 }
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
                            systemData[@"os_version"]];
     
     if (!osVersion) {
-        osVersion = @"Unknown";
+        osVersion = kValueNotKnown;
     }
     
     NSLocale *locale = [NSLocale currentLocale];
@@ -168,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (!localeStr) {
-        localeStr = @"Unknown";
+        localeStr = kValueNotKnown;
     }
     
     CGRect screenBounds = [UIScreen mainScreen].bounds;
@@ -194,9 +194,9 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSDictionary *errorData  = report[@"crash"][@"error"];
     NSString     *diagnosis  = report[@"crash"][@"diagnosis"];
-    NSString     *signalName = @"Unknown";
-    NSString     *signalCode = @"Unknown";
-    NSString     *className  = @"Unknown";
+    NSString     *signalName = kValueNotKnown;
+    NSString     *signalCode = kValueNotKnown;
+    NSString     *className  = kValueNotKnown;
     NSString     *message    = nil;
     
     if (errorData != nil) {
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
         
         if (message == nil && (diagnosis == nil || diagnosis.length == 0)) {
             // No message and no diagnosis either
-            message = @"Unknown";
+            message = kValueNotKnown;
         }
         else if (message == nil && diagnosis != nil && diagnosis.length > 0) {
             // No message but we have a diagnosis
@@ -270,7 +270,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)referencedBinaryImagesFromCrashReport:(NSDictionary *)report threads:(NSArray<RaygunThread *> *)threads {
     NSArray *binaryImageData = report[@"binary_images"];
-    NSMutableArray *raygunBinaryImages = [NSMutableArray new];
+    NSMutableArray *raygunBinaryImages = [NSMutableArray array];
     
     for (NSDictionary *binaryImage in binaryImageData) {
         if ([self isBinaryImageReferenced:binaryImage threads:threads]) {
@@ -307,7 +307,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)threadsFromCrashReport:(NSDictionary *)report {
     NSArray *threadData = report[@"crash"][@"threads"];
-    NSMutableArray *raygunThreads = [NSMutableArray new];
+    NSMutableArray *raygunThreads = [NSMutableArray array];
     
     for (NSDictionary *thread in threadData) {
         RaygunThread *raygunThread = [[RaygunThread alloc] initWithIndex:thread[@"index"]];
@@ -329,7 +329,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSArray *frameData = thread[@"backtrace"][@"contents"];
     NSUInteger frameCount = frameData.count;
     if (frameCount <= 0) {
-        return [NSArray new];
+        return [NSArray array];
     }
     
     NSMutableArray *frames = [NSMutableArray arrayWithCapacity:frameCount];
@@ -350,7 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSArray<RaygunBreadcrumb *> *)breadcrumbsFromCrashReport:(NSDictionary *)report {
-    NSMutableArray *reportBreadcrumbs = [NSMutableArray new];
+    NSMutableArray *reportBreadcrumbs = [NSMutableArray array];
     NSArray *userBreadcrumbs = report[@"user"][@"breadcrumbs"];
     
     if (userBreadcrumbs != nil) {

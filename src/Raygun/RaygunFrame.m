@@ -34,9 +34,9 @@
 }
 
 - (NSDictionary *)convertToDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    dict[@"symbol"] = [NSMutableDictionary new];
+    dict[@"symbol"] = [NSMutableDictionary dictionary];
     
     if (_symbolName) {
         dict[@"symbol"][@"name"] = _symbolName;

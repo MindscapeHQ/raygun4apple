@@ -31,25 +31,25 @@
 
 @interface RaygunErrorMessage : NSObject
 
-@property (nonatomic, copy) NSString *className;
-@property (nonatomic, copy) NSString *message;
-@property (nonatomic, copy) NSString *signalName;
-@property (nonatomic, copy) NSString *signalCode;
-@property (nonatomic, strong) NSArray *stackTrace;
+@property (nonnull, nonatomic, copy) NSString *className;
+@property (nonnull, nonatomic, copy) NSString *message;
+@property (nullable, nonatomic, copy) NSString *signalName;
+@property (nullable, nonatomic, copy) NSString *signalCode;
+@property (nullable, nonatomic, strong) NSArray *stackTrace;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)init:(NSString *)className
-         withMessage:(NSString *)message
-      withSignalName:(NSString *)signalName
-      withSignalCode:(NSString *)signalCode
-      withStackTrace:(NSArray *)stacktrace NS_DESIGNATED_INITIALIZER;
+- (instancetype)init:(nonnull NSString *)className
+         withMessage:(nonnull NSString *)message
+      withSignalName:(nullable NSString *)signalName
+      withSignalCode:(nullable NSString *)signalCode
+      withStackTrace:(nullable NSArray *)stacktrace NS_DESIGNATED_INITIALIZER;
 
-/**
- Creates and returns a dictionary with the classes properties and their values.
- Used when constructing the crash report that is sent to Raygun.
- 
- @return a new Dictionary with the classes properties and their values.
+/*
+ * Creates and returns a dictionary with the classes properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the classes properties and their values.
  */
 - (NSDictionary *)convertToDictionary;
 
