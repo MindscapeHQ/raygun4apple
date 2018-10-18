@@ -326,10 +326,15 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (NSString *)applicationVersion {
-    NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
-    NSString *version      = infoDict[@"CFBundleShortVersionString"];
-    NSString *build        = infoDict[@"CFBundleVersion"];
-    return [NSString stringWithFormat:@"%@ (%@)", version, build];
+    if ([RaygunUtils isNullOrEmpty:RaygunClient.sharedInstance.applicationVersion]) {
+        NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
+        NSString *version      = infoDict[@"CFBundleShortVersionString"];
+        NSString *build        = infoDict[@"CFBundleVersion"];
+        return [NSString stringWithFormat:@"%@ (%@)", version, build];
+    }
+    else {
+        return RaygunClient.sharedInstance.applicationVersion;
+    }
 }
 
 - (NSString *)platform {
