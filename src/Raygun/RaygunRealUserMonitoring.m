@@ -241,7 +241,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:name]) {
+    if ([RaygunUtils isNullOrEmpty:name]) {
         [RaygunLogger logError:@"Failed to send RUM timing event - Invalid timing name"];
         return;
     }
@@ -362,7 +362,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled || [RaygunUtils isNullOrEmptyString:viewName]) {
+    if (!_enabled || [RaygunUtils isNullOrEmpty:viewName]) {
         return YES;
     }
     

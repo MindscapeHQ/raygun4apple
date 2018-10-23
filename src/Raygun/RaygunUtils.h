@@ -29,16 +29,18 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunUtils : NSObject
 
 + (BOOL)isNullOrEmpty:(id _Nullable)thing;
-
-+ (BOOL)isNullOrEmptyString:(NSString *_Nullable)text;
 
 + (NSString *)currentDateTime;
 
 + (NSNumber *)timeSinceEpochInMilliseconds;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunUtils_h */

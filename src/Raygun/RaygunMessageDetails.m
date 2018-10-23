@@ -43,13 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    dict[@"version"] = [RaygunUtils isNullOrEmptyString:_version] ? kValueNotKnown : _version;
+    dict[@"version"] = [RaygunUtils isNullOrEmpty:_version] ? kValueNotKnown : _version;
     
-    if (![RaygunUtils isNullOrEmptyString:_groupingKey]) {
+    if (![RaygunUtils isNullOrEmpty:_groupingKey]) {
         dict[@"groupingKey"] = _groupingKey;
     }
     
-    if (![RaygunUtils isNullOrEmptyString:_machineName]) {
+    if (![RaygunUtils isNullOrEmpty:_machineName]) {
         dict[@"machineName"] = _machineName;
     }
     

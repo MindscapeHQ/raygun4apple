@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
         return NO;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:breadcrumb.message]) {
+    if ([RaygunUtils isNullOrEmpty:breadcrumb.message]) {
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
@@ -123,15 +123,15 @@ NS_ASSUME_NONNULL_BEGIN
     dict[@"type"]      = RaygunBreadcrumbTypeNames[_type];
     dict[@"timestamp"] = @([_timestamp longValue]);
     
-    if (![RaygunUtils isNullOrEmptyString:_category]) {
+    if (![RaygunUtils isNullOrEmpty:_category]) {
         dict[@"category"] = _category;
     }
 
-    if (![RaygunUtils isNullOrEmptyString:_className]) {
+    if (![RaygunUtils isNullOrEmpty:_className]) {
         dict[@"className"] = _className;
     }
     
-    if (![RaygunUtils isNullOrEmptyString:_methodName]) {
+    if (![RaygunUtils isNullOrEmpty:_methodName]) {
         dict[@"methodName"] = _methodName;
     }
     

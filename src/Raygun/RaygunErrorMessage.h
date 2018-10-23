@@ -29,6 +29,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunErrorMessage : NSObject
 
 @property (nonnull, nonatomic, copy) NSString *className;
@@ -54,5 +56,7 @@
 - (NSDictionary *)convertToDictionary;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunErrorMessage_h */

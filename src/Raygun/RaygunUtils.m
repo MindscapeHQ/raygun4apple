@@ -28,15 +28,13 @@
 
 #import "RaygunLogger.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunUtils
 
 + (BOOL)isNullOrEmpty:(id _Nullable)thing {
     return thing == nil || ([thing respondsToSelector:@selector(length)] && ((NSData *)thing).length == 0)
                         || ([thing respondsToSelector:@selector(count)]  && ((NSArray *)thing).count == 0);
-}
-
-+ (BOOL)isNullOrEmptyString:(NSString *_Nullable)text {
-    return [RaygunUtils isNullOrEmpty:text] || [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0;
 }
 
 + (NSString *)currentDateTime {
@@ -59,3 +57,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

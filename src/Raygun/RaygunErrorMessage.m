@@ -29,6 +29,8 @@
 #import "RaygunUtils.h"
 #import "RaygunDefines.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation RaygunErrorMessage
 
 - (instancetype)init:(nonnull NSString *)className
@@ -50,14 +52,14 @@
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    dict[@"className"] = [RaygunUtils isNullOrEmptyString:_className] ? kValueNotKnown : _className;
-    dict[@"message"]   = [RaygunUtils isNullOrEmptyString:_message]   ? kValueNotKnown : _message;
+    dict[@"className"] = [RaygunUtils isNullOrEmpty:_className] ? kValueNotKnown : _className;
+    dict[@"message"]   = [RaygunUtils isNullOrEmpty:_message]   ? kValueNotKnown : _message;
     
-    if (![RaygunUtils isNullOrEmptyString:_signalName]) {
+    if (![RaygunUtils isNullOrEmpty:_signalName]) {
         dict[@"signalName"] = _signalName;
     }
     
-    if (![RaygunUtils isNullOrEmptyString:_signalCode]) {
+    if (![RaygunUtils isNullOrEmpty:_signalCode]) {
         dict[@"signalCode"] = _signalCode;
     }
     
@@ -69,3 +71,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
