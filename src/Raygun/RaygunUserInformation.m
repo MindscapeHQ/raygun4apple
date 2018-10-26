@@ -77,7 +77,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
         return NO;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:userInformation.identifier]) {
+    if ([RaygunUtils isNullOrEmpty:userInformation.identifier]) {
         [NSError fillError:error
                 withDomain:[[self class] description]
                       code:0
@@ -139,23 +139,23 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
-    if ([RaygunUtils isNullOrEmptyString:_identifier]) {
+    if ([RaygunUtils isNullOrEmpty:_identifier]) {
         details[@"identifier"] = _identifier;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:_email]) {
+    if ([RaygunUtils isNullOrEmpty:_email]) {
         details[@"email"] = _email;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:_fullName]) {
+    if ([RaygunUtils isNullOrEmpty:_fullName]) {
         details[@"fullName"] = _fullName;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:_firstName]) {
+    if ([RaygunUtils isNullOrEmpty:_firstName]) {
         details[@"firstName"] = _firstName;
     }
     
-    if ([RaygunUtils isNullOrEmptyString:_uuid]) {
+    if ([RaygunUtils isNullOrEmpty:_uuid]) {
         details[@"uuid"] = _uuid;
     }
     

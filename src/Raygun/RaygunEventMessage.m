@@ -59,10 +59,10 @@
         message[@"type"]      = RaygunEventTypeNames[_eventType];
         message[@"sessionId"] = _sessionId;
         message[@"timestamp"] = _occurredOn;
-        message[@"version"]   = [RaygunUtils isNullOrEmptyString:_applicationVersion] ? kValueNotKnown : _applicationVersion;
-        message[@"os"]        = [RaygunUtils isNullOrEmptyString:_operatingSystem] ? kValueNotKnown : _operatingSystem;
-        message[@"osVersion"] = [RaygunUtils isNullOrEmptyString:_osVersion] ? kValueNotKnown : _osVersion;
-        message[@"platform"]  = [RaygunUtils isNullOrEmptyString:_platform] ? kValueNotKnown : _platform;
+        message[@"version"]   = [RaygunUtils isNullOrEmpty:_applicationVersion] ? kValueNotKnown : _applicationVersion;
+        message[@"os"]        = [RaygunUtils isNullOrEmpty:_operatingSystem] ? kValueNotKnown : _operatingSystem;
+        message[@"osVersion"] = [RaygunUtils isNullOrEmpty:_osVersion] ? kValueNotKnown : _osVersion;
+        message[@"platform"]  = [RaygunUtils isNullOrEmpty:_platform] ? kValueNotKnown : _platform;
         
         if (_eventData != nil) {
             // The current format requires the data to be translated to a string.

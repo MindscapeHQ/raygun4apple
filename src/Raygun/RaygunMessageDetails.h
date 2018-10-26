@@ -29,6 +29,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class RaygunClientMessage, RaygunEnvironmentMessage, RaygunErrorMessage, RaygunUserInformation, RaygunThread, RaygunBinaryImage, RaygunBreadcrumb;
 
 @interface RaygunMessageDetails : NSObject
@@ -55,6 +57,8 @@
 - (NSDictionary *)convertToDictionary;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* RaygunMessageDetails_h */
 
