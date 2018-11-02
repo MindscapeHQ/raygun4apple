@@ -45,3 +45,4 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_macOSVersionString[];
 #import "RaygunMessageDetails.h"
 #import "RaygunThread.h"
 #import "RaygunUserInformation.h"
+#import "RaygunBreadcrumb.h"
