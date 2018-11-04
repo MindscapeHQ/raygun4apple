@@ -26,12 +26,19 @@
 
 #import "RaygunRealUserMonitoring.h"
 
+#import "RaygunDefines.h"
+
+#if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+
 #import <sys/utsname.h>
 
 #import "RaygunNetworkPerformanceMonitor.h"
 #import "RaygunUserInformation.h"
-#import "RaygunDefines.h"
+
 #import "RaygunEventMessage.h"
 #import "RaygunEventData.h"
 #import "RaygunClient.h"
@@ -83,9 +90,15 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         
         self.enabled = true;
         
+        #if RAYGUN_CAN_USE_UIKIT
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
+        #else
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:NSApplicationWillBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:NSApplicationDidResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:NSApplicationWillTerminateNotification object:nil];
+        #endif
         
         [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
     });

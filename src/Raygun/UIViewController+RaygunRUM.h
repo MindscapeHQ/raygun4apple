@@ -28,6 +28,10 @@
 #define UIViewController_RaygunRUM_h
 
 #import <Foundation/Foundation.h>
+
+#import "RaygunDefines.h"
+
+#if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
 
 @interface UIViewController (RaygunRUM)
@@ -45,5 +49,7 @@
 - (void)viewDidAppearCapture:(BOOL)animated;
 
 @end
+
+#endif // RAYGUN_CAN_USE_UIKIT
 
 #endif /* UIViewController_RaygunRUM_h */

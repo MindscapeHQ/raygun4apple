@@ -26,6 +26,8 @@
 
 #import "UIViewController+RaygunRUM.h"
 
+#if RAYGUN_CAN_USE_UIKIT
+
 #import <objc/runtime.h>
 
 #import "RaygunRealUserMonitoring.h"
@@ -143,3 +145,5 @@
 }
 
 @end
+
+#endif // RAYGUN_CAN_USE_UIKIT

@@ -27,7 +27,15 @@
 #import "RaygunNetworkPerformanceMonitor.h"
 
 #import <Foundation/NSURLSession.h>
+
+#import "RaygunDefines.h"
+
+#if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <sys/utsname.h>

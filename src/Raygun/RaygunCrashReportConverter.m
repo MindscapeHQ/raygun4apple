@@ -26,11 +26,14 @@
 
 #import "RaygunCrashReportConverter.h"
 
+#import "RaygunDefines.h"
+
 #if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
 #endif
 
-#import "RaygunDefines.h"
 #import "RaygunMessage.h"
 #import "RaygunMessageDetails.h"
 #import "RaygunClientMessage.h"
@@ -105,6 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
     // Machine Name
     #if RAYGUN_CAN_USE_UIDEVICE
     details.machineName = [UIDevice currentDevice].name;
+    #else
+    // TODO
     #endif
     
     // Breadcrumbs
@@ -151,10 +156,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSDictionary *systemData = report[@"system"];
     
-    NSString *osVersion = [NSString stringWithFormat:@"%@ %@ (%@)",
-                           systemData[@"system_name"],
-                           systemData[@"system_version"],
-                           systemData[@"os_version"]];
+    NSString *osVersion = [NSString stringWithFormat:@"%@ %@ (%@)", systemData[@"system_name"], systemData[@"system_version"], systemData[@"os_version"]];
     
     if (!osVersion) {
         osVersion = kValueNotKnown;
@@ -171,21 +173,27 @@ NS_ASSUME_NONNULL_BEGIN
         localeStr = kValueNotKnown;
     }
     
+#if RAYGUN_CAN_USE_UIKIT
     CGRect screenBounds = [UIScreen mainScreen].bounds;
+    NSNumber *resolutionScale = @([UIScreen mainScreen].scale);
     
-    environment.processorCount     = nil;
-    environment.oSVersion          = osVersion;
-    environment.model              = systemData[@"machine"];
     environment.windowsBoundWidth  = @(screenBounds.size.width);
     environment.windowsBoundHeight = @(screenBounds.size.height);
-    environment.resolutionScale    = @([UIScreen mainScreen].scale);
-    environment.cpu                = systemData[@"cpu_arch"];
-    environment.utcOffset          = @([NSTimeZone systemTimeZone].secondsFromGMT / 3600);
-    environment.locale             = localeStr;
-    environment.kernelVersion      = systemData[@"kernel_version"];
-    environment.memorySize         = systemData[@"memory"][@"size"];
-    environment.memoryFree         = systemData[@"memory"][@"free"];
-    environment.jailBroken         = [systemData[@"jailbroken"] boolValue];
+    environment.resolutionScale    = resolutionScale;
+#else
+    // TODO
+#endif
+    
+    environment.processorCount = nil;
+    environment.oSVersion      = osVersion;
+    environment.model          = systemData[@"machine"];
+    environment.cpu            = systemData[@"cpu_arch"];
+    environment.utcOffset      = @([NSTimeZone systemTimeZone].secondsFromGMT / 3600);
+    environment.locale         = localeStr;
+    environment.kernelVersion  = systemData[@"kernel_version"];
+    environment.memorySize     = systemData[@"memory"][@"size"];
+    environment.memoryFree     = systemData[@"memory"][@"free"];
+    environment.jailBroken     = [systemData[@"jailbroken"] boolValue];
     
     return environment;
 }
