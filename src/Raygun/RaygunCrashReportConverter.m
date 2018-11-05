@@ -45,6 +45,8 @@
 #import "RaygunThread.h"
 #import "RaygunBreadcrumb.h"
 
+#import <sys/sysctl.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RaygunCrashReportConverter ()
@@ -176,15 +178,17 @@ NS_ASSUME_NONNULL_BEGIN
 #if RAYGUN_CAN_USE_UIKIT
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     NSNumber *resolutionScale = @([UIScreen mainScreen].scale);
-    
     environment.windowsBoundWidth  = @(screenBounds.size.width);
     environment.windowsBoundHeight = @(screenBounds.size.height);
     environment.resolutionScale    = resolutionScale;
 #else
-    // TODO
+    NSRect frame = [[NSApplication sharedApplication].mainWindow frame];
+    environment.windowsBoundWidth  = @(frame.size.width);
+    environment.windowsBoundHeight = @(frame.size.height);
+    environment.resolutionScale    = nil;
 #endif
     
-    environment.processorCount = nil;
+    environment.processorCount = [self numControlEntry:@"hw.logicalcpu_max"];
     environment.oSVersion      = osVersion;
     environment.model          = systemData[@"machine"];
     environment.cpu            = systemData[@"cpu_arch"];
@@ -196,6 +200,12 @@ NS_ASSUME_NONNULL_BEGIN
     environment.jailBroken     = [systemData[@"jailbroken"] boolValue];
     
     return environment;
+}
+
+- (NSNumber *) numControlEntry:(NSString *)ctlKey {
+    size_t size = sizeof( uint64_t ); uint64_t ctlValue = 0;
+    if ( sysctlbyname([ctlKey UTF8String], &ctlValue, &size, NULL, 0) == -1 ) return nil;
+    return [NSNumber numberWithUnsignedLongLong:ctlValue];
 }
 
 - (RaygunErrorMessage *)errorDetailsFromCrashReport:(NSDictionary *)report {
