@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
     #if RAYGUN_CAN_USE_UIDEVICE
     details.machineName = [UIDevice currentDevice].name;
     #else
-    // TODO
+    details.machineName = [[NSHost currentHost] localizedName];
     #endif
     
     // Breadcrumbs
