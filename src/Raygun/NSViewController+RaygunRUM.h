@@ -1,5 +1,5 @@
 //
-//  UIViewController+RaygunRUM.h
+//  NSViewController+RaygunRUM.h
 //  raygun4apple
 //
 //  Created by Mitchell Duncan on 3/09/18.
@@ -24,14 +24,14 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+#ifndef NSViewController_RaygunRUM_h
+#define NSViewController_RaygunRUM_h
 
 #import <Foundation/Foundation.h>
 
-#import <UIKit/UIKit.h>
+#import <AppKit/AppKit.h>
 
-@interface UIViewController (RaygunRUM)
+@interface NSViewController (RaygunRUM)
 
 + (void)load;
 
@@ -47,4 +47,4 @@
 
 @end
 
-#endif /* UIViewController_RaygunRUM_h */
+#endif /* NSViewController_RaygunRUM_h */
