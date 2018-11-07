@@ -37,6 +37,8 @@
 
 - (void)ignoreURLs:(NSArray *)urls;
 
+- (BOOL)shouldIgnoreURL:(NSString *)urlName;
+
 @end
 
 @interface RaygunSessionTaskDelegate: NSObject

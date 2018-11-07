@@ -259,6 +259,15 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
+    if (type == RaygunEventTimingTypeViewLoaded && [self shouldIgnoreView:name]) {
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - View has been set to be ignored"];
+        return;
+    }
+    else if (type == RaygunEventTimingTypeNetworkCall && _networkMonitor != nil && [_networkMonitor shouldIgnoreURL:name]) {
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - Request Url has been set to be ignored"];
+        return;
+    }
+    
     if (type == RaygunEventTimingTypeViewLoaded) {
         _lastViewName = name;
     }

@@ -42,6 +42,7 @@
 
 #import "RaygunRealUserMonitoring.h"
 #import "RaygunLogger.h"
+#import "RaygunUtils.h"
 
 #pragma mark - NSURLSessionTask Swizzle Declarations -
 
@@ -121,6 +122,20 @@ static RaygunSessionTaskDelegate* sessionDelegate;
             }
         }
     }
+}
+
+- (BOOL)shouldIgnoreURL:(NSString *)urlName {
+    if ([RaygunUtils isNullOrEmpty:urlName]) {
+        return YES;
+    }
+    
+    for (NSString* ignoredUrl in ignoredUrls) {
+        if ([ignoredUrl containsString:urlName] || [urlName containsString:ignoredUrl]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 + (bool)isEnabled {
