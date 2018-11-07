@@ -344,6 +344,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     NSError *error = nil;
     if ([RaygunBreadcrumb validate:breadcrumb withError:&error]) {
         if ([_mutableBreadcrumbs count] >= kMaxRecordedBreadcrumbs) {
+            [RaygunLogger logDebug:@"Reached max recorded breadcrumbs - removing oldest breadcrumb"];
             [_mutableBreadcrumbs removeObjectAtIndex:0];
         }
         
