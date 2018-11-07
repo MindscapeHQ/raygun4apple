@@ -334,7 +334,18 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #if RAYGUN_CAN_USE_UIDEVICE
     return [UIDevice currentDevice].systemVersion;
 #else
-    return kValueNotKnown;
+    NSOperatingSystemVersion version = {0, 0, 0};
+    if (@available(macOS 10.10, *)) {
+        version = [NSProcessInfo processInfo].operatingSystemVersion;
+    }
+    NSString* systemVersion;
+    if (version.patchVersion == 0) {
+        systemVersion = [NSString stringWithFormat:@"%d.%d", (int)version.majorVersion, (int)version.minorVersion];
+    }
+    else {
+        systemVersion = [NSString stringWithFormat:@"%d.%d.%d", (int)version.majorVersion, (int)version.minorVersion, (int)version.patchVersion];
+    }
+    return systemVersion;
 #endif
 }
 
