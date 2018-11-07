@@ -340,6 +340,10 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb {
     NSError *error = nil;
     if ([RaygunBreadcrumb validate:breadcrumb withError:&error]) {
+        if ([_mutableBreadcrumbs count] >= kMaxRecordedBreadcrumbs) {
+            [_mutableBreadcrumbs removeObjectAtIndex:0];
+        }
+        
         [_mutableBreadcrumbs addObject:breadcrumb];
         [self updateCrashReportUserInformation];
         

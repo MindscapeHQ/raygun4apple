@@ -53,6 +53,7 @@ static NSString *_Nonnull const kValueNotKnown = @"Unknown";
 
 static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
+static NSInteger const kMaxRecordedBreadcrumbs = 32;
 
 typedef NS_ENUM(NSInteger, RaygunEventType) {
     RaygunEventTypeSessionStart = 0,
