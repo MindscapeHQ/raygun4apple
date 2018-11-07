@@ -381,7 +381,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)ignoreViews:(NSArray *)viewNames {
     if (viewNames != nil && _ignoredViews != nil) {
         for (NSString* name in viewNames) {
-            if ([RaygunUtils isNullOrEmpty:name]) {
+            if (![RaygunUtils isNullOrEmpty:name]) {
                 [_ignoredViews addObject:name];
             }
         }
