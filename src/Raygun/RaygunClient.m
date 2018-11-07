@@ -211,6 +211,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
                                terminateProgram:NO];
     
     [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
+    
+    // Send any reports that failed previously.
+    [self sendAllStoredCrashReports];
 }
 
 - (void)sendException:(NSString *)exceptionName
