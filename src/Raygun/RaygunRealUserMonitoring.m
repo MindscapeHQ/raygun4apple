@@ -249,7 +249,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
-    if(!_enabled) {
+    if (!_enabled) {
         [RaygunLogger logError:@"Failed to send RUM timing event - Real User Monitoring has not been enabled"];
         return;
     }
@@ -259,12 +259,17 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         return;
     }
     
+    if (duration == nil || [duration isKindOfClass:[NSNull class]] || [duration intValue] == 0) {
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - Invalid duration"];
+        return;
+    }
+    
     if (type == RaygunEventTimingTypeViewLoaded && [self shouldIgnoreView:name]) {
         [RaygunLogger logDebug:@"Failed to send RUM timing event - View has been set to be ignored"];
         return;
     }
     else if (type == RaygunEventTimingTypeNetworkCall && _networkMonitor != nil && [_networkMonitor shouldIgnoreURL:name]) {
-        [RaygunLogger logDebug:@"Failed to send RUM timing event - Request Url has been set to be ignored"];
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - Request url has been set to be ignored"];
         return;
     }
     
