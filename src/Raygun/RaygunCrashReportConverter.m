@@ -140,7 +140,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *appVersion = report[@"user"][@"applicationVersion"];
     
     if (appVersion == nil) {
-        appVersion = report[@"system"][@"CFBundleShortVersionString"];
+        NSString *version = report[@"system"][@"CFBundleShortVersionString"];
+        NSString *build = report[@"system"][@"CFBundleVersion"];
+        appVersion = [NSString stringWithFormat:@"%@ (%@)", version, build];
     }
     
     if (appVersion == nil) {
