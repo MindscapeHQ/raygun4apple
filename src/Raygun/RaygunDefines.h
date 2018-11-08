@@ -41,7 +41,7 @@
 #define RAYGUN_CAN_USE_UIKIT 0
 #endif
 
-static NSString *_Nonnull const kRaygunClientVersion = @"1.2.1";
+static NSString *_Nonnull const kRaygunClientVersion = @"1.3.0";
 
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
@@ -53,6 +53,7 @@ static NSString *_Nonnull const kValueNotKnown = @"Unknown";
 
 static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
+static NSInteger const kMaxRecordedBreadcrumbs = 32;
 
 typedef NS_ENUM(NSInteger, RaygunEventType) {
     RaygunEventTypeSessionStart = 0,

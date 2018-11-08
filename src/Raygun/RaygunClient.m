@@ -211,6 +211,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
                                terminateProgram:NO];
     
     [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
+    
+    // Send any reports that failed previously.
+    [self sendAllStoredCrashReports];
 }
 
 - (void)sendException:(NSString *)exceptionName
@@ -340,6 +343,11 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb {
     NSError *error = nil;
     if ([RaygunBreadcrumb validate:breadcrumb withError:&error]) {
+        if ([_mutableBreadcrumbs count] >= kMaxRecordedBreadcrumbs) {
+            [RaygunLogger logDebug:@"Reached max recorded breadcrumbs - removing oldest breadcrumb"];
+            [_mutableBreadcrumbs removeObjectAtIndex:0];
+        }
+        
         [_mutableBreadcrumbs addObject:breadcrumb];
         [self updateCrashReportUserInformation];
         

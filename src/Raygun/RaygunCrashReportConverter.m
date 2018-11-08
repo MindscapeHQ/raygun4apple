@@ -26,11 +26,14 @@
 
 #import "RaygunCrashReportConverter.h"
 
+#import "RaygunDefines.h"
+
 #if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
 #endif
 
-#import "RaygunDefines.h"
 #import "RaygunMessage.h"
 #import "RaygunMessageDetails.h"
 #import "RaygunClientMessage.h"
@@ -41,6 +44,8 @@
 #import "RaygunFrame.h"
 #import "RaygunThread.h"
 #import "RaygunBreadcrumb.h"
+
+#import <sys/sysctl.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -105,6 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
     // Machine Name
     #if RAYGUN_CAN_USE_UIDEVICE
     details.machineName = [UIDevice currentDevice].name;
+    #else
+    details.machineName = [[NSHost currentHost] localizedName];
     #endif
     
     // Breadcrumbs
@@ -133,7 +140,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *appVersion = report[@"user"][@"applicationVersion"];
     
     if (appVersion == nil) {
-        appVersion = report[@"system"][@"CFBundleShortVersionString"];
+        NSString *version = report[@"system"][@"CFBundleShortVersionString"];
+        NSString *build = report[@"system"][@"CFBundleVersion"];
+        appVersion = [NSString stringWithFormat:@"%@ (%@)", version, build];
     }
     
     if (appVersion == nil) {
@@ -151,10 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSDictionary *systemData = report[@"system"];
     
-    NSString *osVersion = [NSString stringWithFormat:@"%@ %@ (%@)",
-                           systemData[@"system_name"],
-                           systemData[@"system_version"],
-                           systemData[@"os_version"]];
+    NSString *osVersion = [NSString stringWithFormat:@"%@ %@ (%@)", systemData[@"system_name"], systemData[@"system_version"], systemData[@"os_version"]];
     
     if (!osVersion) {
         osVersion = kValueNotKnown;
@@ -171,23 +177,36 @@ NS_ASSUME_NONNULL_BEGIN
         localeStr = kValueNotKnown;
     }
     
+#if RAYGUN_CAN_USE_UIKIT
     CGRect screenBounds = [UIScreen mainScreen].bounds;
-    
-    environment.processorCount     = nil;
-    environment.oSVersion          = osVersion;
-    environment.model              = systemData[@"machine"];
     environment.windowsBoundWidth  = @(screenBounds.size.width);
     environment.windowsBoundHeight = @(screenBounds.size.height);
     environment.resolutionScale    = @([UIScreen mainScreen].scale);
-    environment.cpu                = systemData[@"cpu_arch"];
-    environment.utcOffset          = @([NSTimeZone systemTimeZone].secondsFromGMT / 3600);
-    environment.locale             = localeStr;
-    environment.kernelVersion      = systemData[@"kernel_version"];
-    environment.memorySize         = systemData[@"memory"][@"size"];
-    environment.memoryFree         = systemData[@"memory"][@"free"];
-    environment.jailBroken         = [systemData[@"jailbroken"] boolValue];
+#else
+    NSRect frame = [[NSApplication sharedApplication].mainWindow frame];
+    environment.windowsBoundWidth  = @(frame.size.width);
+    environment.windowsBoundHeight = @(frame.size.height);
+    environment.resolutionScale    = @([NSScreen mainScreen].backingScaleFactor);
+#endif
+    
+    environment.processorCount = [self numControlEntry:@"hw.logicalcpu_max"];
+    environment.oSVersion      = osVersion;
+    environment.model          = systemData[@"machine"];
+    environment.cpu            = systemData[@"cpu_arch"];
+    environment.utcOffset      = @([NSTimeZone systemTimeZone].secondsFromGMT / 3600);
+    environment.locale         = localeStr;
+    environment.kernelVersion  = systemData[@"kernel_version"];
+    environment.memorySize     = systemData[@"memory"][@"size"];
+    environment.memoryFree     = systemData[@"memory"][@"free"];
+    environment.jailBroken     = [systemData[@"jailbroken"] boolValue];
     
     return environment;
+}
+
+- (NSNumber *) numControlEntry:(NSString *)ctlKey {
+    size_t size = sizeof( uint64_t ); uint64_t ctlValue = 0;
+    if ( sysctlbyname([ctlKey UTF8String], &ctlValue, &size, NULL, 0) == -1 ) return nil;
+    return [NSNumber numberWithUnsignedLongLong:ctlValue];
 }
 
 - (RaygunErrorMessage *)errorDetailsFromCrashReport:(NSDictionary *)report {

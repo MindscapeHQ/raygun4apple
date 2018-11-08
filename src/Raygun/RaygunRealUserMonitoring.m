@@ -26,12 +26,19 @@
 
 #import "RaygunRealUserMonitoring.h"
 
+#import "RaygunDefines.h"
+
+#if RAYGUN_CAN_USE_UIKIT
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+
 #import <sys/utsname.h>
 
 #import "RaygunNetworkPerformanceMonitor.h"
 #import "RaygunUserInformation.h"
-#import "RaygunDefines.h"
+
 #import "RaygunEventMessage.h"
 #import "RaygunEventData.h"
 #import "RaygunClient.h"
@@ -83,9 +90,15 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         
         self.enabled = true;
         
+        #if RAYGUN_CAN_USE_UIKIT
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
+        #else
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:NSApplicationWillBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:NSApplicationDidResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:NSApplicationWillTerminateNotification object:nil];
+        #endif
         
         [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
     });
@@ -236,13 +249,27 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)sendTimingEvent:(enum RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration {
-    if(!_enabled) {
+    if (!_enabled) {
         [RaygunLogger logError:@"Failed to send RUM timing event - Real User Monitoring has not been enabled"];
         return;
     }
     
     if ([RaygunUtils isNullOrEmpty:name]) {
         [RaygunLogger logError:@"Failed to send RUM timing event - Invalid timing name"];
+        return;
+    }
+    
+    if (duration == nil || [duration isKindOfClass:[NSNull class]] || [duration intValue] == 0) {
+        [RaygunLogger logError:@"Failed to send RUM timing event - Invalid duration"];
+        return;
+    }
+    
+    if (type == RaygunEventTimingTypeViewLoaded && [self shouldIgnoreView:name]) {
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - View has been set to be ignored"];
+        return;
+    }
+    else if (type == RaygunEventTimingTypeNetworkCall && _networkMonitor != nil && [_networkMonitor shouldIgnoreURL:name]) {
+        [RaygunLogger logDebug:@"Failed to send RUM timing event - Request url has been set to be ignored"];
         return;
     }
     
@@ -321,7 +348,18 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #if RAYGUN_CAN_USE_UIDEVICE
     return [UIDevice currentDevice].systemVersion;
 #else
-    return kValueNotKnown;
+    NSOperatingSystemVersion version = {0, 0, 0};
+    if (@available(macOS 10.10, *)) {
+        version = [NSProcessInfo processInfo].operatingSystemVersion;
+    }
+    NSString* systemVersion;
+    if (version.patchVersion == 0) {
+        systemVersion = [NSString stringWithFormat:@"%d.%d", (int)version.majorVersion, (int)version.minorVersion];
+    }
+    else {
+        systemVersion = [NSString stringWithFormat:@"%d.%d.%d", (int)version.majorVersion, (int)version.minorVersion, (int)version.patchVersion];
+    }
+    return systemVersion;
 #endif
 }
 
@@ -348,7 +386,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 - (void)ignoreViews:(NSArray *)viewNames {
     if (viewNames != nil && _ignoredViews != nil) {
         for (NSString* name in viewNames) {
-            if ([RaygunUtils isNullOrEmpty:name]) {
+            if (![RaygunUtils isNullOrEmpty:name]) {
                 [_ignoredViews addObject:name];
             }
         }

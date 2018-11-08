@@ -27,6 +27,11 @@
 #import "RaygunUserInformation.h"
 
 #import "RaygunDefines.h"
+
+#if RAYGUN_CAN_USE_UIDEVICE
+#import <UIKit/UIKit.h>
+#endif
+
 #import "RaygunUtils.h"
 #import "NSError+SimpleConstructor.h"
 
@@ -39,7 +44,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 + (RaygunUserInformation *)anonymousUser {
     if (sharedAnonymousUser == nil) {
         sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation anonymousIdentifier]];
-        sharedAnonymousUser.isAnonymous = @YES;
+        sharedAnonymousUser.isAnonymous = YES;
     }
     return sharedAnonymousUser;
 }
@@ -50,14 +55,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
     
     if (!identifier) {
-        if ([UIDevice.currentDevice respondsToSelector:@selector(identifierForVendor)]) {
-            identifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
-        }
-        else {
-            CFUUIDRef theUUID = CFUUIDCreate(NULL);
-            identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
-            CFRelease(theUUID);
-        }
+        identifier = [self generateIdentifier];
         
         // Store the identifier
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -67,6 +65,29 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     
     return identifier;
 }
+
+
++ (NSString *)generateIdentifier {
+    NSString *identifier = nil;
+    
+    #if RAYGUN_CAN_USE_UIDEVICE
+    if ([UIDevice.currentDevice respondsToSelector:@selector(identifierForVendor)]) {
+        identifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
+    }
+    else {
+        CFUUIDRef theUUID = CFUUIDCreate(NULL);
+        identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
+        CFRelease(theUUID);
+    }
+    #else
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    identifier = (__bridge NSString *)CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    #endif
+    
+    return identifier;
+}
+
 
 + (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError * __autoreleasing *)error {
     if (userInformation == nil) {
@@ -139,23 +160,23 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
-    if ([RaygunUtils isNullOrEmpty:_identifier]) {
+    if (![RaygunUtils isNullOrEmpty:_identifier]) {
         details[@"identifier"] = _identifier;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_email]) {
+    if (![RaygunUtils isNullOrEmpty:_email]) {
         details[@"email"] = _email;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_fullName]) {
+    if (![RaygunUtils isNullOrEmpty:_fullName]) {
         details[@"fullName"] = _fullName;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_firstName]) {
+    if (![RaygunUtils isNullOrEmpty:_firstName]) {
         details[@"firstName"] = _firstName;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_uuid]) {
+    if (![RaygunUtils isNullOrEmpty:_uuid]) {
         details[@"uuid"] = _uuid;
     }
     
