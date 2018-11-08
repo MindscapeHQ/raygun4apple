@@ -160,23 +160,23 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
 - (NSDictionary *)convertToDictionary {
     NSMutableDictionary *details = [NSMutableDictionary dictionaryWithDictionary:@{@"isAnonymous":_isAnonymous?@"True":@"False"}];
     
-    if ([RaygunUtils isNullOrEmpty:_identifier]) {
+    if (![RaygunUtils isNullOrEmpty:_identifier]) {
         details[@"identifier"] = _identifier;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_email]) {
+    if (![RaygunUtils isNullOrEmpty:_email]) {
         details[@"email"] = _email;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_fullName]) {
+    if (![RaygunUtils isNullOrEmpty:_fullName]) {
         details[@"fullName"] = _fullName;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_firstName]) {
+    if (![RaygunUtils isNullOrEmpty:_firstName]) {
         details[@"firstName"] = _firstName;
     }
     
-    if ([RaygunUtils isNullOrEmpty:_uuid]) {
+    if (![RaygunUtils isNullOrEmpty:_uuid]) {
         details[@"uuid"] = _uuid;
     }
     
