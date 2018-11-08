@@ -260,7 +260,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
     
     if (duration == nil || [duration isKindOfClass:[NSNull class]] || [duration intValue] == 0) {
-        [RaygunLogger logDebug:@"Failed to send RUM timing event - Invalid duration"];
+        [RaygunLogger logError:@"Failed to send RUM timing event - Invalid duration"];
         return;
     }
     
