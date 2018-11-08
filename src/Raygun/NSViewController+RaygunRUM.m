@@ -129,7 +129,7 @@
         
         [rum.timers removeObjectForKey:viewName];
         
-        // Cleanup the view name so when only have the class name.
+        // Cleanup the view name so we only have the class name.
         viewName = [viewName stringByReplacingOccurrencesOfString:@"<" withString:@""];
         NSUInteger index = [viewName rangeOfString:@":"].location;
         if (index != NSNotFound) {
