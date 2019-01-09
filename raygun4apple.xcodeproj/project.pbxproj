@@ -72,6 +72,15 @@
 		A2660FE520FE931100C12A69 /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A2660FD720FE931100C12A69 /* raygun4apple_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A28ECA48218FFC370098E422 /* NSViewController+RaygunRUM.m in Sources */ = {isa = PBXBuildFile; fileRef = A28ECA46218FFC370098E422 /* NSViewController+RaygunRUM.m */; };
 		A28ECA49218FFC370098E422 /* NSViewController+RaygunRUM.h in Headers */ = {isa = PBXBuildFile; fileRef = A28ECA47218FFC370098E422 /* NSViewController+RaygunRUM.h */; };
+		A2959D8821E6906500125E31 /* RaygunRealUserMonitoringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8221E68FF000125E31 /* RaygunRealUserMonitoringTests.m */; };
+		A2959D8921E6906500125E31 /* RaygunBreadcrumbsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8321E68FF000125E31 /* RaygunBreadcrumbsTests.m */; };
+		A2959D8A21E6906500125E31 /* RaygunClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8421E68FF000125E31 /* RaygunClientTests.m */; };
+		A2959D8B21E690A600125E31 /* RaygunClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8421E68FF000125E31 /* RaygunClientTests.m */; };
+		A2959D8C21E690A800125E31 /* RaygunClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8421E68FF000125E31 /* RaygunClientTests.m */; };
+		A2959D8D21E690BA00125E31 /* RaygunBreadcrumbsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8321E68FF000125E31 /* RaygunBreadcrumbsTests.m */; };
+		A2959D8E21E690BB00125E31 /* RaygunBreadcrumbsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8321E68FF000125E31 /* RaygunBreadcrumbsTests.m */; };
+		A2959D8F21E690BF00125E31 /* RaygunRealUserMonitoringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8221E68FF000125E31 /* RaygunRealUserMonitoringTests.m */; };
+		A2959D9021E690C000125E31 /* RaygunRealUserMonitoringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2959D8221E68FF000125E31 /* RaygunRealUserMonitoringTests.m */; };
 		A29D6739216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A29D673A216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A29D673B216D675700BAC934 /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -651,17 +660,20 @@
 		A2660FB820FE914F00C12A69 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FBB20FE914F00C12A69 /* raygun4apple_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raygun4apple_iOS.h; sourceTree = "<group>"; };
 		A2660FBC20FE914F00C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A2660FC120FE914F00C12A69 /* raygun4apple iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2660FC120FE914F00C12A69 /* raygun4apple iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FC620FE914F00C12A69 /* raygun4apple_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = raygun4apple_iOSTests.m; sourceTree = "<group>"; };
 		A2660FC820FE914F00C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2660FD520FE931100C12A69 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FD720FE931100C12A69 /* raygun4apple_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raygun4apple_tvOS.h; sourceTree = "<group>"; };
 		A2660FD820FE931100C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A2660FDD20FE931100C12A69 /* raygun4apple tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2660FDD20FE931100C12A69 /* raygun4apple tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = raygun4apple_tvOSTests.m; sourceTree = "<group>"; };
 		A2660FE420FE931100C12A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A28ECA46218FFC370098E422 /* NSViewController+RaygunRUM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+RaygunRUM.m"; sourceTree = "<group>"; };
 		A28ECA47218FFC370098E422 /* NSViewController+RaygunRUM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+RaygunRUM.h"; sourceTree = "<group>"; };
+		A2959D8221E68FF000125E31 /* RaygunRealUserMonitoringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunRealUserMonitoringTests.m; sourceTree = "<group>"; };
+		A2959D8321E68FF000125E31 /* RaygunBreadcrumbsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunBreadcrumbsTests.m; sourceTree = "<group>"; };
+		A2959D8421E68FF000125E31 /* RaygunClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunClientTests.m; sourceTree = "<group>"; };
 		A29D6738216D675700BAC934 /* RaygunBreadcrumb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunBreadcrumb.h; sourceTree = "<group>"; };
 		A29D673C216D677100BAC934 /* RaygunBreadcrumb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaygunBreadcrumb.m; sourceTree = "<group>"; };
 		A29D6740216DA2EB00BAC934 /* RaygunUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunUtils.h; sourceTree = "<group>"; };
@@ -812,7 +824,7 @@
 		DC5EFA28210E812F002C0713 /* raygun4apple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = raygun4apple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EFA2A210E812F002C0713 /* raygun4apple_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raygun4apple_macOS.h; sourceTree = "<group>"; };
 		DC5EFA2B210E812F002C0713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DC5EFA30210E812F002C0713 /* raygun4apple macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC5EFA30210E812F002C0713 /* raygun4apple macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "raygun4apple macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EFA35210E8130002C0713 /* raygun4apple_macOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = raygun4apple_macOSTests.m; sourceTree = "<group>"; };
 		DC5EFA37210E8130002C0713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC5EFA4E210FFA78002C0713 /* RaygunRealUserMonitoring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunRealUserMonitoring.m; sourceTree = "<group>"; };
@@ -903,11 +915,12 @@
 			children = (
 				A266101420FEAD6F00C12A69 /* src */,
 				A2660FBA20FE914F00C12A69 /* raygun4apple iOS */,
-				A2660FC520FE914F00C12A69 /* raygun4apple iOSTests */,
+				A2660FC520FE914F00C12A69 /* raygun4apple iOS Tests */,
 				A2660FD620FE931100C12A69 /* raygun4apple tvOS */,
-				A2660FE120FE931100C12A69 /* raygun4apple tvOSTests */,
+				A2660FE120FE931100C12A69 /* raygun4apple tvOS Tests */,
 				DC5EFA29210E812F002C0713 /* raygun4apple macOS */,
-				DC5EFA34210E8130002C0713 /* raygun4apple macOSTests */,
+				DC5EFA34210E8130002C0713 /* raygun4apple macOS Tests */,
+				A2959D8121E68FF000125E31 /* raygun4apple Shared Tests */,
 				A2660FB920FE914F00C12A69 /* Products */,
 				A2E4ABD820FFF96E0003C8B4 /* Frameworks */,
 			);
@@ -917,11 +930,11 @@
 			isa = PBXGroup;
 			children = (
 				A2660FB820FE914F00C12A69 /* raygun4apple.framework */,
-				A2660FC120FE914F00C12A69 /* raygun4apple iOSTests.xctest */,
+				A2660FC120FE914F00C12A69 /* raygun4apple iOS Tests.xctest */,
 				A2660FD520FE931100C12A69 /* raygun4apple.framework */,
-				A2660FDD20FE931100C12A69 /* raygun4apple tvOSTests.xctest */,
+				A2660FDD20FE931100C12A69 /* raygun4apple tvOS Tests.xctest */,
 				DC5EFA28210E812F002C0713 /* raygun4apple.framework */,
-				DC5EFA30210E812F002C0713 /* raygun4apple macOSTests.xctest */,
+				DC5EFA30210E812F002C0713 /* raygun4apple macOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -935,13 +948,13 @@
 			path = "raygun4apple iOS";
 			sourceTree = "<group>";
 		};
-		A2660FC520FE914F00C12A69 /* raygun4apple iOSTests */ = {
+		A2660FC520FE914F00C12A69 /* raygun4apple iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
 				A2660FC620FE914F00C12A69 /* raygun4apple_iOSTests.m */,
 				A2660FC820FE914F00C12A69 /* Info.plist */,
 			);
-			path = "raygun4apple iOSTests";
+			path = "raygun4apple iOS Tests";
 			sourceTree = "<group>";
 		};
 		A2660FD620FE931100C12A69 /* raygun4apple tvOS */ = {
@@ -953,13 +966,13 @@
 			path = "raygun4apple tvOS";
 			sourceTree = "<group>";
 		};
-		A2660FE120FE931100C12A69 /* raygun4apple tvOSTests */ = {
+		A2660FE120FE931100C12A69 /* raygun4apple tvOS Tests */ = {
 			isa = PBXGroup;
 			children = (
 				A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */,
 				A2660FE420FE931100C12A69 /* Info.plist */,
 			);
-			path = "raygun4apple tvOSTests";
+			path = "raygun4apple tvOS Tests";
 			sourceTree = "<group>";
 		};
 		A266101420FEAD6F00C12A69 /* src */ = {
@@ -969,6 +982,16 @@
 				A2E4AC0221003DA90003C8B4 /* KSCrash */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		A2959D8121E68FF000125E31 /* raygun4apple Shared Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A2959D8221E68FF000125E31 /* RaygunRealUserMonitoringTests.m */,
+				A2959D8321E68FF000125E31 /* RaygunBreadcrumbsTests.m */,
+				A2959D8421E68FF000125E31 /* RaygunClientTests.m */,
+			);
+			path = "raygun4apple Shared Tests";
 			sourceTree = "<group>";
 		};
 		A2E4ABD820FFF96E0003C8B4 /* Frameworks */ = {
@@ -1240,13 +1263,13 @@
 			path = "raygun4apple macOS";
 			sourceTree = "<group>";
 		};
-		DC5EFA34210E8130002C0713 /* raygun4apple macOSTests */ = {
+		DC5EFA34210E8130002C0713 /* raygun4apple macOS Tests */ = {
 			isa = PBXGroup;
 			children = (
 				DC5EFA35210E8130002C0713 /* raygun4apple_macOSTests.m */,
 				DC5EFA37210E8130002C0713 /* Info.plist */,
 			);
-			path = "raygun4apple macOSTests";
+			path = "raygun4apple macOS Tests";
 			sourceTree = "<group>";
 		};
 		DC5EFA4D210FF0FA002C0713 /* Raygun */ = {
@@ -1652,9 +1675,9 @@
 			productReference = A2660FB820FE914F00C12A69 /* raygun4apple.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		A2660FC020FE914F00C12A69 /* raygun4apple iOSTests */ = {
+		A2660FC020FE914F00C12A69 /* raygun4apple iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A2660FCF20FE914F00C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple iOSTests" */;
+			buildConfigurationList = A2660FCF20FE914F00C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple iOS Tests" */;
 			buildPhases = (
 				A2660FBD20FE914F00C12A69 /* Sources */,
 				A2660FBE20FE914F00C12A69 /* Frameworks */,
@@ -1665,9 +1688,9 @@
 			dependencies = (
 				A2660FC420FE914F00C12A69 /* PBXTargetDependency */,
 			);
-			name = "raygun4apple iOSTests";
+			name = "raygun4apple iOS Tests";
 			productName = "raygun4apple iOSTests";
-			productReference = A2660FC120FE914F00C12A69 /* raygun4apple iOSTests.xctest */;
+			productReference = A2660FC120FE914F00C12A69 /* raygun4apple iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		A2660FD420FE931100C12A69 /* raygun4apple tvOS */ = {
@@ -1688,9 +1711,9 @@
 			productReference = A2660FD520FE931100C12A69 /* raygun4apple.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		A2660FDC20FE931100C12A69 /* raygun4apple tvOSTests */ = {
+		A2660FDC20FE931100C12A69 /* raygun4apple tvOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A2660FE920FE931100C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple tvOSTests" */;
+			buildConfigurationList = A2660FE920FE931100C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple tvOS Tests" */;
 			buildPhases = (
 				A2660FD920FE931100C12A69 /* Sources */,
 				A2660FDA20FE931100C12A69 /* Frameworks */,
@@ -1701,9 +1724,9 @@
 			dependencies = (
 				A2660FE020FE931100C12A69 /* PBXTargetDependency */,
 			);
-			name = "raygun4apple tvOSTests";
+			name = "raygun4apple tvOS Tests";
 			productName = "raygun4apple tvOSTests";
-			productReference = A2660FDD20FE931100C12A69 /* raygun4apple tvOSTests.xctest */;
+			productReference = A2660FDD20FE931100C12A69 /* raygun4apple tvOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DC5EFA27210E812F002C0713 /* raygun4apple macOS */ = {
@@ -1724,9 +1747,9 @@
 			productReference = DC5EFA28210E812F002C0713 /* raygun4apple.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		DC5EFA2F210E812F002C0713 /* raygun4apple macOSTests */ = {
+		DC5EFA2F210E812F002C0713 /* raygun4apple macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC5EFA3C210E8130002C0713 /* Build configuration list for PBXNativeTarget "raygun4apple macOSTests" */;
+			buildConfigurationList = DC5EFA3C210E8130002C0713 /* Build configuration list for PBXNativeTarget "raygun4apple macOS Tests" */;
 			buildPhases = (
 				DC5EFA2C210E812F002C0713 /* Sources */,
 				DC5EFA2D210E812F002C0713 /* Frameworks */,
@@ -1737,9 +1760,9 @@
 			dependencies = (
 				DC5EFA33210E8130002C0713 /* PBXTargetDependency */,
 			);
-			name = "raygun4apple macOSTests";
+			name = "raygun4apple macOS Tests";
 			productName = "raygun4apple macOSTests";
-			productReference = DC5EFA30210E812F002C0713 /* raygun4apple macOSTests.xctest */;
+			productReference = DC5EFA30210E812F002C0713 /* raygun4apple macOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1801,11 +1824,11 @@
 			projectRoot = "";
 			targets = (
 				A2660FB720FE914F00C12A69 /* raygun4apple iOS */,
-				A2660FC020FE914F00C12A69 /* raygun4apple iOSTests */,
+				A2660FC020FE914F00C12A69 /* raygun4apple iOS Tests */,
 				A2660FD420FE931100C12A69 /* raygun4apple tvOS */,
-				A2660FDC20FE931100C12A69 /* raygun4apple tvOSTests */,
+				A2660FDC20FE931100C12A69 /* raygun4apple tvOS Tests */,
 				DC5EFA27210E812F002C0713 /* raygun4apple macOS */,
-				DC5EFA2F210E812F002C0713 /* raygun4apple macOSTests */,
+				DC5EFA2F210E812F002C0713 /* raygun4apple macOS Tests */,
 				A266102520FEDF7600C12A69 /* Package iOS */,
 				A266102A20FEE0B200C12A69 /* Package tvOS */,
 				DC5EFA3F210E81B2002C0713 /* Package macOS */,
@@ -1877,7 +1900,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\necho ============ RUNNING SIMULATOR TEST ============\nxcodebuild -scheme \"raygun4apple iOS\" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.0' -UseNewBuildSystem=NO test\n\necho ============ RUNNING RELEASE BUILD ============\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS} -scheme raygun4apple iOS -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\necho ============ RUNNING SIMULATOR BUILD ============\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\necho ============ COPYING FRAMEWORK ============\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\necho ============ COPY SWIFT MODULES ============\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\necho ============ CREATING UNIVERSAL FRAMEWORK ============\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\necho ============ COPYING UNIVERSAL FRAMEWORK ============\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"\n";
+			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"\"\n\n# Step 2: Define OS and directories\nUNIVERSAL_TARGET=\"iOS\"\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal-${UNIVERSAL_TARGET}\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}/${UNIVERSAL_TARGET}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\necho ============ RUNNING RELEASE BUILD ============\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS} -scheme raygun4apple iOS -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\necho ============ RUNNING SIMULATOR BUILD ============\nxcodebuild -target \"${PROJECT_NAME} ${UNIVERSAL_TARGET}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO -UseNewBuildSystem=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 5: Copy the framework structure (from iphoneos build) to the universal folder\necho ============ COPYING FRAMEWORK ============\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 6: Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\necho ============ COPY SWIFT MODULES ============\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 7: Create universal binary file using lipo and place the combined executable in the copied framework directory\necho ============ CREATING UNIVERSAL FRAMEWORK ============\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 8: Convenience step to copy the framework to the project's directory\necho ============ COPYING UNIVERSAL FRAMEWORK ============\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 9: Convenience step to open the project's directory in Finder\n# open \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 10: Testing\n# open \"${UNIVERSAL_OUTPUTFOLDER}\"\n";
 		};
 		A266102E20FEE0C600C12A69 /* Make Universal Library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1999,6 +2022,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2959D8821E6906500125E31 /* RaygunRealUserMonitoringTests.m in Sources */,
+				A2959D8921E6906500125E31 /* RaygunBreadcrumbsTests.m in Sources */,
+				A2959D8A21E6906500125E31 /* RaygunClientTests.m in Sources */,
 				A2660FC720FE914F00C12A69 /* raygun4apple_iOSTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2092,7 +2118,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2959D8F21E690BF00125E31 /* RaygunRealUserMonitoringTests.m in Sources */,
+				A2959D8B21E690A600125E31 /* RaygunClientTests.m in Sources */,
 				A2660FE320FE931100C12A69 /* raygun4apple_tvOSTests.m in Sources */,
+				A2959D8D21E690BA00125E31 /* RaygunBreadcrumbsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,7 +2214,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2959D9021E690C000125E31 /* RaygunRealUserMonitoringTests.m in Sources */,
+				A2959D8C21E690A800125E31 /* RaygunClientTests.m in Sources */,
 				DC5EFA36210E8130002C0713 /* raygun4apple_macOSTests.m in Sources */,
+				A2959D8E21E690BB00125E31 /* RaygunBreadcrumbsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2462,12 +2494,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple iOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple iOS Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2518,11 +2550,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple iOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple iOS Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2722,11 +2754,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple tvOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple tvOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -2777,10 +2809,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple tvOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple tvOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -3025,12 +3057,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple macOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple macOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-macOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -3084,11 +3116,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "raygun4apple macOSTests/Info.plist";
+				INFOPLIST_FILE = "raygun4apple macOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-macOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raygun.raygun4apple-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -3133,7 +3165,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A2660FCF20FE914F00C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple iOSTests" */ = {
+		A2660FCF20FE914F00C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2660FCC20FE914F00C12A69 /* Debug */,
@@ -3151,7 +3183,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A2660FE920FE931100C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple tvOSTests" */ = {
+		A2660FE920FE931100C12A69 /* Build configuration list for PBXNativeTarget "raygun4apple tvOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2660FEA20FE931100C12A69 /* Debug */,
@@ -3187,7 +3219,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC5EFA3C210E8130002C0713 /* Build configuration list for PBXNativeTarget "raygun4apple macOSTests" */ = {
+		DC5EFA3C210E8130002C0713 /* Build configuration list for PBXNativeTarget "raygun4apple macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC5EFA3D210E8130002C0713 /* Debug */,
