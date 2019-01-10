@@ -39,16 +39,4 @@
     XCTAssertEqual(RaygunClient.apiKey, @"123456");
 }
 
-- (void)testEventTypeNames {
-    XCTAssertEqual(RaygunEventTypeNames[RaygunEventTypeSessionStart], @"session_start");
-    XCTAssertEqual(RaygunEventTypeNames[RaygunEventTypeSessionEnd], @"session_end");
-    XCTAssertEqual(RaygunEventTypeNames[RaygunEventTypeTiming], @"mobile_event_timing");
-}
-
-- (void)testEventTimingTypeNames {
-    XCTAssertEqual(RaygunEventTimingTypeShortNames[RaygunEventTimingTypeViewLoaded], @"p");
-    XCTAssertEqual(RaygunEventTimingTypeShortNames[RaygunEventTimingTypeNetworkCall], @"n");
-}
-
 @end
-
