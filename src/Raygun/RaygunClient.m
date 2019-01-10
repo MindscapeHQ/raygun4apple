@@ -58,7 +58,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
 
-#pragma mark - Setters -
+#pragma mark - Getters & Setters -
 
 + (void)setLogLevel:(enum RaygunLoggingLevel)level {
     NSParameterAssert(level);
