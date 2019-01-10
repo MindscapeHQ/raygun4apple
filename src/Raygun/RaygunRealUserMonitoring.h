@@ -33,7 +33,8 @@
 @interface RaygunRealUserMonitoring : NSObject
 
 @property (nonatomic) bool enabled;
-@property (nonatomic, copy) NSMutableDictionary *timers;
+@property (nonatomic, readonly, copy) NSDictionary *eventTimers;
+@property (nonatomic, readonly, copy) NSSet *ignoredViews;
 
 + (instancetype)sharedInstance;
 
@@ -45,12 +46,18 @@
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation;
 
-- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString*)name withDuration:(NSNumber*)duration;
+- (void)sendTimingEvent:(RaygunEventTimingType)type withName:(NSString *)name withDuration:(NSNumber *)duration;
 
 - (void)ignoreViews:(NSArray *)viewNames;
 
 - (void)ignoreURLs:(NSArray *)urls;
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName;
+
+- (void)setEventStartTime:(NSNumber *)value forKey:(NSString *)key;
+
+- (void)setEventFinishTime:(NSNumber *)value forKey:(NSString *)key;
+
+- (NSNumber *)eventStartTimeForKey:(NSString *)key;
 
 @end
