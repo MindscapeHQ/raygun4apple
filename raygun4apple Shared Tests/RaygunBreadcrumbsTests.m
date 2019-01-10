@@ -26,6 +26,13 @@
     [super tearDown];
 }
 
+- (void)testBreadcrumbLevelNames {
+    XCTAssertEqual(RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelInfo], @"info");
+    XCTAssertEqual(RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelDebug], @"debug");
+    XCTAssertEqual(RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelWarning], @"warning");
+    XCTAssertEqual(RaygunBreadcrumbLevelNames[RaygunBreadcrumbLevelError], @"error");
+}
+
 - (void)assertBreadcrumbCount:(RaygunClient*)client withCount:(NSUInteger)count {
     XCTAssertNotNil(client.breadcrumbs);
     XCTAssertEqual([client.breadcrumbs count], count);
