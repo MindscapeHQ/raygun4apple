@@ -453,10 +453,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:key withDuration:@(duration)];
 }
 
-- (void)removeEventStartTimeForKey:(NSString *)key {
-    [_mutableTimers removeObjectForKey:key];
-}
-
 - (NSNumber *)eventStartTimeForKey:(NSString *)key {
     return [_mutableTimers valueForKey:key];
 }
