@@ -121,4 +121,17 @@
     XCTAssertEqual([rumInstance.viewEventTimers count], 0);
 }
 
+- (void)testDoNotTrackViewEventsWithNilKey {
+    RaygunRealUserMonitoring *rumInstance = [[RaygunRealUserMonitoring alloc] init];
+    
+    XCTAssertNotNil(rumInstance);
+    XCTAssertNotNil(rumInstance.viewEventTimers);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
+    
+    [rumInstance startTrackingViewEventForKey:nil withTime:@(1.0)];
+    
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
+    XCTAssertNil([rumInstance viewEventStartTimeForKey:nil]);
+}
+
 @end
