@@ -50,7 +50,7 @@
 @property (nonatomic, copy) NSString *sessionId;
 @property (nonatomic, copy) NSString *lastViewName;
 @property (nonatomic, copy) NSOperationQueue *operationQueue;
-@property (nonatomic, copy) NSMutableDictionary *mutableTimers;
+@property (nonatomic, copy) NSMutableDictionary *mutableViewTimers;
 @property (nonatomic, copy) NSMutableSet *mutableIgnoredViews;
 @property (nonatomic, copy) RaygunNetworkPerformanceMonitor * networkMonitor;
 @property (nonatomic, copy) RaygunUserInformation *currentSessionUserInformation;
@@ -71,8 +71,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 #pragma mark - Getters & Setters -
 
-- (NSDictionary *)eventTimers {
-    return [NSDictionary dictionaryWithDictionary:_mutableTimers];
+- (NSDictionary *)viewEventTimers {
+    return [NSDictionary dictionaryWithDictionary:_mutableViewTimers];
 }
 
 - (NSSet *)ignoredViews {
@@ -83,11 +83,12 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (id)init {
     if (self = [super init]) {
-        _mutableTimers       = [[NSMutableDictionary alloc] init];
-        _mutableIgnoredViews = [[NSMutableSet alloc] init];
-        _operationQueue      = [[NSOperationQueue alloc] init];
-        _networkMonitor      = [[RaygunNetworkPerformanceMonitor alloc] init];
+        _mutableViewTimers    = [[NSMutableDictionary alloc] init];
+        _mutableIgnoredViews  = [[NSMutableSet alloc] init];
+        _operationQueue       = [[NSOperationQueue alloc] init];
+        _networkMonitor       = [[RaygunNetworkPerformanceMonitor alloc] init];
         
+        // Views ignored by default
         [_mutableIgnoredViews addObject:@"UINavigationController"];
         [_mutableIgnoredViews addObject:@"UIInputWindowController"];
     }
@@ -184,7 +185,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
     
     _sessionId = nil;
-    [_mutableTimers removeAllObjects];
+    
+    [_mutableViewTimers removeAllObjects];
 }
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
@@ -362,6 +364,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     if (@available(macOS 10.10, *)) {
         version = [NSProcessInfo processInfo].operatingSystemVersion;
     }
+    
     NSString* systemVersion;
     if (version.patchVersion == 0) {
         systemVersion = [NSString stringWithFormat:@"%d.%d", (int)version.majorVersion, (int)version.minorVersion];
@@ -369,6 +372,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     else {
         systemVersion = [NSString stringWithFormat:@"%d.%d.%d", (int)version.majorVersion, (int)version.minorVersion, (int)version.patchVersion];
     }
+    
     return systemVersion;
 #endif
 }
@@ -425,22 +429,38 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 #pragma mark - Event Timing Methods -
 
-- (void)setEventStartTime:(NSNumber *)value forKey:(NSString *)key {
-    [_mutableTimers setValue:value forKey:key];
-}
-
-- (void)setEventFinishTime:(NSNumber *)value forKey:(NSString *)key {
-    NSNumber* start = [self eventStartTimeForKey:key];
-    
-    int duration = 0;
-    if (start != nil) {
-        double interval = value.doubleValue - start.doubleValue;
-        // Convert to milliseconds
-        duration = interval * 1000;
+- (void)startTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeStarted {
+    if (!self.enabled) {
+        return;
     }
     
+    if ([self viewEventStartTimeForKey:key] != nil) {
+        [RaygunLogger logDebug:@"Failed to start tracking view event - Event with same key is already being tracked"];
+        return;
+    }
+    
+    if (![RaygunUtils isNullOrEmpty:key]) {
+        [_mutableViewTimers setValue:timeStarted forKey:key];
+    }
+}
+
+- (void)finishTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeEnded {
+    if (!self.enabled) {
+        return;
+    }
+    
+    NSNumber* start = [self viewEventStartTimeForKey:key];
+    
+    if (start == nil) {
+        [RaygunLogger logWarning:@"Failed to send view timing event - missing start time."];
+        return;
+    }
+    
+    // Gather the duration in milliseconds
+    int duration = (timeEnded.doubleValue - start.doubleValue) * 1000;
+    
     // We are now finished tracking this event
-    [_mutableTimers removeObjectForKey:key];
+    [_mutableViewTimers removeObjectForKey:key];
     
     // Cleanup the view name so we only have the class name.
     key = [key stringByReplacingOccurrencesOfString:@"<" withString:@""];
@@ -453,8 +473,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:key withDuration:@(duration)];
 }
 
-- (NSNumber *)eventStartTimeForKey:(NSString *)key {
-    return [_mutableTimers valueForKey:key];
+- (NSNumber *)viewEventStartTimeForKey:(NSString *)key {
+    return [_mutableViewTimers valueForKey:key];
 }
 
 @end

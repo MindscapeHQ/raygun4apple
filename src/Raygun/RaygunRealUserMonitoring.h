@@ -33,7 +33,7 @@
 @interface RaygunRealUserMonitoring : NSObject
 
 @property (nonatomic) bool enabled;
-@property (nonatomic, readonly, copy) NSDictionary *eventTimers;
+@property (nonatomic, readonly, copy) NSDictionary *viewEventTimers;
 @property (nonatomic, readonly, copy) NSSet *ignoredViews;
 
 + (instancetype)sharedInstance;
@@ -54,10 +54,10 @@
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName;
 
-- (void)setEventStartTime:(NSNumber *)value forKey:(NSString *)key;
+- (void)startTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeStarted;
 
-- (void)setEventFinishTime:(NSNumber *)value forKey:(NSString *)key;
+- (void)finishTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeEnded;
 
-- (NSNumber *)eventStartTimeForKey:(NSString *)key;
+- (NSNumber *)viewEventStartTimeForKey:(NSString *)key;
 
 @end

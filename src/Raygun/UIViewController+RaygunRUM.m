@@ -89,23 +89,12 @@
 }
 
 - (void)recordStartTime {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    
-    if (rum.enabled) {
-        NSString* viewName = self.description;
-        if ([rum eventStartTimeForKey:viewName] == nil) {
-            [rum setEventStartTime:@(CACurrentMediaTime()) forKey:viewName];
-        }
-    }
+    [RaygunRealUserMonitoring.sharedInstance startTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
 }
 
 - (void)viewDidAppearCapture:(BOOL)animated {
     [self viewDidAppearCapture:animated];
-    
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        [rum setEventFinishTime:@(CACurrentMediaTime()) forKey:self.description];
-    }
+    [RaygunRealUserMonitoring.sharedInstance finishTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
 }
 
 @end
