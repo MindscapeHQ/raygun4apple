@@ -72,7 +72,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #pragma mark - Getters & Setters -
 
 - (NSDictionary *)viewEventTimers {
-    return [NSDictionary dictionaryWithDictionary:_mutableViewTimers];
+    return [[NSDictionary alloc] initWithDictionary:_mutableViewTimers];
+    //return [NSDictionary dictionaryWithDictionary:_mutableViewTimers];
 }
 
 - (NSSet *)ignoredViews {
@@ -430,10 +431,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #pragma mark - Event Timing Methods -
 
 - (void)startTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeStarted {
-    if (!self.enabled) {
-        return;
-    }
-    
     if ([self viewEventStartTimeForKey:key] != nil) {
         [RaygunLogger logDebug:@"Failed to start tracking view event - Event with same key is already being tracked"];
         return;
@@ -445,10 +442,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (void)finishTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeEnded {
-    if (!self.enabled) {
-        return;
-    }
-    
     NSNumber* start = [self viewEventStartTimeForKey:key];
     
     if (start == nil) {

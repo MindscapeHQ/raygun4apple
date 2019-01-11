@@ -89,12 +89,16 @@
 }
 
 - (void)recordStartTime {
-    [RaygunRealUserMonitoring.sharedInstance startTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
+    if (RaygunRealUserMonitoring.sharedInstance.enabled) {
+        [RaygunRealUserMonitoring.sharedInstance startTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
+    }
 }
 
 - (void)viewDidAppearCapture:(BOOL)animated {
     [self viewDidAppearCapture:animated];
-    [RaygunRealUserMonitoring.sharedInstance finishTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
+    if (RaygunRealUserMonitoring.sharedInstance.enabled) {
+        [RaygunRealUserMonitoring.sharedInstance finishTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
+    }
 }
 
 @end

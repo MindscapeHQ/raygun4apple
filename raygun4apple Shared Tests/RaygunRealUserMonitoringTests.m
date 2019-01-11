@@ -71,54 +71,54 @@
     XCTAssertEqual([rumInstance shouldIgnoreView:@"IgnoredViewName"], true);
 }
 
-- (void)testSettingAnEventStartTime {
+- (void)testStartTrackingAViewEvent {
     RaygunRealUserMonitoring *rumInstance = [[RaygunRealUserMonitoring alloc] init];
     
     XCTAssertNotNil(rumInstance);
-    XCTAssertNotNil(rumInstance.eventTimers);
-    XCTAssertEqual([rumInstance.eventTimers count], 0);
+    XCTAssertNotNil(rumInstance.viewEventTimers);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
     
-    [rumInstance setEventStartTime:@(1.0) forKey:@"SetView"];
+    [rumInstance startTrackingViewEventForKey:@"SetView" withTime:@(1.0)];
     
-    XCTAssertEqual([rumInstance.eventTimers count], 1);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 1);
     
-    NSNumber* time = [rumInstance.eventTimers valueForKey:@"SetView"];
+    NSNumber* time = [rumInstance.viewEventTimers valueForKey:@"SetView"];
     
     XCTAssertNotNil(time);
     XCTAssertEqual(time.doubleValue, 1.0);
 }
 
-- (void)testGettingAnEventStartTime {
+- (void)testGettingAViewEventStartTime {
     RaygunRealUserMonitoring *rumInstance = [[RaygunRealUserMonitoring alloc] init];
     
     XCTAssertNotNil(rumInstance);
-    XCTAssertNotNil(rumInstance.eventTimers);
-    XCTAssertEqual([rumInstance.eventTimers count], 0);
+    XCTAssertNotNil(rumInstance.viewEventTimers);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
     
-    [rumInstance setEventStartTime:@(2.0) forKey:@"GetView"];
+    [rumInstance startTrackingViewEventForKey:@"GetView" withTime:@(2.0)];
     
-    XCTAssertEqual([rumInstance.eventTimers count], 1);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 1);
     
-    NSNumber* time = [rumInstance eventStartTimeForKey:@"GetView"];
+    NSNumber* time = [rumInstance viewEventStartTimeForKey:@"GetView"];
     
     XCTAssertNotNil(time);
     XCTAssertEqual(time.doubleValue, 2.0);
 }
 
-- (void)testSettingAnEventFinishTime {
+- (void)testFinishingAViewEvent {
     RaygunRealUserMonitoring *rumInstance = [[RaygunRealUserMonitoring alloc] init];
     
     XCTAssertNotNil(rumInstance);
-    XCTAssertNotNil(rumInstance.eventTimers);
-    XCTAssertEqual([rumInstance.eventTimers count], 0);
+    XCTAssertNotNil(rumInstance.viewEventTimers);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
     
-    [rumInstance setEventStartTime:@(3.0) forKey:@"FinishView"];
+    [rumInstance startTrackingViewEventForKey:@"FinishView" withTime:@(3.0)];
     
-    XCTAssertEqual([rumInstance.eventTimers count], 1);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 1);
     
-    [rumInstance setEventFinishTime:@(5.0) forKey:@"FinishView"];
+    [rumInstance finishTrackingViewEventForKey:@"FinishView" withTime:@(5.0)];
 
-    XCTAssertEqual([rumInstance.eventTimers count], 0);
+    XCTAssertEqual([rumInstance.viewEventTimers count], 0);
 }
 
 @end
