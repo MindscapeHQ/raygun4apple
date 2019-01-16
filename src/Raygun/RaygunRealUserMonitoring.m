@@ -73,7 +73,6 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 
 - (NSDictionary *)viewEventTimers {
     return [[NSDictionary alloc] initWithDictionary:_mutableViewTimers];
-    //return [NSDictionary dictionaryWithDictionary:_mutableViewTimers];
 }
 
 - (NSSet *)ignoredViews {
