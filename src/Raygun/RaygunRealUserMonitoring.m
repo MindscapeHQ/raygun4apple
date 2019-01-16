@@ -49,8 +49,9 @@
 
 @property (nonatomic, copy) NSString *sessionId;
 @property (nonatomic, copy) NSString *lastViewName;
-@property (nonatomic, copy) NSOperationQueue *queue;
-@property (nonatomic, copy) NSMutableSet *ignoredViews;
+@property (nonatomic, copy) NSOperationQueue *operationQueue;
+@property (nonatomic, copy) NSMutableDictionary *mutableViewTimers;
+@property (nonatomic, copy) NSMutableSet *mutableIgnoredViews;
 @property (nonatomic, copy) RaygunNetworkPerformanceMonitor * networkMonitor;
 @property (nonatomic, copy) RaygunUserInformation *currentSessionUserInformation;
 
@@ -68,17 +69,28 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     return sharedInstance;
 }
 
+#pragma mark - Getters & Setters -
+
+- (NSDictionary *)viewEventTimers {
+    return [[NSDictionary alloc] initWithDictionary:_mutableViewTimers];
+}
+
+- (NSSet *)ignoredViews {
+    return [NSSet setWithSet:_mutableIgnoredViews];
+}
+
 #pragma mark - Initialising Methods  -
 
 - (id)init {
     if (self = [super init]) {
-        _timers         = [[NSMutableDictionary alloc] init];
-        _queue          = [[NSOperationQueue alloc] init];
-        _ignoredViews   = [[NSMutableSet alloc] init];
-        _networkMonitor = [[RaygunNetworkPerformanceMonitor alloc] init];
+        _mutableViewTimers    = [[NSMutableDictionary alloc] init];
+        _mutableIgnoredViews  = [[NSMutableSet alloc] init];
+        _operationQueue       = [[NSOperationQueue alloc] init];
+        _networkMonitor       = [[RaygunNetworkPerformanceMonitor alloc] init];
         
-        [_ignoredViews addObject:@"UINavigationController"];
-        [_ignoredViews addObject:@"UIInputWindowController"];
+        // Views ignored by default
+        [_mutableIgnoredViews addObject:@"UINavigationController"];
+        [_mutableIgnoredViews addObject:@"UIInputWindowController"];
     }
     return self;
 }
@@ -118,15 +130,14 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     NSNumber *lastSeenTime = [[NSUserDefaults standardUserDefaults] objectForKey:kRaygunSessionLastSeenDefaultsKey];
     
     if (lastSeenTime) {
+        // Has the session expired.
         if ([self timeBetween:lastSeenTime] >= kSessionExpiryPeriodInSeconds) {
             [self endSession];
             [self startSessionWithUserInformation:RaygunClient.sharedInstance.userInformation];
         }
     }
     
-    if (![self shouldIgnoreView:_lastViewName]) {
-        [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:_lastViewName withDuration:@0];
-    }
+    [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:_lastViewName withDuration:@0];
 }
 
 - (void)applicationDidEnterBackground {
@@ -174,7 +185,8 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     }
     
     _sessionId = nil;
-    [_timers removeAllObjects];
+    
+    [_mutableViewTimers removeAllObjects];
 }
 
 - (void)identifyWithUserInformation:(RaygunUserInformation *)userInformation {
@@ -352,6 +364,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     if (@available(macOS 10.10, *)) {
         version = [NSProcessInfo processInfo].operatingSystemVersion;
     }
+    
     NSString* systemVersion;
     if (version.patchVersion == 0) {
         systemVersion = [NSString stringWithFormat:@"%d.%d", (int)version.majorVersion, (int)version.minorVersion];
@@ -359,6 +372,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     else {
         systemVersion = [NSString stringWithFormat:@"%d.%d.%d", (int)version.majorVersion, (int)version.minorVersion, (int)version.patchVersion];
     }
+    
     return systemVersion;
 #endif
 }
@@ -384,10 +398,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 #pragma mark - Event Blacklisting Methods -
 
 - (void)ignoreViews:(NSArray *)viewNames {
-    if (viewNames != nil && _ignoredViews != nil) {
+    if (viewNames != nil && _mutableIgnoredViews != nil) {
         for (NSString* name in viewNames) {
             if (![RaygunUtils isNullOrEmpty:name]) {
-                [_ignoredViews addObject:name];
+                [_mutableIgnoredViews addObject:name];
             }
         }
     }
@@ -400,17 +414,59 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
 }
 
 - (BOOL)shouldIgnoreView:(NSString *)viewName {
-    if (!_enabled || [RaygunUtils isNullOrEmpty:viewName]) {
+    if ([RaygunUtils isNullOrEmpty:viewName]) {
         return YES;
     }
     
-    for (NSString *ignoredView in _ignoredViews) {
+    for (NSString *ignoredView in _mutableIgnoredViews) {
         if ([ignoredView containsString:viewName] || [viewName containsString:ignoredView]) {
             return YES;
         }
     }
     
     return NO;
+}
+
+#pragma mark - Event Timing Methods -
+
+- (void)startTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeStarted {
+    if ([self viewEventStartTimeForKey:key] != nil) {
+        [RaygunLogger logDebug:@"Failed to start tracking view event - Event with same key is already being tracked"];
+        return;
+    }
+    
+    if (![RaygunUtils isNullOrEmpty:key]) {
+        [_mutableViewTimers setValue:timeStarted forKey:key];
+    }
+}
+
+- (void)finishTrackingViewEventForKey:(NSString *)key withTime:(NSNumber *)timeEnded {
+    NSNumber* start = [self viewEventStartTimeForKey:key];
+    
+    if (start == nil) {
+        [RaygunLogger logWarning:@"Failed to send view timing event - missing start time."];
+        return;
+    }
+    
+    // Gather the duration in milliseconds
+    int duration = (timeEnded.doubleValue - start.doubleValue) * 1000;
+    
+    // We are now finished tracking this event
+    [_mutableViewTimers removeObjectForKey:key];
+    
+    // Cleanup the view name so we only have the class name.
+    key = [key stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    NSUInteger index = [key rangeOfString:@":"].location;
+    if (index != NSNotFound) {
+        key = [key substringToIndex:index];
+    }
+    
+    // Attempt to send the timing.
+    [self sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:key withDuration:@(duration)];
+}
+
+- (NSNumber *)viewEventStartTimeForKey:(NSString *)key {
+    return [_mutableViewTimers valueForKey:key];
 }
 
 @end

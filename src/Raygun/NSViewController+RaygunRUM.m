@@ -74,71 +74,30 @@
 }
 
 - (void)loadViewCapture {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = self.description;
-        NSNumber* start = (rum.timers)[viewName];
-        if (start == nil) {
-            double startDouble = CACurrentMediaTime();
-            start = @(startDouble);
-            (rum.timers)[viewName] = start;
-        }
-    }
+    [self recordStartTime];
     [self loadViewCapture];
 }
 
 - (void)viewDidLoadCapture {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = self.description;
-        NSNumber* start = (rum.timers)[viewName];
-        if (start == nil) {
-            start = @(CACurrentMediaTime());
-            (rum.timers)[viewName] = start;
-        }
-    }
+    [self recordStartTime];
     [self viewDidLoadCapture];
 }
 
 - (void)viewWillAppearCapture:(BOOL)animated {
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = self.description;
-        NSNumber* start = (rum.timers)[viewName];
-        if (start == nil) {
-            start = @(CACurrentMediaTime());
-            (rum.timers)[viewName] = start;
-        }
-    }
+    [self recordStartTime];
     [self viewWillAppearCapture:animated];
+}
+
+- (void)recordStartTime {
+    if (RaygunRealUserMonitoring.sharedInstance.enabled) {
+        [RaygunRealUserMonitoring.sharedInstance startTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
+    }
 }
 
 - (void)viewDidAppearCapture:(BOOL)animated {
     [self viewDidAppearCapture:animated];
-    
-    RaygunRealUserMonitoring *rum = [RaygunRealUserMonitoring sharedInstance];
-    if (rum.enabled) {
-        NSString* viewName = self.description;
-        NSNumber* start = (rum.timers)[viewName];
-        
-        int duration = 0;
-        if (start != nil) {
-            double interval = CACurrentMediaTime() - start.doubleValue;
-            duration = interval * 1000;
-        }
-        
-        [rum.timers removeObjectForKey:viewName];
-        
-        // Cleanup the view name so we only have the class name.
-        viewName = [viewName stringByReplacingOccurrencesOfString:@"<" withString:@""];
-        NSUInteger index = [viewName rangeOfString:@":"].location;
-        if (index != NSNotFound) {
-            viewName = [viewName substringToIndex:index];
-        }
-        
-        if (![rum shouldIgnoreView:viewName]) {
-            [rum sendTimingEvent:RaygunEventTimingTypeViewLoaded withName:viewName withDuration:@(duration)];
-        }
+    if (RaygunRealUserMonitoring.sharedInstance.enabled) {
+        [RaygunRealUserMonitoring.sharedInstance finishTrackingViewEventForKey:self.description withTime:@(CACurrentMediaTime())];
     }
 }
 
