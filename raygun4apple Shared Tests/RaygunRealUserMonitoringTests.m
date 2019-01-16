@@ -61,14 +61,12 @@
     XCTAssertNotNil(rumInstance);
     XCTAssertNotNil(rumInstance.ignoredViews);
     XCTAssertEqual([rumInstance.ignoredViews count], 2);
-    XCTAssertEqual([rumInstance shouldIgnoreView:@"IgnoredViewName"], false);
     
     // Add the view we want to ignore
     [rumInstance ignoreViews:@[@"IgnoredViewName"]];
     
     XCTAssertEqual([rumInstance.ignoredViews count], 3); // The two default plus our TestView
     XCTAssertEqual([rumInstance.ignoredViews containsObject:@"IgnoredViewName"], true);
-    XCTAssertEqual([rumInstance shouldIgnoreView:@"IgnoredViewName"], true);
 }
 
 - (void)testStartTrackingAViewEvent {
