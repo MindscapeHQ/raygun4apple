@@ -24,10 +24,10 @@
  import "Crash.h"
  ...
  
- [crashObj ThrowBasicException];
+ [Crash throwGenericException];
  ```
  */
-- (void)ThrowGenericException;
++ (void)throwGenericException;
 
 @end
 

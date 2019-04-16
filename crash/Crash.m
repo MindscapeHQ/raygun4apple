@@ -13,13 +13,19 @@
 
 @implementation Crash
 
-- (void)ThrowGenericException {
-    NSLog(@"[Crash] ThrowGenericException called");
-    
-    NSException *exception = [NSException exceptionWithName:@"Generic Exception"
-                                                     reason:@"ThrowGenericException"
++ (void)throwGenericException {
+    NSLog(@"[Crash] throwGenericException was called");
+    [self doSomething];
+}
+
++ (void)doSomething {
+    [self doSomethingElse];
+}
+
++ (void)doSomethingElse {
+    NSException *exception = [NSException exceptionWithName:@"Generic Native Exception"
+                                                     reason:@"Message: throwGenericException was called"
                                                    userInfo:@{ @"name" : @"Ronald Raygun" }];
-    
     [exception raise];
 }
 
