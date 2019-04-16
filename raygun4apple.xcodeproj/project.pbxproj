@@ -82,7 +82,7 @@
 		A2660FE320FE931100C12A69 /* raygun4apple_tvOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2660FE220FE931100C12A69 /* raygun4apple_tvOSTests.m */; };
 		A2660FE520FE931100C12A69 /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A2660FD720FE931100C12A69 /* raygun4apple_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A28910792264358800D66DCB /* crash_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A28910772264358800D66DCB /* crash_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A289107F2264373600D66DCB /* Crash.h in Headers */ = {isa = PBXBuildFile; fileRef = A289107E2264373600D66DCB /* Crash.h */; };
+		A289107F2264373600D66DCB /* Crash.h in Headers */ = {isa = PBXBuildFile; fileRef = A289107E2264373600D66DCB /* Crash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A28910812264374900D66DCB /* Crash.m in Sources */ = {isa = PBXBuildFile; fileRef = A28910802264374900D66DCB /* Crash.m */; };
 		A28ECA48218FFC370098E422 /* NSViewController+RaygunRUM.m in Sources */ = {isa = PBXBuildFile; fileRef = A28ECA46218FFC370098E422 /* NSViewController+RaygunRUM.m */; };
 		A28ECA49218FFC370098E422 /* NSViewController+RaygunRUM.h in Headers */ = {isa = PBXBuildFile; fileRef = A28ECA47218FFC370098E422 /* NSViewController+RaygunRUM.h */; };
