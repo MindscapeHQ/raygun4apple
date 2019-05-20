@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite, retain) NSOperationQueue *queue;
 @property (nonatomic) bool crashReportingEnabled;
 @property (nonatomic, strong) RaygunFileManager *fileManager;
-@property (nonatomic, strong) NSMutableArray* mutableBreadcrumbs;
+@property (nonatomic, strong) NSMutableArray<RaygunBreadcrumb *> *mutableBreadcrumbs;
 
 @end
 
@@ -78,12 +78,12 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     [self updateCrashReportUserInformation];
 }
 
-- (void)setTags:(nullable NSArray *)tags {
+- (void)setTags:(nullable NSArray<NSString *> *)tags {
     _tags = tags;
     [self updateCrashReportUserInformation];
 }
 
-- (void)setCustomData:(nullable NSDictionary *)customData {
+- (void)setCustomData:(nullable NSDictionary<NSString *, id> *)customData {
     _customData = customData;
     [self updateCrashReportUserInformation];
 }
@@ -185,13 +185,13 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 }
 
 - (void)sendException:(NSException *)exception
-             withTags:(nullable NSArray *)tags {
+             withTags:(nullable NSArray<NSString *> *)tags {
     [self sendException:exception withTags:tags withCustomData:nil];
 }
 
 - (void)sendException:(NSException *)exception
-             withTags:(nullable NSArray *)tags
-       withCustomData:(nullable NSDictionary *)customData {
+             withTags:(nullable NSArray<NSString *> *)tags
+       withCustomData:(nullable NSDictionary<NSString *, id> *)customData {
     if (_crashReportingEnabled == NO) {
         [RaygunLogger logWarning:@"Failed to send exception - Crash Reporting has not been enabled"];
         return;
@@ -218,8 +218,8 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 - (void)sendException:(NSString *)exceptionName
            withReason:(nullable NSString *)reason
-             withTags:(nullable NSArray *)tags
-       withCustomData:(nullable NSDictionary *)customData {
+             withTags:(nullable NSArray<NSString *> *)tags
+       withCustomData:(nullable NSDictionary<NSString *, id> *)customData {
     NSException *exception = [NSException exceptionWithName:exceptionName reason:reason userInfo:nil];
     
     @try {
@@ -231,8 +231,8 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 }
 
 - (void)sendError:(NSError *)error
-         withTags:(nullable NSArray *)tags
-   withCustomData:(nullable NSDictionary *)customData {
+         withTags:(nullable NSArray<NSString *> *)tags
+   withCustomData:(nullable NSDictionary<NSString *, id> *)customData {
     NSError *innerError = [self getInnerError:error];
     NSString *reason = innerError.localizedDescription;
     if (reason == nil) {
@@ -298,8 +298,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
  */
 - (void)updateCrashReportUserInformation {
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    userInfo[@"tags"]               = _tags;
-    userInfo[@"customData"]         = _customData;
+    
+    userInfo[@"tags"] = _tags;
+    userInfo[@"customData"] = _customData;
     userInfo[@"applicationVersion"] = _applicationVersion;
     
     if (_userInformation != nil) {
@@ -361,7 +362,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)recordBreadcrumbWithMessage:(NSString *)message
                        withCategory:(nullable NSString *)category
                           withLevel:(enum RaygunBreadcrumbLevel)level
-                     withCustomData:(nullable NSDictionary *)customData {
+                     withCustomData:(nullable NSDictionary<NSString *, id> *)customData {
     RaygunBreadcrumb *breadcrumb = [RaygunBreadcrumb breadcrumbWithBlock:^(RaygunBreadcrumb *breadcrumb) {
         breadcrumb.message    = message;
         breadcrumb.category   = category;
@@ -389,11 +390,11 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     [[RaygunRealUserMonitoring sharedInstance] enableNetworkPerformanceMonitoring];
 }
 
-- (void)ignoreViews:(NSArray *)viewNames {
+- (void)ignoreViews:(NSArray<NSString *> *)viewNames {
     [[RaygunRealUserMonitoring sharedInstance] ignoreViews:viewNames];
 }
 
-- (void)ignoreURLs:(NSArray *)urls {
+- (void)ignoreURLs:(NSArray<NSString *> *)urls {
     [[RaygunRealUserMonitoring sharedInstance] ignoreURLs:urls];
 }
 
