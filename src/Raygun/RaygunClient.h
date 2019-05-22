@@ -44,7 +44,7 @@ typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 
 @property (nullable, nonatomic, copy) NSString *applicationVersion;
 
-@property (nullable, nonatomic, strong) NSArray *tags;
+@property (nullable, nonatomic, strong) NSArray<NSString *> *tags;
 
 @property (nullable, nonatomic, strong) NSDictionary<NSString *, id> *customData;
 
@@ -106,7 +106,7 @@ NS_SWIFT_NAME(send(exception:));
  * @param tags A list of tags to be included only with this report
  */
 - (void)sendException:(NSException *)exception
-             withTags:(nullable NSArray *)tags
+             withTags:(nullable NSArray<NSString *> *)tags
 NS_SWIFT_NAME(send(exception:tags:));
 
 /*
@@ -119,8 +119,8 @@ NS_SWIFT_NAME(send(exception:tags:));
  * @param customData A dictionary of information to be included only with this report
  */
 - (void)sendException:(NSException *)exception
-             withTags:(nullable NSArray *)tags
-       withCustomData:(nullable NSDictionary *)customData
+             withTags:(nullable NSArray<NSString *> *)tags
+       withCustomData:(nullable NSDictionary<NSString *, id> *)customData
 NS_SWIFT_NAME(send(exception:tags:customData:));
 
 /*
@@ -133,8 +133,8 @@ NS_SWIFT_NAME(send(exception:tags:customData:));
  */
 - (void)sendException:(NSString *)exceptionName
            withReason:(nullable NSString *)reason
-             withTags:(nullable NSArray *)tags
-       withCustomData:(nullable NSDictionary *)customData
+             withTags:(nullable NSArray<NSString *> *)tags
+       withCustomData:(nullable NSDictionary<NSString *, id> *)customData
 NS_SWIFT_NAME(send(exceptionName:reason:tags:customData:));
 
 /*
@@ -145,8 +145,8 @@ NS_SWIFT_NAME(send(exceptionName:reason:tags:customData:));
  * @param customData A dictionary of information to be included only with this report
  */
 - (void)sendError:(NSError *)error
-         withTags:(nullable NSArray *)tags
-   withCustomData:(nullable NSDictionary *)customData
+         withTags:(nullable NSArray<NSString *> *)tags
+   withCustomData:(nullable NSDictionary<NSString *, id> *)customData
 NS_SWIFT_NAME(send(error:tags:customData:));
 
 /*
@@ -176,7 +176,7 @@ NS_SWIFT_NAME(record(breadcrumb:));
 - (void)recordBreadcrumbWithMessage:(NSString *)message
                        withCategory:(nullable NSString *)category
                           withLevel:(enum RaygunBreadcrumbLevel)level
-                     withCustomData:(nullable NSDictionary *)customData
+                     withCustomData:(nullable NSDictionary<NSString *, id> *)customData
 NS_SWIFT_NAME(recordBreadcrumb(message:category:level:customData:));
 
 /*
@@ -199,12 +199,12 @@ NS_SWIFT_NAME(recordBreadcrumb(message:category:level:customData:));
 /*
  * Do not send (ViewLoaded) timing events that match a certain view name.
  */
-- (void)ignoreViews:(NSArray *)viewNames;
+- (void)ignoreViews:(NSArray<NSString *> *)viewNames;
 
 /*
  * Do not send (NetworkCall) timing events that match a certain url name.
  */
-- (void)ignoreURLs:(NSArray *)urls;
+- (void)ignoreURLs:(NSArray<NSString *> *)urls;
 
 /*
  * Manually send a RUM timing event to Raygun.
