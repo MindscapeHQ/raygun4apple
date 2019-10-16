@@ -3134,6 +3134,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.3.7;
 				DEVELOPMENT_TEAM = 7AK2557CXR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3143,6 +3144,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.3.7;
 				DEVELOPMENT_TEAM = 7AK2557CXR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
