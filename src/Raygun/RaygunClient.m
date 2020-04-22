@@ -168,8 +168,13 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
             }
             
             if (response != nil) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-                [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                @try {
+                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                    [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                }
+                @catch (NSException *exception) {
+                    [RaygunLogger logError:@"Failed to read response code from API request"];
+                }
                 
                 // Attempt to send the report only once
                 [self.fileManager removeFileAtPath:report.path];
@@ -270,10 +275,17 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
                 }
             }
             else {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-                [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                NSHTTPURLResponse *httpResponse = nil;
                 
-                if (httpResponse.statusCode == RaygunResponseStatusCodeRateLimited) {
+                @try {
+                    httpResponse = (NSHTTPURLResponse*)response;
+                    [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                }
+                @catch (NSException *exception) {
+                    [RaygunLogger logError:@"Failed to read response code from API request"];
+                }
+                
+                if (httpResponse != nil && httpResponse.statusCode == RaygunResponseStatusCodeRateLimited) {
                     // This application is being rate limited currently so store the message to be sent later.
                     NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
                     if (path) {
