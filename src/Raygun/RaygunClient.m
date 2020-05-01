@@ -334,8 +334,12 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     }
     
     userInfo[@"breadcrumbs"] = userBreadcrumbs;
-
-    (KSCrash.sharedInstance).userInfo = userInfo;
+    
+    @try {
+        (KSCrash.sharedInstance).userInfo = userInfo;
+    } @catch (NSException *exception) {
+        [RaygunLogger logError:@"Failed to update internal data due to error %@: %@", exception.name, exception.reason];
+    }
 }
 
 - (void)sendCrashData:(NSData *)crashData
