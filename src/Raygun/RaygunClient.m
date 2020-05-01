@@ -213,15 +213,21 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
         return;
     }
     
-    [KSCrash.sharedInstance reportUserException:exception.name
-                                         reason:exception.reason
-                                       language:@""
-                                     lineOfCode:nil
-                                     stackTrace:exception.callStackSymbols
-                                  logAllThreads:NO
-                               terminateProgram:NO];
+    @try {
+        [self updateCrashReportUserInformation];
+        [KSCrash.sharedInstance reportUserException:exception.name
+                                             reason:exception.reason
+                                           language:@""
+                                         lineOfCode:nil
+                                         stackTrace:exception.callStackSymbols
+                                      logAllThreads:NO
+                                   terminateProgram:NO];
+    } @catch (NSException *exception) {
+        [RaygunLogger logError:@"Failed to report user exception due to error %@: %@", exception.name, exception.reason];
+    }
     
-    [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
+    [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags
+                                                                                       withCustomData:customData]];
     
     // Send any reports that failed previously.
     [self sendAllStoredCrashReports];
