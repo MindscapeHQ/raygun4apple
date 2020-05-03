@@ -58,7 +58,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
 
+// ============================================================================
 #pragma mark - Getters & Setters -
+// ============================================================================
 
 + (void)setLogLevel:(enum RaygunLoggingLevel)level {
     NSParameterAssert(level);
@@ -111,7 +113,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     return [NSArray arrayWithArray:_mutableBreadcrumbs];
 }
 
+// ============================================================================
 #pragma mark - Initialising Methods -
+// ============================================================================
 
 + (instancetype)sharedInstance {
     return sharedClientInstance;
@@ -138,7 +142,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     return self;
 }
 
+// ============================================================================
 #pragma mark - Crash Reporting -
+// ============================================================================
 
 - (void)enableCrashReporting {
     static dispatch_once_t onceToken;
@@ -207,15 +213,21 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
         return;
     }
     
-    [KSCrash.sharedInstance reportUserException:exception.name
-                                         reason:exception.reason
-                                       language:@""
-                                     lineOfCode:nil
-                                     stackTrace:exception.callStackSymbols
-                                  logAllThreads:NO
-                               terminateProgram:NO];
+    @try {
+        [self updateCrashReportUserInformation];
+        [KSCrash.sharedInstance reportUserException:exception.name
+                                             reason:exception.reason
+                                           language:@""
+                                         lineOfCode:nil
+                                         stackTrace:exception.callStackSymbols
+                                      logAllThreads:NO
+                                   terminateProgram:NO];
+    } @catch (NSException *exception) {
+        [RaygunLogger logError:@"Failed to report user exception due to error %@: %@", exception.name, exception.reason];
+    }
     
-    [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags withCustomData:customData]];
+    [sharedCrashInstallation sendAllReportsWithSink:[[RaygunCrashReportCustomSink alloc] initWithTags:tags
+                                                                                       withCustomData:customData]];
     
     // Send any reports that failed previously.
     [self sendAllStoredCrashReports];
@@ -328,8 +340,12 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     }
     
     userInfo[@"breadcrumbs"] = userBreadcrumbs;
-
-    (KSCrash.sharedInstance).userInfo = userInfo;
+    
+    @try {
+        (KSCrash.sharedInstance).userInfo = userInfo;
+    } @catch (NSException *exception) {
+        [RaygunLogger logError:@"Failed to update internal data due to error %@: %@", exception.name, exception.reason];
+    }
 }
 
 - (void)sendCrashData:(NSData *)crashData
@@ -392,7 +408,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     [self updateCrashReportUserInformation];
 }
 
+// ============================================================================
 #pragma mark - Real User Monitoring -
+// ============================================================================
 
 - (void)enableRealUserMonitoring {
     [[RaygunRealUserMonitoring sharedInstance] enable];
