@@ -161,6 +161,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
         
         // Send any reports that failed previously.
         [self sendAllStoredCrashReports];
+        
+        // Do an initial update to ensure anonymous user info is set.
+        [self updateCrashReportUserInformation];
     });
 }
 
@@ -326,10 +329,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     userInfo[@"tags"] = _tags;
     userInfo[@"customData"] = _customData;
     userInfo[@"applicationVersion"] = _applicationVersion;
-    
-    if (_userInformation != nil) {
-        userInfo[@"userInformation"] = [_userInformation convertToDictionary];
-    }
+    userInfo[@"userInformation"] = [[self userInformation] convertToDictionary];
     
     NSMutableArray<NSDictionary *> *userBreadcrumbs = [NSMutableArray array];
     
