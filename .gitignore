@@ -66,4 +66,4 @@ fastlane/test_output
 iOSInjectionProject/
 
 # Custom
-raygun4apple/
+release/
