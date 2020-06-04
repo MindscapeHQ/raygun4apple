@@ -1,6 +1,6 @@
 # Raygun4Apple
 
-The worlds best iOS, tvOS & macOS Crash Reporting and Real User Monitoring solution
+[Raygun](https://raygun.com/) provider for iOS, tvOS & macOS supporting Crash Reporting and Real User Monitoring.
 
 Supports iOS 10+, tvOS 10+ & macOS 10.10+
 
@@ -8,7 +8,7 @@ Supports iOS 10+, tvOS 10+ & macOS 10.10+
 
 ### With package installer
 
-The latest version can be downloaded [here](https://downloads.raygun.com/Raygun4Apple/latest/raygun4apple.pkg). Once downloaded, run the installer and follow the on-screen instructions. The frameworks will be installed onto your localk machine under  *Library > Frameworks > raygun4apple*.
+The latest version can be downloaded [here](https://downloads.raygun.com/Raygun4Apple/latest/raygun4apple.pkg). Once downloaded, run the installer and follow the on-screen instructions. The frameworks will be installed onto your local machine under  *Library > Frameworks > raygun4apple*.
 
 Once installed, go to your app's target **General** settings and add the raygun4apple framework to the **Frameworks, Libraries, and Embedded Content** section. Ensure that the framework is set to **Embed & Sign**.
 
