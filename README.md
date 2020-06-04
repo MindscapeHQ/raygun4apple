@@ -2,7 +2,7 @@
 
 The worlds best iOS, tvOS & macOS Crash Reporting and Real User Monitoring solution
 
-Supports iOS 10+, tvOS 10+ & macOS 
+Supports iOS 10+, tvOS 10+ & macOS 10.10+
 
 ## Installation
 
