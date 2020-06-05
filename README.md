@@ -22,14 +22,14 @@ Once included, go to your app's target **General** settings and add the raygun4a
 
 In your AppDelegate class file, import the header for your target platform.
 
-```
+```objective-c
 #import <raygun4apple/raygun4apple_iOS.h>
 ```
 
 Initialize the Raygun client by adding the following snippet to your AppDelegate application:didFinishLaunchingWithOptions method:
 
-```
-[RaygunClient sharedInstanceWithApiKey:@"_API_KEY_"];
+```objective-c
+[RaygunClient sharedInstanceWithApiKey:@"_INSERT_API_KEY_"];
 [RaygunClient.sharedInstance enableCrashReporting];
 [RaygunClient.sharedInstance enableRealUserMonitoring];
 [RaygunClient.sharedInstance enableNetworkPerformanceMonitoring]; // Optional
@@ -39,7 +39,7 @@ Initialize the Raygun client by adding the following snippet to your AppDelegate
 
 To ensure that the Raygun client is correctly configured, try sending a test crash report with the following snippet.
 
-```
+```objective-c
 [RaygunClient.sharedInstance sendException:@"Raygun has been successfully integrated!"
                                 withReason:@"A test crash report from Raygun"
                                   withTags:@[@"Test"]
@@ -50,7 +50,7 @@ To ensure that the Raygun client is correctly configured, try sending a test cra
 
 By default, each user will be identified as an anonymous user. However you can set more detailed user information with the following snippet.
 
-```
+```objective-c
 RaygunUserInformation *userInfo = nil;
 userInfo = [[RaygunUserInformation alloc] initWithIdentifier:@"ronald@raygun.com"
                                                    withEmail:@"ronald@raygun.com"
