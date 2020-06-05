@@ -1,0 +1,61 @@
+# Changelog
+
+## 1.3.10
+- Fix for anonymous user information not being included in crash reports
+
+## 1.3.9
+ - Additional guards against internal exceptions being thrown when setting custom data
+
+## 1.3.8
+ - Additional guards against internal exceptions being thrown when logging information
+
+## 1.3.7
+ - Fixed a crash within the internal crash reporter (KSCrash)
+
+## 1.3.6
+ - Updated client API to explicitly state the types accepted. Signed frameworks and included simulator architectures
+
+## 1.3.5
+ - Fresh rebuild without simulator architectures
+
+## 1.3.4
+ - Fresh rebuild to resolve possible code signing issues
+
+## 1.3.3
+ - Fresh rebuild to resolve possible code signing issues
+
+## 1.3.2
+ - Removed code signing from all platforms
+
+## 1.3.1
+ - Updated code signing to use distribution certificates. Lowered deployment targets to iOS 10 and tvOS 10
+
+## 1.3.0
+ - Added macOS support and bug fixes affecting all platforms
+
+## 1.2.1
+ - Minor bug fixes
+
+## 1.2.0
+ - Added Swift support
+
+## 1.1.0
+ - Added breadcrumb support
+
+## 1.0.5
+ - Set the default number of stored reports allowed to 64 reports
+
+## 1.0.4
+ - Store crash reports on the device when offline or when receiving a rate limited (429) status response
+
+## 1.0.3
+ - Bitcode support for iOS & tvOS
+
+## 1.0.2
+ - Minor bug fixes
+
+## 1.0.1
+ - Minor bug fixes
+ 
+## 1.0.0
+ - Initial release with basic functionality
