@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <raygun4apple/raygun4apple_iOS.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,38 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // Set the client logging level
+    RaygunClient.logLevel = RaygunLoggingLevelVerbose;
+    
+    // Instantiate the client
+    RaygunClient *raygunClient = [RaygunClient sharedInstanceWithApiKey:@"nGEXUcvTAUr7Kom9KsBy9w=="];
+    
+    // Configure the client
+    raygunClient.tags = @[@"global_tag"];
+    raygunClient.customData = @{ @"globalMessage" : @"Hello, World!", @"globalMagicNumber" : @1 };
+    
+    // Modify or cancel messages by setting a handler for the beforeSendMessage event.
+    raygunClient.beforeSendMessage = ^BOOL(RaygunMessage * _Nonnull message)
+    {
+        if ([message.details.machineName isEqualToString:@"LOCAL_MACBOOK"]) {
+          return NO; // Cancel sending the report
+        }
+        
+        return YES;
+    };
+    
+    // Enable products
+    [RaygunClient.sharedInstance enableCrashReporting];
+    [RaygunClient.sharedInstance enableRealUserMonitoring];
+    [RaygunClient.sharedInstance enableNetworkPerformanceMonitoring];
+    
+    // Send a test error report to Raygun.
+    [RaygunClient.sharedInstance sendException:@"Raygun has been successfully integrated!"
+                                    withReason:@"A test crash report from Raygun"
+                                      withTags:@[@"Test"]
+                                withCustomData:@{@"TestMessage":@"Hello World!"}];
+    
     return YES;
 }
 
