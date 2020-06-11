@@ -15,7 +15,61 @@
 		A276C8202491D04F009711AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A276C81F2491D04F009711AB /* Assets.xcassets */; };
 		A276C8232491D050009711AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A276C8212491D050009711AB /* LaunchScreen.storyboard */; };
 		A276C8262491D050009711AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A276C8252491D050009711AB /* main.m */; };
+		A276C8422491D843009711AB /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A276C83A2491D7F0009711AB /* raygun4apple.framework */; };
+		A276C8432491D843009711AB /* raygun4apple.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A276C83A2491D7F0009711AB /* raygun4apple.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A276C8392491D7F0009711AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A2660FB820FE914F00C12A69;
+			remoteInfo = "raygun4apple-iOS";
+		};
+		A276C83B2491D7F0009711AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A2660FD520FE931100C12A69;
+			remoteInfo = "raygun4apple-tvOS";
+		};
+		A276C83D2491D7F0009711AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DC5EFA28210E812F002C0713;
+			remoteInfo = "raygun4apple-macOS";
+		};
+		A276C83F2491D7F0009711AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A28910752264358700D66DCB;
+			remoteInfo = "CrashGenerator-iOS";
+		};
+		A276C8452491DFFD009711AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A2660FB720FE914F00C12A69;
+			remoteInfo = "raygun4apple-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A276C8442491D843009711AB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A276C8432491D843009711AB /* raygun4apple.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A276C80D2491D04E009711AB /* iOS-ObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-ObjectiveC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +86,7 @@
 		A276C8222491D050009711AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A276C8242491D050009711AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A276C8252491D050009711AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = raygun4apple.xcodeproj; path = ../../raygun4apple.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A276C8422491D843009711AB /* raygun4apple.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,8 +104,10 @@
 		A276C8042491D04E009711AB = {
 			isa = PBXGroup;
 			children = (
+				A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */,
 				A276C80F2491D04E009711AB /* iOS-ObjectiveC */,
 				A276C80E2491D04E009711AB /* Products */,
+				A276C8412491D843009711AB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +139,24 @@
 			path = "iOS-ObjectiveC";
 			sourceTree = "<group>";
 		};
+		A276C82F2491D7EF009711AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A276C83A2491D7F0009711AB /* raygun4apple.framework */,
+				A276C83C2491D7F0009711AB /* raygun4apple.framework */,
+				A276C83E2491D7F0009711AB /* raygun4apple.framework */,
+				A276C8402491D7F0009711AB /* CrashGenerator.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A276C8412491D843009711AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,10 +167,12 @@
 				A276C8092491D04E009711AB /* Sources */,
 				A276C80A2491D04E009711AB /* Frameworks */,
 				A276C80B2491D04E009711AB /* Resources */,
+				A276C8442491D843009711AB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A276C8462491DFFD009711AB /* PBXTargetDependency */,
 			);
 			name = "iOS-ObjectiveC";
 			productName = "iOS-ObjectiveC";
@@ -126,12 +204,49 @@
 			mainGroup = A276C8042491D04E009711AB;
 			productRefGroup = A276C80E2491D04E009711AB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A276C82F2491D7EF009711AB /* Products */;
+					ProjectRef = A276C82E2491D7EF009711AB /* raygun4apple.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A276C80C2491D04E009711AB /* iOS-ObjectiveC */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A276C83A2491D7F0009711AB /* raygun4apple.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = raygun4apple.framework;
+			remoteRef = A276C8392491D7F0009711AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A276C83C2491D7F0009711AB /* raygun4apple.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = raygun4apple.framework;
+			remoteRef = A276C83B2491D7F0009711AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A276C83E2491D7F0009711AB /* raygun4apple.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = raygun4apple.framework;
+			remoteRef = A276C83D2491D7F0009711AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A276C8402491D7F0009711AB /* CrashGenerator.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CrashGenerator.framework;
+			remoteRef = A276C83F2491D7F0009711AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A276C80B2491D04E009711AB /* Resources */ = {
@@ -160,6 +275,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A276C8462491DFFD009711AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "raygun4apple-iOS";
+			targetProxy = A276C8452491DFFD009711AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A276C81C2491D04E009711AB /* Main.storyboard */ = {
