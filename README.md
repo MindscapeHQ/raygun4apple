@@ -9,17 +9,21 @@ Supports:
 
 ## Installation
 
-### With package installer
-
-The latest version can be downloaded [here](https://downloads.raygun.com/Raygun4Apple/latest/raygun4apple.pkg). Once downloaded, run the installer and follow the on-screen instructions. The frameworks will be installed onto your local machine under  *Library > Frameworks > raygun4apple*.
-
-Once installed, go to your app's target **General** settings and add the raygun4apple framework to the **Frameworks, Libraries, and Embedded Content** section. Ensure that the framework is set to **Embed & Sign**.
-
 ### With GitHub releases
 
 The latest release can be found [here](https://github.com/MindscapeHQ/raygun4apple/releases). The frameworks are attached to each release as a zipped file. This can be downloaded, unzipped and included in you project directory.
 
 Once included, go to your app's target **General** settings and add the raygun4apple framework to the **Frameworks, Libraries, and Embedded Content** section. Ensure that the framework is set to **Embed & Sign**.
+
+### With CocoaPods
+
+To integrate Raygun using CocoaPods, update your Podfile to include:
+
+```bash
+pod 'raygun4apple'`
+```
+
+Once updated you can run `pod install` from Terminal.
 
 ## Configuring the Raygun client
 

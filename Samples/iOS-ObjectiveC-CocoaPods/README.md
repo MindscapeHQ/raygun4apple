@@ -13,5 +13,5 @@ To install the raygun4apple Pod please open Terminal and run the following comma
 
 ```bash
 cd {PROJ_DIR}/Samples/iOS-ObjectiveC-CocoaPods
-pod install --repo-update
+pod install
 ```
