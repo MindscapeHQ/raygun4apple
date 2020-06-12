@@ -145,7 +145,13 @@ static RaygunSessionTaskDelegate* sessionDelegate;
 + (void)swizzleUrlSessionTaskMethods {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wnonnull"
+        // Building invalid task to capture class information
         NSURLSessionDataTask *dataTask = [[NSURLSession sessionWithConfiguration:nil] dataTaskWithURL:nil];
+        #pragma clang diagnostic pop
+        
         Class taskClass = dataTask.superclass;
         
         Method m1 = class_getInstanceMethod(taskClass, @selector(resume));
