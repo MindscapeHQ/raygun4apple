@@ -20,7 +20,7 @@ Once included, go to your app's target **General** settings and add the raygun4a
 To integrate Raygun using CocoaPods, update your Podfile to include:
 
 ```bash
-pod 'raygun4apple'`
+pod 'raygun4apple'
 ```
 
 Once updated you can run `pod install` from Terminal.
