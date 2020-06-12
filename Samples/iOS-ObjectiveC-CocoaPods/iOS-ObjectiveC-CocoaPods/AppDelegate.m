@@ -21,7 +21,7 @@
     RaygunClient.logLevel = RaygunLoggingLevelVerbose;
     
     // Instantiate the client
-    RaygunClient *raygunClient = [RaygunClient sharedInstanceWithApiKey:@"nGEXUcvTAUr7Kom9KsBy9w=="];
+    RaygunClient *raygunClient = [RaygunClient sharedInstanceWithApiKey:@"_INSERT_API_KEY_"];
     
     // Configure the client
     raygunClient.tags = @[@"global_tag", @"CocoaPods"];
