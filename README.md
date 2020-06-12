@@ -2,7 +2,10 @@
 
 [Raygun](https://raygun.com/) provider for iOS, tvOS & macOS supporting Crash Reporting and Real User Monitoring.
 
-Supports iOS 10+, tvOS 10+ & macOS 10.10+
+Supports:
+- iOS 10+
+- tvOS 10+
+- macOS 10.10+
 
 ## Installation
 
