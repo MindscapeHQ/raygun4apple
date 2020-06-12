@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+- CocoaPods support
+- New sample app projects
+
 ## 1.3.10
 - Fix for anonymous user information not being included in crash reports
 

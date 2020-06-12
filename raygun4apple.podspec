@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = 'raygun4apple'
-  s.version      = '1.3.10-beta2'
+  s.version      = '1.4.0'
   s.summary      = 'Raygun client for Apple platforms'
   s.homepage     = 'https://raygun.com'
   s.authors      = { 'Raygun' => 'hello@raygun.com' }
   s.license      = { :type => 'Custom', :file => 'LICENCE.md' }
-  s.source       = { :git => 'https://github.com/MindscapeHQ/raygun4apple.git', :tag => '1.3.10' }
+  s.source       = { :git => 'https://github.com/MindscapeHQ/raygun4apple.git', :tag => s.version.to_s }
   s.source_files = 'Sources/**/*.{h,m,mm,c,cpp}'
   s.ios.source_files    = 'raygun4apple-iOS/*.h'
   s.tvos.source_files   = 'raygun4apple-tvOS/*.h'
