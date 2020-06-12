@@ -24,7 +24,7 @@
     RaygunClient *raygunClient = [RaygunClient sharedInstanceWithApiKey:@"nGEXUcvTAUr7Kom9KsBy9w=="];
     
     // Configure the client
-    raygunClient.tags = @[@"global_tag"];
+    raygunClient.tags = @[@"global_tag", @"CocoaPods"];
     raygunClient.customData = @{ @"globalMessage" : @"Hello, World!", @"globalMagicNumber" : @1 };
     
     // Modify or cancel messages by setting a handler for the beforeSendMessage event.
