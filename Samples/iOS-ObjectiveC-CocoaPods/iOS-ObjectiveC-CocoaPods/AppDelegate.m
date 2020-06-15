@@ -17,13 +17,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Set the client logging level
+    // Set the client logging level.
     RaygunClient.logLevel = RaygunLoggingLevelVerbose;
     
-    // Instantiate the client
+    // Instantiate the client.
     RaygunClient *raygunClient = [RaygunClient sharedInstanceWithApiKey:@"_INSERT_API_KEY_"];
     
-    // Configure the client
+    // Configure the client.
     raygunClient.tags = @[@"global_tag", @"CocoaPods"];
     raygunClient.customData = @{ @"globalMessage" : @"Hello, World!", @"globalMagicNumber" : @1 };
     
@@ -37,10 +37,17 @@
         return YES;
     };
     
-    // Enable products
+    // Enable products.
     [RaygunClient.sharedInstance enableCrashReporting];
     [RaygunClient.sharedInstance enableRealUserMonitoring];
     [RaygunClient.sharedInstance enableNetworkPerformanceMonitoring];
+    
+    // Set some user information.
+    RaygunUserInformation *userInfo = [[RaygunUserInformation alloc] initWithIdentifier:@"ronald@raygun.com"
+                                                                              withEmail:@"ronald@raygun.com"
+                                                                           withFullName:@"Ronald Raygun"
+                                                                          withFirstName:@"Ronald"];
+     RaygunClient.sharedInstance.userInformation = userInfo;
     
     // Send a test error report to Raygun.
     [RaygunClient.sharedInstance sendException:@"Raygun has been successfully integrated!"
