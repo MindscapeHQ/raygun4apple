@@ -2,15 +2,22 @@
 
 [Raygun](https://raygun.com/) provider for iOS, tvOS & macOS supporting Crash Reporting and Real User Monitoring.
 
-Supports iOS 10+, tvOS 10+ & macOS 10.10+
+Supports:
+- iOS 10+
+- tvOS 10+
+- macOS 10.10+
 
 ## Installation
 
-### With package installer
+### With CocoaPods
 
-The latest version can be downloaded [here](https://downloads.raygun.com/Raygun4Apple/latest/raygun4apple.pkg). Once downloaded, run the installer and follow the on-screen instructions. The frameworks will be installed onto your local machine under  *Library > Frameworks > raygun4apple*.
+To integrate Raygun using CocoaPods, update your Podfile to include:
 
-Once installed, go to your app's target **General** settings and add the raygun4apple framework to the **Frameworks, Libraries, and Embedded Content** section. Ensure that the framework is set to **Embed & Sign**.
+```bash
+pod 'raygun4apple'
+```
+
+Once updated you can run `pod install` from Terminal.
 
 ### With GitHub releases
 
@@ -22,14 +29,14 @@ Once included, go to your app's target **General** settings and add the raygun4a
 
 In your AppDelegate class file, import the header for your target platform.
 
-```
+```objective-c
 #import <raygun4apple/raygun4apple_iOS.h>
 ```
 
 Initialize the Raygun client by adding the following snippet to your AppDelegate application:didFinishLaunchingWithOptions method:
 
-```
-[RaygunClient sharedInstanceWithApiKey:@"_API_KEY_"];
+```objective-c
+[RaygunClient sharedInstanceWithApiKey:@"_INSERT_API_KEY_"];
 [RaygunClient.sharedInstance enableCrashReporting];
 [RaygunClient.sharedInstance enableRealUserMonitoring];
 [RaygunClient.sharedInstance enableNetworkPerformanceMonitoring]; // Optional
@@ -39,7 +46,7 @@ Initialize the Raygun client by adding the following snippet to your AppDelegate
 
 To ensure that the Raygun client is correctly configured, try sending a test crash report with the following snippet.
 
-```
+```objective-c
 [RaygunClient.sharedInstance sendException:@"Raygun has been successfully integrated!"
                                 withReason:@"A test crash report from Raygun"
                                   withTags:@[@"Test"]
@@ -50,7 +57,7 @@ To ensure that the Raygun client is correctly configured, try sending a test cra
 
 By default, each user will be identified as an anonymous user. However you can set more detailed user information with the following snippet.
 
-```
+```objective-c
 RaygunUserInformation *userInfo = nil;
 userInfo = [[RaygunUserInformation alloc] initWithIdentifier:@"ronald@raygun.com"
                                                    withEmail:@"ronald@raygun.com"

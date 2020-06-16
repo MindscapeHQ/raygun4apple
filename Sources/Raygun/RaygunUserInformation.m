@@ -38,34 +38,36 @@
 NS_ASSUME_NONNULL_BEGIN
 
 static RaygunUserInformation *sharedAnonymousUser = nil;
+static NSString *sharedUuid = nil;
 
 @implementation RaygunUserInformation
 
 + (RaygunUserInformation *)anonymousUser {
     if (sharedAnonymousUser == nil) {
-        sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation anonymousIdentifier]];
+        sharedAnonymousUser = [[RaygunUserInformation alloc] initWithIdentifier:[RaygunUserInformation UUID]];
         sharedAnonymousUser.isAnonymous = YES;
     }
     return sharedAnonymousUser;
 }
 
-+ (NSString *)anonymousIdentifier {
-    // Check if we have stored one before
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *identifier = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
-    
-    if (!identifier) {
-        identifier = [self generateIdentifier];
-        
-        // Store the identifier
++ (NSString *)UUID {
+    if (sharedUuid == nil) {
+        // Check if we have stored one before
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:identifier forKey:kRaygunIdentifierUserDefaultsKey];
-        [defaults synchronize];
+        sharedUuid = [defaults stringForKey:kRaygunIdentifierUserDefaultsKey];
+        
+        if (!sharedUuid) {
+            sharedUuid = [self generateIdentifier];
+            
+            // Store the identifier
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:sharedUuid forKey:kRaygunIdentifierUserDefaultsKey];
+            [defaults synchronize];
+        }
     }
     
-    return identifier;
+    return sharedUuid;
 }
-
 
 + (NSString *)generateIdentifier {
     NSString *identifier = nil;
@@ -87,7 +89,6 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
     
     return identifier;
 }
-
 
 + (BOOL)validate:(nullable RaygunUserInformation *)userInformation withError:(NSError * __autoreleasing *)error {
     if (userInformation == nil) {
@@ -137,7 +138,7 @@ static RaygunUserInformation *sharedAnonymousUser = nil;
                        withFullName:fullName
                       withFirstName:firstName
                     withIsAnonymous:isAnonymous
-                           withUuid:nil];
+                           withUuid:[RaygunUserInformation UUID]];
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
