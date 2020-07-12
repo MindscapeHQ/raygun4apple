@@ -28,7 +28,7 @@
 #include "KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCPU.h"
-#include "KSCPU_Apple.h"
+#include "Raygun_KSCPU_Apple.h"
 #include "KSStackCursor_MachineContext.h"
 
 #include <mach/mach.h>

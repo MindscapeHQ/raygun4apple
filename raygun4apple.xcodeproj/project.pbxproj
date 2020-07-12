@@ -204,10 +204,10 @@
 		A2E1A221218F92D500BF66DB /* Raygun_KSCrashMonitor_Zombie.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4621003DA90003C8B4 /* Raygun_KSCrashMonitor_Zombie.c */; };
 		A2E1A222218F92D500BF66DB /* Raygun_KSCrashMonitorType.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4921003DA90003C8B4 /* Raygun_KSCrashMonitorType.c */; };
 		A2E1A223218F92D500BF66DB /* Raygun_KSCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */; };
-		A2E1A224218F92D500BF66DB /* KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */; };
-		A2E1A225218F92D500BF66DB /* KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */; };
-		A2E1A226218F92D500BF66DB /* KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */; };
-		A2E1A227218F92D500BF66DB /* KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* KSCPU_x86_64.c */; };
+		A2E1A224218F92D500BF66DB /* Raygun_KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* Raygun_KSCPU_arm.c */; };
+		A2E1A225218F92D500BF66DB /* Raygun_KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* Raygun_KSCPU_arm64.c */; };
+		A2E1A226218F92D500BF66DB /* Raygun_KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* Raygun_KSCPU_x86_32.c */; };
+		A2E1A227218F92D500BF66DB /* Raygun_KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */; };
 		A2E1A228218F92D500BF66DB /* KSDate.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5321003DA90003C8B4 /* KSDate.c */; };
 		A2E1A229218F92D500BF66DB /* KSDebug.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5521003DA90003C8B4 /* KSDebug.c */; };
 		A2E1A22A218F92D500BF66DB /* KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */; };
@@ -354,14 +354,14 @@
 		A2E4AD4521003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */; };
 		A2E4AD4621003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
 		A2E4AD4721003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
-		A2E4AD4821003DAA0003C8B4 /* KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */; };
-		A2E4AD4921003DAA0003C8B4 /* KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */; };
-		A2E4AD4A21003DAA0003C8B4 /* KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */; };
-		A2E4AD4B21003DAA0003C8B4 /* KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */; };
-		A2E4AD4C21003DAA0003C8B4 /* KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */; };
-		A2E4AD4D21003DAA0003C8B4 /* KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */; };
-		A2E4AD4E21003DAA0003C8B4 /* KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* KSCPU_x86_64.c */; };
-		A2E4AD4F21003DAA0003C8B4 /* KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* KSCPU_x86_64.c */; };
+		A2E4AD4821003DAA0003C8B4 /* Raygun_KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* Raygun_KSCPU_arm.c */; };
+		A2E4AD4921003DAA0003C8B4 /* Raygun_KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* Raygun_KSCPU_arm.c */; };
+		A2E4AD4A21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* Raygun_KSCPU_arm64.c */; };
+		A2E4AD4B21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* Raygun_KSCPU_arm64.c */; };
+		A2E4AD4C21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* Raygun_KSCPU_x86_32.c */; };
+		A2E4AD4D21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5121003DA90003C8B4 /* Raygun_KSCPU_x86_32.c */; };
+		A2E4AD4E21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */; };
+		A2E4AD4F21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */; };
 		A2E4AD5021003DAA0003C8B4 /* KSDate.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5321003DA90003C8B4 /* KSDate.c */; };
 		A2E4AD5121003DAA0003C8B4 /* KSDate.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5321003DA90003C8B4 /* KSDate.c */; };
 		A2E4AD5221003DAA0003C8B4 /* KSDate.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5421003DA90003C8B4 /* KSDate.h */; };
@@ -717,10 +717,10 @@
 		A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU.c; sourceTree = "<group>"; };
 		A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCPU.h; sourceTree = "<group>"; };
 		A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCPU_Apple.h; sourceTree = "<group>"; };
-		A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_arm.c; sourceTree = "<group>"; };
-		A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_arm64.c; sourceTree = "<group>"; };
-		A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_x86_32.c; sourceTree = "<group>"; };
-		A2E4AC5221003DA90003C8B4 /* KSCPU_x86_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_x86_64.c; sourceTree = "<group>"; };
+		A2E4AC4F21003DA90003C8B4 /* Raygun_KSCPU_arm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU_arm.c; sourceTree = "<group>"; };
+		A2E4AC5021003DA90003C8B4 /* Raygun_KSCPU_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU_arm64.c; sourceTree = "<group>"; };
+		A2E4AC5121003DA90003C8B4 /* Raygun_KSCPU_x86_32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU_x86_32.c; sourceTree = "<group>"; };
+		A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU_x86_64.c; sourceTree = "<group>"; };
 		A2E4AC5321003DA90003C8B4 /* KSDate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSDate.c; sourceTree = "<group>"; };
 		A2E4AC5421003DA90003C8B4 /* KSDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDate.h; sourceTree = "<group>"; };
 		A2E4AC5521003DA90003C8B4 /* KSDebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSDebug.c; sourceTree = "<group>"; };
@@ -1070,10 +1070,10 @@
 				A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */,
 				A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */,
 				A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */,
-				A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */,
-				A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */,
-				A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */,
-				A2E4AC5221003DA90003C8B4 /* KSCPU_x86_64.c */,
+				A2E4AC4F21003DA90003C8B4 /* Raygun_KSCPU_arm.c */,
+				A2E4AC5021003DA90003C8B4 /* Raygun_KSCPU_arm64.c */,
+				A2E4AC5121003DA90003C8B4 /* Raygun_KSCPU_x86_32.c */,
+				A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */,
 				A2E4AC5321003DA90003C8B4 /* KSDate.c */,
 				A2E4AC5421003DA90003C8B4 /* KSDate.h */,
 				A2E4AC5521003DA90003C8B4 /* KSDebug.c */,
@@ -1867,7 +1867,7 @@
 				A2E4AD0A21003DAA0003C8B4 /* Raygun_KSCrashReportStore.c in Sources */,
 				A2E4ADAC21003DAA0003C8B4 /* KSThread.c in Sources */,
 				A2E4AD7821003DAA0003C8B4 /* KSMach.c in Sources */,
-				A2E4AD4A21003DAA0003C8B4 /* KSCPU_arm64.c in Sources */,
+				A2E4AD4A21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */,
 				A2E4AD1421003DAA0003C8B4 /* Raygun_KSCrashMonitor.c in Sources */,
 				DC5EFA98210FFA7A002C0713 /* RaygunNetworkPerformanceMonitor.m in Sources */,
 				DC5EFAF92113C29B002C0713 /* RaygunBinaryImage.m in Sources */,
@@ -1884,12 +1884,12 @@
 				A2E4ACF421003DAA0003C8B4 /* Raygun_KSCrashC.c in Sources */,
 				DC5EFA74210FFA7A002C0713 /* RaygunErrorMessage.m in Sources */,
 				A2E4ADDA21003DAA0003C8B4 /* NSData+GZip.m in Sources */,
-				A2E4AD4821003DAA0003C8B4 /* KSCPU_arm.c in Sources */,
+				A2E4AD4821003DAA0003C8B4 /* Raygun_KSCPU_arm.c in Sources */,
 				A2E4AD6421003DAA0003C8B4 /* KSFileUtils.c in Sources */,
 				A2E4AD8221003DAA0003C8B4 /* KSMemory.c in Sources */,
 				A2E4AD1C21003DAA0003C8B4 /* Raygun_KSCrashMonitor_CPPException.cpp in Sources */,
 				A2E4AD8621003DAA0003C8B4 /* KSObjC.c in Sources */,
-				A2E4AD4C21003DAA0003C8B4 /* KSCPU_x86_32.c in Sources */,
+				A2E4AD4C21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */,
 				A29D673D216D677100BAC934 /* RaygunBreadcrumb.m in Sources */,
 				A2E4AD9821003DAA0003C8B4 /* KSStackCursor_MachineContext.c in Sources */,
 				A2E4AE0821003DAA0003C8B4 /* Demangle.cpp in Sources */,
@@ -1909,7 +1909,7 @@
 				A2E4AD5421003DAA0003C8B4 /* KSDebug.c in Sources */,
 				A2E4AD3821003DAA0003C8B4 /* Raygun_KSCrashMonitor_Zombie.c in Sources */,
 				A2A6D2AB2136603200AFC48E /* RaygunEventMessage.m in Sources */,
-				A2E4AD4E21003DAA0003C8B4 /* KSCPU_x86_64.c in Sources */,
+				A2E4AD4E21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E4AD9021003DAA0003C8B4 /* KSStackCursor.c in Sources */,
 				A29D6745216DA80000BAC934 /* RaygunUtils.m in Sources */,
 				A2E4AD6C21003DAA0003C8B4 /* KSJSONCodec.c in Sources */,
@@ -1953,7 +1953,7 @@
 				A2E4AD0B21003DAA0003C8B4 /* Raygun_KSCrashReportStore.c in Sources */,
 				A2E4ADAD21003DAA0003C8B4 /* KSThread.c in Sources */,
 				A2E4AD7921003DAA0003C8B4 /* KSMach.c in Sources */,
-				A2E4AD4B21003DAA0003C8B4 /* KSCPU_arm64.c in Sources */,
+				A2E4AD4B21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */,
 				A2E4AD1521003DAA0003C8B4 /* Raygun_KSCrashMonitor.c in Sources */,
 				DC5EFAFA2113C29B002C0713 /* RaygunBinaryImage.m in Sources */,
 				A2E4ADD521003DAA0003C8B4 /* Container+DeepSearch.m in Sources */,
@@ -1969,14 +1969,14 @@
 				A2E4ACF521003DAA0003C8B4 /* Raygun_KSCrashC.c in Sources */,
 				DC5EFA75210FFA7A002C0713 /* RaygunErrorMessage.m in Sources */,
 				A2E4ADDB21003DAA0003C8B4 /* NSData+GZip.m in Sources */,
-				A2E4AD4921003DAA0003C8B4 /* KSCPU_arm.c in Sources */,
+				A2E4AD4921003DAA0003C8B4 /* Raygun_KSCPU_arm.c in Sources */,
 				A2E4AD6521003DAA0003C8B4 /* KSFileUtils.c in Sources */,
 				DCD5C2062117E8C2002623B7 /* RaygunNetworkPerformanceMonitor.m in Sources */,
 				A2E4AD8321003DAA0003C8B4 /* KSMemory.c in Sources */,
 				A2E4AD1D21003DAA0003C8B4 /* Raygun_KSCrashMonitor_CPPException.cpp in Sources */,
 				A2E4AD8721003DAA0003C8B4 /* KSObjC.c in Sources */,
 				A29D673E216D677100BAC934 /* RaygunBreadcrumb.m in Sources */,
-				A2E4AD4D21003DAA0003C8B4 /* KSCPU_x86_32.c in Sources */,
+				A2E4AD4D21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */,
 				A2E4AD9921003DAA0003C8B4 /* KSStackCursor_MachineContext.c in Sources */,
 				A2E4AE0921003DAA0003C8B4 /* Demangle.cpp in Sources */,
 				A2132B3421373FF90030A3C5 /* RaygunEventData.m in Sources */,
@@ -1994,7 +1994,7 @@
 				A2E4AD5521003DAA0003C8B4 /* KSDebug.c in Sources */,
 				A2E4AD3921003DAA0003C8B4 /* Raygun_KSCrashMonitor_Zombie.c in Sources */,
 				A2A6D2AC2136603200AFC48E /* RaygunEventMessage.m in Sources */,
-				A2E4AD4F21003DAA0003C8B4 /* KSCPU_x86_64.c in Sources */,
+				A2E4AD4F21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E4AD9121003DAA0003C8B4 /* KSStackCursor.c in Sources */,
 				A29D6746216DA80000BAC934 /* RaygunUtils.m in Sources */,
 				A2E4AD6D21003DAA0003C8B4 /* KSJSONCodec.c in Sources */,
@@ -2034,10 +2034,10 @@
 				A2E1A221218F92D500BF66DB /* Raygun_KSCrashMonitor_Zombie.c in Sources */,
 				A2E1A222218F92D500BF66DB /* Raygun_KSCrashMonitorType.c in Sources */,
 				A2E1A223218F92D500BF66DB /* Raygun_KSCPU.c in Sources */,
-				A2E1A224218F92D500BF66DB /* KSCPU_arm.c in Sources */,
-				A2E1A225218F92D500BF66DB /* KSCPU_arm64.c in Sources */,
-				A2E1A226218F92D500BF66DB /* KSCPU_x86_32.c in Sources */,
-				A2E1A227218F92D500BF66DB /* KSCPU_x86_64.c in Sources */,
+				A2E1A224218F92D500BF66DB /* Raygun_KSCPU_arm.c in Sources */,
+				A2E1A225218F92D500BF66DB /* Raygun_KSCPU_arm64.c in Sources */,
+				A2E1A226218F92D500BF66DB /* Raygun_KSCPU_x86_32.c in Sources */,
+				A2E1A227218F92D500BF66DB /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E1A228218F92D500BF66DB /* KSDate.c in Sources */,
 				A2E1A229218F92D500BF66DB /* KSDebug.c in Sources */,
 				A2E1A22A218F92D500BF66DB /* KSDemangle_CPP.cpp in Sources */,

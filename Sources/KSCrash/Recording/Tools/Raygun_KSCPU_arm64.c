@@ -1,7 +1,7 @@
 //
-//  KSCPU_x86_64.c
+//  KSCPU_arm64_Apple.c
 //
-//  Created by Karl Stenerud on 2012-01-29.
+//  Created by Karl Stenerud on 2013-09-29.
 //
 //  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
@@ -24,15 +24,13 @@
 // THE SOFTWARE.
 //
 
-
-#if defined (__x86_64__)
+#if defined (__arm64__)
 
 
 #include "Raygun_KSCPU.h"
-#include "KSCPU_Apple.h"
+#include "Raygun_KSCPU_Apple.h"
 #include "KSMachineContext.h"
 #include "KSMachineContext_Apple.h"
-
 #include <stdlib.h>
 
 //#define KSLogger_LocalLevel TRACE
@@ -41,12 +39,11 @@
 
 static const char* g_registerNames[] =
 {
-    "rax", "rbx", "rcx", "rdx",
-    "rdi", "rsi",
-    "rbp", "rsp",
-    "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-    "rip", "rflags",
-    "cs", "fs", "gs"
+     "x0",  "x1",  "x2",  "x3",  "x4",  "x5",  "x6",  "x7",
+     "x8",  "x9", "x10", "x11", "x12", "x13", "x14", "x15",
+    "x16", "x17", "x18", "x19", "x20", "x21", "x22", "x23",
+    "x24", "x25", "x26", "x27", "x28", "x29",
+    "fp", "lr", "sp", "pc", "cpsr"
 };
 static const int g_registerNamesCount =
 sizeof(g_registerNames) / sizeof(*g_registerNames);
@@ -54,7 +51,7 @@ sizeof(g_registerNames) / sizeof(*g_registerNames);
 
 static const char* g_exceptionRegisterNames[] =
 {
-    "trapno", "err", "faultvaddr"
+    "exception", "esr", "far"
 };
 static const int g_exceptionRegisterNamesCount =
 sizeof(g_exceptionRegisterNames) / sizeof(*g_exceptionRegisterNames);
@@ -62,22 +59,22 @@ sizeof(g_exceptionRegisterNames) / sizeof(*g_exceptionRegisterNames);
 
 uintptr_t raygun_kscpu_framePointer(const KSMachineContext* const context)
 {
-    return context->machineContext.__ss.__rbp;
+    return context->machineContext.__ss.__fp;
 }
 
 uintptr_t raygun_kscpu_stackPointer(const KSMachineContext* const context)
 {
-    return context->machineContext.__ss.__rsp;
+    return context->machineContext.__ss.__sp;
 }
 
 uintptr_t raygun_kscpu_instructionAddress(const KSMachineContext* const context)
 {
-    return context->machineContext.__ss.__rip;
+    return context->machineContext.__ss.__pc;
 }
 
-uintptr_t raygun_kscpu_linkRegister(__unused const KSMachineContext* const context)
+uintptr_t raygun_kscpu_linkRegister(const KSMachineContext* const context)
 {
-    return 0;
+    return context->machineContext.__ss.__lr;
 }
 
 void raygun_kscpu_getState(KSMachineContext* context)
@@ -85,8 +82,8 @@ void raygun_kscpu_getState(KSMachineContext* context)
     thread_t thread = context->thisThread;
     STRUCT_MCONTEXT_L* const machineContext = &context->machineContext;
     
-    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__ss, x86_THREAD_STATE64, x86_THREAD_STATE64_COUNT);
-    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__es, x86_EXCEPTION_STATE64, x86_EXCEPTION_STATE64_COUNT);
+    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__ss, ARM_THREAD_STATE64, ARM_THREAD_STATE64_COUNT);
+    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__es, ARM_EXCEPTION_STATE64, ARM_EXCEPTION_STATE64_COUNT);
 }
 
 int raygun_kscpu_numRegisters(void)
@@ -105,50 +102,18 @@ const char* raygun_kscpu_registerName(const int regNumber)
 
 uint64_t raygun_kscpu_registerValue(const KSMachineContext* const context, const int regNumber)
 {
+    if(regNumber <= 29)
+    {
+        return context->machineContext.__ss.__x[regNumber];
+    }
+
     switch(regNumber)
     {
-        case 0:
-            return context->machineContext.__ss.__rax;
-        case 1:
-            return context->machineContext.__ss.__rbx;
-        case 2:
-            return context->machineContext.__ss.__rcx;
-        case 3:
-            return context->machineContext.__ss.__rdx;
-        case 4:
-            return context->machineContext.__ss.__rdi;
-        case 5:
-            return context->machineContext.__ss.__rsi;
-        case 6:
-            return context->machineContext.__ss.__rbp;
-        case 7:
-            return context->machineContext.__ss.__rsp;
-        case 8:
-            return context->machineContext.__ss.__r8;
-        case 9:
-            return context->machineContext.__ss.__r9;
-        case 10:
-            return context->machineContext.__ss.__r10;
-        case 11:
-            return context->machineContext.__ss.__r11;
-        case 12:
-            return context->machineContext.__ss.__r12;
-        case 13:
-            return context->machineContext.__ss.__r13;
-        case 14:
-            return context->machineContext.__ss.__r14;
-        case 15:
-            return context->machineContext.__ss.__r15;
-        case 16:
-            return context->machineContext.__ss.__rip;
-        case 17:
-            return context->machineContext.__ss.__rflags;
-        case 18:
-            return context->machineContext.__ss.__cs;
-        case 19:
-            return context->machineContext.__ss.__fs;
-        case 20:
-            return context->machineContext.__ss.__gs;
+        case 30: return context->machineContext.__ss.__fp;
+        case 31: return context->machineContext.__ss.__lr;
+        case 32: return context->machineContext.__ss.__sp;
+        case 33: return context->machineContext.__ss.__pc;
+        case 34: return context->machineContext.__ss.__cpsr;
     }
 
     KSLOG_ERROR("Invalid register number: %d", regNumber);
@@ -175,11 +140,11 @@ uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const conte
     switch(regNumber)
     {
         case 0:
-            return context->machineContext.__es.__trapno;
+            return context->machineContext.__es.__exception;
         case 1:
-            return context->machineContext.__es.__err;
+            return context->machineContext.__es.__esr;
         case 2:
-            return context->machineContext.__es.__faultvaddr;
+            return context->machineContext.__es.__far;
     }
 
     KSLOG_ERROR("Invalid register number: %d", regNumber);
@@ -188,12 +153,13 @@ uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const conte
 
 uintptr_t raygun_kscpu_faultAddress(const KSMachineContext* const context)
 {
-    return context->machineContext.__es.__faultvaddr;
+    return context->machineContext.__es.__far;
 }
 
 int raygun_kscpu_stackGrowDirection(void)
 {
     return -1;
 }
+
 
 #endif
