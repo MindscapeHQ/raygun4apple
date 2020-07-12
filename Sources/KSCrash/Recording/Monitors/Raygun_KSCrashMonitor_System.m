@@ -29,7 +29,7 @@
 
 #import "Raygun_KSCPU.h"
 #import "Raygun_KSCrashMonitorContext.h"
-#import "KSDate.h"
+#import "Raygun_KSDate.h"
 #import "KSDynamicLinker.h"
 #import "KSSysCtl.h"
 #import "Raygun_KSSystemCapabilities.h"
@@ -140,7 +140,7 @@ static const char* stringSysctl(const char* name)
 static const char* dateString(time_t date)
 {
     char* buffer = malloc(21);
-    ksdate_utcStringFromTimestamp(date, buffer);
+    raygun_ksdate_utcStringFromTimestamp(date, buffer);
     return buffer;
 }
 

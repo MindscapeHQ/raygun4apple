@@ -31,7 +31,7 @@
 #if RAYGUN_KSCRASH_HAS_SWIFT
 #include "KSDemangle_Swift.h"
 #endif
-#include "KSDate.h"
+#include "Raygun_KSDate.h"
 #include "KSLogger.h"
 
 #include <stdlib.h>
@@ -161,7 +161,7 @@ static int onIntegerElement(const char* const name,
     if(shouldFixDate(context, name))
     {
         char buffer[21];
-        ksdate_utcStringFromTimestamp((time_t)value, buffer);
+        raygun_ksdate_utcStringFromTimestamp((time_t)value, buffer);
 
         result = ksjson_addStringElement(context->encodeContext, name, buffer, (int)strlen(buffer));
     }
