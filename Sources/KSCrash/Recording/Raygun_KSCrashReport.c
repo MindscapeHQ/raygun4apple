@@ -40,7 +40,7 @@
 #include "KSSignalInfo.h"
 #include "KSCrashMonitor_Zombie.h"
 #include "KSString.h"
-#include "KSCrashReportVersion.h"
+#include "Raygun_KSCrashReportVersion.h"
 #include "KSStackCursor_Backtrace.h"
 #include "KSStackCursor_MachineContext.h"
 #include "KSSystemCapabilities.h"
@@ -1530,7 +1530,7 @@ static void writeReportInfo(const KSCrashReportWriter* const writer,
 {
     writer->beginObject(writer, key);
     {
-        writer->addStringElement(writer, Raygun_KSCrashField_Version, KSCRASH_REPORT_VERSION);
+        writer->addStringElement(writer, Raygun_KSCrashField_Version, RAYGUN_KSCRASH_REPORT_VERSION);
         writer->addStringElement(writer, Raygun_KSCrashField_ID, reportID);
         writer->addStringElement(writer, Raygun_KSCrashField_ProcessName, processName);
         writer->addIntegerElement(writer, Raygun_KSCrashField_Timestamp, time(NULL));
