@@ -29,7 +29,7 @@
 
 #import "Raygun_KSCrashReportWriter.h"
 #import "KSCrashReportFilter.h"
-#import "KSCrashMonitorType.h"
+#import "Raygun_KSCrashMonitorType.h"
 
 typedef enum
 {
@@ -83,7 +83,7 @@ typedef enum
  *
  * Default: KSCrashMonitorTypeProductionSafeMinimal
  */
-@property(nonatomic,readwrite,assign) KSCrashMonitorType monitoring;
+@property(nonatomic,readwrite,assign) Raygun_KSCrashMonitorType monitoring;
 
 /** Maximum time to allow the main thread to run without returning.
  * If a task occupies the main thread for longer than this interval, the

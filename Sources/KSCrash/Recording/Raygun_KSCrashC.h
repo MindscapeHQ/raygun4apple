@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 
-#include "KSCrashMonitorType.h"
+#include "Raygun_KSCrashMonitorType.h"
 #include "Raygun_KSCrashReportWriter.h"
 
 #include <stdbool.h>
@@ -50,7 +50,7 @@ extern "C" {
  *
  * @return The crash types that are being handled.
  */
-KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath);
+Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath);
 
 /** Set the crash types that will be handled.
  * Some crash types may not be enabled depending on circumstances (e.g. running
@@ -63,7 +63,7 @@ KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const
  *         successfully installed. Otherwise it represents which monitors it
  *         will attempt to activate when KSCrash installs.
  */
-KSCrashMonitorType raygun_kscrash_setMonitoring(KSCrashMonitorType monitors);
+Raygun_KSCrashMonitorType raygun_kscrash_setMonitoring(Raygun_KSCrashMonitorType monitors);
 
 /** Set the user-supplied data in JSON format.
  *

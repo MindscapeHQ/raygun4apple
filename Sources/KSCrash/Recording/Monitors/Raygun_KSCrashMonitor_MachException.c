@@ -344,7 +344,7 @@ static void* handleExceptions(void* const userData)
         }
 
         KSLOG_DEBUG("Filling out context.");
-        crashContext->crashType = KSCrashMonitorTypeMachException;
+        crashContext->crashType = Raygun_KSCrashMonitorTypeMachException;
         crashContext->eventID = eventID;
         crashContext->registersAreValid = true;
         crashContext->mach.type = exceptionMessage.exception;
@@ -572,11 +572,11 @@ static bool isEnabled()
 
 static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* eventContext)
 {
-    if(eventContext->crashType == KSCrashMonitorTypeSignal)
+    if(eventContext->crashType == Raygun_KSCrashMonitorTypeSignal)
     {
         eventContext->mach.type = machExceptionForSignal(eventContext->signal.signum);
     }
-    else if(eventContext->crashType != KSCrashMonitorTypeMachException)
+    else if(eventContext->crashType != Raygun_KSCrashMonitorTypeMachException)
     {
         eventContext->mach.type = EXC_CRASH;
     }

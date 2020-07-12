@@ -120,7 +120,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     KSLOG_DEBUG(@"Filling out context.");
     Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
     memset(crashContext, 0, sizeof(*crashContext));
-    crashContext->crashType = KSCrashMonitorTypeMainThreadDeadlock;
+    crashContext->crashType = Raygun_KSCrashMonitorTypeMainThreadDeadlock;
     crashContext->eventID = eventID;
     crashContext->registersAreValid = false;
     crashContext->offendingMachineContext = machineContext;

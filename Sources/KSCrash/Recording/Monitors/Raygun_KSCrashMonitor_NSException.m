@@ -83,7 +83,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
-        crashContext->crashType = KSCrashMonitorTypeNSException;
+        crashContext->crashType = Raygun_KSCrashMonitorTypeNSException;
         crashContext->eventID = eventID;
         crashContext->offendingMachineContext = machineContext;
         crashContext->registersAreValid = false;

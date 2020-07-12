@@ -158,7 +158,7 @@ catch(TYPE value)\
         ksmc_getContextForThread(ksthread_self(), machineContext, true);
 
         KSLOG_DEBUG("Filling out context.");
-        crashContext->crashType = KSCrashMonitorTypeCPPException;
+        crashContext->crashType = Raygun_KSCrashMonitorTypeCPPException;
         crashContext->eventID = g_eventID;
         crashContext->registersAreValid = false;
         crashContext->stackCursor = &g_stackCursor;

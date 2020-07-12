@@ -94,7 +94,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
-        crashContext->crashType = KSCrashMonitorTypeSignal;
+        crashContext->crashType = Raygun_KSCrashMonitorTypeSignal;
         crashContext->eventID = g_eventID;
         crashContext->offendingMachineContext = machineContext;
         crashContext->registersAreValid = true;
@@ -232,7 +232,7 @@ static bool isEnabled()
 
 static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* eventContext)
 {
-    if(!(eventContext->crashType & (KSCrashMonitorTypeSignal | KSCrashMonitorTypeMachException)))
+    if(!(eventContext->crashType & (Raygun_KSCrashMonitorTypeSignal | Raygun_KSCrashMonitorTypeMachException)))
     {
         eventContext->signal.signum = SIGABRT;
     }

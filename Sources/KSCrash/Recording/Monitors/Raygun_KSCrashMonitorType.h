@@ -42,98 +42,98 @@ extern "C" {
 typedef enum
 {
     /* Captures and reports Mach exceptions. */
-    KSCrashMonitorTypeMachException      = 0x01,
+    Raygun_KSCrashMonitorTypeMachException      = 0x01,
     
     /* Captures and reports POSIX signals. */
-    KSCrashMonitorTypeSignal             = 0x02,
+    Raygun_KSCrashMonitorTypeSignal             = 0x02,
     
     /* Captures and reports C++ exceptions.
      * Note: This will slightly slow down exception processing.
      */
-    KSCrashMonitorTypeCPPException       = 0x04,
+    Raygun_KSCrashMonitorTypeCPPException       = 0x04,
     
     /* Captures and reports NSExceptions. */
-    KSCrashMonitorTypeNSException        = 0x08,
+    Raygun_KSCrashMonitorTypeNSException        = 0x08,
     
     /* Detects and reports a deadlock in the main thread. */
-    KSCrashMonitorTypeMainThreadDeadlock = 0x10,
+    Raygun_KSCrashMonitorTypeMainThreadDeadlock = 0x10,
     
     /* Accepts and reports user-generated exceptions. */
-    KSCrashMonitorTypeUserReported       = 0x20,
+    Raygun_KSCrashMonitorTypeUserReported       = 0x20,
     
     /* Keeps track of and injects system information. */
-    KSCrashMonitorTypeSystem             = 0x40,
+    Raygun_KSCrashMonitorTypeSystem             = 0x40,
     
     /* Keeps track of and injects application state. */
-    KSCrashMonitorTypeApplicationState   = 0x80,
+    Raygun_KSCrashMonitorTypeApplicationState   = 0x80,
     
     /* Keeps track of zombies, and injects the last zombie NSException. */
-    KSCrashMonitorTypeZombie             = 0x100,
-} KSCrashMonitorType;
+    Raygun_KSCrashMonitorTypeZombie             = 0x100,
+} Raygun_KSCrashMonitorType;
 
-#define KSCrashMonitorTypeAll              \
+#define Raygun_KSCrashMonitorTypeAll              \
 (                                          \
-    KSCrashMonitorTypeMachException      | \
-    KSCrashMonitorTypeSignal             | \
-    KSCrashMonitorTypeCPPException       | \
-    KSCrashMonitorTypeNSException        | \
-    KSCrashMonitorTypeMainThreadDeadlock | \
-    KSCrashMonitorTypeUserReported       | \
-    KSCrashMonitorTypeSystem             | \
-    KSCrashMonitorTypeApplicationState   | \
-    KSCrashMonitorTypeZombie               \
+    Raygun_KSCrashMonitorTypeMachException      | \
+    Raygun_KSCrashMonitorTypeSignal             | \
+    Raygun_KSCrashMonitorTypeCPPException       | \
+    Raygun_KSCrashMonitorTypeNSException        | \
+    Raygun_KSCrashMonitorTypeMainThreadDeadlock | \
+    Raygun_KSCrashMonitorTypeUserReported       | \
+    Raygun_KSCrashMonitorTypeSystem             | \
+    Raygun_KSCrashMonitorTypeApplicationState   | \
+    Raygun_KSCrashMonitorTypeZombie               \
 )
 
-#define KSCrashMonitorTypeExperimental     \
+#define Raygun_KSCrashMonitorTypeExperimental     \
 (                                          \
-    KSCrashMonitorTypeMainThreadDeadlock   \
+    Raygun_KSCrashMonitorTypeMainThreadDeadlock   \
 )
 
-#define KSCrashMonitorTypeDebuggerUnsafe   \
+#define Raygun_KSCrashMonitorTypeDebuggerUnsafe   \
 (                                          \
-    KSCrashMonitorTypeMachException      | \
-    KSCrashMonitorTypeSignal             | \
-    KSCrashMonitorTypeCPPException       | \
-    KSCrashMonitorTypeNSException          \
+    Raygun_KSCrashMonitorTypeMachException      | \
+    Raygun_KSCrashMonitorTypeSignal             | \
+    Raygun_KSCrashMonitorTypeCPPException       | \
+    Raygun_KSCrashMonitorTypeNSException          \
 )
 
-#define KSCrashMonitorTypeAsyncSafe        \
+#define Raygun_KSCrashMonitorTypeAsyncSafe        \
 (                                          \
-    KSCrashMonitorTypeMachException      | \
-    KSCrashMonitorTypeSignal               \
+    Raygun_KSCrashMonitorTypeMachException      | \
+    Raygun_KSCrashMonitorTypeSignal               \
 )
 
-#define KSCrashMonitorTypeOptional         \
+#define Raygun_KSCrashMonitorTypeOptional         \
 (                                          \
-    KSCrashMonitorTypeZombie               \
+    Raygun_KSCrashMonitorTypeZombie               \
 )
     
-#define KSCrashMonitorTypeAsyncUnsafe (KSCrashMonitorTypeAll & (~KSCrashMonitorTypeAsyncSafe))
+#define Raygun_KSCrashMonitorTypeAsyncUnsafe (Raygun_KSCrashMonitorTypeAll & (~Raygun_KSCrashMonitorTypeAsyncSafe))
 
 /** Monitors that are safe to enable in a debugger. */
-#define KSCrashMonitorTypeDebuggerSafe (KSCrashMonitorTypeAll & (~KSCrashMonitorTypeDebuggerUnsafe))
+#define Raygun_KSCrashMonitorTypeDebuggerSafe (Raygun_KSCrashMonitorTypeAll & (~Raygun_KSCrashMonitorTypeDebuggerUnsafe))
 
 /** Monitors that are safe to use in a production environment.
  * All other monitors should be considered experimental.
  */
-#define KSCrashMonitorTypeProductionSafe (KSCrashMonitorTypeAll & (~KSCrashMonitorTypeExperimental))
+#define Raygun_KSCrashMonitorTypeProductionSafe (Raygun_KSCrashMonitorTypeAll & (~Raygun_KSCrashMonitorTypeExperimental))
 
 /** Production safe monitors, minus the optional ones. */
-#define KSCrashMonitorTypeProductionSafeMinimal (KSCrashMonitorTypeProductionSafe & (~KSCrashMonitorTypeOptional))
+#define Raygun_KSCrashMonitorTypeProductionSafeMinimal (Raygun_KSCrashMonitorTypeProductionSafe & (~Raygun_KSCrashMonitorTypeOptional))
 
 /** Monitors that are required for proper operation.
  * These add essential information to the reports, but do not trigger reporting.
  */
-#define KSCrashMonitorTypeRequired (KSCrashMonitorTypeSystem | KSCrashMonitorTypeApplicationState)
+#define Raygun_KSCrashMonitorTypeRequired (Raygun_KSCrashMonitorTypeSystem | Raygun_KSCrashMonitorTypeApplicationState)
 
 /** Effectively disables automatica reporting. The only way to generate a report
  * in this mode is by manually calling kscrash_reportUserException().
  */
-#define KSCrashMonitorTypeManual (KSCrashMonitorTypeRequired | KSCrashMonitorTypeUserReported)
+#define Raygun_KSCrashMonitorTypeManual (Raygun_KSCrashMonitorTypeRequired | Raygun_KSCrashMonitorTypeUserReported)
 
-#define KSCrashMonitorTypeNone 0
+#define Raygun_KSCrashMonitorTypeNone 0
 
-const char* kscrashmonitortype_name(KSCrashMonitorType monitorType);
+const char* raygun_kscrashmonitortype_name(Raygun_KSCrashMonitorType monitorType);
 
 
 #ifdef __cplusplus

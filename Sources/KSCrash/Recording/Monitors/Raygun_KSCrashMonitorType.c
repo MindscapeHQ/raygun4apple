@@ -23,32 +23,32 @@
 //
 
 
-#include "KSCrashMonitorType.h"
+#include "Raygun_KSCrashMonitorType.h"
 
 #include <stdlib.h>
 
 
 static const struct
 {
-    const KSCrashMonitorType type;
+    const Raygun_KSCrashMonitorType type;
     const char* const name;
 } g_monitorTypes[] =
 {
 #define MONITORTYPE(NAME) {NAME, #NAME}
-    MONITORTYPE(KSCrashMonitorTypeMachException),
-    MONITORTYPE(KSCrashMonitorTypeSignal),
-    MONITORTYPE(KSCrashMonitorTypeCPPException),
-    MONITORTYPE(KSCrashMonitorTypeNSException),
-    MONITORTYPE(KSCrashMonitorTypeMainThreadDeadlock),
-    MONITORTYPE(KSCrashMonitorTypeUserReported),
-    MONITORTYPE(KSCrashMonitorTypeSystem),
-    MONITORTYPE(KSCrashMonitorTypeApplicationState),
-    MONITORTYPE(KSCrashMonitorTypeZombie),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeMachException),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeSignal),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeCPPException),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeNSException),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeMainThreadDeadlock),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeUserReported),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeSystem),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeApplicationState),
+    MONITORTYPE(Raygun_KSCrashMonitorTypeZombie),
 };
 static const int g_monitorTypesCount = sizeof(g_monitorTypes) / sizeof(*g_monitorTypes);
 
 
-const char* kscrashmonitortype_name(const KSCrashMonitorType monitorType)
+const char* raygun_kscrashmonitortype_name(const Raygun_KSCrashMonitorType monitorType)
 {
     for(int i = 0; i < g_monitorTypesCount; i++)
     {

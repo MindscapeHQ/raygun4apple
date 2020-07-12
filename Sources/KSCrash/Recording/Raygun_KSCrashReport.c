@@ -1390,15 +1390,15 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
         // Gather specific info.
         switch(crash->crashType)
         {
-            case KSCrashMonitorTypeMainThreadDeadlock:
+            case Raygun_KSCrashMonitorTypeMainThreadDeadlock:
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_Deadlock);
                 break;
                 
-            case KSCrashMonitorTypeMachException:
+            case Raygun_KSCrashMonitorTypeMachException:
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_Mach);
                 break;
 
-            case KSCrashMonitorTypeCPPException:
+            case Raygun_KSCrashMonitorTypeCPPException:
             {
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_CPPException);
                 writer->beginObject(writer, Raygun_KSCrashField_CPPException);
@@ -1408,7 +1408,7 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
                 writer->endContainer(writer);
                 break;
             }
-            case KSCrashMonitorTypeNSException:
+            case Raygun_KSCrashMonitorTypeNSException:
             {
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_NSException);
                 writer->beginObject(writer, Raygun_KSCrashField_NSException);
@@ -1420,11 +1420,11 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
                 writer->endContainer(writer);
                 break;
             }
-            case KSCrashMonitorTypeSignal:
+            case Raygun_KSCrashMonitorTypeSignal:
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_Signal);
                 break;
 
-            case KSCrashMonitorTypeUserReported:
+            case Raygun_KSCrashMonitorTypeUserReported:
             {
                 writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashExcType_User);
                 writer->beginObject(writer, Raygun_KSCrashField_UserReported);
@@ -1446,9 +1446,9 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
                 writer->endContainer(writer);
                 break;
             }
-            case KSCrashMonitorTypeSystem:
-            case KSCrashMonitorTypeApplicationState:
-            case KSCrashMonitorTypeZombie:
+            case Raygun_KSCrashMonitorTypeSystem:
+            case Raygun_KSCrashMonitorTypeApplicationState:
+            case Raygun_KSCrashMonitorTypeZombie:
                 KSLOG_ERROR("Crash monitor type 0x%x shouldn't be able to cause events!", crash->crashType);
                 break;
         }

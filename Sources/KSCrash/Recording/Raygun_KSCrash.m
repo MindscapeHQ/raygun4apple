@@ -148,7 +148,7 @@ static NSString* getBasePath()
         self.introspectMemory = YES;
         self.catchZombies = NO;
         self.maxReportCount = 10;
-        self.monitoring = KSCrashMonitorTypeProductionSafeMinimal;
+        self.monitoring = Raygun_KSCrashMonitorTypeProductionSafeMinimal;
     }
     return self;
 }
@@ -186,7 +186,7 @@ static NSString* getBasePath()
     }
 }
 
-- (void) setMonitoring:(KSCrashMonitorType)monitoring
+- (void) setMonitoring:(Raygun_KSCrashMonitorType)monitoring
 {
     _monitoring = raygun_kscrash_setMonitoring(monitoring);
 }
@@ -212,7 +212,7 @@ static NSString* getBasePath()
 - (void) setCatchZombies:(BOOL)catchZombies
 {
     _catchZombies = catchZombies;
-    self.monitoring |= KSCrashMonitorTypeZombie;
+    self.monitoring |= Raygun_KSCrashMonitorTypeZombie;
 }
 
 - (void) setDoNotIntrospectClasses:(NSArray *)doNotIntrospectClasses

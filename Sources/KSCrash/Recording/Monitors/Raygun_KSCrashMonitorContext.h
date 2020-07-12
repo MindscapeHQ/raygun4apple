@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-#include "KSCrashMonitorType.h"
+#include "Raygun_KSCrashMonitorType.h"
 #include "KSMachineContext.h"
 
 #include <stdbool.h>
@@ -74,7 +74,7 @@ typedef struct Raygun_KSCrash_MonitorContext
     
     /** The type of crash that occurred.
      * This determines which other fields are valid. */
-    KSCrashMonitorType crashType;
+    Raygun_KSCrashMonitorType crashType;
     
     /** The name of the exception that caused the crash, if any. */
     const char* exceptionName;

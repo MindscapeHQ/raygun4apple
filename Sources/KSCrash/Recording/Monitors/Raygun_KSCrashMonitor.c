@@ -27,7 +27,7 @@
 
 #include "Raygun_KSCrashMonitor.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSCrashMonitorType.h"
+#include "Raygun_KSCrashMonitorType.h"
 
 #include "Raygun_KSCrashMonitor_Deadlock.h"
 #include "Raygun_KSCrashMonitor_MachException.h"
@@ -54,7 +54,7 @@
 
 typedef struct
 {
-    KSCrashMonitorType monitorType;
+    Raygun_KSCrashMonitorType monitorType;
     Raygun_KSCrashMonitorAPI* (*getAPI)(void);
 } Monitor;
 
@@ -62,50 +62,50 @@ static Monitor g_monitors[] =
 {
 #if RAYGUN_KSCRASH_HAS_MACH
     {
-        .monitorType = KSCrashMonitorTypeMachException,
+        .monitorType = Raygun_KSCrashMonitorTypeMachException,
         .getAPI = raygun_kscm_machexception_getAPI,
     },
 #endif
 #if RAYGUN_KSCRASH_HAS_SIGNAL
     {
-        .monitorType = KSCrashMonitorTypeSignal,
+        .monitorType = Raygun_KSCrashMonitorTypeSignal,
         .getAPI = raygun_kscm_signal_getAPI,
     },
 #endif
 #if RAYGUN_KSCRASH_HAS_OBJC
     {
-        .monitorType = KSCrashMonitorTypeNSException,
+        .monitorType = Raygun_KSCrashMonitorTypeNSException,
         .getAPI = raygun_kscm_nsexception_getAPI,
     },
     {
-        .monitorType = KSCrashMonitorTypeMainThreadDeadlock,
+        .monitorType = Raygun_KSCrashMonitorTypeMainThreadDeadlock,
         .getAPI = raygun_kscm_deadlock_getAPI,
     },
     {
-        .monitorType = KSCrashMonitorTypeZombie,
+        .monitorType = Raygun_KSCrashMonitorTypeZombie,
         .getAPI = raygun_kscm_zombie_getAPI,
     },
 #endif
     {
-        .monitorType = KSCrashMonitorTypeCPPException,
+        .monitorType = Raygun_KSCrashMonitorTypeCPPException,
         .getAPI = raygun_kscm_cppexception_getAPI,
     },
     {
-        .monitorType = KSCrashMonitorTypeUserReported,
+        .monitorType = Raygun_KSCrashMonitorTypeUserReported,
         .getAPI = raygun_kscm_user_getAPI,
     },
     {
-        .monitorType = KSCrashMonitorTypeSystem,
+        .monitorType = Raygun_KSCrashMonitorTypeSystem,
         .getAPI = raygun_kscm_system_getAPI,
     },
     {
-        .monitorType = KSCrashMonitorTypeApplicationState,
+        .monitorType = Raygun_KSCrashMonitorTypeApplicationState,
         .getAPI = raygun_kscm_appstate_getAPI,
     },
 };
 static int g_monitorsCount = sizeof(g_monitors) / sizeof(*g_monitors);
 
-static KSCrashMonitorType g_activeMonitors = KSCrashMonitorTypeNone;
+static Raygun_KSCrashMonitorType g_activeMonitors = Raygun_KSCrashMonitorTypeNone;
 
 static bool g_handlingFatalException = false;
 static bool g_crashedDuringExceptionHandling = false;
@@ -159,9 +159,9 @@ void raygun_kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorC
     g_onExceptionEvent = onEvent;
 }
 
-void raygun_kscm_setActiveMonitors(KSCrashMonitorType monitorTypes)
+void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes)
 {
-    if(ksdebug_isBeingTraced() && (monitorTypes & KSCrashMonitorTypeDebuggerUnsafe))
+    if(ksdebug_isBeingTraced() && (monitorTypes & Raygun_KSCrashMonitorTypeDebuggerUnsafe))
     {
         static bool hasWarned = false;
         if(!hasWarned)
@@ -172,17 +172,17 @@ void raygun_kscm_setActiveMonitors(KSCrashMonitorType monitorTypes)
             KSLOGBASIC_WARN("    * This means that most crashes WILL NOT BE RECORDED while debugging! *");
             KSLOGBASIC_WARN("    **********************************************************************");
         }
-        monitorTypes &= KSCrashMonitorTypeDebuggerSafe;
+        monitorTypes &= Raygun_KSCrashMonitorTypeDebuggerSafe;
     }
-    if(g_requiresAsyncSafety && (monitorTypes & KSCrashMonitorTypeAsyncUnsafe))
+    if(g_requiresAsyncSafety && (monitorTypes & Raygun_KSCrashMonitorTypeAsyncUnsafe))
     {
         KSLOG_DEBUG("Async-safe environment detected. Masking out unsafe monitors.");
-        monitorTypes &= KSCrashMonitorTypeAsyncSafe;
+        monitorTypes &= Raygun_KSCrashMonitorTypeAsyncSafe;
     }
 
     KSLOG_DEBUG("Changing active monitors from 0x%x tp 0x%x.", g_activeMonitors, monitorTypes);
 
-    KSCrashMonitorType activeMonitors = KSCrashMonitorTypeNone;
+    Raygun_KSCrashMonitorType activeMonitors = Raygun_KSCrashMonitorTypeNone;
     for(int i = 0; i < g_monitorsCount; i++)
     {
         Monitor* monitor = &g_monitors[i];
@@ -202,7 +202,7 @@ void raygun_kscm_setActiveMonitors(KSCrashMonitorType monitorTypes)
     g_activeMonitors = activeMonitors;
 }
 
-KSCrashMonitorType raygun_kscm_getActiveMonitors()
+Raygun_KSCrashMonitorType raygun_kscm_getActiveMonitors()
 {
     return g_activeMonitors;
 }
@@ -223,7 +223,7 @@ bool raygun_kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment)
     if(g_crashedDuringExceptionHandling)
     {
         KSLOG_INFO("Detected crash in the crash reporter. Uninstalling KSCrash.");
-        raygun_kscm_setActiveMonitors(KSCrashMonitorTypeNone);
+        raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorTypeNone);
     }
     return g_crashedDuringExceptionHandling;
 }
@@ -251,7 +251,7 @@ void raygun_kscm_handleException(struct Raygun_KSCrash_MonitorContext* context)
     } else {
         if(g_handlingFatalException && !g_crashedDuringExceptionHandling) {
             KSLOG_DEBUG("Exception is fatal. Restoring original handlers.");
-            raygun_kscm_setActiveMonitors(KSCrashMonitorTypeNone);
+            raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorTypeNone);
         }
     }
 }

@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 
-#include "KSCrashMonitorType.h"
+#include "Raygun_KSCrashMonitorType.h"
 #include "KSThread.h"
     
 #include <stdbool.h>
@@ -53,11 +53,11 @@ struct Raygun_KSCrash_MonitorContext;
  *
  * @param monitorTypes Which monitors should be active.
  */
-void raygun_kscm_setActiveMonitors(KSCrashMonitorType monitorTypes);
+void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes);
 
 /** Get the currently active monitors.
  */
-KSCrashMonitorType raygun_kscm_getActiveMonitors(void);
+Raygun_KSCrashMonitorType raygun_kscm_getActiveMonitors(void);
 
 /** Set the callback to call when an event is captured.
  *

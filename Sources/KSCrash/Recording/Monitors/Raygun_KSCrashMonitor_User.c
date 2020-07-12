@@ -74,7 +74,7 @@ void raygun_kscm_reportUserException(const char* name,
         KSLOG_DEBUG("Filling out context.");
         Raygun_KSCrash_MonitorContext context;
         memset(&context, 0, sizeof(context));
-        context.crashType = KSCrashMonitorTypeUserReported;
+        context.crashType = Raygun_KSCrashMonitorTypeUserReported;
         context.eventID = eventID;
         context.offendingMachineContext = machineContext;
         context.registersAreValid = false;

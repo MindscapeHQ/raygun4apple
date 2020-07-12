@@ -61,7 +61,7 @@ static volatile bool g_installed = 0;
 static bool g_shouldAddConsoleLogToReport = false;
 static bool g_shouldPrintPreviousLog = false;
 static char g_consoleLogPath[KSFU_MAX_PATH_LENGTH];
-static KSCrashMonitorType g_monitoring = KSCrashMonitorTypeProductionSafeMinimal;
+static Raygun_KSCrashMonitorType g_monitoring = Raygun_KSCrashMonitorTypeProductionSafeMinimal;
 static char g_lastCrashReportFilePath[KSFU_MAX_PATH_LENGTH];
 
 
@@ -117,7 +117,7 @@ static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 #pragma mark - API -
 // ============================================================================
 
-KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath)
+Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath)
 {
     KSLOG_DEBUG("Installing crash reporter.");
 
@@ -148,13 +148,13 @@ KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const
     raygun_ksccd_init(60);
 
     raygun_kscm_setEventCallback(onCrash);
-    KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
+    Raygun_KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
 
     KSLOG_DEBUG("Installation complete.");
     return monitors;
 }
 
-KSCrashMonitorType raygun_kscrash_setMonitoring(KSCrashMonitorType monitors)
+Raygun_KSCrashMonitorType raygun_kscrash_setMonitoring(Raygun_KSCrashMonitorType monitors)
 {
     g_monitoring = monitors;
     
