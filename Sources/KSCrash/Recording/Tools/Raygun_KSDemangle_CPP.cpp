@@ -26,10 +26,10 @@
 
 
 #include <cxxabi.h>
-#include "KSDemangle_CPP.h"
+#include "Raygun_KSDemangle_CPP.h"
 #include "KSLogger.h"
 
-extern "C" char* ksdm_demangleCPP(const char* mangledSymbol)
+extern "C" char* raygun_ksdm_demangleCPP(const char* mangledSymbol)
 {
     int status = 0;
     char* demangled = __cxxabiv1::__cxa_demangle(mangledSymbol, NULL, NULL, &status);

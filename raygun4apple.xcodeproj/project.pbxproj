@@ -147,7 +147,7 @@
 		A2E1A1E8218F919500BF66DB /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
 		A2E1A1E9218F919500BF66DB /* Raygun_KSDate.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5421003DA90003C8B4 /* Raygun_KSDate.h */; };
 		A2E1A1EA218F919500BF66DB /* Raygun_KSDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5621003DA90003C8B4 /* Raygun_KSDebug.h */; };
-		A2E1A1EB218F919500BF66DB /* KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */; };
+		A2E1A1EB218F919500BF66DB /* Raygun_KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* Raygun_KSDemangle_CPP.h */; };
 		A2E1A1EC218F919500BF66DB /* KSDemangle_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5A21003DA90003C8B4 /* KSDemangle_Swift.h */; };
 		A2E1A1ED218F919500BF66DB /* KSDynamicLinker.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5C21003DA90003C8B4 /* KSDynamicLinker.h */; };
 		A2E1A1EE218F919500BF66DB /* KSFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5E21003DA90003C8B4 /* KSFileUtils.h */; };
@@ -210,7 +210,7 @@
 		A2E1A227218F92D500BF66DB /* Raygun_KSCPU_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5221003DA90003C8B4 /* Raygun_KSCPU_x86_64.c */; };
 		A2E1A228218F92D500BF66DB /* Raygun_KSDate.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5321003DA90003C8B4 /* Raygun_KSDate.c */; };
 		A2E1A229218F92D500BF66DB /* Raygun_KSDebug.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5521003DA90003C8B4 /* Raygun_KSDebug.c */; };
-		A2E1A22A218F92D500BF66DB /* KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */; };
+		A2E1A22A218F92D500BF66DB /* Raygun_KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* Raygun_KSDemangle_CPP.cpp */; };
 		A2E1A22B218F92D500BF66DB /* KSDemangle_Swift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5921003DA90003C8B4 /* KSDemangle_Swift.cpp */; };
 		A2E1A22C218F92D500BF66DB /* KSDynamicLinker.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5B21003DA90003C8B4 /* KSDynamicLinker.c */; };
 		A2E1A22D218F92D500BF66DB /* KSFileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5D21003DA90003C8B4 /* KSFileUtils.c */; };
@@ -370,10 +370,10 @@
 		A2E4AD5521003DAA0003C8B4 /* Raygun_KSDebug.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5521003DA90003C8B4 /* Raygun_KSDebug.c */; };
 		A2E4AD5621003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5621003DA90003C8B4 /* Raygun_KSDebug.h */; };
 		A2E4AD5721003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5621003DA90003C8B4 /* Raygun_KSDebug.h */; };
-		A2E4AD5821003DAA0003C8B4 /* KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */; };
-		A2E4AD5921003DAA0003C8B4 /* KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */; };
-		A2E4AD5A21003DAA0003C8B4 /* KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */; };
-		A2E4AD5B21003DAA0003C8B4 /* KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */; };
+		A2E4AD5821003DAA0003C8B4 /* Raygun_KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* Raygun_KSDemangle_CPP.cpp */; };
+		A2E4AD5921003DAA0003C8B4 /* Raygun_KSDemangle_CPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5721003DA90003C8B4 /* Raygun_KSDemangle_CPP.cpp */; };
+		A2E4AD5A21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* Raygun_KSDemangle_CPP.h */; };
+		A2E4AD5B21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* Raygun_KSDemangle_CPP.h */; };
 		A2E4AD5C21003DAA0003C8B4 /* KSDemangle_Swift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5921003DA90003C8B4 /* KSDemangle_Swift.cpp */; };
 		A2E4AD5D21003DAA0003C8B4 /* KSDemangle_Swift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5921003DA90003C8B4 /* KSDemangle_Swift.cpp */; };
 		A2E4AD5E21003DAA0003C8B4 /* KSDemangle_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5A21003DA90003C8B4 /* KSDemangle_Swift.h */; };
@@ -725,8 +725,8 @@
 		A2E4AC5421003DA90003C8B4 /* Raygun_KSDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSDate.h; sourceTree = "<group>"; };
 		A2E4AC5521003DA90003C8B4 /* Raygun_KSDebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSDebug.c; sourceTree = "<group>"; };
 		A2E4AC5621003DA90003C8B4 /* Raygun_KSDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSDebug.h; sourceTree = "<group>"; };
-		A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KSDemangle_CPP.cpp; sourceTree = "<group>"; };
-		A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDemangle_CPP.h; sourceTree = "<group>"; };
+		A2E4AC5721003DA90003C8B4 /* Raygun_KSDemangle_CPP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_KSDemangle_CPP.cpp; sourceTree = "<group>"; };
+		A2E4AC5821003DA90003C8B4 /* Raygun_KSDemangle_CPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSDemangle_CPP.h; sourceTree = "<group>"; };
 		A2E4AC5921003DA90003C8B4 /* KSDemangle_Swift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KSDemangle_Swift.cpp; sourceTree = "<group>"; };
 		A2E4AC5A21003DA90003C8B4 /* KSDemangle_Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDemangle_Swift.h; sourceTree = "<group>"; };
 		A2E4AC5B21003DA90003C8B4 /* KSDynamicLinker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSDynamicLinker.c; sourceTree = "<group>"; };
@@ -1078,8 +1078,8 @@
 				A2E4AC5421003DA90003C8B4 /* Raygun_KSDate.h */,
 				A2E4AC5521003DA90003C8B4 /* Raygun_KSDebug.c */,
 				A2E4AC5621003DA90003C8B4 /* Raygun_KSDebug.h */,
-				A2E4AC5721003DA90003C8B4 /* KSDemangle_CPP.cpp */,
-				A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */,
+				A2E4AC5721003DA90003C8B4 /* Raygun_KSDemangle_CPP.cpp */,
+				A2E4AC5821003DA90003C8B4 /* Raygun_KSDemangle_CPP.h */,
 				A2E4AC5921003DA90003C8B4 /* KSDemangle_Swift.cpp */,
 				A2E4AC5A21003DA90003C8B4 /* KSDemangle_Swift.h */,
 				A2E4AC5B21003DA90003C8B4 /* KSDynamicLinker.c */,
@@ -1327,7 +1327,7 @@
 				A2E4AD7021003DAA0003C8B4 /* KSJSONCodecObjC.h in Headers */,
 				A29D6741216DA2EB00BAC934 /* RaygunUtils.h in Headers */,
 				A2E4ACEC21003DAA0003C8B4 /* Compiler.h in Headers */,
-				A2E4AD5A21003DAA0003C8B4 /* KSDemangle_CPP.h in Headers */,
+				A2E4AD5A21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */,
 				A2F38CDD212FAEA5008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2E4AD8421003DAA0003C8B4 /* KSMemory.h in Headers */,
 				A2E4AD0C21003DAA0003C8B4 /* Raygun_KSCrashReportStore.h in Headers */,
@@ -1434,7 +1434,7 @@
 				A2E4AD7121003DAA0003C8B4 /* KSJSONCodecObjC.h in Headers */,
 				A29D6742216DA2EB00BAC934 /* RaygunUtils.h in Headers */,
 				A2E4ACED21003DAA0003C8B4 /* Compiler.h in Headers */,
-				A2E4AD5B21003DAA0003C8B4 /* KSDemangle_CPP.h in Headers */,
+				A2E4AD5B21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */,
 				A2F38CDE212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2E4AD8521003DAA0003C8B4 /* KSMemory.h in Headers */,
 				A2E4AD0D21003DAA0003C8B4 /* Raygun_KSCrashReportStore.h in Headers */,
@@ -1542,7 +1542,7 @@
 				A2E1A1E8218F919500BF66DB /* Raygun_KSCPU_Apple.h in Headers */,
 				A2E1A1E9218F919500BF66DB /* Raygun_KSDate.h in Headers */,
 				A2E1A1EA218F919500BF66DB /* Raygun_KSDebug.h in Headers */,
-				A2E1A1EB218F919500BF66DB /* KSDemangle_CPP.h in Headers */,
+				A2E1A1EB218F919500BF66DB /* Raygun_KSDemangle_CPP.h in Headers */,
 				A2E1A1EC218F919500BF66DB /* KSDemangle_Swift.h in Headers */,
 				A2E1A1ED218F919500BF66DB /* KSDynamicLinker.h in Headers */,
 				A2E1A1EE218F919500BF66DB /* KSFileUtils.h in Headers */,
@@ -1840,7 +1840,7 @@
 				A2E4ACF221003DAA0003C8B4 /* Raygun_KSCrash.m in Sources */,
 				A2E4AD3E21003DAA0003C8B4 /* Raygun_KSCrashMonitorType.c in Sources */,
 				DC5EFA68210FFA7A002C0713 /* RaygunEnvironmentMessage.m in Sources */,
-				A2E4AD5821003DAA0003C8B4 /* KSDemangle_CPP.cpp in Sources */,
+				A2E4AD5821003DAA0003C8B4 /* Raygun_KSDemangle_CPP.cpp in Sources */,
 				A2E4AD3421003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.c in Sources */,
 				DC5EFA71210FFA7A002C0713 /* RaygunClientMessage.m in Sources */,
 				A2E4ADF221003DAA0003C8B4 /* KSCString.m in Sources */,
@@ -1925,7 +1925,7 @@
 				A2E4ACF321003DAA0003C8B4 /* Raygun_KSCrash.m in Sources */,
 				A2E4AD3F21003DAA0003C8B4 /* Raygun_KSCrashMonitorType.c in Sources */,
 				DC5EFA69210FFA7A002C0713 /* RaygunEnvironmentMessage.m in Sources */,
-				A2E4AD5921003DAA0003C8B4 /* KSDemangle_CPP.cpp in Sources */,
+				A2E4AD5921003DAA0003C8B4 /* Raygun_KSDemangle_CPP.cpp in Sources */,
 				A2E4AD3521003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.c in Sources */,
 				DC5EFA72210FFA7A002C0713 /* RaygunClientMessage.m in Sources */,
 				A2E4ADF321003DAA0003C8B4 /* KSCString.m in Sources */,
@@ -2040,7 +2040,7 @@
 				A2E1A227218F92D500BF66DB /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E1A228218F92D500BF66DB /* Raygun_KSDate.c in Sources */,
 				A2E1A229218F92D500BF66DB /* Raygun_KSDebug.c in Sources */,
-				A2E1A22A218F92D500BF66DB /* KSDemangle_CPP.cpp in Sources */,
+				A2E1A22A218F92D500BF66DB /* Raygun_KSDemangle_CPP.cpp in Sources */,
 				A2E1A22B218F92D500BF66DB /* KSDemangle_Swift.cpp in Sources */,
 				A2E1A22C218F92D500BF66DB /* KSDynamicLinker.c in Sources */,
 				A2E1A22D218F92D500BF66DB /* KSFileUtils.c in Sources */,
