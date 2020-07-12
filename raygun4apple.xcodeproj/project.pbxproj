@@ -144,7 +144,7 @@
 		A2E1A1E5218F919500BF66DB /* Raygun_KSCrashMonitorContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4821003DA90003C8B4 /* Raygun_KSCrashMonitorContext.h */; };
 		A2E1A1E6218F919500BF66DB /* Raygun_KSCrashMonitorType.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4A21003DA90003C8B4 /* Raygun_KSCrashMonitorType.h */; };
 		A2E1A1E7218F919500BF66DB /* Raygun_KSCPU.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */; };
-		A2E1A1E8218F919500BF66DB /* KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* KSCPU_Apple.h */; };
+		A2E1A1E8218F919500BF66DB /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
 		A2E1A1E9218F919500BF66DB /* KSDate.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5421003DA90003C8B4 /* KSDate.h */; };
 		A2E1A1EA218F919500BF66DB /* KSDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5621003DA90003C8B4 /* KSDebug.h */; };
 		A2E1A1EB218F919500BF66DB /* KSDemangle_CPP.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5821003DA90003C8B4 /* KSDemangle_CPP.h */; };
@@ -352,8 +352,8 @@
 		A2E4AD4321003DAA0003C8B4 /* Raygun_KSCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */; };
 		A2E4AD4421003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */; };
 		A2E4AD4521003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */; };
-		A2E4AD4621003DAA0003C8B4 /* KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* KSCPU_Apple.h */; };
-		A2E4AD4721003DAA0003C8B4 /* KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* KSCPU_Apple.h */; };
+		A2E4AD4621003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
+		A2E4AD4721003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */; };
 		A2E4AD4821003DAA0003C8B4 /* KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */; };
 		A2E4AD4921003DAA0003C8B4 /* KSCPU_arm.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */; };
 		A2E4AD4A21003DAA0003C8B4 /* KSCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */; };
@@ -716,7 +716,7 @@
 		A2E4AC4A21003DA90003C8B4 /* Raygun_KSCrashMonitorType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCrashMonitorType.h; sourceTree = "<group>"; };
 		A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCPU.c; sourceTree = "<group>"; };
 		A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCPU.h; sourceTree = "<group>"; };
-		A2E4AC4E21003DA90003C8B4 /* KSCPU_Apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCPU_Apple.h; sourceTree = "<group>"; };
+		A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCPU_Apple.h; sourceTree = "<group>"; };
 		A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_arm.c; sourceTree = "<group>"; };
 		A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_arm64.c; sourceTree = "<group>"; };
 		A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCPU_x86_32.c; sourceTree = "<group>"; };
@@ -1069,7 +1069,7 @@
 			children = (
 				A2E4AC4C21003DA90003C8B4 /* Raygun_KSCPU.c */,
 				A2E4AC4D21003DA90003C8B4 /* Raygun_KSCPU.h */,
-				A2E4AC4E21003DA90003C8B4 /* KSCPU_Apple.h */,
+				A2E4AC4E21003DA90003C8B4 /* Raygun_KSCPU_Apple.h */,
 				A2E4AC4F21003DA90003C8B4 /* KSCPU_arm.c */,
 				A2E4AC5021003DA90003C8B4 /* KSCPU_arm64.c */,
 				A2E4AC5121003DA90003C8B4 /* KSCPU_x86_32.c */,
@@ -1340,7 +1340,7 @@
 				A2E4AD5E21003DAA0003C8B4 /* KSDemangle_Swift.h in Headers */,
 				A2E4AD0221003DAA0003C8B4 /* Raygun_KSCrashReport.h in Headers */,
 				A2E4AD8821003DAA0003C8B4 /* KSObjC.h in Headers */,
-				A2E4AD4621003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A2E4AD4621003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */,
 				A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3621003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.h in Headers */,
 				A2E4AD1621003DAA0003C8B4 /* Raygun_KSCrashMonitor.h in Headers */,
@@ -1447,7 +1447,7 @@
 				A2E4AD5F21003DAA0003C8B4 /* KSDemangle_Swift.h in Headers */,
 				A2E4AD0321003DAA0003C8B4 /* Raygun_KSCrashReport.h in Headers */,
 				A2E4AD8921003DAA0003C8B4 /* KSObjC.h in Headers */,
-				A2E4AD4721003DAA0003C8B4 /* KSCPU_Apple.h in Headers */,
+				A2E4AD4721003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */,
 				A217796C215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3721003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.h in Headers */,
 				A2E4AD1721003DAA0003C8B4 /* Raygun_KSCrashMonitor.h in Headers */,
@@ -1539,7 +1539,7 @@
 				A2E1A1E5218F919500BF66DB /* Raygun_KSCrashMonitorContext.h in Headers */,
 				A2E1A1E6218F919500BF66DB /* Raygun_KSCrashMonitorType.h in Headers */,
 				A2E1A1E7218F919500BF66DB /* Raygun_KSCPU.h in Headers */,
-				A2E1A1E8218F919500BF66DB /* KSCPU_Apple.h in Headers */,
+				A2E1A1E8218F919500BF66DB /* Raygun_KSCPU_Apple.h in Headers */,
 				A2E1A1E9218F919500BF66DB /* KSDate.h in Headers */,
 				A2E1A1EA218F919500BF66DB /* KSDebug.h in Headers */,
 				A2E1A1EB218F919500BF66DB /* KSDemangle_CPP.h in Headers */,
