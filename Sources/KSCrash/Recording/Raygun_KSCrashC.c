@@ -40,7 +40,7 @@
 #include "KSCrashMonitor_Zombie.h"
 #include "KSCrashMonitor_AppState.h"
 #include "KSCrashMonitorContext.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
@@ -174,7 +174,7 @@ void raygun_kscrash_setUserInfoJSON(const char* const userInfoJSON)
 
 void raygun_kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval)
 {
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     kscm_setDeadlockHandlerWatchdogInterval(deadlockWatchdogInterval);
 #endif
 }

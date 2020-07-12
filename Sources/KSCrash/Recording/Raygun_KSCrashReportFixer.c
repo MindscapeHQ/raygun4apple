@@ -25,10 +25,10 @@
 //
 
 #include "Raygun_KSCrashReportFields.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "KSJSONCodec.h"
 #include "KSDemangle_CPP.h"
-#if KSCRASH_HAS_SWIFT
+#if RAYGUN_KSCRASH_HAS_SWIFT
 #include "KSDemangle_Swift.h"
 #endif
 #include "KSDate.h"
@@ -189,7 +189,7 @@ static int onStringElement(const char* const name,
     if(shouldDemangle(context, name))
     {
         demangled = ksdm_demangleCPP(value);
-#if KSCRASH_HAS_SWIFT
+#if RAYGUN_KSCRASH_HAS_SWIFT
         if(demangled == NULL)
         {
             demangled = ksdm_demangleSwift(value);

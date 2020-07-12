@@ -35,13 +35,13 @@
 #import "NSError+SimpleConstructor.h"
 #import "KSCrashMonitorContext.h"
 #import "KSCrashMonitor_System.h"
-#import "KSSystemCapabilities.h"
+#import "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
 #import "KSLogger.h"
 
 #include <inttypes.h>
-#if KSCRASH_HAS_UIKIT
+#if RAYGUN_KSCRASH_HAS_UIKIT
 #import <UIKit/UIKit.h>
 #endif
 
@@ -293,7 +293,7 @@ static NSString* getBasePath()
         return false;
     }
 
-#if KSCRASH_HAS_UIAPPLICATION
+#if RAYGUN_KSCRASH_HAS_UIAPPLICATION
     NSNotificationCenter* nCenter = [NSNotificationCenter defaultCenter];
     [nCenter addObserver:self
                 selector:@selector(applicationDidBecomeActive)
@@ -316,7 +316,7 @@ static NSString* getBasePath()
                     name:UIApplicationWillTerminateNotification
                   object:nil];
 #endif
-#if KSCRASH_HAS_NSEXTENSION
+#if RAYGUN_KSCRASH_HAS_NSEXTENSION
     NSNotificationCenter* nCenter = [NSNotificationCenter defaultCenter];
     [nCenter addObserver:self
                 selector:@selector(applicationDidBecomeActive)

@@ -32,14 +32,14 @@
 #import "KSDate.h"
 #import "KSDynamicLinker.h"
 #import "KSSysCtl.h"
-#import "KSSystemCapabilities.h"
+#import "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
 #import "KSLogger.h"
 
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
-#if KSCRASH_HAS_UIKIT
+#if RAYGUN_KSCRASH_HAS_UIKIT
 #import <UIKit/UIKit.h>
 #endif
 #include <mach/mach.h>
@@ -359,7 +359,7 @@ static bool isSimulatorBuild()
 static NSString* getReceiptUrlPath()
 {
     NSString* path = nil;
-#if KSCRASH_HOST_IOS
+#if RAYGUN_KSCRASH_HOST_IOS
     // For iOS 6 compatibility
 #ifdef __IPHONE_11_0
     if (@available(iOS 7, *)) {
@@ -368,7 +368,7 @@ static NSString* getReceiptUrlPath()
 #endif
 #endif
         path = [NSBundle mainBundle].appStoreReceiptURL.path;
-#if KSCRASH_HOST_IOS
+#if RAYGUN_KSCRASH_HOST_IOS
     }
 #endif
     return path;
@@ -384,7 +384,7 @@ static const char* getDeviceAndAppHash()
 {
     NSMutableData* data = nil;
     
-#if KSCRASH_HAS_UIDEVICE
+#if RAYGUN_KSCRASH_HAS_UIDEVICE
     if([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)])
     {
         data = [NSMutableData dataWithLength:16];
@@ -493,14 +493,14 @@ static void initialize()
         NSDictionary* infoDict = [mainBundle infoDictionary];
         const struct mach_header* header = _dyld_get_image_header(0);
 
-#if KSCRASH_HAS_UIDEVICE
+#if RAYGUN_KSCRASH_HAS_UIDEVICE
         g_systemData.systemName = cString([UIDevice currentDevice].systemName);
         g_systemData.systemVersion = cString([UIDevice currentDevice].systemVersion);
 #else
-#if KSCRASH_HOST_MAC
+#if RAYGUN_KSCRASH_HOST_MAC
         g_systemData.systemName = "macOS";
 #endif
-#if KSCRASH_HOST_WATCH
+#if RAYGUN_KSCRASH_HOST_WATCH
         g_systemData.systemName = "watchOS";
 #endif
         NSOperatingSystemVersion version = {0, 0, 0};
@@ -526,7 +526,7 @@ static void initialize()
         }
         else
         {
-#if KSCRASH_HOST_MAC
+#if RAYGUN_KSCRASH_HOST_MAC
             // MacOS has the machine in the model field, and no model
             g_systemData.machine = stringSysctl("hw.model");
 #else

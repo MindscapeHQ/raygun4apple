@@ -43,7 +43,7 @@
 #include "Raygun_KSCrashReportVersion.h"
 #include "KSStackCursor_Backtrace.h"
 #include "KSStackCursor_MachineContext.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCrashCachedData.h"
 
 //#define KSLogger_LocalLevel TRACE
@@ -662,7 +662,7 @@ static void writeZombieIfPresent(const KSCrashReportWriter* const writer,
                                  const char* const key,
                                  const uintptr_t address)
 {
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     const void* object = (const void*)address;
     const char* zombieClassName = kszombie_className(object);
     if(zombieClassName != NULL)
@@ -676,7 +676,7 @@ static bool writeObjCObject(const KSCrashReportWriter* const writer,
                             const uintptr_t address,
                             int* limit)
 {
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     const void* object = (const void*)address;
     switch(ksobjc_objectType(object))
     {
@@ -791,7 +791,7 @@ static bool isValidPointer(const uintptr_t address)
         return false;
     }
 
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     if(ksobjc_isTaggedPointer((const void*)address))
     {
         if(!ksobjc_isValidTaggedPointer((const void*)address))
@@ -813,7 +813,7 @@ static bool isNotableAddress(const uintptr_t address)
     
     const void* object = (const void*)address;
 
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     if(kszombie_className(object) != NULL)
     {
         return true;
@@ -1345,7 +1345,7 @@ static void writeError(const KSCrashReportWriter* const writer,
 {
     writer->beginObject(writer, key);
     {
-#if KSCRASH_HOST_APPLE
+#if RAYGUN_KSCRASH_HOST_APPLE
         writer->beginObject(writer, Raygun_KSCrashField_Mach);
         {
             const char* machExceptionName = ksmach_exceptionName(crash->mach.type);

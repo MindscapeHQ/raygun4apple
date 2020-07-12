@@ -30,13 +30,13 @@
 #include "KSCPU.h"
 #include "KSID.h"
 #include "KSThread.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "KSStackCursor_MachineContext.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
 
-#if KSCRASH_HAS_MACH
+#if RAYGUN_KSCRASH_HAS_MACH
 
 #include <mach/mach.h>
 #include <pthread.h>
@@ -588,7 +588,7 @@ KSCrashMonitorAPI* kscm_machexception_getAPI()
 {
     static KSCrashMonitorAPI api =
     {
-#if KSCRASH_HAS_MACH
+#if RAYGUN_KSCRASH_HAS_MACH
         .setEnabled = setEnabled,
         .isEnabled = isEnabled,
         .addContextualInfoToEvent = addContextualInfoToEvent

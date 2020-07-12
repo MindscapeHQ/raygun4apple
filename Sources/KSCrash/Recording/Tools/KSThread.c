@@ -27,7 +27,7 @@
 
 #include "KSThread.h"
 
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "KSMemory.h"
 
 //#define KSLogger_LocalLevel TRACE

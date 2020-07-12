@@ -26,7 +26,7 @@
 
 #include "KSMachineContext_Apple.h"
 #include "KSMachineContext.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "KSCPU.h"
 #include "KSCPU_Apple.h"
 #include "KSStackCursor_MachineContext.h"
@@ -152,7 +152,7 @@ void ksmc_addReservedThread(KSThread thread)
     g_reservedThreads[g_reservedThreadsCount++] = thread;
 }
 
-#if KSCRASH_HAS_THREADS_API
+#if RAYGUN_KSCRASH_HAS_THREADS_API
 static inline bool isThreadInList(thread_t thread, KSThread* list, int listCount)
 {
     for(int i = 0; i < listCount; i++)
@@ -168,7 +168,7 @@ static inline bool isThreadInList(thread_t thread, KSThread* list, int listCount
 
 void ksmc_suspendEnvironment()
 {
-#if KSCRASH_HAS_THREADS_API
+#if RAYGUN_KSCRASH_HAS_THREADS_API
     KSLOG_DEBUG("Suspending environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();
@@ -207,7 +207,7 @@ void ksmc_suspendEnvironment()
 
 void ksmc_resumeEnvironment()
 {
-#if KSCRASH_HAS_THREADS_API
+#if RAYGUN_KSCRASH_HAS_THREADS_API
     KSLOG_DEBUG("Resuming environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();

@@ -40,7 +40,7 @@
 #include "KSCrashMonitor_Zombie.h"
 #include "KSDebug.h"
 #include "KSThread.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 
 #include <memory.h>
 
@@ -60,19 +60,19 @@ typedef struct
 
 static Monitor g_monitors[] =
 {
-#if KSCRASH_HAS_MACH
+#if RAYGUN_KSCRASH_HAS_MACH
     {
         .monitorType = KSCrashMonitorTypeMachException,
         .getAPI = kscm_machexception_getAPI,
     },
 #endif
-#if KSCRASH_HAS_SIGNAL
+#if RAYGUN_KSCRASH_HAS_SIGNAL
     {
         .monitorType = KSCrashMonitorTypeSignal,
         .getAPI = kscm_signal_getAPI,
     },
 #endif
-#if KSCRASH_HAS_OBJC
+#if RAYGUN_KSCRASH_HAS_OBJC
     {
         .monitorType = KSCrashMonitorTypeNSException,
         .getAPI = kscm_nsexception_getAPI,

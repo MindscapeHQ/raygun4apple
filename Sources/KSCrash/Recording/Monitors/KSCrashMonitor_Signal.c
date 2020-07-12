@@ -29,13 +29,13 @@
 #include "KSID.h"
 #include "KSSignalInfo.h"
 #include "KSMachineContext.h"
-#include "KSSystemCapabilities.h"
+#include "Raygun_KSSystemCapabilities.h"
 #include "KSStackCursor_MachineContext.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
 
-#if KSCRASH_HAS_SIGNAL
+#if RAYGUN_KSCRASH_HAS_SIGNAL
 
 #include <errno.h>
 #include <signal.h>
@@ -53,7 +53,7 @@ static volatile bool g_isEnabled = false;
 static KSCrash_MonitorContext g_monitorContext;
 static KSStackCursor g_stackCursor;
 
-#if KSCRASH_HAS_SIGNAL_STACK
+#if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
 /** Our custom signal stack. The signal handler will use this as its stack. */
 static stack_t g_signalStack = {0};
 #endif
@@ -122,7 +122,7 @@ static bool installSignalHandler()
 {
     KSLOG_DEBUG("Installing signal handler.");
 
-#if KSCRASH_HAS_SIGNAL_STACK
+#if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
 
     if(g_signalStack.ss_size == 0)
     {
@@ -151,7 +151,7 @@ static bool installSignalHandler()
 
     struct sigaction action = {{0}};
     action.sa_flags = SA_SIGINFO | SA_ONSTACK;
-#if KSCRASH_HOST_APPLE && defined(__LP64__)
+#if RAYGUN_KSCRASH_HOST_APPLE && defined(__LP64__)
     action.sa_flags |= SA_64REGSET;
 #endif
     sigemptyset(&action.sa_mask);
@@ -199,7 +199,7 @@ static void uninstallSignalHandler(void)
         sigaction(fatalSignals[i], &g_previousSignalHandlers[i], NULL);
     }
     
-#if KSCRASH_HAS_SIGNAL_STACK
+#if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
     g_signalStack = (stack_t){0};
 #endif
     KSLOG_DEBUG("Signal handlers uninstalled.");
@@ -244,7 +244,7 @@ KSCrashMonitorAPI* kscm_signal_getAPI()
 {
     static KSCrashMonitorAPI api =
     {
-#if KSCRASH_HAS_SIGNAL
+#if RAYGUN_KSCRASH_HAS_SIGNAL
         .setEnabled = setEnabled,
         .isEnabled = isEnabled,
         .addContextualInfoToEvent = addContextualInfoToEvent
