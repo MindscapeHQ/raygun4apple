@@ -24,7 +24,7 @@
 
 
 #include "KSSymbolicator.h"
-#include "KSDynamicLinker.h"
+#include "Raygun_KSDynamicLinker.h"
 
 
 /** Remove any pointer tagging from an instruction address
@@ -55,7 +55,7 @@
 bool kssymbolicator_symbolicate(KSStackCursor *cursor)
 {
     Dl_info symbolsBuffer;
-    if(ksdl_dladdr(CALL_INSTRUCTION_FROM_RETURN_ADDRESS(cursor->stackEntry.address), &symbolsBuffer))
+    if(raygun_ksdl_dladdr(CALL_INSTRUCTION_FROM_RETURN_ADDRESS(cursor->stackEntry.address), &symbolsBuffer))
     {
         cursor->stackEntry.imageAddress = (uintptr_t)symbolsBuffer.dli_fbase;
         cursor->stackEntry.imageName = symbolsBuffer.dli_fname;

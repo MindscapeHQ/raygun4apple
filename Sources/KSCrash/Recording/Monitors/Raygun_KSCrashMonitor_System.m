@@ -30,7 +30,7 @@
 #import "Raygun_KSCPU.h"
 #import "Raygun_KSCrashMonitorContext.h"
 #import "Raygun_KSDate.h"
-#import "KSDynamicLinker.h"
+#import "Raygun_KSDynamicLinker.h"
 #import "KSSysCtl.h"
 #import "Raygun_KSSystemCapabilities.h"
 
@@ -254,11 +254,11 @@ static const char* getAppUUID()
     
     if(exePath != nil)
     {
-        const uint8_t* uuidBytes = ksdl_imageUUID(exePath.UTF8String, true);
+        const uint8_t* uuidBytes = raygun_ksdl_imageUUID(exePath.UTF8String, true);
         if(uuidBytes == NULL)
         {
             // OSX app image path is a lie.
-            uuidBytes = ksdl_imageUUID(exePath.lastPathComponent.UTF8String, false);
+            uuidBytes = raygun_ksdl_imageUUID(exePath.lastPathComponent.UTF8String, false);
         }
         if(uuidBytes != NULL)
         {
@@ -323,7 +323,7 @@ static const char* getCurrentCPUArch()
  */
 static bool isJailbroken()
 {
-    return ksdl_imageNamed("MobileSubstrate", false) != UINT32_MAX;
+    return raygun_ksdl_imageNamed("MobileSubstrate", false) != UINT32_MAX;
 }
 
 /** Check if the current build is a debug build.

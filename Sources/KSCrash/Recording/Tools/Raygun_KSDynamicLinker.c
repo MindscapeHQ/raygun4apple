@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSDynamicLinker.h"
+#include "Raygun_KSDynamicLinker.h"
 
 #include <limits.h>
 #include <mach-o/dyld.h>
@@ -156,7 +156,7 @@ static uintptr_t segmentBaseOfImageIndex(const uint32_t idx)
     return 0;
 }
 
-uint32_t ksdl_imageNamed(const char* const imageName, bool exactMatch)
+uint32_t raygun_ksdl_imageNamed(const char* const imageName, bool exactMatch)
 {
     if(imageName != NULL)
     {
@@ -184,11 +184,11 @@ uint32_t ksdl_imageNamed(const char* const imageName, bool exactMatch)
     return UINT32_MAX;
 }
 
-const uint8_t* ksdl_imageUUID(const char* const imageName, bool exactMatch)
+const uint8_t* raygun_ksdl_imageUUID(const char* const imageName, bool exactMatch)
 {
     if(imageName != NULL)
     {
-        const uint32_t iImg = ksdl_imageNamed(imageName, exactMatch);
+        const uint32_t iImg = raygun_ksdl_imageNamed(imageName, exactMatch);
         if(iImg != UINT32_MAX)
         {
             const struct mach_header* header = _dyld_get_image_header(iImg);
@@ -214,7 +214,7 @@ const uint8_t* ksdl_imageUUID(const char* const imageName, bool exactMatch)
     return NULL;
 }
 
-bool ksdl_dladdr(const uintptr_t address, Dl_info* const info)
+bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info)
 {
     info->dli_fname = NULL;
     info->dli_fbase = NULL;
@@ -296,12 +296,12 @@ bool ksdl_dladdr(const uintptr_t address, Dl_info* const info)
     return true;
 }
 
-int ksdl_imageCount()
+int raygun_ksdl_imageCount()
 {
     return (int)_dyld_image_count();
 }
 
-bool ksdl_getBinaryImage(int index, KSBinaryImage* buffer)
+bool raygun_ksdl_getBinaryImage(int index, Raygun_KSBinaryImage* buffer)
 {
     const struct mach_header* header = _dyld_get_image_header((unsigned)index);
     if(header == NULL)

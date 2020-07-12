@@ -29,7 +29,7 @@
 
 #include "Raygun_KSCrashReportFields.h"
 #include "Raygun_KSCrashReportWriter.h"
-#include "KSDynamicLinker.h"
+#include "Raygun_KSDynamicLinker.h"
 #include "KSFileUtils.h"
 #include "KSJSONCodec.h"
 #include "Raygun_KSCPU.h"
@@ -1270,8 +1270,8 @@ static void writeBinaryImage(const Raygun_KSCrashReportWriter* const writer,
                              const char* const key,
                              const int index)
 {
-    KSBinaryImage image = {0};
-    if(!ksdl_getBinaryImage(index, &image))
+    Raygun_KSBinaryImage image = {0};
+    if(!raygun_ksdl_getBinaryImage(index, &image))
     {
         return;
     }
@@ -1300,7 +1300,7 @@ static void writeBinaryImage(const Raygun_KSCrashReportWriter* const writer,
  */
 static void writeBinaryImages(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
-    const int imageCount = ksdl_imageCount();
+    const int imageCount = raygun_ksdl_imageCount();
 
     writer->beginArray(writer, key);
     {

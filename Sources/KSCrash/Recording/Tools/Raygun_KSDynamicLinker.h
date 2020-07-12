@@ -48,11 +48,11 @@ typedef struct
     uint64_t majorVersion;
     uint64_t minorVersion;
     uint64_t revisionVersion;
-} KSBinaryImage;
+} Raygun_KSBinaryImage;
 
 /** Get the number of loaded binary images.
  */
-int ksdl_imageCount(void);
+int raygun_ksdl_imageCount(void);
 
 /** Get information about a binary image.
  *
@@ -62,7 +62,7 @@ int ksdl_imageCount(void);
  *
  * @return True if the image was successfully queried.
  */
-bool ksdl_getBinaryImage(int index, KSBinaryImage* buffer);
+bool raygun_ksdl_getBinaryImage(int index, Raygun_KSBinaryImage* buffer);
 
 /** Find a loaded binary image with the specified name.
  *
@@ -72,7 +72,7 @@ bool ksdl_getBinaryImage(int index, KSBinaryImage* buffer);
  *
  * @return the index of the matched image, or UINT32_MAX if not found.
  */
-uint32_t ksdl_imageNamed(const char* const imageName, bool exactMatch);
+uint32_t raygun_ksdl_imageNamed(const char* const imageName, bool exactMatch);
 
 /** Get the UUID of a loaded binary image with the specified name.
  *
@@ -83,7 +83,7 @@ uint32_t ksdl_imageNamed(const char* const imageName, bool exactMatch);
  * @return A pointer to the binary (16 byte) UUID of the image, or NULL if it
  *         wasn't found.
  */
-const uint8_t* ksdl_imageUUID(const char* const imageName, bool exactMatch);
+const uint8_t* raygun_ksdl_imageUUID(const char* const imageName, bool exactMatch);
 
 /** async-safe version of dladdr.
  *
@@ -99,7 +99,7 @@ const uint8_t* ksdl_imageUUID(const char* const imageName, bool exactMatch);
  * @param info Gets filled out by this function.
  * @return true if at least some information was found.
  */
-bool ksdl_dladdr(const uintptr_t address, Dl_info* const info);
+bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info);
 
 
 #ifdef __cplusplus
