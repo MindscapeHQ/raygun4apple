@@ -50,7 +50,7 @@
 
 static volatile bool g_isEnabled = false;
 
-static KSCrash_MonitorContext g_monitorContext;
+static Raygun_KSCrash_MonitorContext g_monitorContext;
 static KSStackCursor g_stackCursor;
 
 #if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
@@ -92,7 +92,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
         ksmc_getContextForSignal(userContext, machineContext);
         kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
 
-        KSCrash_MonitorContext* crashContext = &g_monitorContext;
+        Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
         crashContext->crashType = KSCrashMonitorTypeSignal;
         crashContext->eventID = g_eventID;

@@ -230,7 +230,7 @@ typedef struct Raygun_KSCrash_MonitorContext
     /** Full path to the console log, if any. */
     const char* consoleLogPath;
 
-} KSCrash_MonitorContext;
+} Raygun_KSCrash_MonitorContext;
     
 
 #ifdef __cplusplus

@@ -63,7 +63,7 @@ static std::terminate_handler g_originalTerminateHandler;
 
 static char g_eventID[37];
 
-static KSCrash_MonitorContext g_monitorContext;
+static Raygun_KSCrash_MonitorContext g_monitorContext;
 
 // TODO: Thread local storage is not supported < ios 9.
 // Find some other way to do thread local. Maybe storage with lookup by tid?
@@ -111,7 +111,7 @@ static void CPPExceptionTerminate(void)
     if(name == NULL || strcmp(name, "NSException") != 0)
     {
         raygun_kscm_notifyFatalExceptionCaptured(false);
-        KSCrash_MonitorContext* crashContext = &g_monitorContext;
+        Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
 
         char descriptionBuff[DESCRIPTION_BUFFER_LENGTH];

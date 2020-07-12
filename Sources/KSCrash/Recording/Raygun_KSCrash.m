@@ -243,7 +243,7 @@ static NSString* getBasePath()
 
 - (NSDictionary*) systemInfo
 {
-    KSCrash_MonitorContext fakeEvent = {0};
+    Raygun_KSCrash_MonitorContext fakeEvent = {0};
     raygun_kscm_system_getAPI()->addContextualInfoToEvent(&fakeEvent);
     NSMutableDictionary* dict = [NSMutableDictionary new];
 

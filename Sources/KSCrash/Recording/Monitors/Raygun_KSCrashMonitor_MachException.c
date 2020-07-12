@@ -116,7 +116,7 @@ typedef struct
 
 static volatile bool g_isEnabled = false;
 
-static KSCrash_MonitorContext g_monitorContext;
+static Raygun_KSCrash_MonitorContext g_monitorContext;
 static KSStackCursor g_stackCursor;
 
 static bool g_isHandlingCrash = false;
@@ -326,7 +326,7 @@ static void* handleExceptions(void* const userData)
         // Fill out crash information
         KSLOG_DEBUG("Fetching machine state.");
         KSMC_NEW_CONTEXT(machineContext);
-        KSCrash_MonitorContext* crashContext = &g_monitorContext;
+        Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         crashContext->offendingMachineContext = machineContext;
         kssc_initCursor(&g_stackCursor, NULL, NULL);
         if(ksmc_getContextForThread(exceptionMessage.thread.name, machineContext, true))

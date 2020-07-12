@@ -46,7 +46,7 @@
 
 static volatile bool g_isEnabled = false;
 
-static KSCrash_MonitorContext g_monitorContext;
+static Raygun_KSCrash_MonitorContext g_monitorContext;
 
 /** Thread which monitors other threads. */
 static KSCrashDeadlockMonitor* g_monitor;
@@ -118,7 +118,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     ksid_generate(eventID);
 
     KSLOG_DEBUG(@"Filling out context.");
-    KSCrash_MonitorContext* crashContext = &g_monitorContext;
+    Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
     memset(crashContext, 0, sizeof(*crashContext));
     crashContext->crashType = KSCrashMonitorTypeMainThreadDeadlock;
     crashContext->eventID = eventID;

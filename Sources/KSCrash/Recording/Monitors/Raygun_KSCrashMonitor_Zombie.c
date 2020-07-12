@@ -229,7 +229,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
+static void addContextualInfoToEvent(Raygun_KSCrash_MonitorContext* eventContext)
 {
     if(g_isEnabled)
     {

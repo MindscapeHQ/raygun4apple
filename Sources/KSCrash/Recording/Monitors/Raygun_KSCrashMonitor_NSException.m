@@ -42,7 +42,7 @@
 
 static volatile bool g_isEnabled = 0;
 
-static KSCrash_MonitorContext g_monitorContext;
+static Raygun_KSCrash_MonitorContext g_monitorContext;
 
 /** The exception handler that was in place before we installed ours. */
 static NSUncaughtExceptionHandler* g_previousUncaughtExceptionHandler;
@@ -81,7 +81,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         KSStackCursor cursor;
         kssc_initWithBacktrace(&cursor, callstack, (int)numFrames, 0);
 
-        KSCrash_MonitorContext* crashContext = &g_monitorContext;
+        Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
         crashContext->crashType = KSCrashMonitorTypeNSException;
         crashContext->eventID = eventID;

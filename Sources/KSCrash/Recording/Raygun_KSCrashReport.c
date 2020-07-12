@@ -378,7 +378,7 @@ static bool isValidString(const void* const address)
  *
  * @return True if the cursor was filled.
  */
-static bool getStackCursor(const KSCrash_MonitorContext* const crash,
+static bool getStackCursor(const Raygun_KSCrash_MonitorContext* const crash,
                            const struct KSMachineContext* const machineContext,
                            KSStackCursor *cursor)
 {
@@ -1170,7 +1170,7 @@ static void writeNotableAddresses(const KSCrashReportWriter* const writer,
  */
 static void writeThread(const KSCrashReportWriter* const writer,
                         const char* const key,
-                        const KSCrash_MonitorContext* const crash,
+                        const Raygun_KSCrash_MonitorContext* const crash,
                         const struct KSMachineContext* const machineContext,
                         const int threadIndex,
                         const bool shouldWriteNotableAddresses)
@@ -1227,7 +1227,7 @@ static void writeThread(const KSCrashReportWriter* const writer,
  */
 static void writeAllThreads(const KSCrashReportWriter* const writer,
                             const char* const key,
-                            const KSCrash_MonitorContext* const crash,
+                            const Raygun_KSCrash_MonitorContext* const crash,
                             bool writeNotableAddresses)
 {
     const struct KSMachineContext* const context = crash->offendingMachineContext;
@@ -1320,7 +1320,7 @@ static void writeBinaryImages(const KSCrashReportWriter* const writer, const cha
  */
 static void writeMemoryInfo(const KSCrashReportWriter* const writer,
                             const char* const key,
-                            const KSCrash_MonitorContext* const monitorContext)
+                            const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1341,7 +1341,7 @@ static void writeMemoryInfo(const KSCrashReportWriter* const writer,
  */
 static void writeError(const KSCrashReportWriter* const writer,
                        const char* const key,
-                       const KSCrash_MonitorContext* const crash)
+                       const Raygun_KSCrash_MonitorContext* const crash)
 {
     writer->beginObject(writer, key);
     {
@@ -1466,7 +1466,7 @@ static void writeError(const KSCrashReportWriter* const writer,
  */
 static void writeAppStats(const KSCrashReportWriter* const writer,
                           const char* const key,
-                          const KSCrash_MonitorContext* const monitorContext)
+                          const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1493,7 +1493,7 @@ static void writeAppStats(const KSCrashReportWriter* const writer,
  */
 static void writeProcessState(const KSCrashReportWriter* const writer,
                               const char* const key,
-                              const KSCrash_MonitorContext* const monitorContext)
+                              const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1582,7 +1582,7 @@ static void prepareReportWriter(KSCrashReportWriter* const writer, KSJSONEncodeC
 #pragma mark - Main API -
 // ============================================================================
 
-void raygun_kscrashreport_writeRecrashReport(const KSCrash_MonitorContext* const monitorContext, const char* const path)
+void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext* const monitorContext, const char* const path)
 {
     char writeBuffer[1024];
     KSBufferedWriter bufferedWriter;
@@ -1650,7 +1650,7 @@ void raygun_kscrashreport_writeRecrashReport(const KSCrash_MonitorContext* const
 
 static void writeSystemInfo(const KSCrashReportWriter* const writer,
                             const char* const key,
-                            const KSCrash_MonitorContext* const monitorContext)
+                            const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1692,7 +1692,7 @@ static void writeSystemInfo(const KSCrashReportWriter* const writer,
 
 static void writeDebugInfo(const KSCrashReportWriter* const writer,
                             const char* const key,
-                            const KSCrash_MonitorContext* const monitorContext)
+                            const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1705,7 +1705,7 @@ static void writeDebugInfo(const KSCrashReportWriter* const writer,
     
 }
 
-void raygun_kscrashreport_writeStandardReport(const KSCrash_MonitorContext* const monitorContext, const char* const path)
+void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContext* const monitorContext, const char* const path)
 {
     KSLOG_INFO("Writing crash report to %s", path);
     char writeBuffer[1024];
