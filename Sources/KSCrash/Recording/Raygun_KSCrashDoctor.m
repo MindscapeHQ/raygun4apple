@@ -8,7 +8,7 @@
 
 #import "Raygun_KSCrashDoctor.h"
 #import "Raygun_KSCrashReportFields.h"
-#import "KSCrashMonitor_System.h"
+#import "Raygun_KSCrashMonitor_System.h"
 
 
 typedef enum

@@ -34,7 +34,7 @@
 #import "KSJSONCodecObjC.h"
 #import "NSError+SimpleConstructor.h"
 #import "Raygun_KSCrashMonitorContext.h"
-#import "KSCrashMonitor_System.h"
+#import "Raygun_KSCrashMonitor_System.h"
 #import "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
@@ -244,7 +244,7 @@ static NSString* getBasePath()
 - (NSDictionary*) systemInfo
 {
     KSCrash_MonitorContext fakeEvent = {0};
-    kscm_system_getAPI()->addContextualInfoToEvent(&fakeEvent);
+    raygun_kscm_system_getAPI()->addContextualInfoToEvent(&fakeEvent);
     NSMutableDictionary* dict = [NSMutableDictionary new];
 
 #define COPY_STRING(A) if (fakeEvent.System.A) dict[@#A] = [NSString stringWithUTF8String:fakeEvent.System.A]

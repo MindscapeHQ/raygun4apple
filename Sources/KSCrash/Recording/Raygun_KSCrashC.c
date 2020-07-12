@@ -36,7 +36,7 @@
 #include "KSFileUtils.h"
 #include "KSObjC.h"
 #include "KSString.h"
-#include "KSCrashMonitor_System.h"
+#include "Raygun_KSCrashMonitor_System.h"
 #include "KSCrashMonitor_Zombie.h"
 #include "Raygun_KSCrashMonitor_AppState.h"
 #include "Raygun_KSCrashMonitorContext.h"

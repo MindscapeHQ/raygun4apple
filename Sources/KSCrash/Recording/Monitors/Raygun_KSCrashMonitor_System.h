@@ -37,7 +37,7 @@ extern "C" {
 
 /** Access the Monitor API.
  */
-    Raygun_KSCrashMonitorAPI* kscm_system_getAPI(void);
+Raygun_KSCrashMonitorAPI* raygun_kscm_system_getAPI(void);
 
 
 #ifdef __cplusplus

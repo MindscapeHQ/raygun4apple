@@ -25,7 +25,7 @@
 //
 
 
-#import "KSCrashMonitor_System.h"
+#import "Raygun_KSCrashMonitor_System.h"
 
 #import "KSCPU.h"
 #import "Raygun_KSCrashMonitorContext.h"
@@ -619,7 +619,7 @@ static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
     }
 }
 
-Raygun_KSCrashMonitorAPI* kscm_system_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_system_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
