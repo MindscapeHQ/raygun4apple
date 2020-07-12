@@ -25,7 +25,7 @@
 //
 
 
-#include "KSCrashMonitor_MachException.h"
+#include "Raygun_KSCrashMonitor_MachException.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSCPU.h"
 #include "KSID.h"
@@ -584,7 +584,7 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-Raygun_KSCrashMonitorAPI* kscm_machexception_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_machexception_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {

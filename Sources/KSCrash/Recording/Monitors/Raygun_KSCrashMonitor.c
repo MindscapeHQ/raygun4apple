@@ -30,7 +30,7 @@
 #include "KSCrashMonitorType.h"
 
 #include "Raygun_KSCrashMonitor_Deadlock.h"
-#include "KSCrashMonitor_MachException.h"
+#include "Raygun_KSCrashMonitor_MachException.h"
 #include "Raygun_KSCrashMonitor_CPPException.h"
 #include "KSCrashMonitor_NSException.h"
 #include "KSCrashMonitor_Signal.h"
@@ -63,7 +63,7 @@ static Monitor g_monitors[] =
 #if RAYGUN_KSCRASH_HAS_MACH
     {
         .monitorType = KSCrashMonitorTypeMachException,
-        .getAPI = kscm_machexception_getAPI,
+        .getAPI = raygun_kscm_machexception_getAPI,
     },
 #endif
 #if RAYGUN_KSCRASH_HAS_SIGNAL
