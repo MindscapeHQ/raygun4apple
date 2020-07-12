@@ -28,7 +28,7 @@
 #include "Raygun_KSCrashReport.h"
 
 #include "Raygun_KSCrashReportFields.h"
-#include "KSCrashReportWriter.h"
+#include "Raygun_KSCrashReportWriter.h"
 #include "KSDynamicLinker.h"
 #include "KSFileUtils.h"
 #include "KSJSONCodec.h"

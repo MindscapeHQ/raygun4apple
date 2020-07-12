@@ -38,7 +38,7 @@ extern "C" {
 
 
 #include "KSCrashMonitorType.h"
-#include "KSCrashReportWriter.h"
+#include "Raygun_KSCrashReportWriter.h"
 
 #include <stdbool.h>
 

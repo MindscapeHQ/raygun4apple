@@ -36,7 +36,7 @@
 extern "C" {
 #endif
 
-#import "KSCrashReportWriter.h"
+#import "Raygun_KSCrashReportWriter.h"
 #import "KSCrashMonitorContext.h"
 
 #include <stdbool.h>

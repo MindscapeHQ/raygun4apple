@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "KSCrashReportWriter.h"
+#import "Raygun_KSCrashReportWriter.h"
 #import "KSCrashReportFilter.h"
 #import "KSCrashMonitorType.h"
 

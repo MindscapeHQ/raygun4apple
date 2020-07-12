@@ -129,7 +129,7 @@
 		A2E1A1D6218F919500BF66DB /* Raygun_KSCrashReportFixer.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2D21003DA90003C8B4 /* Raygun_KSCrashReportFixer.h */; };
 		A2E1A1D7218F919500BF66DB /* Raygun_KSCrashReportStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2F21003DA90003C8B4 /* Raygun_KSCrashReportStore.h */; };
 		A2E1A1D8218F919500BF66DB /* Raygun_KSCrashReportVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3021003DA90003C8B4 /* Raygun_KSCrashReportVersion.h */; };
-		A2E1A1D9218F919500BF66DB /* KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* KSCrashReportWriter.h */; };
+		A2E1A1D9218F919500BF66DB /* Raygun_KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* Raygun_KSCrashReportWriter.h */; };
 		A2E1A1DA218F919500BF66DB /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3221003DA90003C8B4 /* KSSystemCapabilities.h */; };
 		A2E1A1DB218F919500BF66DB /* KSCrashMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3521003DA90003C8B4 /* KSCrashMonitor.h */; };
 		A2E1A1DC218F919500BF66DB /* KSCrashMonitor_AppState.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3721003DA90003C8B4 /* KSCrashMonitor_AppState.h */; };
@@ -298,8 +298,8 @@
 		A2E4AD0D21003DAA0003C8B4 /* Raygun_KSCrashReportStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2F21003DA90003C8B4 /* Raygun_KSCrashReportStore.h */; };
 		A2E4AD0E21003DAA0003C8B4 /* Raygun_KSCrashReportVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3021003DA90003C8B4 /* Raygun_KSCrashReportVersion.h */; };
 		A2E4AD0F21003DAA0003C8B4 /* Raygun_KSCrashReportVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3021003DA90003C8B4 /* Raygun_KSCrashReportVersion.h */; };
-		A2E4AD1021003DAA0003C8B4 /* KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* KSCrashReportWriter.h */; };
-		A2E4AD1121003DAA0003C8B4 /* KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* KSCrashReportWriter.h */; };
+		A2E4AD1021003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* Raygun_KSCrashReportWriter.h */; };
+		A2E4AD1121003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3121003DA90003C8B4 /* Raygun_KSCrashReportWriter.h */; };
 		A2E4AD1221003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3221003DA90003C8B4 /* KSSystemCapabilities.h */; };
 		A2E4AD1321003DAA0003C8B4 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC3221003DA90003C8B4 /* KSSystemCapabilities.h */; };
 		A2E4AD1421003DAA0003C8B4 /* KSCrashMonitor.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC3421003DA90003C8B4 /* KSCrashMonitor.c */; };
@@ -689,7 +689,7 @@
 		A2E4AC2E21003DA90003C8B4 /* Raygun_KSCrashReportStore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSCrashReportStore.c; sourceTree = "<group>"; };
 		A2E4AC2F21003DA90003C8B4 /* Raygun_KSCrashReportStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCrashReportStore.h; sourceTree = "<group>"; };
 		A2E4AC3021003DA90003C8B4 /* Raygun_KSCrashReportVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCrashReportVersion.h; sourceTree = "<group>"; };
-		A2E4AC3121003DA90003C8B4 /* KSCrashReportWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCrashReportWriter.h; sourceTree = "<group>"; };
+		A2E4AC3121003DA90003C8B4 /* Raygun_KSCrashReportWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCrashReportWriter.h; sourceTree = "<group>"; };
 		A2E4AC3221003DA90003C8B4 /* KSSystemCapabilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSystemCapabilities.h; sourceTree = "<group>"; };
 		A2E4AC3421003DA90003C8B4 /* KSCrashMonitor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSCrashMonitor.c; sourceTree = "<group>"; };
 		A2E4AC3521003DA90003C8B4 /* KSCrashMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCrashMonitor.h; sourceTree = "<group>"; };
@@ -1026,7 +1026,7 @@
 				A2E4AC2E21003DA90003C8B4 /* Raygun_KSCrashReportStore.c */,
 				A2E4AC2F21003DA90003C8B4 /* Raygun_KSCrashReportStore.h */,
 				A2E4AC3021003DA90003C8B4 /* Raygun_KSCrashReportVersion.h */,
-				A2E4AC3121003DA90003C8B4 /* KSCrashReportWriter.h */,
+				A2E4AC3121003DA90003C8B4 /* Raygun_KSCrashReportWriter.h */,
 				A2E4AC3221003DA90003C8B4 /* KSSystemCapabilities.h */,
 				A2E4AC3321003DA90003C8B4 /* Monitors */,
 				A2E4AC4B21003DA90003C8B4 /* Tools */,
@@ -1286,7 +1286,7 @@
 				A2E4AE0C21003DAA0003C8B4 /* DemangleNodes.h in Headers */,
 				A2E4ACF621003DAA0003C8B4 /* Raygun_KSCrashC.h in Headers */,
 				A2E4AD9E21003DAA0003C8B4 /* KSStackCursor_SelfThread.h in Headers */,
-				A2E4AD1021003DAA0003C8B4 /* KSCrashReportWriter.h in Headers */,
+				A2E4AD1021003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */,
 				A2E4ACE221003DAA0003C8B4 /* Raygun_StringRef.h in Headers */,
 				A2E4AD9A21003DAA0003C8B4 /* KSStackCursor_MachineContext.h in Headers */,
 				A2E4ADAA21003DAA0003C8B4 /* KSSysCtl.h in Headers */,
@@ -1394,7 +1394,7 @@
 				A2E4AE0D21003DAA0003C8B4 /* DemangleNodes.h in Headers */,
 				A2E4ACF721003DAA0003C8B4 /* Raygun_KSCrashC.h in Headers */,
 				A2E4AD9F21003DAA0003C8B4 /* KSStackCursor_SelfThread.h in Headers */,
-				A2E4AD1121003DAA0003C8B4 /* KSCrashReportWriter.h in Headers */,
+				A2E4AD1121003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */,
 				A2E4ACE321003DAA0003C8B4 /* Raygun_StringRef.h in Headers */,
 				A2E4AD9B21003DAA0003C8B4 /* KSStackCursor_MachineContext.h in Headers */,
 				A2E4ADAB21003DAA0003C8B4 /* KSSysCtl.h in Headers */,
@@ -1524,7 +1524,7 @@
 				A2E1A1D6218F919500BF66DB /* Raygun_KSCrashReportFixer.h in Headers */,
 				A2E1A1D7218F919500BF66DB /* Raygun_KSCrashReportStore.h in Headers */,
 				A2E1A1D8218F919500BF66DB /* Raygun_KSCrashReportVersion.h in Headers */,
-				A2E1A1D9218F919500BF66DB /* KSCrashReportWriter.h in Headers */,
+				A2E1A1D9218F919500BF66DB /* Raygun_KSCrashReportWriter.h in Headers */,
 				A2E1A1DA218F919500BF66DB /* KSSystemCapabilities.h in Headers */,
 				A2E1A1DB218F919500BF66DB /* KSCrashMonitor.h in Headers */,
 				A2E1A1DC218F919500BF66DB /* KSCrashMonitor_AppState.h in Headers */,
