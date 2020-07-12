@@ -48,7 +48,7 @@
  * @return The address of the first command, or NULL if none was found (which
  *         should not happen unless the header or image is corrupt).
  */
-static uintptr_t firstCmdAfterHeader(const struct mach_header* const header)
+static uintptr_t raygun_firstCmdAfterHeader(const struct mach_header* const header)
 {
     switch(header->magic)
     {
@@ -69,7 +69,7 @@ static uintptr_t firstCmdAfterHeader(const struct mach_header* const header)
  * @param address The address to examine.
  * @return The index of the image it is part of, or UINT_MAX if none was found.
  */
-static uint32_t imageIndexContainingAddress(const uintptr_t address)
+static uint32_t raygun_imageIndexContainingAddress(const uintptr_t address)
 {
     const uint32_t imageCount = _dyld_image_count();
     const struct mach_header* header = 0;
@@ -81,7 +81,7 @@ static uint32_t imageIndexContainingAddress(const uintptr_t address)
         {
             // Look for a segment command with this address within its range.
             uintptr_t addressWSlide = address - (uintptr_t)_dyld_get_image_vmaddr_slide(iImg);
-            uintptr_t cmdPtr = firstCmdAfterHeader(header);
+            uintptr_t cmdPtr = raygun_firstCmdAfterHeader(header);
             if(cmdPtr == 0)
             {
                 continue;
@@ -121,12 +121,12 @@ static uint32_t imageIndexContainingAddress(const uintptr_t address)
  * @param idx The image index.
  * @return The image's base address, or 0 if none was found.
  */
-static uintptr_t segmentBaseOfImageIndex(const uint32_t idx)
+static uintptr_t raygun_segmentBaseOfImageIndex(const uint32_t idx)
 {
     const struct mach_header* header = _dyld_get_image_header(idx);
     
     // Look for a segment command and return the file image address.
-    uintptr_t cmdPtr = firstCmdAfterHeader(header);
+    uintptr_t cmdPtr = raygun_firstCmdAfterHeader(header);
     if(cmdPtr == 0)
     {
         return 0;
@@ -194,7 +194,7 @@ const uint8_t* raygun_ksdl_imageUUID(const char* const imageName, bool exactMatc
             const struct mach_header* header = _dyld_get_image_header(iImg);
             if(header != NULL)
             {
-                uintptr_t cmdPtr = firstCmdAfterHeader(header);
+                uintptr_t cmdPtr = raygun_firstCmdAfterHeader(header);
                 if(cmdPtr != 0)
                 {
                     for(uint32_t iCmd = 0;iCmd < header->ncmds; iCmd++)
@@ -221,7 +221,7 @@ bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info)
     info->dli_sname = NULL;
     info->dli_saddr = NULL;
 
-    const uint32_t idx = imageIndexContainingAddress(address);
+    const uint32_t idx = raygun_imageIndexContainingAddress(address);
     if(idx == UINT_MAX)
     {
         return false;
@@ -229,7 +229,7 @@ bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info)
     const struct mach_header* header = _dyld_get_image_header(idx);
     const uintptr_t imageVMAddrSlide = (uintptr_t)_dyld_get_image_vmaddr_slide(idx);
     const uintptr_t addressWithSlide = address - imageVMAddrSlide;
-    const uintptr_t segmentBase = segmentBaseOfImageIndex(idx) + imageVMAddrSlide;
+    const uintptr_t segmentBase = raygun_segmentBaseOfImageIndex(idx) + imageVMAddrSlide;
     if(segmentBase == 0)
     {
         return false;
@@ -241,7 +241,7 @@ bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info)
     // Find symbol tables and get whichever symbol is closest to the address.
     const STRUCT_NLIST* bestMatch = NULL;
     uintptr_t bestDistance = ULONG_MAX;
-    uintptr_t cmdPtr = firstCmdAfterHeader(header);
+    uintptr_t cmdPtr = raygun_firstCmdAfterHeader(header);
     if(cmdPtr == 0)
     {
         return false;
@@ -309,7 +309,7 @@ bool raygun_ksdl_getBinaryImage(int index, Raygun_KSBinaryImage* buffer)
         return false;
     }
     
-    uintptr_t cmdPtr = firstCmdAfterHeader(header);
+    uintptr_t cmdPtr = raygun_firstCmdAfterHeader(header);
     if(cmdPtr == 0)
     {
         return false;
