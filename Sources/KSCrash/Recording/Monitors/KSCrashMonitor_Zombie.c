@@ -26,7 +26,7 @@
 
 
 #include "KSCrashMonitor_Zombie.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "KSObjC.h"
 #include "KSLogger.h"
 

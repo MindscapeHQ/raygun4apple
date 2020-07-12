@@ -27,7 +27,7 @@
 #import "Raygun_KSCrash.h"
 #import "KSCrashMonitor_NSException.h"
 #import "KSStackCursor_Backtrace.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSThread.h"
 #import <Foundation/Foundation.h>

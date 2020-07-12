@@ -38,7 +38,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef struct KSCrash_MonitorContext
+typedef struct Raygun_KSCrash_MonitorContext
 {
     /** Unique identifier for this event. */
     const char* eventID;

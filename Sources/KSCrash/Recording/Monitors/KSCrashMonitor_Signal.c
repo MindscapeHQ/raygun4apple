@@ -25,7 +25,7 @@
 //
 
 #include "KSCrashMonitor_Signal.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSSignalInfo.h"
 #include "KSMachineContext.h"
@@ -230,7 +230,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-static void addContextualInfoToEvent(struct KSCrash_MonitorContext* eventContext)
+static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* eventContext)
 {
     if(!(eventContext->crashType & (KSCrashMonitorTypeSignal | KSCrashMonitorTypeMachException)))
     {

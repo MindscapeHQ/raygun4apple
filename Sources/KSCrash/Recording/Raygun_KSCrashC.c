@@ -39,7 +39,7 @@
 #include "KSCrashMonitor_System.h"
 #include "KSCrashMonitor_Zombie.h"
 #include "KSCrashMonitor_AppState.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
@@ -91,7 +91,7 @@ static void printPreviousLog(const char* filePath)
  *
  * This function gets passed as a callback to a crash handler.
  */
-static void onCrash(struct KSCrash_MonitorContext* monitorContext)
+static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 {
     if (monitorContext->currentSnapshotUserReported == false) {
         KSLOG_DEBUG("Updating application state to note crash.");

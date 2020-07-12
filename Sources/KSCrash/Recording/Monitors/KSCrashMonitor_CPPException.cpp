@@ -23,7 +23,7 @@
 //
 
 #include "KSCrashMonitor_CPPException.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSThread.h"
 #include "KSMachineContext.h"

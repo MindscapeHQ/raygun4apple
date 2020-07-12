@@ -33,7 +33,7 @@
 #import "KSCrashMonitor_AppState.h"
 #import "KSJSONCodecObjC.h"
 #import "NSError+SimpleConstructor.h"
-#import "KSCrashMonitorContext.h"
+#import "Raygun_KSCrashMonitorContext.h"
 #import "KSCrashMonitor_System.h"
 #import "Raygun_KSSystemCapabilities.h"
 

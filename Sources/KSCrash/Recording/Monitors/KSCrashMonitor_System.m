@@ -28,7 +28,7 @@
 #import "KSCrashMonitor_System.h"
 
 #import "KSCPU.h"
-#import "KSCrashMonitorContext.h"
+#import "Raygun_KSCrashMonitorContext.h"
 #import "KSDate.h"
 #import "KSDynamicLinker.h"
 #import "KSSysCtl.h"

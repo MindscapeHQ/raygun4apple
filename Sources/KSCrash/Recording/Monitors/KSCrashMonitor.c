@@ -26,7 +26,7 @@
 
 
 #include "KSCrashMonitor.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 #include "KSCrashMonitorType.h"
 
 #include "KSCrashMonitor_Deadlock.h"
@@ -111,7 +111,7 @@ static bool g_handlingFatalException = false;
 static bool g_crashedDuringExceptionHandling = false;
 static bool g_requiresAsyncSafety = false;
 
-static void (*g_onExceptionEvent)(struct KSCrash_MonitorContext* monitorContext);
+static void (*g_onExceptionEvent)(struct Raygun_KSCrash_MonitorContext* monitorContext);
 
 // ============================================================================
 #pragma mark - API -
@@ -145,7 +145,7 @@ static inline bool isMonitorEnabled(Monitor* monitor)
     return false;
 }
 
-static inline void addContextualInfoToEvent(Monitor* monitor, struct KSCrash_MonitorContext* eventContext)
+static inline void addContextualInfoToEvent(Monitor* monitor, struct Raygun_KSCrash_MonitorContext* eventContext)
 {
     KSCrashMonitorAPI* api = getAPI(monitor);
     if(api != NULL && api->addContextualInfoToEvent != NULL)
@@ -154,7 +154,7 @@ static inline void addContextualInfoToEvent(Monitor* monitor, struct KSCrash_Mon
     }
 }
 
-void kscm_setEventCallback(void (*onEvent)(struct KSCrash_MonitorContext* monitorContext))
+void kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorContext* monitorContext))
 {
     g_onExceptionEvent = onEvent;
 }
@@ -228,7 +228,7 @@ bool kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment)
     return g_crashedDuringExceptionHandling;
 }
 
-void kscm_handleException(struct KSCrash_MonitorContext* context)
+void kscm_handleException(struct Raygun_KSCrash_MonitorContext* context)
 {
     context->requiresAsyncSafety = g_requiresAsyncSafety;
     if(g_crashedDuringExceptionHandling)

@@ -29,7 +29,7 @@
 
 #include "KSFileUtils.h"
 #include "KSJSONCodec.h"
-#include "KSCrashMonitorContext.h"
+#include "Raygun_KSCrashMonitorContext.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"

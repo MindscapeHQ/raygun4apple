@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 #import "Raygun_KSCrashReportWriter.h"
-#import "KSCrashMonitorContext.h"
+#import "Raygun_KSCrashMonitorContext.h"
 
 #include <stdbool.h>
 
@@ -86,7 +86,7 @@ void raygun_kscrashreport_setUserSectionWriteCallback(const KSReportWriteCallbac
  *
  * @param path The file to write to.
  */
-void raygun_kscrashreport_writeStandardReport(const struct KSCrash_MonitorContext* const monitorContext,
+void raygun_kscrashreport_writeStandardReport(const struct Raygun_KSCrash_MonitorContext* const monitorContext,
                                        const char* path);
 
 /** Write a minimal crash report to a file.
@@ -96,7 +96,7 @@ void raygun_kscrashreport_writeStandardReport(const struct KSCrash_MonitorContex
  *
  * @param path The file to write to.
  */
-void raygun_kscrashreport_writeRecrashReport(const struct KSCrash_MonitorContext* const monitorContext,
+void raygun_kscrashreport_writeRecrashReport(const struct Raygun_KSCrash_MonitorContext* const monitorContext,
                                       const char* path);
 
 

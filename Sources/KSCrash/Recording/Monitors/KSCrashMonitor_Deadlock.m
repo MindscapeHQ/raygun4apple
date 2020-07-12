@@ -25,7 +25,7 @@
 //
 
 #import "KSCrashMonitor_Deadlock.h"
-#import "KSCrashMonitorContext.h"
+#import "Raygun_KSCrashMonitorContext.h"
 #import "KSID.h"
 #import "KSThread.h"
 #import "KSStackCursor_MachineContext.h"

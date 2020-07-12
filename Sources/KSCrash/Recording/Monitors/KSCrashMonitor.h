@@ -42,7 +42,7 @@ extern "C" {
     
 #include <stdbool.h>
 
-struct KSCrash_MonitorContext;
+struct Raygun_KSCrash_MonitorContext;
 
 
 // ============================================================================
@@ -63,7 +63,7 @@ KSCrashMonitorType kscm_getActiveMonitors(void);
  *
  * @param onEvent Called whenever an event is captured.
  */
-void kscm_setEventCallback(void (*onEvent)(struct KSCrash_MonitorContext* monitorContext));
+void kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorContext* monitorContext));
 
 
 // ============================================================================
@@ -74,7 +74,7 @@ typedef struct
 {
     void (*setEnabled)(bool isEnabled);
     bool (*isEnabled)(void);
-    void (*addContextualInfoToEvent)(struct KSCrash_MonitorContext* eventContext);
+    void (*addContextualInfoToEvent)(struct Raygun_KSCrash_MonitorContext* eventContext);
 } KSCrashMonitorAPI;
 
 /** Notify that a fatal exception has been captured.
@@ -88,7 +88,7 @@ bool kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment);
  *
  * @oaram context Contextual information about the exception.
  */
-void kscm_handleException(struct KSCrash_MonitorContext* context);
+void kscm_handleException(struct Raygun_KSCrash_MonitorContext* context);
 
 
 #ifdef __cplusplus
