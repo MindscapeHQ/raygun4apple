@@ -85,47 +85,47 @@ typedef struct
     /** If true, the application is currently in the foreground. */
     bool applicationIsInForeground;
     
-} KSCrash_AppState;
+} Raygun_KSCrash_AppState;
     
 
 /** Initialize the state monitor.
  *
  * @param stateFilePath Where to store on-disk representation of state.
  */
-void kscrashstate_initialize(const char* stateFilePath);
+void raygun_kscrashstate_initialize(const char* stateFilePath);
 
 /** Reset the crash state.
  */
-bool kscrashstate_reset(void);
+bool raygun_kscrashstate_reset(void);
 
 /** Notify the crash reporter of the application active state.
  *
  * @param isActive true if the application is active, otherwise false.
  */
-void kscrashstate_notifyAppActive(bool isActive);
+void raygun_kscrashstate_notifyAppActive(bool isActive);
 
 /** Notify the crash reporter of the application foreground/background state.
  *
  * @param isInForeground true if the application is in the foreground, false if
  *                 it is in the background.
  */
-void kscrashstate_notifyAppInForeground(bool isInForeground);
+void raygun_kscrashstate_notifyAppInForeground(bool isInForeground);
 
 /** Notify the crash reporter that the application is terminating.
  */
-void kscrashstate_notifyAppTerminate(void);
+void raygun_kscrashstate_notifyAppTerminate(void);
 
 /** Notify the crash reporter that the application has crashed.
  */
-void kscrashstate_notifyAppCrash(void);
+void raygun_kscrashstate_notifyAppCrash(void);
 
 /** Read-only access into the current state.
  */
-const KSCrash_AppState* const kscrashstate_currentState(void);
+const Raygun_KSCrash_AppState* const raygun_kscrashstate_currentState(void);
 
 /** Access the Monitor API.
  */
-Raygun_KSCrashMonitorAPI* kscm_appstate_getAPI(void);
+Raygun_KSCrashMonitorAPI* raygun_kscm_appstate_getAPI(void);
 
 
 #ifdef __cplusplus

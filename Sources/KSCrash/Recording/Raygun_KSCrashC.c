@@ -38,7 +38,7 @@
 #include "KSString.h"
 #include "KSCrashMonitor_System.h"
 #include "KSCrashMonitor_Zombie.h"
-#include "KSCrashMonitor_AppState.h"
+#include "Raygun_KSCrashMonitor_AppState.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 
@@ -95,7 +95,7 @@ static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 {
     if (monitorContext->currentSnapshotUserReported == false) {
         KSLOG_DEBUG("Updating application state to note crash.");
-        kscrashstate_notifyAppCrash();
+        raygun_kscrashstate_notifyAppCrash();
     }
     monitorContext->consoleLogPath = g_shouldAddConsoleLogToReport ? g_consoleLogPath : NULL;
 
@@ -136,7 +136,7 @@ KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const
     snprintf(path, sizeof(path), "%s/Data", installPath);
     ksfu_makePath(path);
     snprintf(path, sizeof(path), "%s/Data/CrashState.json", installPath);
-    kscrashstate_initialize(path);
+    raygun_kscrashstate_initialize(path);
 
     snprintf(g_consoleLogPath, sizeof(g_consoleLogPath), "%s/Data/ConsoleLog.txt", installPath);
     if(g_shouldPrintPreviousLog)
@@ -232,22 +232,22 @@ void raygun_kscrash_reportUserException(const char* name,
 
 void raygun_kscrash_notifyAppActive(bool isActive)
 {
-    kscrashstate_notifyAppActive(isActive);
+    raygun_kscrashstate_notifyAppActive(isActive);
 }
 
 void raygun_kscrash_notifyAppInForeground(bool isInForeground)
 {
-    kscrashstate_notifyAppInForeground(isInForeground);
+    raygun_kscrashstate_notifyAppInForeground(isInForeground);
 }
 
 void raygun_kscrash_notifyAppTerminate(void)
 {
-    kscrashstate_notifyAppTerminate();
+    raygun_kscrashstate_notifyAppTerminate();
 }
 
 void raygun_kscrash_notifyAppCrash(void)
 {
-    kscrashstate_notifyAppCrash();
+    raygun_kscrashstate_notifyAppCrash();
 }
 
 int raygun_kscrash_getReportCount()

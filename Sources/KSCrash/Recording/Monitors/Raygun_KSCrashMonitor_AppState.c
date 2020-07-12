@@ -25,7 +25,7 @@
 //
 
 
-#include "KSCrashMonitor_AppState.h"
+#include "Raygun_KSCrashMonitor_AppState.h"
 
 #include "KSFileUtils.h"
 #include "KSJSONCodec.h"
@@ -67,7 +67,7 @@
 static const char* g_stateFilePath;
 
 /** Current state. */
-static KSCrash_AppState g_state;
+static Raygun_KSCrash_AppState g_state;
 
 static volatile bool g_isEnabled = false;
 
@@ -77,7 +77,7 @@ static volatile bool g_isEnabled = false;
 
 static int onBooleanElement(const char* const name, const bool value, void* const userData)
 {
-    KSCrash_AppState* state = userData;
+    Raygun_KSCrash_AppState* state = userData;
 
     if(strcmp(name, kKeyCrashedLastLaunch) == 0)
     {
@@ -89,7 +89,7 @@ static int onBooleanElement(const char* const name, const bool value, void* cons
 
 static int onFloatingPointElement(const char* const name, const double value, void* const userData)
 {
-    KSCrash_AppState* state = userData;
+    Raygun_KSCrash_AppState* state = userData;
 
     if(strcmp(name, kKeyActiveDurationSinceLastCrash) == 0)
     {
@@ -105,7 +105,7 @@ static int onFloatingPointElement(const char* const name, const double value, vo
 
 static int onIntegerElement(const char* const name, const int64_t value, void* const userData)
 {
-    KSCrash_AppState* state = userData;
+    Raygun_KSCrash_AppState* state = userData;
 
     if(strcmp(name, kKeyFormatVersion) == 0)
     {
@@ -326,14 +326,14 @@ done:
 #pragma mark - API -
 // ============================================================================
 
-void kscrashstate_initialize(const char* const stateFilePath)
+void raygun_kscrashstate_initialize(const char* const stateFilePath)
 {
     g_stateFilePath = strdup(stateFilePath);
     memset(&g_state, 0, sizeof(g_state));
     loadState(g_stateFilePath);
 }
 
-bool kscrashstate_reset()
+bool raygun_kscrashstate_reset()
 {
     if(g_isEnabled)
     {
@@ -359,7 +359,7 @@ bool kscrashstate_reset()
     return false;
 }
 
-void kscrashstate_notifyAppActive(const bool isActive)
+void raygun_kscrashstate_notifyAppActive(const bool isActive)
 {
     if(g_isEnabled)
     {
@@ -377,7 +377,7 @@ void kscrashstate_notifyAppActive(const bool isActive)
     }
 }
 
-void kscrashstate_notifyAppInForeground(const bool isInForeground)
+void raygun_kscrashstate_notifyAppInForeground(const bool isInForeground)
 {
     if(g_isEnabled)
     {
@@ -400,7 +400,7 @@ void kscrashstate_notifyAppInForeground(const bool isInForeground)
     }
 }
 
-void kscrashstate_notifyAppTerminate(void)
+void raygun_kscrashstate_notifyAppTerminate(void)
 {
     if(g_isEnabled)
     {
@@ -412,7 +412,7 @@ void kscrashstate_notifyAppTerminate(void)
     }
 }
 
-void kscrashstate_notifyAppCrash(void)
+void raygun_kscrashstate_notifyAppCrash(void)
 {
     if(g_isEnabled)
     {
@@ -434,7 +434,7 @@ void kscrashstate_notifyAppCrash(void)
     }
 }
 
-const KSCrash_AppState* const kscrashstate_currentState(void)
+const Raygun_KSCrash_AppState* const raygun_kscrashstate_currentState(void)
 {
     return &g_state;
 }
@@ -446,7 +446,7 @@ static void setEnabled(bool isEnabled)
         g_isEnabled = isEnabled;
         if(isEnabled)
         {
-            kscrashstate_reset();
+            raygun_kscrashstate_reset();
         }
     }
 }
@@ -476,7 +476,7 @@ static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
     }
 }
 
-Raygun_KSCrashMonitorAPI* kscm_appstate_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_appstate_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {

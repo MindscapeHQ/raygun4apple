@@ -36,7 +36,7 @@
 #include "KSCrashMonitor_Signal.h"
 #include "KSCrashMonitor_System.h"
 #include "KSCrashMonitor_User.h"
-#include "KSCrashMonitor_AppState.h"
+#include "Raygun_KSCrashMonitor_AppState.h"
 #include "KSCrashMonitor_Zombie.h"
 #include "KSDebug.h"
 #include "KSThread.h"
@@ -100,7 +100,7 @@ static Monitor g_monitors[] =
     },
     {
         .monitorType = KSCrashMonitorTypeApplicationState,
-        .getAPI = kscm_appstate_getAPI,
+        .getAPI = raygun_kscm_appstate_getAPI,
     },
 };
 static int g_monitorsCount = sizeof(g_monitors) / sizeof(*g_monitors);

@@ -30,7 +30,7 @@
 #import "Raygun_KSCrashC.h"
 #import "Raygun_KSCrashDoctor.h"
 #import "Raygun_KSCrashReportFields.h"
-#import "KSCrashMonitor_AppState.h"
+#import "Raygun_KSCrashMonitor_AppState.h"
 #import "KSJSONCodecObjC.h"
 #import "NSError+SimpleConstructor.h"
 #import "Raygun_KSCrashMonitorContext.h"
@@ -410,7 +410,7 @@ static NSString* getBasePath()
 #define SYNTHESIZE_CRASH_STATE_PROPERTY(TYPE, NAME) \
 - (TYPE) NAME \
 { \
-    return kscrashstate_currentState()->NAME; \
+    return raygun_kscrashstate_currentState()->NAME; \
 }
 
 SYNTHESIZE_CRASH_STATE_PROPERTY(NSTimeInterval, activeDurationSinceLastCrash)
