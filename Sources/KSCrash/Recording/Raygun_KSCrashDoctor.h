@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KSCrashDoctor : NSObject
+@interface Raygun_KSCrashDoctor : NSObject
 
-+ (KSCrashDoctor*) doctor;
++ (Raygun_KSCrashDoctor*) doctor;
 
 - (NSString*) diagnoseCrash:(NSDictionary*) crashReport;
 

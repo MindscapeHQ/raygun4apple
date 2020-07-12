@@ -28,7 +28,7 @@
 #define RaygunCrashReportCustomSink_h
 
 #import <Foundation/Foundation.h>
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 
 @interface RaygunCrashReportCustomSink : NSObject <KSCrashReportFilter>
 

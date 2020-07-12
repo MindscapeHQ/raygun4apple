@@ -37,7 +37,7 @@
  *
  * This is an abstract class.
  */
-@interface KSCrashInstallation : NSObject
+@interface Raygun_KSCrashInstallation : NSObject
 
 /** C Function to call during a crash report to give the callee an opportunity to
  * add to the report. NULL = ignore.

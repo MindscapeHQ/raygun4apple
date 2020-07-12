@@ -23,7 +23,7 @@
 //
 
 
-#include "KSCrashCachedData.h"
+#include "Raygun_KSCrashCachedData.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
@@ -164,7 +164,7 @@ static void* monitorCachedData(__unused void* const userData)
     return NULL;
 }
 
-void ksccd_init(int pollingIntervalInSeconds)
+void raygun_ksccd_init(int pollingIntervalInSeconds)
 {
     if (g_hasThreadStarted == true) {
         return ;
@@ -185,7 +185,7 @@ void ksccd_init(int pollingIntervalInSeconds)
     pthread_attr_destroy(&attr);
 }
 
-void ksccd_freeze()
+void raygun_ksccd_freeze()
 {
     if(g_semaphoreCount++ <= 0)
     {
@@ -194,7 +194,7 @@ void ksccd_freeze()
     }
 }
 
-void ksccd_unfreeze()
+void raygun_ksccd_unfreeze()
 {
     if(--g_semaphoreCount < 0)
     {
@@ -203,12 +203,12 @@ void ksccd_unfreeze()
     }
 }
 
-void ksccd_setSearchQueueNames(bool searchQueueNames)
+void raygun_ksccd_setSearchQueueNames(bool searchQueueNames)
 {
     g_searchQueueNames = searchQueueNames;
 }
 
-KSThread* ksccd_getAllThreads(int* threadCount)
+KSThread* raygun_ksccd_getAllThreads(int* threadCount)
 {
     if(threadCount != NULL)
     {
@@ -217,7 +217,7 @@ KSThread* ksccd_getAllThreads(int* threadCount)
     return g_allMachThreads;
 }
 
-const char* ksccd_getThreadName(KSThread thread)
+const char* raygun_ksccd_getThreadName(KSThread thread)
 {
     if(g_allThreadNames != NULL)
     {
@@ -232,7 +232,7 @@ const char* ksccd_getThreadName(KSThread thread)
     return NULL;
 }
 
-const char* ksccd_getQueueName(KSThread thread)
+const char* raygun_ksccd_getQueueName(KSThread thread)
 {
     if(g_allQueueNames != NULL)
     {

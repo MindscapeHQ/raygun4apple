@@ -16,8 +16,8 @@
 #ifndef LLVM_ADT_OPTIONAL_H
 #define LLVM_ADT_OPTIONAL_H
 
-#include "None.h"
-#include "AlignOf.h"
+#include "Raygun_None.h"
+#include "Raygun_AlignOf.h"
 #include "Compiler.h"
 #include <cassert>
 #include <new>
@@ -26,32 +26,32 @@
 namespace llvm {
 
 template<typename T>
-class Optional {
+class Raygun_Optional {
   AlignedCharArrayUnion<T> storage;
   bool hasVal;
 public:
   typedef T value_type;
 
-  Optional(NoneType) : hasVal(false) {}
-  explicit Optional() : hasVal(false) {}
-  Optional(const T &y) : hasVal(true) {
+  Raygun_Optional(Raygun_NoneType) : hasVal(false) {}
+  explicit Raygun_Optional() : hasVal(false) {}
+  Raygun_Optional(const T &y) : hasVal(true) {
     new (storage.buffer) T(y);
   }
-  Optional(const Optional &O) : hasVal(O.hasVal) {
+  Raygun_Optional(const Raygun_Optional &O) : hasVal(O.hasVal) {
     if (hasVal)
       new (storage.buffer) T(*O);
   }
 
-  Optional(T &&y) : hasVal(true) {
+  Raygun_Optional(T &&y) : hasVal(true) {
     new (storage.buffer) T(std::forward<T>(y));
   }
-  Optional(Optional<T> &&O) : hasVal(O) {
+  Raygun_Optional(Raygun_Optional<T> &&O) : hasVal(O) {
     if (O) {
       new (storage.buffer) T(std::move(*O));
       O.reset();
     }
   }
-  Optional &operator=(T &&y) {
+  Raygun_Optional &operator=(T &&y) {
     if (hasVal)
       **this = std::move(y);
     else {
@@ -60,7 +60,7 @@ public:
     }
     return *this;
   }
-  Optional &operator=(Optional &&O) {
+  Raygun_Optional &operator=(Raygun_Optional &&O) {
     if (!O)
       reset();
     else {
@@ -78,8 +78,8 @@ public:
     new (storage.buffer) T(std::forward<ArgTypes>(Args)...);
   }
 
-  static inline Optional create(const T* y) {
-    return y ? Optional(*y) : Optional();
+  static inline Raygun_Optional create(const T* y) {
+    return y ? Optional(*y) : Raygun_Optional();
   }
 
   // FIXME: these assignments (& the equivalent const T&/const Optional& ctors)
@@ -87,7 +87,7 @@ public:
   // with the rvalue versions above - but this could place a different set of
   // requirements (notably: the existence of a default ctor) when implemented
   // in that way. Careful SFINAE to avoid such pitfalls would be required.
-  Optional &operator=(const T &y) {
+  Raygun_Optional &operator=(const T &y) {
     if (hasVal)
       **this = y;
     else {
@@ -97,7 +97,7 @@ public:
     return *this;
   }
 
-  Optional &operator=(const Optional &O) {
+  Raygun_Optional &operator=(const Raygun_Optional &O) {
     if (!O)
       reset();
     else
@@ -112,7 +112,7 @@ public:
     }
   }
 
-  ~Optional() {
+  ~Raygun_Optional() {
     reset();
   }
 
@@ -145,7 +145,7 @@ public:
 };
 
 template <typename T> struct isPodLike;
-template <typename T> struct isPodLike<Optional<T> > {
+template <typename T> struct isPodLike<Raygun_Optional<T> > {
   // An Optional<T> is pod-like if T is.
   static const bool value = isPodLike<T>::value;
 };
@@ -157,25 +157,25 @@ template <typename T> struct isPodLike<Optional<T> > {
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator==(const Optional<T> &X, const Optional<U> &Y);
+void operator==(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 template<typename T>
-bool operator==(const Optional<T> &X, NoneType) {
+bool operator==(const Raygun_Optional<T> &X, Raygun_NoneType) {
   return !X.hasValue();
 }
 
 template<typename T>
-bool operator==(NoneType, const Optional<T> &X) {
+bool operator==(Raygun_NoneType, const Raygun_Optional<T> &X) {
   return X == None;
 }
 
 template<typename T>
-bool operator!=(const Optional<T> &X, NoneType) {
+bool operator!=(const Raygun_Optional<T> &X, Raygun_NoneType) {
   return !(X == None);
 }
 
 template<typename T>
-bool operator!=(NoneType, const Optional<T> &X) {
+bool operator!=(Raygun_NoneType, const Raygun_Optional<T> &X) {
   return X != None;
 }
 /// \brief Poison comparison between two \c Optional objects. Clients needs to
@@ -185,7 +185,7 @@ bool operator!=(NoneType, const Optional<T> &X) {
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator!=(const Optional<T> &X, const Optional<U> &Y);
+void operator!=(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 /// \brief Poison comparison between two \c Optional objects. Clients needs to
 /// explicitly compare the underlying values and account for empty \c Optional
@@ -194,7 +194,7 @@ void operator!=(const Optional<T> &X, const Optional<U> &Y);
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator<(const Optional<T> &X, const Optional<U> &Y);
+void operator<(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 /// \brief Poison comparison between two \c Optional objects. Clients needs to
 /// explicitly compare the underlying values and account for empty \c Optional
@@ -203,7 +203,7 @@ void operator<(const Optional<T> &X, const Optional<U> &Y);
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator<=(const Optional<T> &X, const Optional<U> &Y);
+void operator<=(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 /// \brief Poison comparison between two \c Optional objects. Clients needs to
 /// explicitly compare the underlying values and account for empty \c Optional
@@ -212,7 +212,7 @@ void operator<=(const Optional<T> &X, const Optional<U> &Y);
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator>=(const Optional<T> &X, const Optional<U> &Y);
+void operator>=(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 /// \brief Poison comparison between two \c Optional objects. Clients needs to
 /// explicitly compare the underlying values and account for empty \c Optional
@@ -221,7 +221,7 @@ void operator>=(const Optional<T> &X, const Optional<U> &Y);
 /// This routine will never be defined. It returns \c void to help diagnose
 /// errors at compile time.
 template<typename T, typename U>
-void operator>(const Optional<T> &X, const Optional<U> &Y);
+void operator>(const Raygun_Optional<T> &X, const Raygun_Optional<U> &Y);
 
 } // end llvm namespace
 

@@ -25,7 +25,7 @@
 //
 
 
-#import "KSCrashInstallation.h"
+#import "Raygun_KSCrashInstallation.h"
 
 
 /** Implement a property to be used as a "key". */
@@ -54,7 +54,7 @@ IMPLEMENT_REPORT_VALUE_PROPERTY(NAME, NAMEUPPER, TYPE) \
 IMPLEMENT_REPORT_KEY_PROPERTY(NAME, NAMEUPPER)
 
 
-@interface KSCrashInstallation ()
+@interface Raygun_KSCrashInstallation ()
 
 /** Initializer.
  *

@@ -33,25 +33,25 @@
 
 typedef enum
 {
-    KSCrashDemangleLanguageNone = 0,
-    KSCrashDemangleLanguageCPlusPlus = 1,
-    KSCrashDemangleLanguageSwift = 2,
-    KSCrashDemangleLanguageAll = ~1
-} KSCrashDemangleLanguage;
+    Raygun_KSCrashDemangleLanguageNone = 0,
+    Raygun_KSCrashDemangleLanguageCPlusPlus = 1,
+    Raygun_KSCrashDemangleLanguageSwift = 2,
+    Raygun_KSCrashDemangleLanguageAll = ~1
+} Raygun_KSCrashDemangleLanguage;
 
 typedef enum
 {
-    KSCDeleteNever,
-    KSCDeleteOnSucess,
-    KSCDeleteAlways
-} KSCDeleteBehavior;
+    Raygun_KSCDeleteNever,
+    Raygun_KSCDeleteOnSucess,
+    Raygun_KSCDeleteAlways
+} Raygun_KSCDeleteBehavior;
 
 /**
  * Reports any crashes that occur in the application.
  *
  * The crash reports will be located in $APP_HOME/Library/Caches/KSCrashReports
  */
-@interface KSCrash : NSObject
+@interface Raygun_KSCrash : NSObject
 
 #pragma mark - Configuration -
 
@@ -75,7 +75,7 @@ typedef enum
  *
  * Default: KSCDeleteAlways
  */
-@property(nonatomic,readwrite,assign) KSCDeleteBehavior deleteBehaviorAfterSendAll;
+@property(nonatomic,readwrite,assign) Raygun_KSCDeleteBehavior deleteBehaviorAfterSendAll;
 
 /** The monitors that will or have been installed.
  * Note: This value may change once KSCrash is installed if some monitors
@@ -167,7 +167,7 @@ typedef enum
 @property(nonatomic,readwrite,assign) BOOL printPreviousLog;
 
 /** Which languages to demangle when getting stack traces (default KSCrashDemangleLanguageAll) */
-@property(nonatomic,readwrite,assign) KSCrashDemangleLanguage demangleLanguages;
+@property(nonatomic,readwrite,assign) Raygun_KSCrashDemangleLanguage demangleLanguages;
 
 /** Exposes the uncaughtExceptionHandler if set from KSCrash. Is nil if debugger is running. **/
 @property (nonatomic, assign) NSUncaughtExceptionHandler *uncaughtExceptionHandler;
@@ -211,7 +211,7 @@ typedef enum
 
 /** Get the singleton instance of the crash reporter.
  */
-+ (KSCrash*) sharedInstance;
++ (Raygun_KSCrash*) sharedInstance;
 
 /** Install the crash reporter.
  * The reporter will record crashes, but will not send any crash reports unless

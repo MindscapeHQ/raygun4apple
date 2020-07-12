@@ -50,7 +50,7 @@ extern "C" {
  *
  * @return The crash types that are being handled.
  */
-KSCrashMonitorType kscrash_install(const char* appName, const char* const installPath);
+KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath);
 
 /** Set the crash types that will be handled.
  * Some crash types may not be enabled depending on circumstances (e.g. running
@@ -63,14 +63,14 @@ KSCrashMonitorType kscrash_install(const char* appName, const char* const instal
  *         successfully installed. Otherwise it represents which monitors it
  *         will attempt to activate when KSCrash installs.
  */
-KSCrashMonitorType kscrash_setMonitoring(KSCrashMonitorType monitors);
+KSCrashMonitorType raygun_kscrash_setMonitoring(KSCrashMonitorType monitors);
 
 /** Set the user-supplied data in JSON format.
  *
  * @param userInfoJSON Pre-baked JSON containing user-supplied information.
  *                     NULL = delete.
  */
-void kscrash_setUserInfoJSON(const char* const userInfoJSON);
+void raygun_kscrash_setUserInfoJSON(const char* const userInfoJSON);
 
 /** Set the maximum time to allow the main thread to run without returning.
  * If a task occupies the main thread for longer than this interval, the
@@ -87,7 +87,7 @@ void kscrash_setUserInfoJSON(const char* const userInfoJSON);
  *
  * Default: 0
  */
-void kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval);
+void raygun_kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval);
 
 /** If true, introspect memory contents during a crash.
  * Any Objective-C objects or C strings near the stack pointer or referenced by
@@ -96,7 +96,7 @@ void kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval);
  *
  * Default: false
  */
-void kscrash_setIntrospectMemory(bool introspectMemory);
+void raygun_kscrash_setIntrospectMemory(bool introspectMemory);
 
 /** List of Objective-C classes that should never be introspected.
  * Whenever a class in this list is encountered, only the class name will be recorded.
@@ -104,7 +104,7 @@ void kscrash_setIntrospectMemory(bool introspectMemory);
  *
  * Default: NULL
  */
-void kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasses, int length);
+void raygun_kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasses, int length);
 
 /** Set the callback to invoke upon a crash.
  *
@@ -117,24 +117,24 @@ void kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasses, int 
  *
  * Default: NULL
  */
-void kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify);
+void raygun_kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify);
 
 /** Set if KSLOG console messages should be appended to the report.
  *
  * @param shouldAddConsoleLogToReport If true, add the log to the report.
  */
-void kscrash_setAddConsoleLogToReport(bool shouldAddConsoleLogToReport);
+void raygun_kscrash_setAddConsoleLogToReport(bool shouldAddConsoleLogToReport);
 
 /** Set if KSCrash should print the previous log to the console on startup.
  *  This is for debugging purposes.
  */
-void kscrash_setPrintPreviousLog(bool shouldPrintPreviousLog);
+void raygun_kscrash_setPrintPreviousLog(bool shouldPrintPreviousLog);
 
 /** Set the maximum number of reports allowed on disk before old ones get deleted.
  *
  * @param maxReportCount The maximum number of reports.
  */
-void kscrash_setMaxReportCount(int maxReportCount);
+void raygun_kscrash_setMaxReportCount(int maxReportCount);
 
 /** Report a custom, user defined exception.
  * This can be useful when dealing with scripting languages.
@@ -158,7 +158,7 @@ void kscrash_setMaxReportCount(int maxReportCount);
  *
  * @param terminateProgram If true, do not return from this function call. Terminate the program instead.
  */
-void kscrash_reportUserException(const char* name,
+void raygun_kscrash_reportUserException(const char* name,
                                  const char* reason,
                                  const char* language,
                                  const char* lineOfCode,
@@ -173,29 +173,29 @@ void kscrash_reportUserException(const char* name,
  *
  * @param isActive true if the application is active, otherwise false.
  */
-void kscrash_notifyAppActive(bool isActive);
+void raygun_kscrash_notifyAppActive(bool isActive);
 
 /** Notify the crash reporter of the application foreground/background state.
  *
  * @param isInForeground true if the application is in the foreground, false if
  *                 it is in the background.
  */
-void kscrash_notifyAppInForeground(bool isInForeground);
+void raygun_kscrash_notifyAppInForeground(bool isInForeground);
 
 /** Notify the crash reporter that the application is terminating.
  */
-void kscrash_notifyAppTerminate(void);
+void raygun_kscrash_notifyAppTerminate(void);
 
 /** Notify the crash reporter that the application has crashed.
  */
-void kscrash_notifyAppCrash(void);
+void raygun_kscrash_notifyAppCrash(void);
 
     
 #pragma mark -- Reporting --
 
 /** Get the number of reports on disk.
  */
-int kscrash_getReportCount(void);
+int raygun_kscrash_getReportCount(void);
 
 /** Get a list of IDs for all reports on disk.
  *
@@ -204,7 +204,7 @@ int kscrash_getReportCount(void);
  *
  * @return The number of report IDs that were placed in the array.
  */
-int kscrash_getReportIDs(int64_t* reportIDs, int count);
+int raygun_kscrash_getReportIDs(int64_t* reportIDs, int count);
 
 /** Read a report.
  *
@@ -213,7 +213,7 @@ int kscrash_getReportIDs(int64_t* reportIDs, int count);
  * @return The NULL terminated report, or NULL if not found.
  *         MEMORY MANAGEMENT WARNING: User is responsible for calling free() on the returned value.
  */
-char* kscrash_readReport(int64_t reportID);
+char* raygun_kscrash_readReport(int64_t reportID);
 
 /** Add a custom report to the store.
  *
@@ -222,17 +222,17 @@ char* kscrash_readReport(int64_t reportID);
  *
  * @return the new report's ID.
  */
-int64_t kscrash_addUserReport(const char* report, int reportLength);
+int64_t raygun_kscrash_addUserReport(const char* report, int reportLength);
 
 /** Delete all reports on disk.
  */
-void kscrash_deleteAllReports(void);
+void raygun_kscrash_deleteAllReports(void);
 
 /** Delete report.
  *
  * @param reportID An ID of report to delete.
  */
-void kscrash_deleteReportWithID(int64_t reportID);
+void raygun_kscrash_deleteReportWithID(int64_t reportID);
 
 
 #ifdef __cplusplus

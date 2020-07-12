@@ -27,7 +27,7 @@
 #import "RaygunCrashInstallation.h"
 
 #import "RaygunCrashReportSink.h"
-#import "KSCrashInstallation+Private.h"
+#import "Raygun_KSCrashInstallation+Private.h"
 #import "RaygunLogger.h"
 
 @implementation RaygunCrashInstallation

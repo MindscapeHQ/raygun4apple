@@ -25,11 +25,11 @@
 //
 
 
-#include "KSCrashC.h"
+#include "Raygun_KSCrashC.h"
 
-#include "KSCrashCachedData.h"
-#include "KSCrashReport.h"
-#include "KSCrashReportFixer.h"
+#include "Raygun_KSCrashCachedData.h"
+#include "Raygun_KSCrashReport.h"
+#include "Raygun_KSCrashReportFixer.h"
 #include "KSCrashReportStore.h"
 #include "KSCrashMonitor_Deadlock.h"
 #include "KSCrashMonitor_User.h"
@@ -101,14 +101,14 @@ static void onCrash(struct KSCrash_MonitorContext* monitorContext)
 
     if(monitorContext->crashedDuringCrashHandling)
     {
-        kscrashreport_writeRecrashReport(monitorContext, g_lastCrashReportFilePath);
+        raygun_kscrashreport_writeRecrashReport(monitorContext, g_lastCrashReportFilePath);
     }
     else
     {
         char crashReportFilePath[KSFU_MAX_PATH_LENGTH];
         kscrs_getNextCrashReportPath(crashReportFilePath);
         strncpy(g_lastCrashReportFilePath, crashReportFilePath, sizeof(g_lastCrashReportFilePath));
-        kscrashreport_writeStandardReport(monitorContext, crashReportFilePath);
+        raygun_kscrashreport_writeStandardReport(monitorContext, crashReportFilePath);
     }
 }
 
@@ -117,7 +117,7 @@ static void onCrash(struct KSCrash_MonitorContext* monitorContext)
 #pragma mark - API -
 // ============================================================================
 
-KSCrashMonitorType kscrash_install(const char* appName, const char* const installPath)
+KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath)
 {
     KSLOG_DEBUG("Installing crash reporter.");
 
@@ -145,16 +145,16 @@ KSCrashMonitorType kscrash_install(const char* appName, const char* const instal
     }
     kslog_setLogFilename(g_consoleLogPath, true);
     
-    ksccd_init(60);
+    raygun_ksccd_init(60);
 
     kscm_setEventCallback(onCrash);
-    KSCrashMonitorType monitors = kscrash_setMonitoring(g_monitoring);
+    KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
 
     KSLOG_DEBUG("Installation complete.");
     return monitors;
 }
 
-KSCrashMonitorType kscrash_setMonitoring(KSCrashMonitorType monitors)
+KSCrashMonitorType raygun_kscrash_setMonitoring(KSCrashMonitorType monitors)
 {
     g_monitoring = monitors;
     
@@ -167,49 +167,49 @@ KSCrashMonitorType kscrash_setMonitoring(KSCrashMonitorType monitors)
     return g_monitoring;
 }
 
-void kscrash_setUserInfoJSON(const char* const userInfoJSON)
+void raygun_kscrash_setUserInfoJSON(const char* const userInfoJSON)
 {
-    kscrashreport_setUserInfoJSON(userInfoJSON);
+    raygun_kscrashreport_setUserInfoJSON(userInfoJSON);
 }
 
-void kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval)
+void raygun_kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval)
 {
 #if KSCRASH_HAS_OBJC
     kscm_setDeadlockHandlerWatchdogInterval(deadlockWatchdogInterval);
 #endif
 }
 
-void kscrash_setIntrospectMemory(bool introspectMemory)
+void raygun_kscrash_setIntrospectMemory(bool introspectMemory)
 {
-    kscrashreport_setIntrospectMemory(introspectMemory);
+    raygun_kscrashreport_setIntrospectMemory(introspectMemory);
 }
 
-void kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasses, int length)
+void raygun_kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasses, int length)
 {
-    kscrashreport_setDoNotIntrospectClasses(doNotIntrospectClasses, length);
+    raygun_kscrashreport_setDoNotIntrospectClasses(doNotIntrospectClasses, length);
 }
 
-void kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify)
+void raygun_kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify)
 {
-    kscrashreport_setUserSectionWriteCallback(onCrashNotify);
+    raygun_kscrashreport_setUserSectionWriteCallback(onCrashNotify);
 }
 
-void kscrash_setAddConsoleLogToReport(bool shouldAddConsoleLogToReport)
+void raygun_kscrash_setAddConsoleLogToReport(bool shouldAddConsoleLogToReport)
 {
     g_shouldAddConsoleLogToReport = shouldAddConsoleLogToReport;
 }
 
-void kscrash_setPrintPreviousLog(bool shouldPrintPreviousLog)
+void raygun_kscrash_setPrintPreviousLog(bool shouldPrintPreviousLog)
 {
     g_shouldPrintPreviousLog = shouldPrintPreviousLog;
 }
 
-void kscrash_setMaxReportCount(int maxReportCount)
+void raygun_kscrash_setMaxReportCount(int maxReportCount)
 {
     kscrs_setMaxReportCount(maxReportCount);
 }
 
-void kscrash_reportUserException(const char* name,
+void raygun_kscrash_reportUserException(const char* name,
                                  const char* reason,
                                  const char* language,
                                  const char* lineOfCode,
@@ -230,37 +230,37 @@ void kscrash_reportUserException(const char* name,
     }
 }
 
-void kscrash_notifyAppActive(bool isActive)
+void raygun_kscrash_notifyAppActive(bool isActive)
 {
     kscrashstate_notifyAppActive(isActive);
 }
 
-void kscrash_notifyAppInForeground(bool isInForeground)
+void raygun_kscrash_notifyAppInForeground(bool isInForeground)
 {
     kscrashstate_notifyAppInForeground(isInForeground);
 }
 
-void kscrash_notifyAppTerminate(void)
+void raygun_kscrash_notifyAppTerminate(void)
 {
     kscrashstate_notifyAppTerminate();
 }
 
-void kscrash_notifyAppCrash(void)
+void raygun_kscrash_notifyAppCrash(void)
 {
     kscrashstate_notifyAppCrash();
 }
 
-int kscrash_getReportCount()
+int raygun_kscrash_getReportCount()
 {
     return kscrs_getReportCount();
 }
 
-int kscrash_getReportIDs(int64_t* reportIDs, int count)
+int raygun_kscrash_getReportIDs(int64_t* reportIDs, int count)
 {
     return kscrs_getReportIDs(reportIDs, count);
 }
 
-char* kscrash_readReport(int64_t reportID)
+char* raygun_kscrash_readReport(int64_t reportID)
 {
     if(reportID <= 0)
     {
@@ -275,7 +275,7 @@ char* kscrash_readReport(int64_t reportID)
         return NULL;
     }
 
-    char* fixedReport = kscrf_fixupCrashReport(rawReport);
+    char* fixedReport = raygun_kscrf_fixupCrashReport(rawReport);
     if(fixedReport == NULL)
     {
         KSLOG_ERROR("Failed to fixup report ID %" PRIx64, reportID);
@@ -285,17 +285,17 @@ char* kscrash_readReport(int64_t reportID)
     return fixedReport;
 }
 
-int64_t kscrash_addUserReport(const char* report, int reportLength)
+int64_t raygun_kscrash_addUserReport(const char* report, int reportLength)
 {
     return kscrs_addUserReport(report, reportLength);
 }
 
-void kscrash_deleteAllReports()
+void raygun_kscrash_deleteAllReports()
 {
     kscrs_deleteAllReports();
 }
 
-void kscrash_deleteReportWithID(int64_t reportID)
+void raygun_kscrash_deleteReportWithID(int64_t reportID)
 {
     kscrs_deleteReportWithID(reportID);
 }

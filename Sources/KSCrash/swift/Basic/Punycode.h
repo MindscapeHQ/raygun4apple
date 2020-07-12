@@ -28,7 +28,7 @@
 //#include "llvm/ADT/StringRef.h"
 //#include "llvm/ADT/SmallVector.h"
 #include "LLVM.h"
-#include "StringRef.h"
+#include "Raygun_StringRef.h"
 #include <vector>
 #include <cstdint>
 
@@ -44,12 +44,12 @@ bool encodePunycode(const std::vector<uint32_t> &InputCodePoints,
 /// Decodes a Punycode string into a sequence of Unicode scalars.
 ///
 /// Returns false if decoding failed.
-bool decodePunycode(StringRef InputPunycode,
+bool decodePunycode(Raygun_StringRef InputPunycode,
                     std::vector<uint32_t> &OutCodePoints);
 
-bool encodePunycodeUTF8(StringRef InputUTF8, std::string &OutPunycode);
+bool encodePunycodeUTF8(Raygun_StringRef InputUTF8, std::string &OutPunycode);
 
-bool decodePunycodeUTF8(StringRef InputPunycode, std::string &OutUTF8);
+bool decodePunycodeUTF8(Raygun_StringRef InputPunycode, std::string &OutUTF8);
 
 } // end namespace Punycode
 } // end namespace swift

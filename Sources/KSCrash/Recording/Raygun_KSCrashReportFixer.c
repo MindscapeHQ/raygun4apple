@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSCrashReportFields.h"
+#include "Raygun_KSCrashReportFields.h"
 #include "KSSystemCapabilities.h"
 #include "KSJSONCodec.h"
 #include "KSDemangle_CPP.h"
@@ -42,17 +42,17 @@
 
 static char* datePaths[][MAX_DEPTH] =
 {
-    {"", KSCrashField_Report, KSCrashField_Timestamp},
-    {"", KSCrashField_RecrashReport, KSCrashField_Report, KSCrashField_Timestamp},
+    {"", Raygun_KSCrashField_Report, Raygun_KSCrashField_Timestamp},
+    {"", Raygun_KSCrashField_RecrashReport, Raygun_KSCrashField_Report, Raygun_KSCrashField_Timestamp},
 };
 static int datePathsCount = sizeof(datePaths) / sizeof(*datePaths);
 
 static char* demanglePaths[][MAX_DEPTH] =
 {
-    {"", KSCrashField_Crash, KSCrashField_Threads, "", KSCrashField_Backtrace, KSCrashField_Contents, "", KSCrashField_SymbolName},
-    {"", KSCrashField_RecrashReport, KSCrashField_Crash, KSCrashField_Threads, "", KSCrashField_Backtrace, KSCrashField_Contents, "", KSCrashField_SymbolName},
-    {"", KSCrashField_Crash, KSCrashField_Error, KSCrashField_CPPException, KSCrashField_Name},
-    {"", KSCrashField_RecrashReport, KSCrashField_Crash, KSCrashField_Error, KSCrashField_CPPException, KSCrashField_Name},
+    {"", Raygun_KSCrashField_Crash, Raygun_KSCrashField_Threads, "", Raygun_KSCrashField_Backtrace, Raygun_KSCrashField_Contents, "", Raygun_KSCrashField_SymbolName},
+    {"", Raygun_KSCrashField_RecrashReport, Raygun_KSCrashField_Crash, Raygun_KSCrashField_Threads, "", Raygun_KSCrashField_Backtrace, Raygun_KSCrashField_Contents, "", Raygun_KSCrashField_SymbolName},
+    {"", Raygun_KSCrashField_Crash, Raygun_KSCrashField_Error, Raygun_KSCrashField_CPPException, Raygun_KSCrashField_Name},
+    {"", Raygun_KSCrashField_RecrashReport, Raygun_KSCrashField_Crash, Raygun_KSCrashField_Error, Raygun_KSCrashField_CPPException, Raygun_KSCrashField_Name},
 };
 static int demanglePathsCount = sizeof(demanglePaths) / sizeof(*demanglePaths);
 
@@ -263,7 +263,7 @@ static int addJSONData(const char* data, int length, void* userData)
     return KSJSON_OK;
 }
 
-char* kscrf_fixupCrashReport(const char* crashReport)
+char* raygun_kscrf_fixupCrashReport(const char* crashReport)
 {
     if(crashReport == NULL)
     {

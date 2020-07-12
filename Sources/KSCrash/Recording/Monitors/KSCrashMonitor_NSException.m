@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 #import "KSCrashMonitor_NSException.h"
 #import "KSStackCursor_Backtrace.h"
 #include "KSCrashMonitorContext.h"
@@ -133,8 +133,8 @@ static void setEnabled(bool isEnabled)
             
             KSLOG_DEBUG(@"Setting new handler.");
             NSSetUncaughtExceptionHandler(&handleUncaughtException);
-            KSCrash.sharedInstance.uncaughtExceptionHandler = &handleUncaughtException;
-            KSCrash.sharedInstance.currentSnapshotUserReportedExceptionHandler = &handleCurrentSnapshotUserReportedException;
+            Raygun_KSCrash.sharedInstance.uncaughtExceptionHandler = &handleUncaughtException;
+            Raygun_KSCrash.sharedInstance.currentSnapshotUserReportedExceptionHandler = &handleCurrentSnapshotUserReportedException;
         }
         else
         {

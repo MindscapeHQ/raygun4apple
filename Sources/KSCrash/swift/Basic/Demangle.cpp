@@ -27,8 +27,8 @@
 #include "LLVM.h"
 #include "Punycode.h"
 //#include "UUID.h"
-#include "Optional.h"
-#include "StringRef.h"
+#include "Raygun_Optional.h"
+#include "Raygun_StringRef.h"
 #include <functional>
 #include <inttypes.h>
 #include <vector>
@@ -173,9 +173,9 @@ namespace {
 
 /// A convenient class for parsing characters out of a string.
 class NameSource {
-  StringRef Text;
+  Raygun_StringRef Text;
 public:
-  NameSource(StringRef text) : Text(text) {}
+  NameSource(Raygun_StringRef text) : Text(text) {}
 
   /// Return whether there are at least len characters remaining.
   bool hasAtLeast(size_t len) { return (len <= Text.size()); }
@@ -204,7 +204,7 @@ public:
   }
 
   /// Claim the next few characters if they exactly match the given string.
-  bool nextIf(StringRef str) {
+  bool nextIf(Raygun_StringRef str) {
     if (!Text.startswith(str)) return false;
     advanceOffset(str.size());
     return true;
@@ -212,10 +212,10 @@ public:
 
   /// Return the next len characters without claiming them.  Asserts
   /// that there are at least so many characters.
-  StringRef slice(size_t len) { return Text.substr(0, len); }
+  Raygun_StringRef slice(size_t len) { return Text.substr(0, len); }
 
   /// Return the current string ref without claiming any characters.
-  StringRef str() { return Text; }
+  Raygun_StringRef str() { return Text; }
 
   /// Claim the next len characters.
   void advanceOffset(size_t len) {
@@ -223,14 +223,14 @@ public:
   }
 
   /// Claim and return all the rest of the characters.
-  StringRef getString() {
+  Raygun_StringRef getString() {
     auto result = Text;
     advanceOffset(Text.size());
     return result;
   }
 
   bool readUntil(char c, std::string &result) {
-    llvm::Optional<char> c2;
+    llvm::Raygun_Optional<char> c2;
     while (!isEmpty() && (c2 = peek()).getValue() != c) {
       result.push_back(c2.getValue());
       advanceOffset(1);
@@ -239,7 +239,7 @@ public:
   }
 };
 
-static StringRef toString(Directness d) {
+static Raygun_StringRef toString(Directness d) {
   switch (d) {
   case Directness::Direct:
     return "direct";
@@ -249,7 +249,7 @@ static StringRef toString(Directness d) {
   unreachable("bad directness");
 }
 
-static StringRef toString(ValueWitnessKind k) {
+static Raygun_StringRef toString(ValueWitnessKind k) {
   switch (k) {
   case ValueWitnessKind::AllocateBuffer:
     return "allocateBuffer";
@@ -302,7 +302,7 @@ class Demangler {
   std::vector<NodePointer> Substitutions;
   NameSource Mangled;
 public:  
-  Demangler(llvm::StringRef mangled) : Mangled(mangled) {}
+  Demangler(llvm::Raygun_StringRef mangled) : Mangled(mangled) {}
 
 /// Try to demangle a child node of the given kind.  If that fails,
 /// return; otherwise add it to the parent.
@@ -380,7 +380,7 @@ private:
     yes = true, no = false
   };
 
-  Optional<Directness> demangleDirectness() {
+  Raygun_Optional<Directness> demangleDirectness() {
     if (Mangled.nextIf('d'))
       return Directness::Direct;
     if (Mangled.nextIf('i'))
@@ -417,7 +417,7 @@ private:
     return false;
   }
 
-  Optional<ValueWitnessKind> demangleValueWitnessKind() {
+  Raygun_Optional<ValueWitnessKind> demangleValueWitnessKind() {
     if (!Mangled)
       return None;
     char c1 = Mangled.next();
@@ -539,7 +539,7 @@ private:
 
     // Value witnesses.
     if (Mangled.nextIf('w')) {
-      Optional<ValueWitnessKind> w = demangleValueWitnessKind();
+      Raygun_Optional<ValueWitnessKind> w = demangleValueWitnessKind();
       if (!w.hasValue())
         return nullptr;
       auto witness =
@@ -917,14 +917,14 @@ private:
     return demangleIdentifier();
   }
 
-  NodePointer demangleIdentifier(Optional<Node::Kind> kind = None) {
+  NodePointer demangleIdentifier(Raygun_Optional<Node::Kind> kind = None) {
     if (!Mangled)
       return nullptr;
     
     bool isPunycoded = Mangled.nextIf('X');
     std::string decodeBuffer;
 
-    auto decode = [&](StringRef s) -> StringRef {
+    auto decode = [&](Raygun_StringRef s) -> Raygun_StringRef {
       if (!isPunycoded)
         return s;
       if (!Punycode::decodePunycodeUTF8(s, decodeBuffer))
@@ -963,7 +963,7 @@ private:
     if (!Mangled.hasAtLeast((size_t)length))
       return nullptr;
     
-    StringRef identifier = Mangled.slice((size_t)length);
+    Raygun_StringRef identifier = Mangled.slice((size_t)length);
     Mangled.advanceOffset((size_t)length);
     
     // Decode Unicode identifiers.
@@ -1019,7 +1019,7 @@ private:
     return NodeFactory::create(kind, index);
   }
 
-  NodePointer createSwiftType(Node::Kind typeKind, StringRef name) {
+  NodePointer createSwiftType(Node::Kind typeKind, Raygun_StringRef name) {
     NodePointer type = NodeFactory::create(typeKind);
     type->addChild(NodeFactory::create(Node::Kind::Module, STDLIB_NAME));
     type->addChild(NodeFactory::create(Node::Kind::Identifier, name));
@@ -2197,7 +2197,7 @@ private:
   /// impl-convention ::= 'o'                     // direct, ownership transfer
   ///
   /// Returns an empty string otherwise.
-  StringRef demangleImplConvention(ImplConventionContext ctxt) {
+  Raygun_StringRef demangleImplConvention(ImplConventionContext ctxt) {
 #define CASE(CHAR, FOR_CALLEE, FOR_PARAMETER, FOR_RESULT)            \
     if (Mangled.nextIf(CHAR)) {                                      \
       switch (ctxt) {                                                \
@@ -2207,7 +2207,7 @@ private:
       }                                                              \
       unreachable("bad context");                               \
     }
-    auto Nothing = StringRef();
+    auto Nothing = Raygun_StringRef();
     CASE('a',   Nothing,                Nothing,         "@autoreleased")
     CASE('d',   "@callee_unowned",      "@unowned",      "@unowned")
     CASE('D',   Nothing,                Nothing,         "@unowned_inner_pointer")
@@ -2223,7 +2223,7 @@ private:
   // impl-callee-convention ::= 't'
   // impl-callee-convention ::= impl-convention
   bool demangleImplCalleeConvention(NodePointer type) {
-    StringRef attr;
+    Raygun_StringRef attr;
     if (Mangled.nextIf('t')) {
       attr = "@convention(thin)";
     } else {
@@ -2236,7 +2236,7 @@ private:
     return true;
   }
 
-  void addImplFunctionAttribute(NodePointer parent, StringRef attr,
+  void addImplFunctionAttribute(NodePointer parent, Raygun_StringRef attr,
                          Node::Kind kind = Node::Kind::ImplFunctionAttribute) {
     parent->addChild(NodeFactory::create(kind, attr));
   }
@@ -2298,7 +2298,7 @@ NodePointer
 swift::Demangle::demangleSymbolAsNode(const char *MangledName,
                                       size_t MangledNameLength,
                                       __unused const DemangleOptions &Options) {
-  Demangler demangler(StringRef(MangledName, MangledNameLength));
+  Demangler demangler(Raygun_StringRef(MangledName, MangledNameLength));
   return demangler.demangleTopLevel();
 }
 
@@ -2306,7 +2306,7 @@ NodePointer
 swift::Demangle::demangleTypeAsNode(const char *MangledName,
                                     size_t MangledNameLength,
                                     __unused const DemangleOptions &Options) {
-  Demangler demangler(StringRef(MangledName, MangledNameLength));
+  Demangler demangler(Raygun_StringRef(MangledName, MangledNameLength));
   return demangler.demangleTypeName();
 }
 
@@ -2373,7 +2373,7 @@ private:
               0 == node->getText().find(LLDB_EXPRESSIONS_MODULE_NAME_PREFIX));
     }
 
-  static bool isIdentifier(NodePointer node, StringRef desired) {
+  static bool isIdentifier(NodePointer node, Raygun_StringRef desired) {
     return (node->getKind() == Node::Kind::Identifier &&
             node->getText() == desired);
   }
@@ -2886,7 +2886,7 @@ void NodePrinter::printSimplifiedEntityType(NodePointer context,
 
 void NodePrinter::print(NodePointer pointer, bool asContext, bool suppressType) {
   // Common code for handling entities.
-  auto printEntity = [&](bool hasName, bool hasType, StringRef extraName) {
+  auto printEntity = [&](bool hasName, bool hasType, Raygun_StringRef extraName) {
     if (Options.QualifyEntities)
       printContext(pointer->getChild(0));
 
@@ -3712,7 +3712,7 @@ std::string Demangle::nodeToString(NodePointer root,
 std::string Demangle::demangleSymbolAsString(const char *MangledName,
                                              size_t MangledNameLength,
                                              const DemangleOptions &Options) {
-  auto mangled = StringRef(MangledName, MangledNameLength);
+  auto mangled = Raygun_StringRef(MangledName, MangledNameLength);
   auto root = demangleSymbolAsNode(MangledName, MangledNameLength, Options);
   if (!root) return mangled.str();
 
@@ -3725,7 +3725,7 @@ std::string Demangle::demangleSymbolAsString(const char *MangledName,
 std::string Demangle::demangleTypeAsString(const char *MangledName,
                                            size_t MangledNameLength,
                                            const DemangleOptions &Options) {
-  auto mangled = StringRef(MangledName, MangledNameLength);
+  auto mangled = Raygun_StringRef(MangledName, MangledNameLength);
   auto root = demangleTypeAsNode(MangledName, MangledNameLength, Options);
   if (!root) return mangled.str();
   

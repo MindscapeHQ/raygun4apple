@@ -15,7 +15,7 @@
 #ifndef LLVM_SUPPORT_COMPILER_H
 #define LLVM_SUPPORT_COMPILER_H
 
-#include "llvm-config.h"
+#include "Raygun_llvm-config.h"
 
 #ifndef __has_feature
 # define __has_feature(x) 0

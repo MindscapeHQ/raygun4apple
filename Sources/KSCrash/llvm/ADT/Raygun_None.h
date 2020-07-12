@@ -19,8 +19,8 @@
 namespace llvm {
 /// \brief A simple null object to allow implicit construction of Optional<T>
 /// and similar types without having to spell out the specialization's name.
-enum class NoneType { None };
-const NoneType None = None;
+enum class Raygun_NoneType { None };
+const Raygun_NoneType None = None;
 }
 
 #endif

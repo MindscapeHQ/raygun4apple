@@ -29,15 +29,15 @@
 
 #include "KSThread.h"
 
-void ksccd_init(int pollingIntervalInSeconds);
+void raygun_ksccd_init(int pollingIntervalInSeconds);
 
-void ksccd_freeze(void);
-void ksccd_unfreeze(void);
+void raygun_ksccd_freeze(void);
+void raygun_ksccd_unfreeze(void);
 
-void ksccd_setSearchQueueNames(bool searchQueueNames);
+void raygun_ksccd_setSearchQueueNames(bool searchQueueNames);
 
-KSThread* ksccd_getAllThreads(int* threadCount);
+KSThread* raygun_ksccd_getAllThreads(int* threadCount);
 
-const char* ksccd_getThreadName(KSThread thread);
+const char* raygun_ksccd_getThreadName(KSThread thread);
 
-const char* ksccd_getQueueName(KSThread thread);
+const char* raygun_ksccd_getQueueName(KSThread thread);

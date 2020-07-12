@@ -26,7 +26,7 @@
 
 #import "RaygunClient.h"
 
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 #import "RaygunCrashInstallation.h"
 #import "RaygunCrashReportCustomSink.h"
 #import "RaygunRealUserMonitoring.h"
@@ -218,7 +218,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     
     @try {
         [self updateCrashReportUserInformation];
-        [KSCrash.sharedInstance reportUserException:exception.name
+        [Raygun_KSCrash.sharedInstance reportUserException:exception.name
                                              reason:exception.reason
                                            language:@""
                                          lineOfCode:nil
@@ -342,7 +342,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     userInfo[@"breadcrumbs"] = userBreadcrumbs;
     
     @try {
-        (KSCrash.sharedInstance).userInfo = userInfo;
+        (Raygun_KSCrash.sharedInstance).userInfo = userInfo;
     } @catch (NSException *exception) {
         [RaygunLogger logError:@"Failed to update internal data due to error %@: %@", exception.name, exception.reason];
     }

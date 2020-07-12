@@ -68,7 +68,7 @@ struct AlignmentCalcImpl<T, true> : AlignmentCalcImplBase, T {
 ///  that because the alignment is an enum value, it can be used as a
 ///  compile-time constant (e.g., for template instantiation).
 template <typename T>
-struct AlignOf {
+struct Raygun_AlignOf {
 #ifndef _MSC_VER
   // Avoid warnings from GCC like:
   //   comparison between 'enum llvm::AlignOf<X>::<anonymous>' and 'enum
@@ -95,7 +95,7 @@ struct AlignOf {
 };
 
 #ifndef _MSC_VER
-template <typename T> constexpr unsigned AlignOf<T>::Alignment;
+template <typename T> constexpr unsigned Raygun_AlignOf<T>::Alignment;
 #endif
 
 /// alignOf - A templated function that returns the minimum alignment of
@@ -103,7 +103,7 @@ template <typename T> constexpr unsigned AlignOf<T>::Alignment;
 ///  class besides some cosmetic cleanliness.  Example usage:
 ///  alignOf<int>() returns the alignment of an int.
 template <typename T>
-inline unsigned alignOf() { return AlignOf<T>::Alignment; }
+inline unsigned alignOf() { return Raygun_AlignOf<T>::Alignment; }
 
 /// \struct AlignedCharArray
 /// \brief Helper for building an aligned character array type.
@@ -249,7 +249,7 @@ template <typename T1,
           typename T5 = char, typename T6 = char, typename T7 = char,
           typename T8 = char, typename T9 = char, typename T10 = char>
 struct AlignedCharArrayUnion : llvm::AlignedCharArray<
-    AlignOf<llvm::detail::AlignerImpl<T1, T2, T3, T4, T5,
+    Raygun_AlignOf<llvm::detail::AlignerImpl<T1, T2, T3, T4, T5,
                                       T6, T7, T8, T9, T10> >::Alignment,
     sizeof(::llvm::detail::SizerImpl<T1, T2, T3, T4, T5,
                                      T6, T7, T8, T9, T10>)> {

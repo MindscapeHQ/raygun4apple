@@ -26,12 +26,12 @@
 // None.h includes an enumerator that is desired & cannot be forward declared
 // without a definition of NoneType.
 //#include "llvm/ADT/None.h"
-#include "None.h"
+#include "Raygun_None.h"
 
 // Forward declarations.
 namespace llvm {
   // Containers.
-  class StringRef;
+  class Raygun_StringRef;
   class Twine;
   template <typename T> class SmallPtrSetImpl;
   template <typename T, unsigned N> class SmallPtrSet;
@@ -41,7 +41,7 @@ namespace llvm {
   template<typename T> class ArrayRef;
   template<typename T> class MutableArrayRef;
   template<typename T> class TinyPtrVector;
-  template<typename T> class Optional;
+  template<typename T> class Raygun_Optional;
   template <typename PT1, typename PT2> class PointerUnion;
 
   // Other common classes.
@@ -61,11 +61,11 @@ namespace swift {
 
   // Containers.
   using llvm::None;
-  using llvm::Optional;
+  using llvm::Raygun_Optional;
   using llvm::SmallPtrSetImpl;
   using llvm::SmallPtrSet;
   using llvm::SmallString;
-  using llvm::StringRef;
+  using llvm::Raygun_StringRef;
   using llvm::Twine;
   using llvm::SmallVectorImpl;
   using llvm::SmallVector;
@@ -78,7 +78,7 @@ namespace swift {
   using llvm::raw_ostream;
   using llvm::APInt;
   using llvm::APFloat;
-  using llvm::NoneType;
+  using llvm::Raygun_NoneType;
 } // end namespace swift
 
 #endif // SWIFT_BASIC_LLVM_H

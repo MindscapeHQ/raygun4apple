@@ -71,7 +71,7 @@ static int adapt(int delta, int numpoints, bool firsttime) {
 
 // Section 6.2: Decoding procedure
 
-bool Punycode::decodePunycode(StringRef InputPunycode,
+bool Punycode::decodePunycode(Raygun_StringRef InputPunycode,
                               std::vector<uint32_t> &OutCodePoints) {
   OutCodePoints.clear();
   OutCodePoints.reserve(InputPunycode.size());
@@ -84,7 +84,7 @@ bool Punycode::decodePunycode(StringRef InputPunycode,
   // consume all code points before the last delimiter (if there is one)
   //  and copy them to output,
   size_t lastDelimiter = InputPunycode.find_last_of(delimiter);
-  if (lastDelimiter != StringRef::npos) {
+  if (lastDelimiter != Raygun_StringRef::npos) {
     for (char c : InputPunycode.slice(0, lastDelimiter)) {
       // fail on any non-basic code point
       if (static_cast<unsigned char>(c) > 0x7f)
@@ -255,7 +255,7 @@ static bool encodeToUTF8(const std::vector<uint32_t> &Scalars,
   return true;
 }
 
-bool Punycode::decodePunycodeUTF8(StringRef InputPunycode,
+bool Punycode::decodePunycodeUTF8(Raygun_StringRef InputPunycode,
                                   std::string &OutUTF8) {
   std::vector<uint32_t> OutCodePoints;
   if (!decodePunycode(InputPunycode, OutCodePoints))

@@ -25,11 +25,11 @@
 //
 
 
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 
-#import "KSCrashC.h"
-#import "KSCrashDoctor.h"
-#import "KSCrashReportFields.h"
+#import "Raygun_KSCrashC.h"
+#import "Raygun_KSCrashDoctor.h"
+#import "Raygun_KSCrashReportFields.h"
 #import "KSCrashMonitor_AppState.h"
 #import "KSJSONCodecObjC.h"
 #import "NSError+SimpleConstructor.h"
@@ -50,7 +50,7 @@
 #pragma mark - Globals -
 // ============================================================================
 
-@interface KSCrash ()
+@interface Raygun_KSCrash ()
 
 @property(nonatomic,readwrite,retain) NSString* bundleName;
 @property(nonatomic,readwrite,retain) NSString* basePath;
@@ -89,7 +89,7 @@ static NSString* getBasePath()
 }
 
 
-@implementation KSCrash
+@implementation Raygun_KSCrash
 
 // ============================================================================
 #pragma mark - Properties -
@@ -119,11 +119,11 @@ static NSString* getBasePath()
 
 + (instancetype) sharedInstance
 {
-    static KSCrash *sharedInstance = nil;
+    static Raygun_KSCrash *sharedInstance = nil;
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[KSCrash alloc] init];
+        sharedInstance = [[Raygun_KSCrash alloc] init];
     });
     return sharedInstance;
 }
@@ -144,7 +144,7 @@ static NSString* getBasePath()
             KSLOG_ERROR(@"Failed to initialize crash handler. Crash reporting disabled.");
             return nil;
         }
-        self.deleteBehaviorAfterSendAll = KSCDeleteAlways;
+        self.deleteBehaviorAfterSendAll = Raygun_KSCDeleteAlways;
         self.introspectMemory = YES;
         self.catchZombies = NO;
         self.maxReportCount = 10;
@@ -182,31 +182,31 @@ static NSString* getBasePath()
         }
         
         _userInfo = userInfo;
-        kscrash_setUserInfoJSON([userInfoJSON bytes]);
+        raygun_kscrash_setUserInfoJSON([userInfoJSON bytes]);
     }
 }
 
 - (void) setMonitoring:(KSCrashMonitorType)monitoring
 {
-    _monitoring = kscrash_setMonitoring(monitoring);
+    _monitoring = raygun_kscrash_setMonitoring(monitoring);
 }
 
 - (void) setDeadlockWatchdogInterval:(double) deadlockWatchdogInterval
 {
     _deadlockWatchdogInterval = deadlockWatchdogInterval;
-    kscrash_setDeadlockWatchdogInterval(deadlockWatchdogInterval);
+    raygun_kscrash_setDeadlockWatchdogInterval(deadlockWatchdogInterval);
 }
 
 - (void) setOnCrash:(KSReportWriteCallback) onCrash
 {
     _onCrash = onCrash;
-    kscrash_setCrashNotifyCallback(onCrash);
+    raygun_kscrash_setCrashNotifyCallback(onCrash);
 }
 
 - (void) setIntrospectMemory:(BOOL) introspectMemory
 {
     _introspectMemory = introspectMemory;
-    kscrash_setIntrospectMemory(introspectMemory);
+    raygun_kscrash_setIntrospectMemory(introspectMemory);
 }
 
 - (void) setCatchZombies:(BOOL)catchZombies
@@ -221,7 +221,7 @@ static NSString* getBasePath()
     NSUInteger count = [doNotIntrospectClasses count];
     if(count == 0)
     {
-        kscrash_setDoNotIntrospectClasses(nil, 0);
+        raygun_kscrash_setDoNotIntrospectClasses(nil, 0);
     }
     else
     {
@@ -231,14 +231,14 @@ static NSString* getBasePath()
         {
             classes[i] = [[doNotIntrospectClasses objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding];
         }
-        kscrash_setDoNotIntrospectClasses(classes, (int)count);
+        raygun_kscrash_setDoNotIntrospectClasses(classes, (int)count);
     }
 }
 
 - (void) setMaxReportCount:(int)maxReportCount
 {
     _maxReportCount = maxReportCount;
-    kscrash_setMaxReportCount(maxReportCount);
+    raygun_kscrash_setMaxReportCount(maxReportCount);
 }
 
 - (NSDictionary*) systemInfo
@@ -286,7 +286,7 @@ static NSString* getBasePath()
 
 - (BOOL) install
 {
-    _monitoring = kscrash_install(self.bundleName.UTF8String,
+    _monitoring = raygun_kscrash_install(self.bundleName.UTF8String,
                                           self.basePath.UTF8String);
     if(self.monitoring == 0)
     {
@@ -353,10 +353,10 @@ static NSString* getBasePath()
          {
              KSLOG_ERROR(@"Failed to send reports: %@", error);
          }
-         if((self.deleteBehaviorAfterSendAll == KSCDeleteOnSucess && completed) ||
-            self.deleteBehaviorAfterSendAll == KSCDeleteAlways)
+         if((self.deleteBehaviorAfterSendAll == Raygun_KSCDeleteOnSucess && completed) ||
+            self.deleteBehaviorAfterSendAll == Raygun_KSCDeleteAlways)
          {
-             kscrash_deleteAllReports();
+             raygun_kscrash_deleteAllReports();
          }
          kscrash_callCompletion(onCompletion, filteredReports, completed, error);
      }];
@@ -364,12 +364,12 @@ static NSString* getBasePath()
 
 - (void) deleteAllReports
 {
-    kscrash_deleteAllReports();
+    raygun_kscrash_deleteAllReports();
 }
 
 - (void) deleteReportWithID:(NSNumber*) reportID
 {
-    kscrash_deleteReportWithID([reportID longValue]);
+    raygun_kscrash_deleteReportWithID([reportID longValue]);
 }
 
 - (void) reportUserException:(NSString*) name
@@ -394,7 +394,7 @@ static NSString* getBasePath()
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     const char* cStackTrace = [jsonString cStringUsingEncoding:NSUTF8StringEncoding];
 
-    kscrash_reportUserException(cName,
+    raygun_kscrash_reportUserException(cName,
                                 cReason,
                                 cLanguage,
                                 cLineOfCode,
@@ -424,7 +424,7 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 
 - (int) reportCount
 {
-    return kscrash_getReportCount();
+    return raygun_kscrash_getReportCount();
 }
 
 - (void) sendReports:(NSArray*) reports onCompletion:(KSCrashReportFilterCompletion) onCompletion
@@ -453,7 +453,7 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 
 - (NSData*) loadCrashReportJSONWithID:(int64_t) reportID
 {
-    char* report = kscrash_readReport(reportID);
+    char* report = raygun_kscrash_readReport(reportID);
     if(report != NULL)
     {
         return [NSData dataWithBytesNoCopy:report length:strlen(report) freeWhenDone:YES];
@@ -463,23 +463,23 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 
 - (void) doctorReport:(NSMutableDictionary*) report
 {
-    NSMutableDictionary* crashReport = report[@KSCrashField_Crash];
+    NSMutableDictionary* crashReport = report[@Raygun_KSCrashField_Crash];
     if(crashReport != nil)
     {
-        crashReport[@KSCrashField_Diagnosis] = [[KSCrashDoctor doctor] diagnoseCrash:report];
+        crashReport[@Raygun_KSCrashField_Diagnosis] = [[Raygun_KSCrashDoctor doctor] diagnoseCrash:report];
     }
-    crashReport = report[@KSCrashField_RecrashReport][@KSCrashField_Crash];
+    crashReport = report[@Raygun_KSCrashField_RecrashReport][@Raygun_KSCrashField_Crash];
     if(crashReport != nil)
     {
-        crashReport[@KSCrashField_Diagnosis] = [[KSCrashDoctor doctor] diagnoseCrash:report];
+        crashReport[@Raygun_KSCrashField_Diagnosis] = [[Raygun_KSCrashDoctor doctor] diagnoseCrash:report];
     }
 }
 
 - (NSArray*)reportIDs
 {
-    int reportCount = kscrash_getReportCount();
+    int reportCount = raygun_kscrash_getReportCount();
     int64_t reportIDsC[reportCount];
-    reportCount = kscrash_getReportIDs(reportIDsC, reportCount);
+    reportCount = raygun_kscrash_getReportIDs(reportIDsC, reportCount);
     NSMutableArray* reportIDs = [NSMutableArray arrayWithCapacity:(NSUInteger)reportCount];
     for(int i = 0; i < reportCount; i++)
     {
@@ -523,9 +523,9 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 
 - (NSArray*) allReports
 {
-    int reportCount = kscrash_getReportCount();
+    int reportCount = raygun_kscrash_getReportCount();
     int64_t reportIDs[reportCount];
-    reportCount = kscrash_getReportIDs(reportIDs, reportCount);
+    reportCount = raygun_kscrash_getReportIDs(reportIDs, reportCount);
     NSMutableArray* reports = [NSMutableArray arrayWithCapacity:(NSUInteger)reportCount];
     for(int i = 0; i < reportCount; i++)
     {
@@ -542,13 +542,13 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 - (void) setAddConsoleLogToReport:(BOOL) shouldAddConsoleLogToReport
 {
     _addConsoleLogToReport = shouldAddConsoleLogToReport;
-    kscrash_setAddConsoleLogToReport(shouldAddConsoleLogToReport);
+    raygun_kscrash_setAddConsoleLogToReport(shouldAddConsoleLogToReport);
 }
 
 - (void) setPrintPreviousLog:(BOOL) shouldPrintPreviousLog
 {
     _printPreviousLog = shouldPrintPreviousLog;
-    kscrash_setPrintPreviousLog(shouldPrintPreviousLog);
+    raygun_kscrash_setPrintPreviousLog(shouldPrintPreviousLog);
 }
 
 
@@ -574,27 +574,27 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
 
 - (void) applicationDidBecomeActive
 {
-    kscrash_notifyAppActive(true);
+    raygun_kscrash_notifyAppActive(true);
 }
 
 - (void) applicationWillResignActive
 {
-    kscrash_notifyAppActive(false);
+    raygun_kscrash_notifyAppActive(false);
 }
 
 - (void) applicationDidEnterBackground
 {
-    kscrash_notifyAppInForeground(false);
+    raygun_kscrash_notifyAppInForeground(false);
 }
 
 - (void) applicationWillEnterForeground
 {
-    kscrash_notifyAppInForeground(true);
+    raygun_kscrash_notifyAppInForeground(true);
 }
 
 - (void) applicationWillTerminate
 {
-    kscrash_notifyAppTerminate();
+    raygun_kscrash_notifyAppTerminate();
 }
 
 @end

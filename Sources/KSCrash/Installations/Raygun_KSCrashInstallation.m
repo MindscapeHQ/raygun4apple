@@ -25,10 +25,10 @@
 //
 
 
-#import "KSCrashInstallation.h"
-#import "KSCrashInstallation+Private.h"
+#import "Raygun_KSCrashInstallation.h"
+#import "Raygun_KSCrashInstallation+Private.h"
 #import "KSCrashReportFilterBasic.h"
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 #import "KSCString.h"
 #import "KSJSONCodecObjC.h"
 #import "KSLogger.h"
@@ -156,7 +156,7 @@ static void crashCallback(const KSCrashReportWriter* writer)
 
 @end
 
-@interface KSCrashInstallation ()
+@interface Raygun_KSCrashInstallation ()
 
 @property(nonatomic,readwrite,assign) int nextFieldIndex;
 @property(nonatomic,readonly,assign) CrashHandlerData* crashHandlerData;
@@ -168,7 +168,7 @@ static void crashCallback(const KSCrashReportWriter* writer)
 @end
 
 
-@implementation KSCrashInstallation
+@implementation Raygun_KSCrashInstallation
 
 @synthesize nextFieldIndex = _nextFieldIndex;
 @synthesize crashHandlerDataBacking = _crashHandlerDataBacking;
@@ -198,7 +198,7 @@ static void crashCallback(const KSCrashReportWriter* writer)
 
 - (void) dealloc
 {
-    KSCrash* handler = [KSCrash sharedInstance];
+    Raygun_KSCrash* handler = [Raygun_KSCrash sharedInstance];
     @synchronized(handler)
     {
         if(g_crashHandlerData == self.crashHandlerData)
@@ -318,7 +318,7 @@ static void crashCallback(const KSCrashReportWriter* writer)
 
 - (void) install
 {
-    KSCrash* handler = [KSCrash sharedInstance];
+    Raygun_KSCrash* handler = [Raygun_KSCrash sharedInstance];
     @synchronized(handler)
     {
         g_crashHandlerData = self.crashHandlerData;
@@ -354,7 +354,7 @@ static void crashCallback(const KSCrashReportWriter* writer)
     
     sink = [KSCrashReportFilterPipeline filterWithFilters:self.prependedFilters, sink, nil];
 
-    KSCrash* handler = [KSCrash sharedInstance];
+    Raygun_KSCrash* handler = [Raygun_KSCrash sharedInstance];
     handler.sink = sink;
     [handler sendAllReportsWithCompletion:onCompletion];
 }
