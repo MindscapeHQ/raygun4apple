@@ -118,32 +118,32 @@ static KSReportWriteCallback g_userSectionWriteCallback;
 
 #pragma mark Callbacks
 
-static void addBooleanElement(const KSCrashReportWriter* const writer, const char* const key, const bool value)
+static void addBooleanElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const bool value)
 {
     ksjson_addBooleanElement(getJsonContext(writer), key, value);
 }
 
-static void addFloatingPointElement(const KSCrashReportWriter* const writer, const char* const key, const double value)
+static void addFloatingPointElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const double value)
 {
     ksjson_addFloatingPointElement(getJsonContext(writer), key, value);
 }
 
-static void addIntegerElement(const KSCrashReportWriter* const writer, const char* const key, const int64_t value)
+static void addIntegerElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const int64_t value)
 {
     ksjson_addIntegerElement(getJsonContext(writer), key, value);
 }
 
-static void addUIntegerElement(const KSCrashReportWriter* const writer, const char* const key, const uint64_t value)
+static void addUIntegerElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const uint64_t value)
 {
     ksjson_addIntegerElement(getJsonContext(writer), key, (int64_t)value);
 }
 
-static void addStringElement(const KSCrashReportWriter* const writer, const char* const key, const char* const value)
+static void addStringElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const value)
 {
     ksjson_addStringElement(getJsonContext(writer), key, value, KSJSON_SIZE_AUTOMATIC);
 }
 
-static void addTextFileElement(const KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
+static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
 {
     const int fd = open(filePath, O_RDONLY);
     if(fd < 0)
@@ -176,7 +176,7 @@ done:
     close(fd);
 }
 
-static void addDataElement(const KSCrashReportWriter* const writer,
+static void addDataElement(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
                            const char* const value,
                            const int length)
@@ -184,22 +184,22 @@ static void addDataElement(const KSCrashReportWriter* const writer,
     ksjson_addDataElement(getJsonContext(writer), key, value, length);
 }
 
-static void beginDataElement(const KSCrashReportWriter* const writer, const char* const key)
+static void beginDataElement(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
     ksjson_beginDataElement(getJsonContext(writer), key);
 }
 
-static void appendDataElement(const KSCrashReportWriter* const writer, const char* const value, const int length)
+static void appendDataElement(const Raygun_KSCrashReportWriter* const writer, const char* const value, const int length)
 {
     ksjson_appendDataElement(getJsonContext(writer), value, length);
 }
 
-static void endDataElement(const KSCrashReportWriter* const writer)
+static void endDataElement(const Raygun_KSCrashReportWriter* const writer)
 {
     ksjson_endDataElement(getJsonContext(writer));
 }
 
-static void addUUIDElement(const KSCrashReportWriter* const writer, const char* const key, const unsigned char* const value)
+static void addUUIDElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const unsigned char* const value)
 {
     if(value == NULL)
     {
@@ -244,7 +244,7 @@ static void addUUIDElement(const KSCrashReportWriter* const writer, const char* 
     }
 }
 
-static void addJSONElement(const KSCrashReportWriter* const writer,
+static void addJSONElement(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
                            const char* const jsonElement,
                            bool closeLastContainer)
@@ -274,7 +274,7 @@ static void addJSONElement(const KSCrashReportWriter* const writer,
     }
 }
 
-static void addJSONElementFromFile(const KSCrashReportWriter* const writer,
+static void addJSONElementFromFile(const Raygun_KSCrashReportWriter* const writer,
                                    const char* const key,
                                    const char* const filePath,
                                    bool closeLastContainer)
@@ -282,23 +282,23 @@ static void addJSONElementFromFile(const KSCrashReportWriter* const writer,
     ksjson_addJSONFromFile(getJsonContext(writer), key, filePath, closeLastContainer);
 }
 
-static void beginObject(const KSCrashReportWriter* const writer, const char* const key)
+static void beginObject(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
     ksjson_beginObject(getJsonContext(writer), key);
 }
 
-static void beginArray(const KSCrashReportWriter* const writer, const char* const key)
+static void beginArray(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
     ksjson_beginArray(getJsonContext(writer), key);
 }
 
-static void endContainer(const KSCrashReportWriter* const writer)
+static void endContainer(const Raygun_KSCrashReportWriter* const writer)
 {
     ksjson_endContainer(getJsonContext(writer));
 }
 
 
-static void addTextLinesFromFile(const KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
+static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
 {
     char readBuffer[1024];
     KSBufferedReader reader;
@@ -408,7 +408,7 @@ static bool getStackCursor(const Raygun_KSCrash_MonitorContext* const crash,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeMemoryContents(const KSCrashReportWriter* const writer,
+static void writeMemoryContents(const Raygun_KSCrashReportWriter* const writer,
                                 const char* const key,
                                 const uintptr_t address,
                                 int* limit);
@@ -424,7 +424,7 @@ static void writeMemoryContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeNSStringContents(const KSCrashReportWriter* const writer,
+static void writeNSStringContents(const Raygun_KSCrashReportWriter* const writer,
                                   const char* const key,
                                   const uintptr_t objectAddress,
                                   __unused int* limit)
@@ -448,7 +448,7 @@ static void writeNSStringContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeURLContents(const KSCrashReportWriter* const writer,
+static void writeURLContents(const Raygun_KSCrashReportWriter* const writer,
                              const char* const key,
                              const uintptr_t objectAddress,
                              __unused int* limit)
@@ -472,7 +472,7 @@ static void writeURLContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeDateContents(const KSCrashReportWriter* const writer,
+static void writeDateContents(const Raygun_KSCrashReportWriter* const writer,
                               const char* const key,
                               const uintptr_t objectAddress,
                               __unused int* limit)
@@ -492,7 +492,7 @@ static void writeDateContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeNumberContents(const KSCrashReportWriter* const writer,
+static void writeNumberContents(const Raygun_KSCrashReportWriter* const writer,
                                 const char* const key,
                                 const uintptr_t objectAddress,
                                 __unused int* limit)
@@ -512,7 +512,7 @@ static void writeNumberContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeArrayContents(const KSCrashReportWriter* const writer,
+static void writeArrayContents(const Raygun_KSCrashReportWriter* const writer,
                                const char* const key,
                                const uintptr_t objectAddress,
                                int* limit)
@@ -535,7 +535,7 @@ static void writeArrayContents(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeUnknownObjectContents(const KSCrashReportWriter* const writer,
+static void writeUnknownObjectContents(const Raygun_KSCrashReportWriter* const writer,
                                        const char* const key,
                                        const uintptr_t objectAddress,
                                        int* limit)
@@ -658,7 +658,7 @@ static bool isRestrictedClass(const char* name)
     return false;
 }
 
-static void writeZombieIfPresent(const KSCrashReportWriter* const writer,
+static void writeZombieIfPresent(const Raygun_KSCrashReportWriter* const writer,
                                  const char* const key,
                                  const uintptr_t address)
 {
@@ -672,7 +672,7 @@ static void writeZombieIfPresent(const KSCrashReportWriter* const writer,
 #endif
 }
 
-static bool writeObjCObject(const KSCrashReportWriter* const writer,
+static bool writeObjCObject(const Raygun_KSCrashReportWriter* const writer,
                             const uintptr_t address,
                             int* limit)
 {
@@ -753,7 +753,7 @@ static bool writeObjCObject(const KSCrashReportWriter* const writer,
  *
  * @param limit How many more subreferenced objects to write, if any.
  */
-static void writeMemoryContents(const KSCrashReportWriter* const writer,
+static void writeMemoryContents(const Raygun_KSCrashReportWriter* const writer,
                                 const char* const key,
                                 const uintptr_t address,
                                 int* limit)
@@ -842,7 +842,7 @@ static bool isNotableAddress(const uintptr_t address)
  *
  * @param address The memory address.
  */
-static void writeMemoryContentsIfNotable(const KSCrashReportWriter* const writer,
+static void writeMemoryContentsIfNotable(const Raygun_KSCrashReportWriter* const writer,
                                          const char* const key,
                                          const uintptr_t address)
 {
@@ -861,7 +861,7 @@ static void writeMemoryContentsIfNotable(const KSCrashReportWriter* const writer
  *
  * @param string The string to search.
  */
-static void writeAddressReferencedByString(const KSCrashReportWriter* const writer,
+static void writeAddressReferencedByString(const Raygun_KSCrashReportWriter* const writer,
                                            const char* const key,
                                            const char* string)
 {
@@ -885,7 +885,7 @@ static void writeAddressReferencedByString(const KSCrashReportWriter* const writ
  *
  * @param stackCursor The stack cursor to read from.
  */
-static void writeBacktrace(const KSCrashReportWriter* const writer,
+static void writeBacktrace(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
                            KSStackCursor* stackCursor)
 {
@@ -934,7 +934,7 @@ static void writeBacktrace(const KSCrashReportWriter* const writer,
  *
  * @param isStackOverflow If true, the stack has overflowed.
  */
-static void writeStackContents(const KSCrashReportWriter* const writer,
+static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
                                const char* const key,
                                const struct KSMachineContext* const machineContext,
                                const bool isStackOverflow)
@@ -984,7 +984,7 @@ static void writeStackContents(const KSCrashReportWriter* const writer,
  *
  * @param forwardDistance The distance past the end of the stack to check.
  */
-static void writeNotableStackContents(const KSCrashReportWriter* const writer,
+static void writeNotableStackContents(const Raygun_KSCrashReportWriter* const writer,
                                       const struct KSMachineContext* const machineContext,
                                       const int backDistance,
                                       const int forwardDistance)
@@ -1026,7 +1026,7 @@ static void writeNotableStackContents(const KSCrashReportWriter* const writer,
  *
  * @param machineContext The context to retrieve the registers from.
  */
-static void writeBasicRegisters(const KSCrashReportWriter* const writer,
+static void writeBasicRegisters(const Raygun_KSCrashReportWriter* const writer,
                                 const char* const key,
                                 const struct KSMachineContext* const machineContext)
 {
@@ -1058,7 +1058,7 @@ static void writeBasicRegisters(const KSCrashReportWriter* const writer,
  *
  * @param machineContext The context to retrieve the registers from.
  */
-static void writeExceptionRegisters(const KSCrashReportWriter* const writer,
+static void writeExceptionRegisters(const Raygun_KSCrashReportWriter* const writer,
                                     const char* const key,
                                     const struct KSMachineContext* const machineContext)
 {
@@ -1090,7 +1090,7 @@ static void writeExceptionRegisters(const KSCrashReportWriter* const writer,
  *
  * @param machineContext The context to retrieve the registers from.
  */
-static void writeRegisters(const KSCrashReportWriter* const writer,
+static void writeRegisters(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
                            const struct KSMachineContext* const machineContext)
 {
@@ -1111,7 +1111,7 @@ static void writeRegisters(const KSCrashReportWriter* const writer,
  *
  * @param machineContext The context to retrieve the registers from.
  */
-static void writeNotableRegisters(const KSCrashReportWriter* const writer,
+static void writeNotableRegisters(const Raygun_KSCrashReportWriter* const writer,
                                   const struct KSMachineContext* const machineContext)
 {
     char registerNameBuff[30];
@@ -1141,7 +1141,7 @@ static void writeNotableRegisters(const KSCrashReportWriter* const writer,
  *
  * @param machineContext The context to retrieve the registers from.
  */
-static void writeNotableAddresses(const KSCrashReportWriter* const writer,
+static void writeNotableAddresses(const Raygun_KSCrashReportWriter* const writer,
                                   const char* const key,
                                   const struct KSMachineContext* const machineContext)
 {
@@ -1168,7 +1168,7 @@ static void writeNotableAddresses(const KSCrashReportWriter* const writer,
  *
  * @param shouldWriteNotableAddresses If true, write any notable addresses found.
  */
-static void writeThread(const KSCrashReportWriter* const writer,
+static void writeThread(const Raygun_KSCrashReportWriter* const writer,
                         const char* const key,
                         const Raygun_KSCrash_MonitorContext* const crash,
                         const struct KSMachineContext* const machineContext,
@@ -1225,7 +1225,7 @@ static void writeThread(const KSCrashReportWriter* const writer,
  *
  * @param crash The crash handler context.
  */
-static void writeAllThreads(const KSCrashReportWriter* const writer,
+static void writeAllThreads(const Raygun_KSCrashReportWriter* const writer,
                             const char* const key,
                             const Raygun_KSCrash_MonitorContext* const crash,
                             bool writeNotableAddresses)
@@ -1266,7 +1266,7 @@ static void writeAllThreads(const KSCrashReportWriter* const writer,
  *
  * @param index Which image to write about.
  */
-static void writeBinaryImage(const KSCrashReportWriter* const writer,
+static void writeBinaryImage(const Raygun_KSCrashReportWriter* const writer,
                              const char* const key,
                              const int index)
 {
@@ -1298,7 +1298,7 @@ static void writeBinaryImage(const KSCrashReportWriter* const writer,
  *
  * @param key The object key, if needed.
  */
-static void writeBinaryImages(const KSCrashReportWriter* const writer, const char* const key)
+static void writeBinaryImages(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
     const int imageCount = ksdl_imageCount();
 
@@ -1318,7 +1318,7 @@ static void writeBinaryImages(const KSCrashReportWriter* const writer, const cha
  *
  * @param key The object key, if needed.
  */
-static void writeMemoryInfo(const KSCrashReportWriter* const writer,
+static void writeMemoryInfo(const Raygun_KSCrashReportWriter* const writer,
                             const char* const key,
                             const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
@@ -1339,7 +1339,7 @@ static void writeMemoryInfo(const KSCrashReportWriter* const writer,
  *
  * @param crash The crash handler context.
  */
-static void writeError(const KSCrashReportWriter* const writer,
+static void writeError(const Raygun_KSCrashReportWriter* const writer,
                        const char* const key,
                        const Raygun_KSCrash_MonitorContext* const crash)
 {
@@ -1464,7 +1464,7 @@ static void writeError(const KSCrashReportWriter* const writer,
  *
  * @param monitorContext The event monitor context.
  */
-static void writeAppStats(const KSCrashReportWriter* const writer,
+static void writeAppStats(const Raygun_KSCrashReportWriter* const writer,
                           const char* const key,
                           const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
@@ -1491,7 +1491,7 @@ static void writeAppStats(const KSCrashReportWriter* const writer,
  *
  * @param key The object key, if needed.
  */
-static void writeProcessState(const KSCrashReportWriter* const writer,
+static void writeProcessState(const Raygun_KSCrashReportWriter* const writer,
                               const char* const key,
                               const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
@@ -1522,7 +1522,7 @@ static void writeProcessState(const KSCrashReportWriter* const writer,
  *
  * @param reportID The report ID.
  */
-static void writeReportInfo(const KSCrashReportWriter* const writer,
+static void writeReportInfo(const Raygun_KSCrashReportWriter* const writer,
                             const char* const key,
                             const char* const type,
                             const char* const reportID,
@@ -1539,7 +1539,7 @@ static void writeReportInfo(const KSCrashReportWriter* const writer,
     writer->endContainer(writer);
 }
 
-static void writeRecrash(const KSCrashReportWriter* const writer,
+static void writeRecrash(const Raygun_KSCrashReportWriter* const writer,
                          const char* const key,
                          const char* crashReportPath)
 {
@@ -1555,7 +1555,7 @@ static void writeRecrash(const KSCrashReportWriter* const writer,
  *
  * @param context JSON writer contextual information.
  */
-static void prepareReportWriter(KSCrashReportWriter* const writer, KSJSONEncodeContext* const context)
+static void prepareReportWriter(Raygun_KSCrashReportWriter* const writer, KSJSONEncodeContext* const context)
 {
     writer->addBooleanElement = addBooleanElement;
     writer->addFloatingPointElement = addFloatingPointElement;
@@ -1604,8 +1604,8 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
 
     KSJSONEncodeContext jsonContext;
     jsonContext.userData = &bufferedWriter;
-    KSCrashReportWriter concreteWriter;
-    KSCrashReportWriter* writer = &concreteWriter;
+    Raygun_KSCrashReportWriter concreteWriter;
+    Raygun_KSCrashReportWriter* writer = &concreteWriter;
     prepareReportWriter(writer, &jsonContext);
 
     ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);
@@ -1648,7 +1648,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     raygun_ksccd_unfreeze();
 }
 
-static void writeSystemInfo(const KSCrashReportWriter* const writer,
+static void writeSystemInfo(const Raygun_KSCrashReportWriter* const writer,
                             const char* const key,
                             const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
@@ -1690,7 +1690,7 @@ static void writeSystemInfo(const KSCrashReportWriter* const writer,
 
 }
 
-static void writeDebugInfo(const KSCrashReportWriter* const writer,
+static void writeDebugInfo(const Raygun_KSCrashReportWriter* const writer,
                             const char* const key,
                             const Raygun_KSCrash_MonitorContext* const monitorContext)
 {
@@ -1720,8 +1720,8 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
     
     KSJSONEncodeContext jsonContext;
     jsonContext.userData = &bufferedWriter;
-    KSCrashReportWriter concreteWriter;
-    KSCrashReportWriter* writer = &concreteWriter;
+    Raygun_KSCrashReportWriter concreteWriter;
+    Raygun_KSCrashReportWriter* writer = &concreteWriter;
     prepareReportWriter(writer, &jsonContext);
 
     ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);

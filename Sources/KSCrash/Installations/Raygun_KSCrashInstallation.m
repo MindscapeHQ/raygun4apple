@@ -57,7 +57,7 @@ typedef struct
 static CrashHandlerData* g_crashHandlerData;
 
 
-static void crashCallback(const KSCrashReportWriter* writer)
+static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 {
     for(int i = 0; i < g_crashHandlerData->reportFieldsCount; i++)
     {

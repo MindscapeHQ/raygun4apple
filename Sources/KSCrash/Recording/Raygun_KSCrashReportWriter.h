@@ -241,9 +241,9 @@ typedef struct Raygun_KSCrashReportWriter
     /** Internal contextual data for the writer */
     void* context;
 
-} KSCrashReportWriter;
+} Raygun_KSCrashReportWriter;
 
-typedef void (*KSReportWriteCallback)(const KSCrashReportWriter* writer);
+typedef void (*KSReportWriteCallback)(const Raygun_KSCrashReportWriter* writer);
 
 
 #ifdef __cplusplus
