@@ -72,7 +72,7 @@ typedef enum
 } Raygun_KSCrashMonitorType;
 
 #define Raygun_KSCrashMonitorTypeAll              \
-(                                          \
+(                                                 \
     Raygun_KSCrashMonitorTypeMachException      | \
     Raygun_KSCrashMonitorTypeSignal             | \
     Raygun_KSCrashMonitorTypeCPPException       | \
@@ -85,12 +85,12 @@ typedef enum
 )
 
 #define Raygun_KSCrashMonitorTypeExperimental     \
-(                                          \
+(                                                 \
     Raygun_KSCrashMonitorTypeMainThreadDeadlock   \
 )
 
 #define Raygun_KSCrashMonitorTypeDebuggerUnsafe   \
-(                                          \
+(                                                 \
     Raygun_KSCrashMonitorTypeMachException      | \
     Raygun_KSCrashMonitorTypeSignal             | \
     Raygun_KSCrashMonitorTypeCPPException       | \
@@ -98,13 +98,13 @@ typedef enum
 )
 
 #define Raygun_KSCrashMonitorTypeAsyncSafe        \
-(                                          \
+(                                                 \
     Raygun_KSCrashMonitorTypeMachException      | \
     Raygun_KSCrashMonitorTypeSignal               \
 )
 
 #define Raygun_KSCrashMonitorTypeOptional         \
-(                                          \
+(                                                 \
     Raygun_KSCrashMonitorTypeZombie               \
 )
     
