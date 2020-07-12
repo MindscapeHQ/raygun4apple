@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSCrashMonitor_Signal.h"
+#include "Raygun_KSCrashMonitor_Signal.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSSignalInfo.h"
@@ -240,7 +240,7 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-Raygun_KSCrashMonitorAPI* kscm_signal_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_signal_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
