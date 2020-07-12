@@ -44,7 +44,7 @@ extern "C" {
  *
  * @return true if we're being traced.
  */
-bool ksdebug_isBeingTraced(void);
+bool raygun_ksdebug_isBeingTraced(void);
     
 #ifdef __cplusplus
 }

@@ -25,7 +25,7 @@
 //
 
 
-#include "KSDebug.h"
+#include "Raygun_KSDebug.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
@@ -40,7 +40,7 @@
  *
  * @return true if we're being traced.
  */
-bool ksdebug_isBeingTraced(void)
+bool raygun_ksdebug_isBeingTraced(void)
 {
     struct kinfo_proc procInfo;
     size_t structSize = sizeof(procInfo);

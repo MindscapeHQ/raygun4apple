@@ -38,7 +38,7 @@
 #include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSCrashMonitor_AppState.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
-#include "KSDebug.h"
+#include "Raygun_KSDebug.h"
 #include "KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
 
@@ -161,7 +161,7 @@ void raygun_kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorC
 
 void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes)
 {
-    if(ksdebug_isBeingTraced() && (monitorTypes & Raygun_KSCrashMonitorTypeDebuggerUnsafe))
+    if(raygun_ksdebug_isBeingTraced() && (monitorTypes & Raygun_KSCrashMonitorTypeDebuggerUnsafe))
     {
         static bool hasWarned = false;
         if(!hasWarned)
