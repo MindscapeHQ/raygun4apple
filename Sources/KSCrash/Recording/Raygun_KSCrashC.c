@@ -31,7 +31,7 @@
 #include "Raygun_KSCrashReport.h"
 #include "Raygun_KSCrashReportFixer.h"
 #include "Raygun_KSCrashReportStore.h"
-#include "KSCrashMonitor_Deadlock.h"
+#include "Raygun_KSCrashMonitor_Deadlock.h"
 #include "KSCrashMonitor_User.h"
 #include "KSFileUtils.h"
 #include "KSObjC.h"
@@ -175,7 +175,7 @@ void raygun_kscrash_setUserInfoJSON(const char* const userInfoJSON)
 void raygun_kscrash_setDeadlockWatchdogInterval(double deadlockWatchdogInterval)
 {
 #if RAYGUN_KSCRASH_HAS_OBJC
-    kscm_setDeadlockHandlerWatchdogInterval(deadlockWatchdogInterval);
+    raygun_kscm_setDeadlockHandlerWatchdogInterval(deadlockWatchdogInterval);
 #endif
 }
 

@@ -29,7 +29,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSCrashMonitorType.h"
 
-#include "KSCrashMonitor_Deadlock.h"
+#include "Raygun_KSCrashMonitor_Deadlock.h"
 #include "KSCrashMonitor_MachException.h"
 #include "Raygun_KSCrashMonitor_CPPException.h"
 #include "KSCrashMonitor_NSException.h"
@@ -79,7 +79,7 @@ static Monitor g_monitors[] =
     },
     {
         .monitorType = KSCrashMonitorTypeMainThreadDeadlock,
-        .getAPI = kscm_deadlock_getAPI,
+        .getAPI = raygun_kscm_deadlock_getAPI,
     },
     {
         .monitorType = KSCrashMonitorTypeZombie,

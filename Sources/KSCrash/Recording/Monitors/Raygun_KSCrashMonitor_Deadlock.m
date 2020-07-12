@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#import "KSCrashMonitor_Deadlock.h"
+#import "Raygun_KSCrashMonitor_Deadlock.h"
 #import "Raygun_KSCrashMonitorContext.h"
 #import "KSID.h"
 #import "KSThread.h"
@@ -205,7 +205,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-Raygun_KSCrashMonitorAPI* kscm_deadlock_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_deadlock_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
@@ -215,7 +215,7 @@ Raygun_KSCrashMonitorAPI* kscm_deadlock_getAPI()
     return &api;
 }
 
-void kscm_setDeadlockHandlerWatchdogInterval(double value)
+void raygun_kscm_setDeadlockHandlerWatchdogInterval(double value)
 {
     g_watchdogInterval = value;
 }
