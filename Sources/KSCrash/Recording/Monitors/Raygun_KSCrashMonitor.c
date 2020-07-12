@@ -31,7 +31,7 @@
 
 #include "KSCrashMonitor_Deadlock.h"
 #include "KSCrashMonitor_MachException.h"
-#include "KSCrashMonitor_CPPException.h"
+#include "Raygun_KSCrashMonitor_CPPException.h"
 #include "KSCrashMonitor_NSException.h"
 #include "KSCrashMonitor_Signal.h"
 #include "KSCrashMonitor_System.h"
@@ -88,7 +88,7 @@ static Monitor g_monitors[] =
 #endif
     {
         .monitorType = KSCrashMonitorTypeCPPException,
-        .getAPI = kscm_cppexception_getAPI,
+        .getAPI = raygun_kscm_cppexception_getAPI,
     },
     {
         .monitorType = KSCrashMonitorTypeUserReported,

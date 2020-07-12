@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSCrashMonitor_CPPException.h"
+#include "Raygun_KSCrashMonitor_CPPException.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSThread.h"
@@ -219,7 +219,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-extern "C" Raygun_KSCrashMonitorAPI* kscm_cppexception_getAPI()
+extern "C" Raygun_KSCrashMonitorAPI* raygun_kscm_cppexception_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
