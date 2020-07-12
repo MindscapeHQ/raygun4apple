@@ -35,7 +35,7 @@
 #include "Raygun_KSCrashMonitor_NSException.h"
 #include "Raygun_KSCrashMonitor_Signal.h"
 #include "Raygun_KSCrashMonitor_System.h"
-#include "KSCrashMonitor_User.h"
+#include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSCrashMonitor_AppState.h"
 #include "KSCrashMonitor_Zombie.h"
 #include "KSDebug.h"
@@ -92,7 +92,7 @@ static Monitor g_monitors[] =
     },
     {
         .monitorType = KSCrashMonitorTypeUserReported,
-        .getAPI = kscm_user_getAPI,
+        .getAPI = raygun_kscm_user_getAPI,
     },
     {
         .monitorType = KSCrashMonitorTypeSystem,

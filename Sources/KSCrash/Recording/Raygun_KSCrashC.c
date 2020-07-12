@@ -32,7 +32,7 @@
 #include "Raygun_KSCrashReportFixer.h"
 #include "Raygun_KSCrashReportStore.h"
 #include "Raygun_KSCrashMonitor_Deadlock.h"
-#include "KSCrashMonitor_User.h"
+#include "Raygun_KSCrashMonitor_User.h"
 #include "KSFileUtils.h"
 #include "KSObjC.h"
 #include "KSString.h"
@@ -217,7 +217,7 @@ void raygun_kscrash_reportUserException(const char* name,
                                  bool logAllThreads,
                                  bool terminateProgram)
 {
-    kscm_reportUserException(name,
+    raygun_kscm_reportUserException(name,
                              reason,
                              language,
                              lineOfCode,

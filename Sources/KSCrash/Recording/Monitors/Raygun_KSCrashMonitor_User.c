@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSCrashMonitor_User.h"
+#include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
 #include "KSThread.h"
@@ -40,7 +40,7 @@
 static volatile bool g_isEnabled = false;
 
 
-void kscm_reportUserException(const char* name,
+void raygun_kscm_reportUserException(const char* name,
                               const char* reason,
                               const char* language,
                               const char* lineOfCode,
@@ -108,7 +108,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-Raygun_KSCrashMonitorAPI* kscm_user_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_user_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
