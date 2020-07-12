@@ -25,7 +25,7 @@
 //
 
 #import "Raygun_KSCrash.h"
-#import "KSCrashMonitor_NSException.h"
+#import "Raygun_KSCrashMonitor_NSException.h"
 #import "KSStackCursor_Backtrace.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSID.h"
@@ -149,7 +149,7 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-Raygun_KSCrashMonitorAPI* kscm_nsexception_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_nsexception_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
