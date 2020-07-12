@@ -28,7 +28,7 @@
 #if defined (__i386__)
 
 
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSCPU_Apple.h"
 #include "KSMachineContext.h"
 #include "KSMachineContext_Apple.h"

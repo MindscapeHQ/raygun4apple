@@ -27,7 +27,7 @@
 
 #include "Raygun_KSCrashMonitor_MachException.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSID.h"
 #include "KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
@@ -335,11 +335,11 @@ static void* handleExceptions(void* const userData)
             KSLOG_TRACE("Fault address 0x%x, instruction address 0x%x", kscpu_faultAddress(machineContext), kscpu_instructionAddress(machineContext));
             if(exceptionMessage.exception == EXC_BAD_ACCESS)
             {
-                crashContext->faultAddress = kscpu_faultAddress(machineContext);
+                crashContext->faultAddress = raygun_kscpu_faultAddress(machineContext);
             }
             else
             {
-                crashContext->faultAddress = kscpu_instructionAddress(machineContext);
+                crashContext->faultAddress = raygun_kscpu_instructionAddress(machineContext);
             }
         }
 

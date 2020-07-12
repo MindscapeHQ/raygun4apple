@@ -32,7 +32,7 @@
 #include "KSDynamicLinker.h"
 #include "KSFileUtils.h"
 #include "KSJSONCodec.h"
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSMemory.h"
 #include "KSMach.h"
 #include "KSThread.h"
@@ -939,14 +939,14 @@ static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
                                const struct KSMachineContext* const machineContext,
                                const bool isStackOverflow)
 {
-    uintptr_t sp = kscpu_stackPointer(machineContext);
+    uintptr_t sp = raygun_kscpu_stackPointer(machineContext);
     if((void*)sp == NULL)
     {
         return;
     }
 
-    uintptr_t lowAddress = sp + (uintptr_t)(kStackContentsPushedDistance * (int)sizeof(sp) * kscpu_stackGrowDirection() * -1);
-    uintptr_t highAddress = sp + (uintptr_t)(kStackContentsPoppedDistance * (int)sizeof(sp) * kscpu_stackGrowDirection());
+    uintptr_t lowAddress = sp + (uintptr_t)(kStackContentsPushedDistance * (int)sizeof(sp) * raygun_kscpu_stackGrowDirection() * -1);
+    uintptr_t highAddress = sp + (uintptr_t)(kStackContentsPoppedDistance * (int)sizeof(sp) * raygun_kscpu_stackGrowDirection());
     if(highAddress < lowAddress)
     {
         uintptr_t tmp = lowAddress;
@@ -955,7 +955,7 @@ static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
     }
     writer->beginObject(writer, key);
     {
-        writer->addStringElement(writer, Raygun_KSCrashField_GrowDirection, kscpu_stackGrowDirection() > 0 ? "+" : "-");
+        writer->addStringElement(writer, Raygun_KSCrashField_GrowDirection, raygun_kscpu_stackGrowDirection() > 0 ? "+" : "-");
         writer->addUIntegerElement(writer, Raygun_KSCrashField_DumpStart, lowAddress);
         writer->addUIntegerElement(writer, Raygun_KSCrashField_DumpEnd, highAddress);
         writer->addUIntegerElement(writer, Raygun_KSCrashField_StackPtr, sp);
@@ -989,14 +989,14 @@ static void writeNotableStackContents(const Raygun_KSCrashReportWriter* const wr
                                       const int backDistance,
                                       const int forwardDistance)
 {
-    uintptr_t sp = kscpu_stackPointer(machineContext);
+    uintptr_t sp = raygun_kscpu_stackPointer(machineContext);
     if((void*)sp == NULL)
     {
         return;
     }
 
-    uintptr_t lowAddress = sp + (uintptr_t)(backDistance * (int)sizeof(sp) * kscpu_stackGrowDirection() * -1);
-    uintptr_t highAddress = sp + (uintptr_t)(forwardDistance * (int)sizeof(sp) * kscpu_stackGrowDirection());
+    uintptr_t lowAddress = sp + (uintptr_t)(backDistance * (int)sizeof(sp) * raygun_kscpu_stackGrowDirection() * -1);
+    uintptr_t highAddress = sp + (uintptr_t)(forwardDistance * (int)sizeof(sp) * raygun_kscpu_stackGrowDirection());
     if(highAddress < lowAddress)
     {
         uintptr_t tmp = lowAddress;
@@ -1034,17 +1034,17 @@ static void writeBasicRegisters(const Raygun_KSCrashReportWriter* const writer,
     const char* registerName;
     writer->beginObject(writer, key);
     {
-        const int numRegisters = kscpu_numRegisters();
+        const int numRegisters = raygun_kscpu_numRegisters();
         for(int reg = 0; reg < numRegisters; reg++)
         {
-            registerName = kscpu_registerName(reg);
+            registerName = raygun_kscpu_registerName(reg);
             if(registerName == NULL)
             {
                 snprintf(registerNameBuff, sizeof(registerNameBuff), "r%d", reg);
                 registerName = registerNameBuff;
             }
             writer->addUIntegerElement(writer, registerName,
-                                       kscpu_registerValue(machineContext, reg));
+                                       raygun_kscpu_registerValue(machineContext, reg));
         }
     }
     writer->endContainer(writer);
@@ -1066,17 +1066,17 @@ static void writeExceptionRegisters(const Raygun_KSCrashReportWriter* const writ
     const char* registerName;
     writer->beginObject(writer, key);
     {
-        const int numRegisters = kscpu_numExceptionRegisters();
+        const int numRegisters = raygun_kscpu_numExceptionRegisters();
         for(int reg = 0; reg < numRegisters; reg++)
         {
-            registerName = kscpu_exceptionRegisterName(reg);
+            registerName = raygun_kscpu_exceptionRegisterName(reg);
             if(registerName == NULL)
             {
                 snprintf(registerNameBuff, sizeof(registerNameBuff), "r%d", reg);
                 registerName = registerNameBuff;
             }
             writer->addUIntegerElement(writer,registerName,
-                                       kscpu_exceptionRegisterValue(machineContext, reg));
+                                       raygun_kscpu_exceptionRegisterValue(machineContext, reg));
         }
     }
     writer->endContainer(writer);
@@ -1116,10 +1116,10 @@ static void writeNotableRegisters(const Raygun_KSCrashReportWriter* const writer
 {
     char registerNameBuff[30];
     const char* registerName;
-    const int numRegisters = kscpu_numRegisters();
+    const int numRegisters = raygun_kscpu_numRegisters();
     for(int reg = 0; reg < numRegisters; reg++)
     {
-        registerName = kscpu_registerName(reg);
+        registerName = raygun_kscpu_registerName(reg);
         if(registerName == NULL)
         {
             snprintf(registerNameBuff, sizeof(registerNameBuff), "r%d", reg);
@@ -1127,7 +1127,7 @@ static void writeNotableRegisters(const Raygun_KSCrashReportWriter* const writer
         }
         writeMemoryContentsIfNotable(writer,
                                      registerName,
-                                     (uintptr_t)kscpu_registerValue(machineContext, reg));
+                                     (uintptr_t)raygun_kscpu_registerValue(machineContext, reg));
     }
 }
 

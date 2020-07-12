@@ -28,7 +28,7 @@
 #if defined (__x86_64__)
 
 
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSCPU_Apple.h"
 #include "KSMachineContext.h"
 #include "KSMachineContext_Apple.h"
@@ -60,50 +60,50 @@ static const int g_exceptionRegisterNamesCount =
 sizeof(g_exceptionRegisterNames) / sizeof(*g_exceptionRegisterNames);
 
 
-uintptr_t kscpu_framePointer(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_framePointer(const KSMachineContext* const context)
 {
     return context->machineContext.__ss.__rbp;
 }
 
-uintptr_t kscpu_stackPointer(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_stackPointer(const KSMachineContext* const context)
 {
     return context->machineContext.__ss.__rsp;
 }
 
-uintptr_t kscpu_instructionAddress(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_instructionAddress(const KSMachineContext* const context)
 {
     return context->machineContext.__ss.__rip;
 }
 
-uintptr_t kscpu_linkRegister(__unused const KSMachineContext* const context)
+uintptr_t raygun_kscpu_linkRegister(__unused const KSMachineContext* const context)
 {
     return 0;
 }
 
-void kscpu_getState(KSMachineContext* context)
+void raygun_kscpu_getState(KSMachineContext* context)
 {
     thread_t thread = context->thisThread;
     STRUCT_MCONTEXT_L* const machineContext = &context->machineContext;
     
-    kscpu_i_fillState(thread, (thread_state_t)&machineContext->__ss, x86_THREAD_STATE64, x86_THREAD_STATE64_COUNT);
-    kscpu_i_fillState(thread, (thread_state_t)&machineContext->__es, x86_EXCEPTION_STATE64, x86_EXCEPTION_STATE64_COUNT);
+    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__ss, x86_THREAD_STATE64, x86_THREAD_STATE64_COUNT);
+    raygun_kscpu_i_fillState(thread, (thread_state_t)&machineContext->__es, x86_EXCEPTION_STATE64, x86_EXCEPTION_STATE64_COUNT);
 }
 
-int kscpu_numRegisters(void)
+int raygun_kscpu_numRegisters(void)
 {
     return g_registerNamesCount;
 }
 
-const char* kscpu_registerName(const int regNumber)
+const char* raygun_kscpu_registerName(const int regNumber)
 {
-    if(regNumber < kscpu_numRegisters())
+    if(regNumber < raygun_kscpu_numRegisters())
     {
         return g_registerNames[regNumber];
     }
     return NULL;
 }
 
-uint64_t kscpu_registerValue(const KSMachineContext* const context, const int regNumber)
+uint64_t raygun_kscpu_registerValue(const KSMachineContext* const context, const int regNumber)
 {
     switch(regNumber)
     {
@@ -155,14 +155,14 @@ uint64_t kscpu_registerValue(const KSMachineContext* const context, const int re
     return 0;
 }
 
-int kscpu_numExceptionRegisters(void)
+int raygun_kscpu_numExceptionRegisters(void)
 {
     return g_exceptionRegisterNamesCount;
 }
 
-const char* kscpu_exceptionRegisterName(const int regNumber)
+const char* raygun_kscpu_exceptionRegisterName(const int regNumber)
 {
-    if(regNumber < kscpu_numExceptionRegisters())
+    if(regNumber < raygun_kscpu_numExceptionRegisters())
     {
         return g_exceptionRegisterNames[regNumber];
     }
@@ -170,7 +170,7 @@ const char* kscpu_exceptionRegisterName(const int regNumber)
     return NULL;
 }
 
-uint64_t kscpu_exceptionRegisterValue(const KSMachineContext* const context, const int regNumber)
+uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const context, const int regNumber)
 {
     switch(regNumber)
     {
@@ -186,12 +186,12 @@ uint64_t kscpu_exceptionRegisterValue(const KSMachineContext* const context, con
     return 0;
 }
 
-uintptr_t kscpu_faultAddress(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_faultAddress(const KSMachineContext* const context)
 {
     return context->machineContext.__es.__faultvaddr;
 }
 
-int kscpu_stackGrowDirection(void)
+int raygun_kscpu_stackGrowDirection(void)
 {
     return -1;
 }

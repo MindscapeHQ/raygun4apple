@@ -25,7 +25,7 @@
 
 #include "KSStackCursor_MachineContext.h"
 
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSMemory.h"
 
 #include <stdlib.h>
@@ -72,7 +72,7 @@ static bool advanceCursor(KSStackCursor *cursor)
     
     if(context->instructionAddress == 0)
     {
-        context->instructionAddress = kscpu_instructionAddress(context->machineContext);
+        context->instructionAddress = raygun_kscpu_instructionAddress(context->machineContext);
         if(context->instructionAddress == 0)
         {
             return false;
@@ -84,7 +84,7 @@ static bool advanceCursor(KSStackCursor *cursor)
     if(context->linkRegister == 0 && !context->isPastFramePointer)
     {
         // Link register, if available, is the second address in the trace.
-        context->linkRegister = kscpu_linkRegister(context->machineContext);
+        context->linkRegister = raygun_kscpu_linkRegister(context->machineContext);
         if(context->linkRegister != 0)
         {
             nextAddress = context->linkRegister;
@@ -98,7 +98,7 @@ static bool advanceCursor(KSStackCursor *cursor)
         {
             return false;
         }
-        context->currentFrame.previous = (struct FrameEntry*)kscpu_framePointer(context->machineContext);
+        context->currentFrame.previous = (struct FrameEntry*)raygun_kscpu_framePointer(context->machineContext);
         context->isPastFramePointer = true;
     }
 

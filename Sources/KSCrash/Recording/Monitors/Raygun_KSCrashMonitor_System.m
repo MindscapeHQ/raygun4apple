@@ -27,7 +27,7 @@
 
 #import "Raygun_KSCrashMonitor_System.h"
 
-#import "KSCPU.h"
+#import "Raygun_KSCPU.h"
 #import "Raygun_KSCrashMonitorContext.h"
 #import "KSDate.h"
 #import "KSDynamicLinker.h"
@@ -312,7 +312,7 @@ static const char* getCurrentCPUArch()
 
     if(result == NULL)
     {
-        result = kscpu_currentArch();
+        result = raygun_kscpu_currentArch();
     }
     return result;
 }

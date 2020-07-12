@@ -27,7 +27,7 @@
 #include "KSMachineContext_Apple.h"
 #include "KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
-#include "KSCPU.h"
+#include "Raygun_KSCPU.h"
 #include "KSCPU_Apple.h"
 #include "KSStackCursor_MachineContext.h"
 
@@ -116,7 +116,7 @@ bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationCont
     destinationContext->isSignalContext = false;
     if(ksmc_canHaveCPUState(destinationContext))
     {
-        kscpu_getState(destinationContext);
+        raygun_kscpu_getState(destinationContext);
     }
     if(ksmc_isCrashedContext(destinationContext))
     {
