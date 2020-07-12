@@ -30,7 +30,7 @@
 #include "Raygun_KSCrashCachedData.h"
 #include "Raygun_KSCrashReport.h"
 #include "Raygun_KSCrashReportFixer.h"
-#include "KSCrashReportStore.h"
+#include "Raygun_KSCrashReportStore.h"
 #include "KSCrashMonitor_Deadlock.h"
 #include "KSCrashMonitor_User.h"
 #include "KSFileUtils.h"
@@ -106,7 +106,7 @@ static void onCrash(struct KSCrash_MonitorContext* monitorContext)
     else
     {
         char crashReportFilePath[KSFU_MAX_PATH_LENGTH];
-        kscrs_getNextCrashReportPath(crashReportFilePath);
+        raygun_kscrs_getNextCrashReportPath(crashReportFilePath);
         strncpy(g_lastCrashReportFilePath, crashReportFilePath, sizeof(g_lastCrashReportFilePath));
         raygun_kscrashreport_writeStandardReport(monitorContext, crashReportFilePath);
     }
@@ -131,7 +131,7 @@ KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const
     char path[KSFU_MAX_PATH_LENGTH];
     snprintf(path, sizeof(path), "%s/Reports", installPath);
     ksfu_makePath(path);
-    kscrs_initialize(appName, path);
+    raygun_kscrs_initialize(appName, path);
 
     snprintf(path, sizeof(path), "%s/Data", installPath);
     ksfu_makePath(path);
@@ -206,7 +206,7 @@ void raygun_kscrash_setPrintPreviousLog(bool shouldPrintPreviousLog)
 
 void raygun_kscrash_setMaxReportCount(int maxReportCount)
 {
-    kscrs_setMaxReportCount(maxReportCount);
+    raygun_kscrs_setMaxReportCount(maxReportCount);
 }
 
 void raygun_kscrash_reportUserException(const char* name,
@@ -252,12 +252,12 @@ void raygun_kscrash_notifyAppCrash(void)
 
 int raygun_kscrash_getReportCount()
 {
-    return kscrs_getReportCount();
+    return raygun_kscrs_getReportCount();
 }
 
 int raygun_kscrash_getReportIDs(int64_t* reportIDs, int count)
 {
-    return kscrs_getReportIDs(reportIDs, count);
+    return raygun_kscrs_getReportIDs(reportIDs, count);
 }
 
 char* raygun_kscrash_readReport(int64_t reportID)
@@ -268,7 +268,7 @@ char* raygun_kscrash_readReport(int64_t reportID)
         return NULL;
     }
 
-    char* rawReport = kscrs_readReport(reportID);
+    char* rawReport = raygun_kscrs_readReport(reportID);
     if(rawReport == NULL)
     {
         KSLOG_ERROR("Failed to load report ID %" PRIx64, reportID);
@@ -287,15 +287,15 @@ char* raygun_kscrash_readReport(int64_t reportID)
 
 int64_t raygun_kscrash_addUserReport(const char* report, int reportLength)
 {
-    return kscrs_addUserReport(report, reportLength);
+    return raygun_kscrs_addUserReport(report, reportLength);
 }
 
 void raygun_kscrash_deleteAllReports()
 {
-    kscrs_deleteAllReports();
+    raygun_kscrs_deleteAllReports();
 }
 
 void raygun_kscrash_deleteReportWithID(int64_t reportID)
 {
-    kscrs_deleteReportWithID(reportID);
+    raygun_kscrs_deleteReportWithID(reportID);
 }

@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#include "KSCrashReportStore.h"
+#include "Raygun_KSCrashReportStore.h"
 #include "KSLogger.h"
 #include "KSFileUtils.h"
 
@@ -148,7 +148,7 @@ static void pruneReports()
         
         for(int i = 0; i < reportCount - g_maxReportCount; i++)
         {
-            kscrs_deleteReportWithID(reportIDs[i]);
+            raygun_kscrs_deleteReportWithID(reportIDs[i]);
         }
     }
 }
@@ -173,7 +173,7 @@ static void initializeIDs()
 
 // Public API
 
-void kscrs_initialize(const char* appName, const char* reportsPath)
+void raygun_kscrs_initialize(const char* appName, const char* reportsPath)
 {
     pthread_mutex_lock(&g_mutex);
     g_appName = strdup(appName);
@@ -184,12 +184,12 @@ void kscrs_initialize(const char* appName, const char* reportsPath)
     pthread_mutex_unlock(&g_mutex);
 }
 
-void kscrs_getNextCrashReportPath(char* crashReportPathBuffer)
+void raygun_kscrs_getNextCrashReportPath(char* crashReportPathBuffer)
 {
     getCrashReportPathByID(getNextUniqueID(), crashReportPathBuffer);
 }
 
-int kscrs_getReportCount()
+int raygun_kscrs_getReportCount()
 {
     pthread_mutex_lock(&g_mutex);
     int count = getReportCount();
@@ -197,7 +197,7 @@ int kscrs_getReportCount()
     return count;
 }
 
-int kscrs_getReportIDs(int64_t* reportIDs, int count)
+int raygun_kscrs_getReportIDs(int64_t* reportIDs, int count)
 {
     pthread_mutex_lock(&g_mutex);
     count = getReportIDs(reportIDs, count);
@@ -205,7 +205,7 @@ int kscrs_getReportIDs(int64_t* reportIDs, int count)
     return count;
 }
 
-char* kscrs_readReport(int64_t reportID)
+char* raygun_kscrs_readReport(int64_t reportID)
 {
     pthread_mutex_lock(&g_mutex);
     char path[KSCRS_MAX_PATH_LENGTH];
@@ -216,7 +216,7 @@ char* kscrs_readReport(int64_t reportID)
     return result;
 }
 
-int64_t kscrs_addUserReport(const char* report, int reportLength)
+int64_t raygun_kscrs_addUserReport(const char* report, int reportLength)
 {
     pthread_mutex_lock(&g_mutex);
     int64_t currentID = getNextUniqueID();
@@ -251,21 +251,21 @@ done:
     return currentID;
 }
 
-void kscrs_deleteAllReports()
+void raygun_kscrs_deleteAllReports()
 {
     pthread_mutex_lock(&g_mutex);
     ksfu_deleteContentsOfPath(g_reportsPath);
     pthread_mutex_unlock(&g_mutex);
 }
 
-void kscrs_deleteReportWithID(int64_t reportID)
+void raygun_kscrs_deleteReportWithID(int64_t reportID)
 {
     char path[KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(reportID, path);
     ksfu_removeFile(path, true);
 }
 
-void kscrs_setMaxReportCount(int maxReportCount)
+void raygun_kscrs_setMaxReportCount(int maxReportCount)
 {
     g_maxReportCount = maxReportCount;
 }
