@@ -147,7 +147,7 @@ KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const
     
     raygun_ksccd_init(60);
 
-    kscm_setEventCallback(onCrash);
+    raygun_kscm_setEventCallback(onCrash);
     KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
 
     KSLOG_DEBUG("Installation complete.");
@@ -160,8 +160,8 @@ KSCrashMonitorType raygun_kscrash_setMonitoring(KSCrashMonitorType monitors)
     
     if(g_installed)
     {
-        kscm_setActiveMonitors(monitors);
-        return kscm_getActiveMonitors();
+        raygun_kscm_setActiveMonitors(monitors);
+        return raygun_kscm_getActiveMonitors();
     }
     // Return what we will be monitoring in future.
     return g_monitoring;

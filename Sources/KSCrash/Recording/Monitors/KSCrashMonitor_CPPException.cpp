@@ -110,7 +110,7 @@ static void CPPExceptionTerminate(void)
     
     if(name == NULL || strcmp(name, "NSException") != 0)
     {
-        kscm_notifyFatalExceptionCaptured(false);
+        raygun_kscm_notifyFatalExceptionCaptured(false);
         KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
 
@@ -167,7 +167,7 @@ catch(TYPE value)\
         crashContext->crashReason = description;
         crashContext->offendingMachineContext = machineContext;
 
-        kscm_handleException(crashContext);
+        raygun_kscm_handleException(crashContext);
     }
     else
     {
@@ -219,9 +219,9 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-extern "C" KSCrashMonitorAPI* kscm_cppexception_getAPI()
+extern "C" Raygun_KSCrashMonitorAPI* kscm_cppexception_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled

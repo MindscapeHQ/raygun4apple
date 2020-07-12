@@ -30,7 +30,7 @@ extern "C" {
 #endif
 
 
-#include "KSCrashMonitor.h"
+#include "Raygun_KSCrashMonitor.h"
 
 #include <stdbool.h>
 
@@ -65,7 +65,7 @@ void kscm_reportUserException(const char* name,
 
 /** Access the Monitor API.
  */
-KSCrashMonitorAPI* kscm_user_getAPI(void);
+Raygun_KSCrashMonitorAPI* kscm_user_getAPI(void);
 
 
 #ifdef __cplusplus

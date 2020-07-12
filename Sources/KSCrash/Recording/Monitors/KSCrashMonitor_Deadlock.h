@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 
-#include "KSCrashMonitor.h"
+#include "Raygun_KSCrashMonitor.h"
 
 #include <stdbool.h>
 
@@ -50,7 +50,7 @@ void kscm_setDeadlockHandlerWatchdogInterval(double value);
 
 /** Access the Monitor API.
  */
-KSCrashMonitorAPI* kscm_deadlock_getAPI(void);
+Raygun_KSCrashMonitorAPI* kscm_deadlock_getAPI(void);
 
 
 #ifdef __cplusplus

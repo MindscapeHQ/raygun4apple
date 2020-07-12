@@ -45,7 +45,7 @@
 extern "C" {
 #endif
 
-#include "KSCrashMonitor.h"
+#include "Raygun_KSCrashMonitor.h"
 #include <stdbool.h>
 
 
@@ -59,7 +59,7 @@ const char* kszombie_className(const void* object);
 
 /** Access the Monitor API.
  */
-KSCrashMonitorAPI* kscm_zombie_getAPI(void);
+Raygun_KSCrashMonitorAPI* kscm_zombie_getAPI(void);
 
 
 #ifdef __cplusplus

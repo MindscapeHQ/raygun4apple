@@ -300,7 +300,7 @@ static void* handleExceptions(void* const userData)
     {
         ksmc_suspendEnvironment();
         g_isHandlingCrash = true;
-        kscm_notifyFatalExceptionCaptured(true);
+        raygun_kscm_notifyFatalExceptionCaptured(true);
 
         KSLOG_DEBUG("Exception handler is installed. Continuing exception handling.");
 
@@ -360,7 +360,7 @@ static void* handleExceptions(void* const userData)
         crashContext->signal.signum = signalForMachException(crashContext->mach.type, crashContext->mach.code);
         crashContext->stackCursor = &g_stackCursor;
 
-        kscm_handleException(crashContext);
+        raygun_kscm_handleException(crashContext);
 
         KSLOG_DEBUG("Crash handling complete. Restoring original handlers.");
         g_isHandlingCrash = false;
@@ -584,9 +584,9 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-KSCrashMonitorAPI* kscm_machexception_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_machexception_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
 #if RAYGUN_KSCRASH_HAS_MACH
         .setEnabled = setEnabled,

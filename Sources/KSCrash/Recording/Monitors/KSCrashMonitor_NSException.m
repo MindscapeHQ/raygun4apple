@@ -63,7 +63,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
     if(g_isEnabled)
     {
         ksmc_suspendEnvironment();
-        kscm_notifyFatalExceptionCaptured(false);
+        raygun_kscm_notifyFatalExceptionCaptured(false);
 
         KSLOG_DEBUG(@"Filling out context.");
         NSArray* addresses = [exception callStackReturnAddresses];
@@ -95,7 +95,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         crashContext->currentSnapshotUserReported = currentSnapshotUserReported;
 
         KSLOG_DEBUG(@"Calling main crash handler.");
-        kscm_handleException(crashContext);
+        raygun_kscm_handleException(crashContext);
 
         free(callstack);
         if (currentSnapshotUserReported) {
@@ -149,9 +149,9 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-KSCrashMonitorAPI* kscm_nsexception_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_nsexception_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled

@@ -476,9 +476,9 @@ static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
     }
 }
 
-KSCrashMonitorAPI* kscm_appstate_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_appstate_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled,

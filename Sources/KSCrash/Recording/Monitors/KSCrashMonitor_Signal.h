@@ -37,12 +37,12 @@ extern "C" {
 #endif
 
 
-#include "KSCrashMonitor.h"
+#include "Raygun_KSCrashMonitor.h"
 
 
 /** Access the Monitor API.
  */
-KSCrashMonitorAPI* kscm_signal_getAPI(void);
+Raygun_KSCrashMonitorAPI* kscm_signal_getAPI(void);
 
 
 #ifdef __cplusplus

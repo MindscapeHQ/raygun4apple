@@ -60,7 +60,7 @@ void kscm_reportUserException(const char* name,
         }
         if(terminateProgram)
         {
-            kscm_notifyFatalExceptionCaptured(false);
+            raygun_kscm_notifyFatalExceptionCaptured(false);
         }
 
         char eventID[37];
@@ -85,7 +85,7 @@ void kscm_reportUserException(const char* name,
         context.userException.customStackTrace = stackTrace;
         context.stackCursor = &stackCursor;
 
-        kscm_handleException(&context);
+        raygun_kscm_handleException(&context);
 
         if(logAllThreads)
         {
@@ -108,9 +108,9 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-KSCrashMonitorAPI* kscm_user_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_user_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled

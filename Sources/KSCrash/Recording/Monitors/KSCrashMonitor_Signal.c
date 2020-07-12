@@ -85,7 +85,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
     if(g_isEnabled)
     {
         ksmc_suspendEnvironment();
-        kscm_notifyFatalExceptionCaptured(false);
+        raygun_kscm_notifyFatalExceptionCaptured(false);
 
         KSLOG_DEBUG("Filling out context.");
         KSMC_NEW_CONTEXT(machineContext);
@@ -104,7 +104,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
         crashContext->signal.sigcode = signalInfo->si_code;
         crashContext->stackCursor = &g_stackCursor;
 
-        kscm_handleException(crashContext);
+        raygun_kscm_handleException(crashContext);
         ksmc_resumeEnvironment();
     }
 
@@ -240,9 +240,9 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-KSCrashMonitorAPI* kscm_signal_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_signal_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
 #if RAYGUN_KSCRASH_HAS_SIGNAL
         .setEnabled = setEnabled,

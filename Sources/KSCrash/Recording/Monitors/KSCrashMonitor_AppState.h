@@ -37,7 +37,7 @@
 extern "C" {
 #endif
 
-#include "KSCrashMonitor.h"
+#include "Raygun_KSCrashMonitor.h"
 
 #include <stdbool.h>
 
@@ -125,7 +125,7 @@ const KSCrash_AppState* const kscrashstate_currentState(void);
 
 /** Access the Monitor API.
  */
-KSCrashMonitorAPI* kscm_appstate_getAPI(void);
+Raygun_KSCrashMonitorAPI* kscm_appstate_getAPI(void);
 
 
 #ifdef __cplusplus

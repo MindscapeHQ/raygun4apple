@@ -239,9 +239,9 @@ static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
     }
 }
 
-KSCrashMonitorAPI* kscm_zombie_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_zombie_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled,

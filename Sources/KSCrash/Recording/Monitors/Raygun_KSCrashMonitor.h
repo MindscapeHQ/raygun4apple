@@ -53,17 +53,17 @@ struct Raygun_KSCrash_MonitorContext;
  *
  * @param monitorTypes Which monitors should be active.
  */
-void kscm_setActiveMonitors(KSCrashMonitorType monitorTypes);
+void raygun_kscm_setActiveMonitors(KSCrashMonitorType monitorTypes);
 
 /** Get the currently active monitors.
  */
-KSCrashMonitorType kscm_getActiveMonitors(void);
+KSCrashMonitorType raygun_kscm_getActiveMonitors(void);
 
 /** Set the callback to call when an event is captured.
  *
  * @param onEvent Called whenever an event is captured.
  */
-void kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorContext* monitorContext));
+void raygun_kscm_setEventCallback(void (*onEvent)(struct Raygun_KSCrash_MonitorContext* monitorContext));
 
 
 // ============================================================================
@@ -75,20 +75,20 @@ typedef struct
     void (*setEnabled)(bool isEnabled);
     bool (*isEnabled)(void);
     void (*addContextualInfoToEvent)(struct Raygun_KSCrash_MonitorContext* eventContext);
-} KSCrashMonitorAPI;
+} Raygun_KSCrashMonitorAPI;
 
 /** Notify that a fatal exception has been captured.
  *  This allows the system to take appropriate steps in preparation.
  *
  * @oaram isAsyncSafeEnvironment If true, only async-safe functions are allowed from now on.
  */
-bool kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment);
+bool raygun_kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment);
 
 /** Start general exception processing.
  *
  * @oaram context Contextual information about the exception.
  */
-void kscm_handleException(struct Raygun_KSCrash_MonitorContext* context);
+void raygun_kscm_handleException(struct Raygun_KSCrash_MonitorContext* context);
 
 
 #ifdef __cplusplus

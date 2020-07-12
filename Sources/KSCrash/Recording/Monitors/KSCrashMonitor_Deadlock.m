@@ -108,7 +108,7 @@ static NSTimeInterval g_watchdogInterval = 0;
 - (void) handleDeadlock
 {
     ksmc_suspendEnvironment();
-    kscm_notifyFatalExceptionCaptured(false);
+    raygun_kscm_notifyFatalExceptionCaptured(false);
 
     KSMC_NEW_CONTEXT(machineContext);
     ksmc_getContextForThread(g_mainQueueThread, machineContext, false);
@@ -126,7 +126,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     crashContext->offendingMachineContext = machineContext;
     crashContext->stackCursor = &stackCursor;
     
-    kscm_handleException(crashContext);
+    raygun_kscm_handleException(crashContext);
     ksmc_resumeEnvironment();
 
     KSLOG_DEBUG(@"Calling abort()");
@@ -205,9 +205,9 @@ static bool isEnabled()
     return g_isEnabled;
 }
 
-KSCrashMonitorAPI* kscm_deadlock_getAPI()
+Raygun_KSCrashMonitorAPI* kscm_deadlock_getAPI()
 {
-    static KSCrashMonitorAPI api =
+    static Raygun_KSCrashMonitorAPI api =
     {
         .setEnabled = setEnabled,
         .isEnabled = isEnabled
