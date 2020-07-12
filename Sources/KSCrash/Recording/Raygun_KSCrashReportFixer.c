@@ -29,7 +29,7 @@
 #include "KSJSONCodec.h"
 #include "Raygun_KSDemangle_CPP.h"
 #if RAYGUN_KSCRASH_HAS_SWIFT
-#include "KSDemangle_Swift.h"
+#include "Raygun_KSDemangle_Swift.h"
 #endif
 #include "Raygun_KSDate.h"
 #include "KSLogger.h"
@@ -192,7 +192,7 @@ static int onStringElement(const char* const name,
 #if RAYGUN_KSCRASH_HAS_SWIFT
         if(demangled == NULL)
         {
-            demangled = ksdm_demangleSwift(value);
+            demangled = raygun_ksdm_demangleSwift(value);
         }
 #endif
         if(demangled != NULL)

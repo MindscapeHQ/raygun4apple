@@ -1,5 +1,5 @@
 //
-//  KSDemangle_Swift.cc
+//  KSDemangle_Swift.h
 //
 //  Created by Karl Stenerud on 2016-11-04.
 //
@@ -24,17 +24,24 @@
 // THE SOFTWARE.
 //
 
+#ifndef HDR_KSDemangle_Swift_h
+#define HDR_KSDemangle_Swift_h
 
-#include "Demangle.h"
-#include "KSDemangle_Swift.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-extern "C" char* ksdm_demangleSwift(const char* mangledSymbol)
-{
-    swift::Demangle::DemangleOptions options = swift::Demangle::DemangleOptions::SimplifiedUIDemangleOptions();
-    std::string demangled = swift::Demangle::demangleSymbolAsString(mangledSymbol, options);
-    if(demangled.length() == 0)
-    {
-        return NULL;
-    }
-    return strdup(demangled.c_str());
+/** Demangle a Swift symbol.
+ *
+ * @param mangledSymbol The mangled symbol.
+ *
+ * @return A demangled symbol, or NULL if demangling failed.
+ *         MEMORY MANAGEMENT WARNING: User is responsible for calling free() on the returned value.
+ */
+char* raygun_ksdm_demangleSwift(const char* mangledSymbol);
+    
+#ifdef __cplusplus
 }
+#endif
+
+#endif // HDR_KSDemangle_Swift_h
