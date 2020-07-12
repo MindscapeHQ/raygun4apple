@@ -37,7 +37,7 @@
 #include "Raygun_KSCrashMonitor_System.h"
 #include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSCrashMonitor_AppState.h"
-#include "KSCrashMonitor_Zombie.h"
+#include "Raygun_KSCrashMonitor_Zombie.h"
 #include "KSDebug.h"
 #include "KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
@@ -83,7 +83,7 @@ static Monitor g_monitors[] =
     },
     {
         .monitorType = KSCrashMonitorTypeZombie,
-        .getAPI = kscm_zombie_getAPI,
+        .getAPI = raygun_kscm_zombie_getAPI,
     },
 #endif
     {

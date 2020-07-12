@@ -38,7 +38,7 @@
 #include "KSThread.h"
 #include "KSObjC.h"
 #include "KSSignalInfo.h"
-#include "KSCrashMonitor_Zombie.h"
+#include "Raygun_KSCrashMonitor_Zombie.h"
 #include "KSString.h"
 #include "Raygun_KSCrashReportVersion.h"
 #include "KSStackCursor_Backtrace.h"
@@ -664,7 +664,7 @@ static void writeZombieIfPresent(const KSCrashReportWriter* const writer,
 {
 #if RAYGUN_KSCRASH_HAS_OBJC
     const void* object = (const void*)address;
-    const char* zombieClassName = kszombie_className(object);
+    const char* zombieClassName = raygun_kszombie_className(object);
     if(zombieClassName != NULL)
     {
         writer->addStringElement(writer, key, zombieClassName);
@@ -814,7 +814,7 @@ static bool isNotableAddress(const uintptr_t address)
     const void* object = (const void*)address;
 
 #if RAYGUN_KSCRASH_HAS_OBJC
-    if(kszombie_className(object) != NULL)
+    if(raygun_kszombie_className(object) != NULL)
     {
         return true;
     }

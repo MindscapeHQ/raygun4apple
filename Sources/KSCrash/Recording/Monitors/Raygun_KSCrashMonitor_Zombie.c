@@ -25,7 +25,7 @@
 //
 
 
-#include "KSCrashMonitor_Zombie.h"
+#include "Raygun_KSCrashMonitor_Zombie.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "KSObjC.h"
 #include "KSLogger.h"
@@ -190,7 +190,7 @@ static void install()
 //    });
 //}
 
-const char* kszombie_className(const void* object)
+const char* raygun_kszombie_className(const void* object)
 {
     volatile Zombie* cache = g_zombieCache;
     if(cache == NULL || object == NULL)
@@ -239,7 +239,7 @@ static void addContextualInfoToEvent(KSCrash_MonitorContext* eventContext)
     }
 }
 
-Raygun_KSCrashMonitorAPI* kscm_zombie_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_zombie_getAPI()
 {
     static Raygun_KSCrashMonitorAPI api =
     {
