@@ -27,7 +27,7 @@
 
 #include "Raygun_KSCrashMonitor_AppState.h"
 
-#include "KSFileUtils.h"
+#include "Raygun_KSFileUtils.h"
 #include "KSJSONCodec.h"
 #include "Raygun_KSCrashMonitorContext.h"
 
@@ -166,7 +166,7 @@ static int onEndData(__unused void* const userData)
 static int addJSONData(const char* const data, const int length, void* const userData)
 {
     const int fd = *((int*)userData);
-    const bool success = ksfu_writeBytesToFD(fd, data, length);
+    const bool success = raygun_ksfu_writeBytesToFD(fd, data, length);
     return success ? KSJSON_OK : KSJSON_ERROR_CANNOT_ADD_DATA;
 }
 
@@ -206,7 +206,7 @@ bool loadState(const char* const path)
 
     char* data;
     int length;
-    if(!ksfu_readEntireFile(path, &data, &length, 50000))
+    if(!raygun_ksfu_readEntireFile(path, &data, &length, 50000))
     {
         KSLOG_ERROR("%s: Could not load file", path);
         return false;

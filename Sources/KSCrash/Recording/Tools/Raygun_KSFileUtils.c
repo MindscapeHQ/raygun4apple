@@ -25,7 +25,7 @@
 //
 
 
-#include "KSFileUtils.h"
+#include "Raygun_KSFileUtils.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "KSLogger.h"
@@ -52,7 +52,7 @@
 #pragma mark - Utility -
 // ============================================================================
 
-static bool canDeletePath(const char* path)
+static bool raygun_canDeletePath(const char* path)
 {
     const char* lastComponent = strrchr(path, '/');
     if(lastComponent == NULL)
@@ -74,7 +74,7 @@ static bool canDeletePath(const char* path)
     return true;
 }
 
-static int dirContentsCount(const char* path)
+static int raygun_dirContentsCount(const char* path)
 {
     int count = 0;
     DIR* dir = opendir(path);
@@ -94,11 +94,11 @@ static int dirContentsCount(const char* path)
     return count;
 }
 
-static void dirContents(const char* path, char*** entries, int* count)
+static void raygun_dirContents(const char* path, char*** entries, int* count)
 {
     DIR* dir = NULL;
     char** entryList = NULL;
-    int entryCount = dirContentsCount(path);
+    int entryCount = raygun_dirContentsCount(path);
     if(entryCount <= 0)
     {
         goto done;
@@ -137,7 +137,7 @@ done:
     *count = entryCount;
 }
 
-static void freeDirListing(char** entries, int count)
+static void raygun_freeDirListing(char** entries, int count)
 {
     if(entries != NULL)
     {
@@ -153,7 +153,7 @@ static void freeDirListing(char** entries, int count)
     }
 }
 
-static bool deletePathContents(const char* path, bool deleteTopLevelPathAlso)
+static bool raygun_deletePathContents(const char* path, bool deleteTopLevelPathAlso)
 {
     struct stat statStruct = {0};
     if(stat(path, &statStruct) != 0)
@@ -165,7 +165,7 @@ static bool deletePathContents(const char* path, bool deleteTopLevelPathAlso)
     {
         char** entries = NULL;
         int entryCount = 0;
-        dirContents(path, &entries, &entryCount);
+        raygun_dirContents(path, &entries, &entryCount);
         
         int bufferLength = KSFU_MAX_PATH_LENGTH;
         char* pathBuffer = malloc((unsigned)bufferLength);
@@ -176,23 +176,23 @@ static bool deletePathContents(const char* path, bool deleteTopLevelPathAlso)
         for(int i = 0; i < entryCount; i++)
         {
             char* entry = entries[i];
-            if(entry != NULL && canDeletePath(entry))
+            if(entry != NULL && raygun_canDeletePath(entry))
             {
                 strncpy(pathPtr, entry, pathRemainingLength);
-                deletePathContents(pathBuffer, true);
+                raygun_deletePathContents(pathBuffer, true);
             }
         }
         
         free(pathBuffer);
-        freeDirListing(entries, entryCount);
+        raygun_freeDirListing(entries, entryCount);
         if(deleteTopLevelPathAlso)
         {
-            ksfu_removeFile(path, false);
+            raygun_ksfu_removeFile(path, false);
         }
     }
     else if(S_ISREG(statStruct.st_mode))
     {
-        ksfu_removeFile(path, false);
+        raygun_ksfu_removeFile(path, false);
     }
     else
     {
@@ -206,7 +206,7 @@ static bool deletePathContents(const char* path, bool deleteTopLevelPathAlso)
 #pragma mark - API -
 // ============================================================================
 
-const char* ksfu_lastPathEntry(const char* const path)
+const char* raygun_ksfu_lastPathEntry(const char* const path)
 {
     if(path == NULL)
     {
@@ -217,7 +217,7 @@ const char* ksfu_lastPathEntry(const char* const path)
     return lastFile == NULL ? path : lastFile + 1;
 }
 
-bool ksfu_writeBytesToFD(const int fd, const char* const bytes, int length)
+bool raygun_ksfu_writeBytesToFD(const int fd, const char* const bytes, int length)
 {
     const char* pos = bytes;
     while(length > 0)
@@ -234,7 +234,7 @@ bool ksfu_writeBytesToFD(const int fd, const char* const bytes, int length)
     return true;
 }
 
-bool ksfu_readBytesFromFD(const int fd, char* const bytes, int length)
+bool raygun_ksfu_readBytesFromFD(const int fd, char* const bytes, int length)
 {
     char* pos = bytes;
     while(length > 0)
@@ -251,7 +251,7 @@ bool ksfu_readBytesFromFD(const int fd, char* const bytes, int length)
     return true;
 }
 
-bool ksfu_readEntireFile(const char* const path, char** data, int* length, int maxLength)
+bool raygun_ksfu_readEntireFile(const char* const path, char** data, int* length, int maxLength)
 {
     bool isSuccessful = false;
     int bytesRead = 0;
@@ -293,7 +293,7 @@ bool ksfu_readEntireFile(const char* const path, char** data, int* length, int m
         goto done;
     }
 
-    if(!ksfu_readBytesFromFD(fd, mem, bytesToRead))
+    if(!raygun_ksfu_readBytesFromFD(fd, mem, bytesToRead))
     {
         goto done;
     }
@@ -322,7 +322,7 @@ done:
     return isSuccessful;
 }
 
-bool ksfu_writeStringToFD(const int fd, const char* const string)
+bool raygun_ksfu_writeStringToFD(const int fd, const char* const string)
 {
     if(*string != 0)
     {
@@ -345,20 +345,20 @@ bool ksfu_writeStringToFD(const int fd, const char* const string)
     return false;
 }
 
-bool ksfu_writeFmtToFD(const int fd, const char* const fmt, ...)
+bool raygun_ksfu_writeFmtToFD(const int fd, const char* const fmt, ...)
 {
     if(*fmt != 0)
     {
         va_list args;
         va_start(args,fmt);
-        bool result = ksfu_writeFmtArgsToFD(fd, fmt, args);
+        bool result = raygun_ksfu_writeFmtArgsToFD(fd, fmt, args);
         va_end(args);
         return result;
     }
     return false;
 }
 
-bool ksfu_writeFmtArgsToFD(const int fd,
+bool raygun_ksfu_writeFmtArgsToFD(const int fd,
                            const char* const fmt,
                            va_list args)
 {
@@ -366,12 +366,12 @@ bool ksfu_writeFmtArgsToFD(const int fd,
     {
         char buffer[KSFU_WriteFmtBufferSize];
         vsnprintf(buffer, sizeof(buffer), fmt, args);
-        return ksfu_writeStringToFD(fd, buffer);
+        return raygun_ksfu_writeStringToFD(fd, buffer);
     }
     return false;
 }
 
-int ksfu_readLineFromFD(const int fd, char* const buffer, const int maxLength)
+int raygun_ksfu_readLineFromFD(const int fd, char* const buffer, const int maxLength)
 {
     char* end = buffer + maxLength - 1;
     *end = 0;
@@ -393,7 +393,7 @@ int ksfu_readLineFromFD(const int fd, char* const buffer, const int maxLength)
     return (int)(ch - buffer);
 }
 
-bool ksfu_makePath(const char* absolutePath)
+bool raygun_ksfu_makePath(const char* absolutePath)
 {
     bool isSuccessful = false;
     char* pathCopy = strdup(absolutePath);
@@ -422,7 +422,7 @@ done:
     return isSuccessful;
 }
 
-bool ksfu_removeFile(const char* path, bool mustExist)
+bool raygun_ksfu_removeFile(const char* path, bool mustExist)
 {
     if(remove(path) < 0)
     {
@@ -435,17 +435,17 @@ bool ksfu_removeFile(const char* path, bool mustExist)
     return true;
 }
 
-bool ksfu_deleteContentsOfPath(const char* path)
+bool raygun_ksfu_deleteContentsOfPath(const char* path)
 {
-    if(!canDeletePath(path))
+    if(!raygun_canDeletePath(path))
     {
         return false;
     }
     
-    return deletePathContents(path, false);
+    return raygun_deletePathContents(path, false);
 }
 
-bool ksfu_openBufferedWriter(KSBufferedWriter* writer, const char* const path, char* writeBuffer, int writeBufferLength)
+bool raygun_ksfu_openBufferedWriter(Raygun_KSBufferedWriter* writer, const char* const path, char* writeBuffer, int writeBufferLength)
 {
     writer->buffer = writeBuffer;
     writer->bufferLength = writeBufferLength;
@@ -459,36 +459,36 @@ bool ksfu_openBufferedWriter(KSBufferedWriter* writer, const char* const path, c
     return true;
 }
 
-void ksfu_closeBufferedWriter(KSBufferedWriter* writer)
+void raygun_ksfu_closeBufferedWriter(Raygun_KSBufferedWriter* writer)
 {
     if(writer->fd > 0)
     {
-        ksfu_flushBufferedWriter(writer);
+        raygun_ksfu_flushBufferedWriter(writer);
         close(writer->fd);
         writer->fd = -1;
     }
 }
 
-bool ksfu_writeBufferedWriter(KSBufferedWriter* writer, const char* restrict const data, const int length)
+bool raygun_ksfu_writeBufferedWriter(Raygun_KSBufferedWriter* writer, const char* restrict const data, const int length)
 {
     if(length > writer->bufferLength - writer->position)
     {
-        ksfu_flushBufferedWriter(writer);
+        raygun_ksfu_flushBufferedWriter(writer);
     }
     if(length > writer->bufferLength)
     {
-        return ksfu_writeBytesToFD(writer->fd, data, length);
+        return raygun_ksfu_writeBytesToFD(writer->fd, data, length);
     }
     memcpy(writer->buffer + writer->position, data, length);
     writer->position += length;
     return true;
 }
 
-bool ksfu_flushBufferedWriter(KSBufferedWriter* writer)
+bool raygun_ksfu_flushBufferedWriter(Raygun_KSBufferedWriter* writer)
 {
     if(writer->fd > 0 && writer->position > 0)
     {
-        if(!ksfu_writeBytesToFD(writer->fd, writer->buffer, writer->position))
+        if(!raygun_ksfu_writeBytesToFD(writer->fd, writer->buffer, writer->position))
         {
             return false;
         }
@@ -497,12 +497,12 @@ bool ksfu_flushBufferedWriter(KSBufferedWriter* writer)
     return true;
 }
 
-static inline bool isReadBufferEmpty(KSBufferedReader* reader)
+static inline bool raygun_isReadBufferEmpty(Raygun_KSBufferedReader* reader)
 {
     return reader->dataEndPos == reader->dataStartPos;
 }
 
-static bool fillReadBuffer(KSBufferedReader* reader)
+static bool raygun_fillReadBuffer(Raygun_KSBufferedReader* reader)
 {
     if(reader->dataStartPos > 0)
     {
@@ -530,7 +530,7 @@ static bool fillReadBuffer(KSBufferedReader* reader)
     return true;
 }
 
-int ksfu_readBufferedReader(KSBufferedReader* reader, char* dstBuffer, int byteCount)
+int raygun_ksfu_readBufferedReader(Raygun_KSBufferedReader* reader, char* dstBuffer, int byteCount)
 {
     int bytesRemaining = byteCount;
     int bytesConsumed = 0;
@@ -540,7 +540,7 @@ int ksfu_readBufferedReader(KSBufferedReader* reader, char* dstBuffer, int byteC
         int bytesInReader = reader->dataEndPos - reader->dataStartPos;
         if(bytesInReader <= 0)
         {
-            if(!fillReadBuffer(reader))
+            if(!raygun_fillReadBuffer(reader))
             {
                 break;
             }
@@ -562,7 +562,7 @@ int ksfu_readBufferedReader(KSBufferedReader* reader, char* dstBuffer, int byteC
     return bytesConsumed;
 }
 
-bool ksfu_readBufferedReaderUntilChar(KSBufferedReader* reader, int ch, char* dstBuffer, int* length)
+bool raygun_ksfu_readBufferedReaderUntilChar(Raygun_KSBufferedReader* reader, int ch, char* dstBuffer, int* length)
 {
     int bytesRemaining = *length;
     int bytesConsumed = 0;
@@ -594,8 +594,8 @@ bool ksfu_readBufferedReaderUntilChar(KSBufferedReader* reader, int ch, char* ds
         }
         if(bytesRemaining > 0)
         {
-            fillReadBuffer(reader);
-            if(isReadBufferEmpty(reader))
+            raygun_fillReadBuffer(reader);
+            if(raygun_isReadBufferEmpty(reader))
             {
                 break;
             }
@@ -606,7 +606,7 @@ bool ksfu_readBufferedReaderUntilChar(KSBufferedReader* reader, int ch, char* ds
     return false;
 }
 
-bool ksfu_openBufferedReader(KSBufferedReader* reader, const char* const path, char* readBuffer, int readBufferLength)
+bool raygun_ksfu_openBufferedReader(Raygun_KSBufferedReader* reader, const char* const path, char* readBuffer, int readBufferLength)
 {
     readBuffer[0] = '\0';
     readBuffer[readBufferLength - 1] = '\0';
@@ -620,11 +620,11 @@ bool ksfu_openBufferedReader(KSBufferedReader* reader, const char* const path, c
         KSLOG_ERROR("Could not open file %s: %s", path, strerror(errno));
         return false;
     }
-    fillReadBuffer(reader);
+    raygun_fillReadBuffer(reader);
     return true;
 }
 
-void ksfu_closeBufferedReader(KSBufferedReader* reader)
+void raygun_ksfu_closeBufferedReader(Raygun_KSBufferedReader* reader)
 {
     if(reader->fd > 0)
     {

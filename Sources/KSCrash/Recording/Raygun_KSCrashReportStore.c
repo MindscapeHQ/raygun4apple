@@ -26,7 +26,7 @@
 
 #include "Raygun_KSCrashReportStore.h"
 #include "KSLogger.h"
-#include "KSFileUtils.h"
+#include "Raygun_KSFileUtils.h"
 
 #include <dirent.h>
 #include <errno.h>
@@ -178,7 +178,7 @@ void raygun_kscrs_initialize(const char* appName, const char* reportsPath)
     pthread_mutex_lock(&g_mutex);
     g_appName = strdup(appName);
     g_reportsPath = strdup(reportsPath);
-    ksfu_makePath(reportsPath);
+    raygun_ksfu_makePath(reportsPath);
     pruneReports();
     initializeIDs();
     pthread_mutex_unlock(&g_mutex);
@@ -211,7 +211,7 @@ char* raygun_kscrs_readReport(int64_t reportID)
     char path[KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(reportID, path);
     char* result;
-    ksfu_readEntireFile(path, &result, NULL, 2000000);
+    raygun_ksfu_readEntireFile(path, &result, NULL, 2000000);
     pthread_mutex_unlock(&g_mutex);
     return result;
 }
@@ -254,7 +254,7 @@ done:
 void raygun_kscrs_deleteAllReports()
 {
     pthread_mutex_lock(&g_mutex);
-    ksfu_deleteContentsOfPath(g_reportsPath);
+    raygun_ksfu_deleteContentsOfPath(g_reportsPath);
     pthread_mutex_unlock(&g_mutex);
 }
 
@@ -262,7 +262,7 @@ void raygun_kscrs_deleteReportWithID(int64_t reportID)
 {
     char path[KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(reportID, path);
-    ksfu_removeFile(path, true);
+    raygun_ksfu_removeFile(path, true);
 }
 
 void raygun_kscrs_setMaxReportCount(int maxReportCount)

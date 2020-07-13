@@ -49,7 +49,7 @@ extern "C" {
  *
  * @return the last entry in the path.
  */
-const char* ksfu_lastPathEntry(const char* path);
+const char* raygun_ksfu_lastPathEntry(const char* path);
 
 /** Write bytes to a file descriptor.
  *
@@ -61,7 +61,7 @@ const char* ksfu_lastPathEntry(const char* path);
  *
  * @return true if the operation was successful.
  */
-bool ksfu_writeBytesToFD(const int fd, const char* bytes, int length);
+bool raygun_ksfu_writeBytesToFD(const int fd, const char* bytes, int length);
 
 /** Read bytes from a file descriptor.
  *
@@ -73,7 +73,7 @@ bool ksfu_writeBytesToFD(const int fd, const char* bytes, int length);
  *
  * @return true if the operation was successful.
  */
-bool ksfu_readBytesFromFD(const int fd, char* bytes, int length);
+bool raygun_ksfu_readBytesFromFD(const int fd, char* bytes, int length);
 
 /** Read an entire file. Returns a buffer of file size + 1, null terminated.
  *
@@ -89,7 +89,7 @@ bool ksfu_readBytesFromFD(const int fd, char* bytes, int length);
  *
  * @return true if the operation was successful.
  */
-bool ksfu_readEntireFile(const char* path, char** data, int* length, int maxLength);
+bool raygun_ksfu_readEntireFile(const char* path, char** data, int* length, int maxLength);
 
 /** Write a string to a file.
  *
@@ -99,7 +99,7 @@ bool ksfu_readEntireFile(const char* path, char** data, int* length, int maxLeng
  *
  * @return true if successful.
  */
-bool ksfu_writeStringToFD(const int fd, const char* string);
+bool raygun_ksfu_writeStringToFD(const int fd, const char* string);
 
 /** Write a formatted string to a file.
  *
@@ -109,7 +109,7 @@ bool ksfu_writeStringToFD(const int fd, const char* string);
  *
  * @return true if successful.
  */
-bool ksfu_writeFmtToFD(const int fd, const char* fmt, ...);
+bool raygun_ksfu_writeFmtToFD(const int fd, const char* fmt, ...);
 
 /** Write a formatted string to a file.
  *
@@ -121,7 +121,7 @@ bool ksfu_writeFmtToFD(const int fd, const char* fmt, ...);
  *
  * @return true if successful.
  */
-bool ksfu_writeFmtArgsToFD(const int fd, const char* fmt, va_list args);
+bool raygun_ksfu_writeFmtArgsToFD(const int fd, const char* fmt, va_list args);
 
 /** Read a single line from a file.
  *
@@ -133,7 +133,7 @@ bool ksfu_writeFmtArgsToFD(const int fd, const char* fmt, va_list args);
  *
  * @return The number of bytes read.
  */
-int ksfu_readLineFromFD(const int fd, char* buffer, int maxLength);
+int raygun_ksfu_readLineFromFD(const int fd, char* buffer, int maxLength);
 
 /** Make all directories in a path.
  *
@@ -141,7 +141,7 @@ int ksfu_readLineFromFD(const int fd, char* buffer, int maxLength);
  *
  * @return true if successful.
  */
-bool ksfu_makePath(const char* absolutePath);
+bool raygun_ksfu_makePath(const char* absolutePath);
 
 /** Remove a file or directory.
  *
@@ -151,7 +151,7 @@ bool ksfu_makePath(const char* absolutePath);
  *
  * @return true if successful.
  */
-bool ksfu_removeFile(const char* path, bool mustExist);
+bool raygun_ksfu_removeFile(const char* path, bool mustExist);
 
 /** Delete the contents of a directory.
  *
@@ -159,7 +159,7 @@ bool ksfu_removeFile(const char* path, bool mustExist);
  *
  * @return true if successful.
  */
-bool ksfu_deleteContentsOfPath(const char* path);
+bool raygun_ksfu_deleteContentsOfPath(const char* path);
 
 /** Buffered writer structure. Everything inside should be considered internal use only. */
 typedef struct
@@ -168,7 +168,7 @@ typedef struct
     int bufferLength;
     int position;
     int fd;
-} KSBufferedWriter;
+} Raygun_KSBufferedWriter;
 
 /** Open a file for buffered writing.
  *
@@ -182,13 +182,13 @@ typedef struct
  *
  * @return True if the file was successfully opened.
  */
-bool ksfu_openBufferedWriter(KSBufferedWriter* writer, const char* const path, char* writeBuffer, int writeBufferLength);
+bool raygun_ksfu_openBufferedWriter(Raygun_KSBufferedWriter* writer, const char* const path, char* writeBuffer, int writeBufferLength);
 
 /** Close a buffered writer.
  *
  * @param writer The writer to close.
  */
-void ksfu_closeBufferedWriter(KSBufferedWriter* writer);
+void raygun_ksfu_closeBufferedWriter(Raygun_KSBufferedWriter* writer);
 
 /** Write to a buffered writer.
  *
@@ -200,7 +200,7 @@ void ksfu_closeBufferedWriter(KSBufferedWriter* writer);
  *
  * @return True if the data was successfully written.
  */
-bool ksfu_writeBufferedWriter(KSBufferedWriter* writer, const char* restrict const data, const int length);
+bool raygun_ksfu_writeBufferedWriter(Raygun_KSBufferedWriter* writer, const char* restrict const data, const int length);
 
 /** Flush a buffered writer, writing all uncommitted data to disk.
  *
@@ -208,7 +208,7 @@ bool ksfu_writeBufferedWriter(KSBufferedWriter* writer, const char* restrict con
  *
  * @return True if the buffer was successfully flushed.
  */
-bool ksfu_flushBufferedWriter(KSBufferedWriter* writer);
+bool raygun_ksfu_flushBufferedWriter(Raygun_KSBufferedWriter* writer);
 
 /** Buffered reader structure. Everything inside should be considered internal use only. */
 typedef struct
@@ -218,7 +218,7 @@ typedef struct
     int dataStartPos;
     int dataEndPos;
     int fd;
-} KSBufferedReader;
+} Raygun_KSBufferedReader;
 
 /** Open a file for buffered reading.
  *
@@ -232,13 +232,13 @@ typedef struct
  *
  * @return True if the file was successfully opened.
  */
-bool ksfu_openBufferedReader(KSBufferedReader* reader, const char* const path, char* readBuffer, int readBufferLength);
+bool raygun_ksfu_openBufferedReader(Raygun_KSBufferedReader* reader, const char* const path, char* readBuffer, int readBufferLength);
 
 /** Close a buffered reader.
  *
  * @param reader The reader to close.
  */
-void ksfu_closeBufferedReader(KSBufferedReader* reader);
+void raygun_ksfu_closeBufferedReader(Raygun_KSBufferedReader* reader);
 
 /** Read from a buffered reader.
  *
@@ -250,7 +250,7 @@ void ksfu_closeBufferedReader(KSBufferedReader* reader);
  *
  * @return The number of bytes actually read.
  */
-int ksfu_readBufferedReader(KSBufferedReader* reader, char* dstBuffer, int byteCount);
+int raygun_ksfu_readBufferedReader(Raygun_KSBufferedReader* reader, char* dstBuffer, int byteCount);
 
 /** Read from a buffered reader until the specified character is encountered.
  * All bytes up to and including the character will be read.
@@ -266,7 +266,7 @@ int ksfu_readBufferedReader(KSBufferedReader* reader, char* dstBuffer, int byteC
  *
  * @return True if the character was found before giving up.
  */
-bool ksfu_readBufferedReaderUntilChar(KSBufferedReader* reader, int ch, char* dstBuffer, int* length);
+bool raygun_ksfu_readBufferedReaderUntilChar(Raygun_KSBufferedReader* reader, int ch, char* dstBuffer, int* length);
 
 
 #ifdef __cplusplus

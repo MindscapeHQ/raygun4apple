@@ -33,7 +33,7 @@
 #include "Raygun_KSCrashReportStore.h"
 #include "Raygun_KSCrashMonitor_Deadlock.h"
 #include "Raygun_KSCrashMonitor_User.h"
-#include "KSFileUtils.h"
+#include "Raygun_KSFileUtils.h"
 #include "KSObjC.h"
 #include "KSString.h"
 #include "Raygun_KSCrashMonitor_System.h"
@@ -73,7 +73,7 @@ static void printPreviousLog(const char* filePath)
 {
     char* data;
     int length;
-    if(ksfu_readEntireFile(filePath, &data, &length, 0))
+    if(raygun_ksfu_readEntireFile(filePath, &data, &length, 0))
     {
         printf("\nvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Previous Log vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n\n");
         printf("%s\n", data);
@@ -130,11 +130,11 @@ Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char
 
     char path[KSFU_MAX_PATH_LENGTH];
     snprintf(path, sizeof(path), "%s/Reports", installPath);
-    ksfu_makePath(path);
+    raygun_ksfu_makePath(path);
     raygun_kscrs_initialize(appName, path);
 
     snprintf(path, sizeof(path), "%s/Data", installPath);
-    ksfu_makePath(path);
+    raygun_ksfu_makePath(path);
     snprintf(path, sizeof(path), "%s/Data/CrashState.json", installPath);
     raygun_kscrashstate_initialize(path);
 

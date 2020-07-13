@@ -30,7 +30,7 @@
 #include "Raygun_KSCrashReportFields.h"
 #include "Raygun_KSCrashReportWriter.h"
 #include "Raygun_KSDynamicLinker.h"
-#include "KSFileUtils.h"
+#include "Raygun_KSFileUtils.h"
 #include "KSJSONCodec.h"
 #include "Raygun_KSCPU.h"
 #include "KSMemory.h"
@@ -301,8 +301,8 @@ static void endContainer(const Raygun_KSCrashReportWriter* const writer)
 static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
 {
     char readBuffer[1024];
-    KSBufferedReader reader;
-    if(!ksfu_openBufferedReader(&reader, filePath, readBuffer, sizeof(readBuffer)))
+    Raygun_KSBufferedReader reader;
+    if(!raygun_ksfu_openBufferedReader(&reader, filePath, readBuffer, sizeof(readBuffer)))
     {
         return;
     }
@@ -312,7 +312,7 @@ static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer,
         for(;;)
         {
             int length = sizeof(buffer);
-            ksfu_readBufferedReaderUntilChar(&reader, '\n', buffer, &length);
+            raygun_ksfu_readBufferedReaderUntilChar(&reader, '\n', buffer, &length);
             if(length <= 0)
             {
                 break;
@@ -322,13 +322,13 @@ static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer,
         }
     }
     endContainer(writer);
-    ksfu_closeBufferedReader(&reader);
+    raygun_ksfu_closeBufferedReader(&reader);
 }
 
 static int addJSONData(const char* restrict const data, const int length, void* restrict userData)
 {
-    KSBufferedWriter* writer = (KSBufferedWriter*)userData;
-    const bool success = ksfu_writeBufferedWriter(writer, data, length);
+    Raygun_KSBufferedWriter* writer = (Raygun_KSBufferedWriter*)userData;
+    const bool success = raygun_ksfu_writeBufferedWriter(writer, data, length);
     return success ? KSJSON_OK : KSJSON_ERROR_CANNOT_ADD_DATA;
 }
 
@@ -901,7 +901,7 @@ static void writeBacktrace(const Raygun_KSCrashReportWriter* const writer,
                     {
                         if(stackCursor->stackEntry.imageName != NULL)
                         {
-                            writer->addStringElement(writer, Raygun_KSCrashField_ObjectName, ksfu_lastPathEntry(stackCursor->stackEntry.imageName));
+                            writer->addStringElement(writer, Raygun_KSCrashField_ObjectName, raygun_ksfu_lastPathEntry(stackCursor->stackEntry.imageName));
                         }
                         writer->addUIntegerElement(writer, Raygun_KSCrashField_ObjectAddr, stackCursor->stackEntry.imageAddress);
                         if(stackCursor->stackEntry.symbolName != NULL)
@@ -1585,7 +1585,7 @@ static void prepareReportWriter(Raygun_KSCrashReportWriter* const writer, KSJSON
 void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext* const monitorContext, const char* const path)
 {
     char writeBuffer[1024];
-    KSBufferedWriter bufferedWriter;
+    Raygun_KSBufferedWriter bufferedWriter;
     static char tempPath[KSFU_MAX_PATH_LENGTH];
     strncpy(tempPath, path, sizeof(tempPath) - 10);
     strncpy(tempPath + strlen(tempPath) - 5, ".old", 5);
@@ -1595,7 +1595,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     {
         KSLOG_ERROR("Could not rename %s to %s: %s", path, tempPath, strerror(errno));
     }
-    if(!ksfu_openBufferedWriter(&bufferedWriter, path, writeBuffer, sizeof(writeBuffer)))
+    if(!raygun_ksfu_openBufferedWriter(&bufferedWriter, path, writeBuffer, sizeof(writeBuffer)))
     {
         return;
     }
@@ -1613,7 +1613,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     writer->beginObject(writer, Raygun_KSCrashField_Report);
     {
         writeRecrash(writer, Raygun_KSCrashField_RecrashReport, tempPath);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
         if(remove(tempPath) < 0)
         {
             KSLOG_ERROR("Could not remove %s: %s", tempPath, strerror(errno));
@@ -1623,12 +1623,12 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
                         Raygun_KSCrashReportType_Minimal,
                         monitorContext->eventID,
                         monitorContext->System.processName);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writer->beginObject(writer, Raygun_KSCrashField_Crash);
         {
             writeError(writer, Raygun_KSCrashField_Error, monitorContext);
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
             int threadIndex = ksmc_indexOfThread(monitorContext->offendingMachineContext,
                                                  ksmc_getThreadFromContext(monitorContext->offendingMachineContext));
             writeThread(writer,
@@ -1637,14 +1637,14 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
                         monitorContext->offendingMachineContext,
                         threadIndex,
                         false);
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
         }
         writer->endContainer(writer);
     }
     writer->endContainer(writer);
 
     ksjson_endEncode(getJsonContext(writer));
-    ksfu_closeBufferedWriter(&bufferedWriter);
+    raygun_ksfu_closeBufferedWriter(&bufferedWriter);
     raygun_ksccd_unfreeze();
 }
 
@@ -1709,9 +1709,9 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
 {
     KSLOG_INFO("Writing crash report to %s", path);
     char writeBuffer[1024];
-    KSBufferedWriter bufferedWriter;
+    Raygun_KSBufferedWriter bufferedWriter;
 
-    if(!ksfu_openBufferedWriter(&bufferedWriter, path, writeBuffer, sizeof(writeBuffer)))
+    if(!raygun_ksfu_openBufferedWriter(&bufferedWriter, path, writeBuffer, sizeof(writeBuffer)))
     {
         return;
     }
@@ -1733,33 +1733,33 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
                         Raygun_KSCrashReportType_Standard,
                         monitorContext->eventID,
                         monitorContext->System.processName);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writeBinaryImages(writer, Raygun_KSCrashField_BinaryImages);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writeProcessState(writer, Raygun_KSCrashField_ProcessState, monitorContext);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writeSystemInfo(writer, Raygun_KSCrashField_System, monitorContext);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writer->beginObject(writer, Raygun_KSCrashField_Crash);
         {
             writeError(writer, Raygun_KSCrashField_Error, monitorContext);
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
             writeAllThreads(writer,
                             Raygun_KSCrashField_Threads,
                             monitorContext,
                             g_introspectionRules.enabled);
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
         }
         writer->endContainer(writer);
 
         if(g_userInfoJSON != NULL)
         {
             addJSONElement(writer, Raygun_KSCrashField_User, g_userInfoJSON, false);
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
         }
         else
         {
@@ -1767,20 +1767,20 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
         }
         if(g_userSectionWriteCallback != NULL)
         {
-            ksfu_flushBufferedWriter(&bufferedWriter);
+            raygun_ksfu_flushBufferedWriter(&bufferedWriter);
             if (monitorContext->currentSnapshotUserReported == false) {
                 g_userSectionWriteCallback(writer);
             }
         }
         writer->endContainer(writer);
-        ksfu_flushBufferedWriter(&bufferedWriter);
+        raygun_ksfu_flushBufferedWriter(&bufferedWriter);
 
         writeDebugInfo(writer, Raygun_KSCrashField_Debug, monitorContext);
     }
     writer->endContainer(writer);
     
     ksjson_endEncode(getJsonContext(writer));
-    ksfu_closeBufferedWriter(&bufferedWriter);
+    raygun_ksfu_closeBufferedWriter(&bufferedWriter);
     raygun_ksccd_unfreeze();
 }
 
