@@ -31,7 +31,7 @@
 #include "Raygun_KSCrashReportWriter.h"
 #include "Raygun_KSDynamicLinker.h"
 #include "Raygun_KSFileUtils.h"
-#include "KSJSONCodec.h"
+#include "Raygun_KSJSONCodec.h"
 #include "Raygun_KSCPU.h"
 #include "KSMemory.h"
 #include "KSMach.h"
@@ -82,7 +82,7 @@
 #pragma mark - JSON Encoding -
 // ============================================================================
 
-#define getJsonContext(REPORT_WRITER) ((KSJSONEncodeContext*)((REPORT_WRITER)->context))
+#define getJsonContext(REPORT_WRITER) ((Raygun_KSJSONEncodeContext*)((REPORT_WRITER)->context))
 
 /** Used for writing hex string values. */
 static const char g_hexNybbles[] =
@@ -120,27 +120,27 @@ static KSReportWriteCallback g_userSectionWriteCallback;
 
 static void addBooleanElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const bool value)
 {
-    ksjson_addBooleanElement(getJsonContext(writer), key, value);
+    raygun_ksjson_addBooleanElement(getJsonContext(writer), key, value);
 }
 
 static void addFloatingPointElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const double value)
 {
-    ksjson_addFloatingPointElement(getJsonContext(writer), key, value);
+    raygun_ksjson_addFloatingPointElement(getJsonContext(writer), key, value);
 }
 
 static void addIntegerElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const int64_t value)
 {
-    ksjson_addIntegerElement(getJsonContext(writer), key, value);
+    raygun_ksjson_addIntegerElement(getJsonContext(writer), key, value);
 }
 
 static void addUIntegerElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const uint64_t value)
 {
-    ksjson_addIntegerElement(getJsonContext(writer), key, (int64_t)value);
+    raygun_ksjson_addIntegerElement(getJsonContext(writer), key, (int64_t)value);
 }
 
 static void addStringElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const value)
 {
-    ksjson_addStringElement(getJsonContext(writer), key, value, KSJSON_SIZE_AUTOMATIC);
+    raygun_ksjson_addStringElement(getJsonContext(writer), key, value, KSJSON_SIZE_AUTOMATIC);
 }
 
 static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
@@ -152,7 +152,7 @@ static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, c
         return;
     }
 
-    if(ksjson_beginStringElement(getJsonContext(writer), key) != KSJSON_OK)
+    if(raygun_ksjson_beginStringElement(getJsonContext(writer), key) != RAYGUN_KSJSON_OK)
     {
         KSLOG_ERROR("Could not start string element");
         goto done;
@@ -164,7 +164,7 @@ static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, c
         bytesRead > 0;
         bytesRead = (int)read(fd, buffer, sizeof(buffer)))
     {
-        if(ksjson_appendStringElement(getJsonContext(writer), buffer, bytesRead) != KSJSON_OK)
+        if(raygun_ksjson_appendStringElement(getJsonContext(writer), buffer, bytesRead) != RAYGUN_KSJSON_OK)
         {
             KSLOG_ERROR("Could not append string element");
             goto done;
@@ -172,7 +172,7 @@ static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, c
     }
 
 done:
-    ksjson_endStringElement(getJsonContext(writer));
+    raygun_ksjson_endStringElement(getJsonContext(writer));
     close(fd);
 }
 
@@ -181,22 +181,22 @@ static void addDataElement(const Raygun_KSCrashReportWriter* const writer,
                            const char* const value,
                            const int length)
 {
-    ksjson_addDataElement(getJsonContext(writer), key, value, length);
+    raygun_ksjson_addDataElement(getJsonContext(writer), key, value, length);
 }
 
 static void beginDataElement(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
-    ksjson_beginDataElement(getJsonContext(writer), key);
+    raygun_ksjson_beginDataElement(getJsonContext(writer), key);
 }
 
 static void appendDataElement(const Raygun_KSCrashReportWriter* const writer, const char* const value, const int length)
 {
-    ksjson_appendDataElement(getJsonContext(writer), value, length);
+    raygun_ksjson_appendDataElement(getJsonContext(writer), value, length);
 }
 
 static void endDataElement(const Raygun_KSCrashReportWriter* const writer)
 {
-    ksjson_endDataElement(getJsonContext(writer));
+    raygun_ksjson_endDataElement(getJsonContext(writer));
 }
 
 static void addUUIDElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const unsigned char* const value)
@@ -240,7 +240,7 @@ static void addUUIDElement(const Raygun_KSCrashReportWriter* const writer, const
             *dst++ = g_hexNybbles[(*src++)&15];
         }
 
-        ksjson_addStringElement(getJsonContext(writer), key, uuidBuffer, (int)(dst - uuidBuffer));
+        raygun_ksjson_addStringElement(getJsonContext(writer), key, uuidBuffer, (int)(dst - uuidBuffer));
     }
 }
 
@@ -249,28 +249,28 @@ static void addJSONElement(const Raygun_KSCrashReportWriter* const writer,
                            const char* const jsonElement,
                            bool closeLastContainer)
 {
-    int jsonResult = ksjson_addJSONElement(getJsonContext(writer),
+    int jsonResult = raygun_ksjson_addJSONElement(getJsonContext(writer),
                                            key,
                                            jsonElement,
                                            (int)strlen(jsonElement),
                                            closeLastContainer);
-    if(jsonResult != KSJSON_OK)
+    if(jsonResult != RAYGUN_KSJSON_OK)
     {
         char errorBuff[100];
         snprintf(errorBuff,
                  sizeof(errorBuff),
                  "Invalid JSON data: %s",
-                 ksjson_stringForError(jsonResult));
-        ksjson_beginObject(getJsonContext(writer), key);
-        ksjson_addStringElement(getJsonContext(writer),
+                 raygun_ksjson_stringForError(jsonResult));
+        raygun_ksjson_beginObject(getJsonContext(writer), key);
+        raygun_ksjson_addStringElement(getJsonContext(writer),
                                 Raygun_KSCrashField_Error,
                                 errorBuff,
                                 KSJSON_SIZE_AUTOMATIC);
-        ksjson_addStringElement(getJsonContext(writer),
+        raygun_ksjson_addStringElement(getJsonContext(writer),
                                 Raygun_KSCrashField_JSONData,
                                 jsonElement,
                                 KSJSON_SIZE_AUTOMATIC);
-        ksjson_endContainer(getJsonContext(writer));
+        raygun_ksjson_endContainer(getJsonContext(writer));
     }
 }
 
@@ -279,22 +279,22 @@ static void addJSONElementFromFile(const Raygun_KSCrashReportWriter* const write
                                    const char* const filePath,
                                    bool closeLastContainer)
 {
-    ksjson_addJSONFromFile(getJsonContext(writer), key, filePath, closeLastContainer);
+    raygun_ksjson_addJSONFromFile(getJsonContext(writer), key, filePath, closeLastContainer);
 }
 
 static void beginObject(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
-    ksjson_beginObject(getJsonContext(writer), key);
+    raygun_ksjson_beginObject(getJsonContext(writer), key);
 }
 
 static void beginArray(const Raygun_KSCrashReportWriter* const writer, const char* const key)
 {
-    ksjson_beginArray(getJsonContext(writer), key);
+    raygun_ksjson_beginArray(getJsonContext(writer), key);
 }
 
 static void endContainer(const Raygun_KSCrashReportWriter* const writer)
 {
-    ksjson_endContainer(getJsonContext(writer));
+    raygun_ksjson_endContainer(getJsonContext(writer));
 }
 
 
@@ -318,7 +318,7 @@ static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer,
                 break;
             }
             buffer[length - 1] = '\0';
-            ksjson_addStringElement(getJsonContext(writer), NULL, buffer, KSJSON_SIZE_AUTOMATIC);
+            raygun_ksjson_addStringElement(getJsonContext(writer), NULL, buffer, KSJSON_SIZE_AUTOMATIC);
         }
     }
     endContainer(writer);
@@ -329,7 +329,7 @@ static int addJSONData(const char* restrict const data, const int length, void* 
 {
     Raygun_KSBufferedWriter* writer = (Raygun_KSBufferedWriter*)userData;
     const bool success = raygun_ksfu_writeBufferedWriter(writer, data, length);
-    return success ? KSJSON_OK : KSJSON_ERROR_CANNOT_ADD_DATA;
+    return success ? RAYGUN_KSJSON_OK : RAYGUN_KSJSON_ERROR_CANNOT_ADD_DATA;
 }
 
 
@@ -1555,7 +1555,7 @@ static void writeRecrash(const Raygun_KSCrashReportWriter* const writer,
  *
  * @param context JSON writer contextual information.
  */
-static void prepareReportWriter(Raygun_KSCrashReportWriter* const writer, KSJSONEncodeContext* const context)
+static void prepareReportWriter(Raygun_KSCrashReportWriter* const writer, Raygun_KSJSONEncodeContext* const context)
 {
     writer->addBooleanElement = addBooleanElement;
     writer->addFloatingPointElement = addFloatingPointElement;
@@ -1602,13 +1602,13 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
 
     raygun_ksccd_freeze();
 
-    KSJSONEncodeContext jsonContext;
+    Raygun_KSJSONEncodeContext jsonContext;
     jsonContext.userData = &bufferedWriter;
     Raygun_KSCrashReportWriter concreteWriter;
     Raygun_KSCrashReportWriter* writer = &concreteWriter;
     prepareReportWriter(writer, &jsonContext);
 
-    ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);
+    raygun_ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);
 
     writer->beginObject(writer, Raygun_KSCrashField_Report);
     {
@@ -1643,7 +1643,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     }
     writer->endContainer(writer);
 
-    ksjson_endEncode(getJsonContext(writer));
+    raygun_ksjson_endEncode(getJsonContext(writer));
     raygun_ksfu_closeBufferedWriter(&bufferedWriter);
     raygun_ksccd_unfreeze();
 }
@@ -1718,13 +1718,13 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
 
     raygun_ksccd_freeze();
     
-    KSJSONEncodeContext jsonContext;
+    Raygun_KSJSONEncodeContext jsonContext;
     jsonContext.userData = &bufferedWriter;
     Raygun_KSCrashReportWriter concreteWriter;
     Raygun_KSCrashReportWriter* writer = &concreteWriter;
     prepareReportWriter(writer, &jsonContext);
 
-    ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);
+    raygun_ksjson_beginEncode(getJsonContext(writer), true, addJSONData, &bufferedWriter);
 
     writer->beginObject(writer, Raygun_KSCrashField_Report);
     {
@@ -1779,7 +1779,7 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
     }
     writer->endContainer(writer);
     
-    ksjson_endEncode(getJsonContext(writer));
+    raygun_ksjson_endEncode(getJsonContext(writer));
     raygun_ksfu_closeBufferedWriter(&bufferedWriter);
     raygun_ksccd_unfreeze();
 }

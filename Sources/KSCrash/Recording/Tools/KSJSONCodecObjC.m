@@ -27,7 +27,7 @@
 
 #import "KSJSONCodecObjC.h"
 
-#import "KSJSONCodec.h"
+#import "Raygun_KSJSONCodec.h"
 #import "NSError+SimpleConstructor.h"
 #import "Raygun_KSDate.h"
 
@@ -37,7 +37,7 @@
 #pragma mark Properties
 
 /** Callbacks from the C library */
-@property(nonatomic,readwrite,assign) KSJSONDecodeCallbacks* callbacks;
+@property(nonatomic,readwrite,assign) Raygun_KSJSONDecodeCallbacks* callbacks;
 
 /** Stack of arrays/objects as the decoded content is built */
 @property(nonatomic,readwrite,retain) NSMutableArray* containerStack;
@@ -171,7 +171,7 @@ static int onElement(KSJSONCodec* codec, NSString* name, id element)
                                           code:0
                                    description:@"Type %@ not allowed as top level container",
                        [element class]];
-        return KSJSON_ERROR_INVALID_DATA;
+        return RAYGUN_KSJSON_ERROR_INVALID_DATA;
     }
 
     if([codec->_currentContainer isKindOfClass:[NSMutableDictionary class]])
@@ -183,7 +183,7 @@ static int onElement(KSJSONCodec* codec, NSString* name, id element)
     {
         [(NSMutableArray*)codec->_currentContainer addObject:element];
     }
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onBeginContainer(KSJSONCodec* codec, NSString* name, id container)
@@ -195,14 +195,14 @@ static int onBeginContainer(KSJSONCodec* codec, NSString* name, id container)
     else
     {
         int result = onElement(codec, name, container);
-        if(result != KSJSON_OK)
+        if(result != RAYGUN_KSJSON_OK)
         {
             return result;
         }
     }
     codec->_currentContainer = container;
     [codec->_containerStack addObject:container];
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onBooleanElement(const char* const cName, const bool value, void* const userData)
@@ -241,7 +241,7 @@ static int onNullElement(const char* const cName, void* const userData)
        (codec->_ignoreNullsInObjects &&
         [codec->_currentContainer isKindOfClass:[NSDictionary class]]))
     {
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
 
     return onElement(codec, name, [NSNull null]);
@@ -281,7 +281,7 @@ static int onEndContainer(void* const userData)
         codec.error = [NSError errorWithDomain:@"KSJSONCodecObjC"
                                           code:0
                                    description:@"Already at the top level; no container left to end"];
-        return KSJSON_ERROR_INVALID_DATA;
+        return RAYGUN_KSJSON_ERROR_INVALID_DATA;
     }
     [codec->_containerStack removeLastObject];
     NSUInteger count = [codec->_containerStack count];
@@ -293,30 +293,30 @@ static int onEndContainer(void* const userData)
     {
         codec->_currentContainer = nil;
     }
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onEndData(__unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int addJSONData(const char* const bytes, const int length, void* const userData)
 {
     NSMutableData* data = (__bridge NSMutableData*)userData;
     [data appendBytes:bytes length:(unsigned)length];
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
-static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEncodeContext* context)
+static int encodeObject(KSJSONCodec* codec, id object, NSString* name, Raygun_KSJSONEncodeContext* context)
 {
     int result;
     const char* cName = [name UTF8String];
     if([object isKindOfClass:[NSString class]])
     {
         NSData* data = [object dataUsingEncoding:NSUTF8StringEncoding];
-        result = ksjson_addStringElement(context, cName, data.bytes, (int)data.length);
-        if(result == KSJSON_ERROR_INVALID_CHARACTER)
+        result = raygun_ksjson_addStringElement(context, cName, data.bytes, (int)data.length);
+        if(result == RAYGUN_KSJSON_ERROR_INVALID_CHARACTER)
         {
             codec.error = [NSError errorWithDomain:@"KSJSONCodecObjC"
                                               code:0
@@ -334,33 +334,33 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
             case kCFNumberFloatType:
             case kCFNumberCGFloatType:
             case kCFNumberDoubleType:
-                return ksjson_addFloatingPointElement(context, cName, [object doubleValue]);
+                return raygun_ksjson_addFloatingPointElement(context, cName, [object doubleValue]);
             case kCFNumberCharType:
-                return ksjson_addBooleanElement(context, cName, [object boolValue]);
+                return raygun_ksjson_addBooleanElement(context, cName, [object boolValue]);
             default:
-                return ksjson_addIntegerElement(context, cName, [object longLongValue]);
+                return raygun_ksjson_addIntegerElement(context, cName, [object longLongValue]);
         }
     }
 
     if([object isKindOfClass:[NSArray class]])
     {
-        if((result = ksjson_beginArray(context, cName)) != KSJSON_OK)
+        if((result = raygun_ksjson_beginArray(context, cName)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
         for(id subObject in object)
         {
-            if((result = encodeObject(codec, subObject, NULL, context)) != KSJSON_OK)
+            if((result = encodeObject(codec, subObject, NULL, context)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
         }
-        return ksjson_endContainer(context);
+        return raygun_ksjson_endContainer(context);
     }
 
     if([object isKindOfClass:[NSDictionary class]])
     {
-        if((result = ksjson_beginObject(context, cName)) != KSJSON_OK)
+        if((result = raygun_ksjson_beginObject(context, cName)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
@@ -371,12 +371,12 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
         }
         for(id key in keys)
         {
-            if((result = encodeObject(codec, [object valueForKey:key], key, context)) != KSJSON_OK)
+            if((result = encodeObject(codec, [object valueForKey:key], key, context)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
         }
-        return ksjson_endContainer(context);
+        return raygun_ksjson_endContainer(context);
     }
 
     if([object isKindOfClass:[NSNull class]])
@@ -390,19 +390,19 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
         time_t timestamp = (time_t)((NSDate*)object).timeIntervalSince1970;
         raygun_ksdate_utcStringFromTimestamp(timestamp, string);
         NSData* data = [NSData dataWithBytes:string length:strnlen(string, 20)];
-        return ksjson_addStringElement(context, cName, data.bytes, (int)data.length);
+        return raygun_ksjson_addStringElement(context, cName, data.bytes, (int)data.length);
     }
 
     if([object isKindOfClass:[NSData class]])
     {
         NSData* data = (NSData*)object;
-        return ksjson_addDataElement(context, cName, data.bytes, (int)data.length);
+        return raygun_ksjson_addDataElement(context, cName, data.bytes, (int)data.length);
     }
 
     codec.error = [NSError errorWithDomain:@"KSJSONCodecObjC"
                                       code:0
                                description:@"Could not determine type of %@", [object class]];
-    return KSJSON_ERROR_INVALID_DATA;
+    return RAYGUN_KSJSON_ERROR_INVALID_DATA;
 }
 
 
@@ -413,8 +413,8 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
              error:(NSError* __autoreleasing *) error
 {
     NSMutableData* data = [NSMutableData data];
-    KSJSONEncodeContext JSONContext;
-    ksjson_beginEncode(&JSONContext,
+    Raygun_KSJSONEncodeContext JSONContext;
+    raygun_ksjson_beginEncode(&JSONContext,
                        encodeOptions & KSJSONEncodeOptionPretty,
                        addJSONData,
                        (__bridge void*)data);
@@ -426,7 +426,7 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
     {
         *error = codec.error;
     }
-    return result == KSJSON_OK ? data : nil;
+    return result == RAYGUN_KSJSON_OK ? data : nil;
 }
 
 + (id) decode:(NSData*) JSONData
@@ -437,18 +437,18 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
                                         decodeOptions:decodeOptions];
     NSMutableData* stringData = [NSMutableData dataWithLength:10001];
     int errorOffset;
-    int result = ksjson_decode(JSONData.bytes,
+    int result = raygun_ksjson_decode(JSONData.bytes,
                                (int)JSONData.length,
                                stringData.mutableBytes,
                                (int)stringData.length,
                                codec.callbacks,
                                (__bridge void*)codec, &errorOffset);
-    if(result != KSJSON_OK && codec.error == nil)
+    if(result != RAYGUN_KSJSON_OK && codec.error == nil)
     {
         codec.error = [NSError errorWithDomain:@"KSJSONCodecObjC"
                                           code:0
                                    description:@"%s (offset %d)",
-                       ksjson_stringForError(result),
+                       raygun_ksjson_stringForError(result),
                        errorOffset];
     }
     if(error != nil)
@@ -456,7 +456,7 @@ static int encodeObject(KSJSONCodec* codec, id object, NSString* name, KSJSONEnc
         *error = codec.error;
     }
 
-    if(result != KSJSON_OK && !(decodeOptions & KSJSONDecodeOptionKeepPartialObject))
+    if(result != RAYGUN_KSJSON_OK && !(decodeOptions & KSJSONDecodeOptionKeepPartialObject))
     {
         return nil;
     }

@@ -26,7 +26,7 @@
 
 #include "Raygun_KSCrashReportFields.h"
 #include "Raygun_KSSystemCapabilities.h"
-#include "KSJSONCodec.h"
+#include "Raygun_KSJSONCodec.h"
 #include "Raygun_KSDemangle_CPP.h"
 #if RAYGUN_KSCRASH_HAS_SWIFT
 #include "Raygun_KSDemangle_Swift.h"
@@ -58,7 +58,7 @@ static int demanglePathsCount = sizeof(demanglePaths) / sizeof(*demanglePaths);
 
 typedef struct
 {
-    KSJSONEncodeContext* encodeContext;
+    Raygun_KSJSONEncodeContext* encodeContext;
     char objectPath[MAX_DEPTH][MAX_NAME_LENGTH];
     int currentDepth;
     char* outputPtr;
@@ -141,7 +141,7 @@ static int onBooleanElement(const char* const name,
                             void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    return ksjson_addBooleanElement(context->encodeContext, name, value);
+    return raygun_ksjson_addBooleanElement(context->encodeContext, name, value);
 }
 
 static int onFloatingPointElement(const char* const name,
@@ -149,7 +149,7 @@ static int onFloatingPointElement(const char* const name,
                                   void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    return ksjson_addFloatingPointElement(context->encodeContext, name, value);
+    return raygun_ksjson_addFloatingPointElement(context->encodeContext, name, value);
 }
 
 static int onIntegerElement(const char* const name,
@@ -157,17 +157,17 @@ static int onIntegerElement(const char* const name,
                             void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
     if(shouldFixDate(context, name))
     {
         char buffer[21];
         raygun_ksdate_utcStringFromTimestamp((time_t)value, buffer);
 
-        result = ksjson_addStringElement(context->encodeContext, name, buffer, (int)strlen(buffer));
+        result = raygun_ksjson_addStringElement(context->encodeContext, name, buffer, (int)strlen(buffer));
     }
     else
     {
-        result = ksjson_addIntegerElement(context->encodeContext, name, value);
+        result = raygun_ksjson_addIntegerElement(context->encodeContext, name, value);
     }
     return result;
 }
@@ -200,7 +200,7 @@ static int onStringElement(const char* const name,
             stringValue = demangled;
         }
     }
-    int result = ksjson_addStringElement(context->encodeContext, name, stringValue, (int)strlen(stringValue));
+    int result = raygun_ksjson_addStringElement(context->encodeContext, name, stringValue, (int)strlen(stringValue));
     if(demangled != NULL)
     {
         free(demangled);
@@ -212,10 +212,10 @@ static int onBeginObject(const char* const name,
                          void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    int result = ksjson_beginObject(context->encodeContext, name);
+    int result = raygun_ksjson_beginObject(context->encodeContext, name);
     if(!increaseDepth(context, name))
     {
-        return KSJSON_ERROR_DATA_TOO_LONG;
+        return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
     }
     return result;
 }
@@ -224,10 +224,10 @@ static int onBeginArray(const char* const name,
                         void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    int result = ksjson_beginArray(context->encodeContext, name);
+    int result = raygun_ksjson_beginArray(context->encodeContext, name);
     if(!increaseDepth(context, name))
     {
-        return KSJSON_ERROR_DATA_TOO_LONG;
+        return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
     }
     return result;
 }
@@ -235,7 +235,7 @@ static int onBeginArray(const char* const name,
 static int onEndContainer(void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    int result = ksjson_endContainer(context->encodeContext);
+    int result = raygun_ksjson_endContainer(context->encodeContext);
     if(!decreaseDepth(context))
     {
         // Do something;
@@ -246,7 +246,7 @@ static int onEndContainer(void* const userData)
 static int onEndData(__unused void* const userData)
 {
     FixupContext* context = (FixupContext*)userData;
-    return ksjson_endEncode(context->encodeContext);
+    return raygun_ksjson_endEncode(context->encodeContext);
 }
 
 static int addJSONData(const char* data, int length, void* userData)
@@ -254,13 +254,13 @@ static int addJSONData(const char* data, int length, void* userData)
     FixupContext* context = (FixupContext*)userData;
     if(length > context->outputBytesLeft)
     {
-        return KSJSON_ERROR_DATA_TOO_LONG;
+        return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
     }
     memcpy(context->outputPtr, data, length);
     context->outputPtr += length;
     context->outputBytesLeft -= length;
     
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 char* raygun_kscrf_fixupCrashReport(const char* crashReport)
@@ -270,7 +270,7 @@ char* raygun_kscrf_fixupCrashReport(const char* crashReport)
         return NULL;
     }
 
-    KSJSONDecodeCallbacks callbacks =
+    Raygun_KSJSONDecodeCallbacks callbacks =
     {
         .onBeginArray = onBeginArray,
         .onBeginObject = onBeginObject,
@@ -287,7 +287,7 @@ char* raygun_kscrf_fixupCrashReport(const char* crashReport)
     int crashReportLength = (int)strlen(crashReport);
     int fixedReportLength = (int)(crashReportLength * 1.5);
     char* fixedReport = malloc((unsigned)fixedReportLength);
-    KSJSONEncodeContext encodeContext;
+    Raygun_KSJSONEncodeContext encodeContext;
     FixupContext fixupContext =
     {
         .encodeContext = &encodeContext,
@@ -296,15 +296,15 @@ char* raygun_kscrf_fixupCrashReport(const char* crashReport)
         .outputBytesLeft = fixedReportLength,
     };
     
-    ksjson_beginEncode(&encodeContext, true, addJSONData, &fixupContext);
+    raygun_ksjson_beginEncode(&encodeContext, true, addJSONData, &fixupContext);
     
     int errorOffset = 0;
-    int result = ksjson_decode(crashReport, (int)strlen(crashReport), stringBuffer, stringBufferLength, &callbacks, &fixupContext, &errorOffset);
+    int result = raygun_ksjson_decode(crashReport, (int)strlen(crashReport), stringBuffer, stringBufferLength, &callbacks, &fixupContext, &errorOffset);
     *fixupContext.outputPtr = '\0';
     free(stringBuffer);
-    if(result != KSJSON_OK)
+    if(result != RAYGUN_KSJSON_OK)
     {
-        KSLOG_ERROR("Could not decode report: %s", ksjson_stringForError(result));
+        KSLOG_ERROR("Could not decode report: %s", raygun_ksjson_stringForError(result));
         free(fixedReport);
         return NULL;
     }

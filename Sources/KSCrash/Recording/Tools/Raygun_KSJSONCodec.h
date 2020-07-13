@@ -48,29 +48,29 @@ extern "C" {
 enum
 {
     /** Encoding or decoding: Everything completed without error */
-    KSJSON_OK = 0,
+    RAYGUN_KSJSON_OK = 0,
 
     /** Encoding or decoding: Encountered an unexpected or invalid character */
-    KSJSON_ERROR_INVALID_CHARACTER = 1,
+    RAYGUN_KSJSON_ERROR_INVALID_CHARACTER = 1,
 
     /** Decoding: Source data was too long. */
-    KSJSON_ERROR_DATA_TOO_LONG = 2,
+    RAYGUN_KSJSON_ERROR_DATA_TOO_LONG = 2,
 
     /** Encoding: addJSONData could not handle the data.
      * This code is not used by the decoder, but is meant to be returned by
      * the addJSONData callback method if it couldn't handle the data.
      */
-    KSJSON_ERROR_CANNOT_ADD_DATA = 3,
+    RAYGUN_KSJSON_ERROR_CANNOT_ADD_DATA = 3,
 
     /** Decoding: Source data appears to be truncated. */
-    KSJSON_ERROR_INCOMPLETE = 4,
+    RAYGUN_KSJSON_ERROR_INCOMPLETE = 4,
 
     /** Decoding: Parsing failed due to bad data structure/type/contents.
      * This code is not used by the decoder, but is meant to be returned
      * by the user callback methods if the decoded data is incorrect for
      * semantic or structural reasons.
      */
-    KSJSON_ERROR_INVALID_DATA = 5,
+    RAYGUN_KSJSON_ERROR_INVALID_DATA = 5,
 };
 
 /** Get a description for an error code.
@@ -79,7 +79,7 @@ enum
  *
  * @return A string describing the error.
  */
-const char* ksjson_stringForError(const int error);
+const char* raygun_ksjson_stringForError(const int error);
 
 
 // ============================================================================
@@ -118,7 +118,7 @@ typedef struct
 
     bool prettyPrint;
 
-} KSJSONEncodeContext;
+} Raygun_KSJSONEncodeContext;
 
 
 /** Begin a new encoding process.
@@ -131,7 +131,7 @@ typedef struct
  *
  * @param userData User-specified data which gets passed to addJSONData.
  */
-void ksjson_beginEncode(KSJSONEncodeContext* context,
+void raygun_ksjson_beginEncode(Raygun_KSJSONEncodeContext* context,
                         bool prettyPrint,
                         KSJSONAddDataFunc addJSONData,
                         void* userData);
@@ -140,7 +140,7 @@ void ksjson_beginEncode(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_endEncode(KSJSONEncodeContext* context);
+int raygun_ksjson_endEncode(Raygun_KSJSONEncodeContext* context);
 
 /** Add a boolean element.
  *
@@ -152,7 +152,7 @@ int ksjson_endEncode(KSJSONEncodeContext* context);
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addBooleanElement(KSJSONEncodeContext* context,
+int raygun_ksjson_addBooleanElement(Raygun_KSJSONEncodeContext* context,
                              const char* name,
                              bool value);
 
@@ -166,7 +166,7 @@ int ksjson_addBooleanElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addIntegerElement(KSJSONEncodeContext* context,
+int raygun_ksjson_addIntegerElement(Raygun_KSJSONEncodeContext* context,
                              const char* name,
                              int64_t value);
 
@@ -180,7 +180,7 @@ int ksjson_addIntegerElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addFloatingPointElement(KSJSONEncodeContext* context,
+int raygun_ksjson_addFloatingPointElement(Raygun_KSJSONEncodeContext* context,
                                    const char* name,
                                    double value);
 
@@ -192,7 +192,7 @@ int ksjson_addFloatingPointElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addNullElement(KSJSONEncodeContext* context,
+int ksjson_addNullElement(Raygun_KSJSONEncodeContext* context,
                           const char* name);
 
 /** Add a string element.
@@ -207,7 +207,7 @@ int ksjson_addNullElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addStringElement(KSJSONEncodeContext* context,
+int raygun_ksjson_addStringElement(Raygun_KSJSONEncodeContext* context,
                             const char* name,
                             const char* value,
                             int length);
@@ -222,7 +222,7 @@ int ksjson_addStringElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_beginStringElement(KSJSONEncodeContext* context,
+int raygun_ksjson_beginStringElement(Raygun_KSJSONEncodeContext* context,
                               const char* name);
 
 /** Add a string fragment to an incrementally-built string element.
@@ -235,7 +235,7 @@ int ksjson_beginStringElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_appendStringElement(KSJSONEncodeContext* context,
+int raygun_ksjson_appendStringElement(Raygun_KSJSONEncodeContext* context,
                                const char* value,
                                int length);
 
@@ -245,7 +245,7 @@ int ksjson_appendStringElement(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_endStringElement(KSJSONEncodeContext* context);
+int raygun_ksjson_endStringElement(Raygun_KSJSONEncodeContext* context);
 
 /** Add a string element. The element will be converted to string-coded hex.
  *
@@ -259,7 +259,7 @@ int ksjson_endStringElement(KSJSONEncodeContext* context);
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addDataElement(Raygun_KSJSONEncodeContext* const context,
                           const char* name,
                           const char* value,
                           int length);
@@ -275,7 +275,7 @@ int ksjson_addDataElement(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_beginDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginDataElement(Raygun_KSJSONEncodeContext* const context,
                             const char* const name);
 
 /** Add a data fragment to an incrementally-built data element.
@@ -288,7 +288,7 @@ int ksjson_beginDataElement(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_appendDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_appendDataElement(Raygun_KSJSONEncodeContext* const context,
                              const char* const value,
                              int length);
 
@@ -298,7 +298,7 @@ int ksjson_appendDataElement(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_endDataElement(KSJSONEncodeContext* const context);
+int raygun_ksjson_endDataElement(Raygun_KSJSONEncodeContext* const context);
 
 /** Add a pre-formatted JSON element.
  *
@@ -314,7 +314,7 @@ int ksjson_endDataElement(KSJSONEncodeContext* const context);
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addJSONElement(KSJSONEncodeContext* const encodeContext,
+int raygun_ksjson_addJSONElement(Raygun_KSJSONEncodeContext* const encodeContext,
                           const char* restrict const name,
                           const char* restrict const jsonData,
                           const int jsonDataLength,
@@ -328,7 +328,7 @@ int ksjson_addJSONElement(KSJSONEncodeContext* const encodeContext,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_beginObject(KSJSONEncodeContext* context,
+int raygun_ksjson_beginObject(Raygun_KSJSONEncodeContext* context,
                        const char* name);
 
 /** Begin a new array container.
@@ -339,7 +339,7 @@ int ksjson_beginObject(KSJSONEncodeContext* context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_beginArray(KSJSONEncodeContext* context,
+int raygun_ksjson_beginArray(Raygun_KSJSONEncodeContext* context,
                       const char* name);
 
 /** Begin a generic JSON element, adding any necessary JSON preamble text,
@@ -350,7 +350,7 @@ int ksjson_beginArray(KSJSONEncodeContext* context,
  *
  * @param name The name of the next element (only needed if parent is a dictionary).
  */
-int ksjson_beginElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginElement(Raygun_KSJSONEncodeContext* const context,
                         const char* const name);
 
 /** Add JSON data manually.
@@ -364,7 +364,7 @@ int ksjson_beginElement(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_addRawJSONData(KSJSONEncodeContext* const context,
+int raygun_ksjson_addRawJSONData(Raygun_KSJSONEncodeContext* const context,
                           const char* const data,
                           const int length);
 
@@ -374,7 +374,7 @@ int ksjson_addRawJSONData(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the process was successful.
  */
-int ksjson_endContainer(KSJSONEncodeContext* context);
+int raygun_ksjson_endContainer(Raygun_KSJSONEncodeContext* context);
 
 /** Decode and add JSON data from a file.
  *
@@ -386,7 +386,7 @@ int ksjson_endContainer(KSJSONEncodeContext* context);
  *
  * @param closeLastContainer If false, do not close the last container.
  */
-int ksjson_addJSONFromFile(KSJSONEncodeContext* const context,
+int raygun_ksjson_addJSONFromFile(Raygun_KSJSONEncodeContext* const context,
                            const char* restrict const name,
                            const char* restrict const filename,
                            const bool closeLastContainer);
@@ -401,7 +401,7 @@ int ksjson_addJSONFromFile(KSJSONEncodeContext* const context,
  * Callbacks called during a JSON decode process.
  * All function pointers must point to valid functions.
  */
-typedef struct KSJSONDecodeCallbacks
+typedef struct Raygun_KSJSONDecodeCallbacks
 {
     /** Called when a boolean element is decoded.
      *
@@ -509,7 +509,7 @@ typedef struct KSJSONDecodeCallbacks
      */
     int (*onEndData)(void* userData);
 
-} KSJSONDecodeCallbacks;
+} Raygun_KSJSONDecodeCallbacks;
 
 
 /** Read a JSON encoded file from the specified FD.
@@ -532,11 +532,11 @@ typedef struct KSJSONDecodeCallbacks
  *
  * @return KSJSON_OK if succesful. An error code otherwise.
  */
-int ksjson_decode(const char* data,
+int raygun_ksjson_decode(const char* data,
                   int length,
                   char* stringBuffer,
                   int stringBufferLength,
-                  KSJSONDecodeCallbacks* callbacks,
+                  Raygun_KSJSONDecodeCallbacks* callbacks,
                   void* userData,
                   int* errorOffset);
 

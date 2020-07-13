@@ -152,7 +152,7 @@
 		A2E1A1ED218F919500BF66DB /* Raygun_KSDynamicLinker.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5C21003DA90003C8B4 /* Raygun_KSDynamicLinker.h */; };
 		A2E1A1EE218F919500BF66DB /* Raygun_KSFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC5E21003DA90003C8B4 /* Raygun_KSFileUtils.h */; };
 		A2E1A1EF218F919500BF66DB /* Raygun_KSID.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6021003DA90003C8B4 /* Raygun_KSID.h */; };
-		A2E1A1F0218F919500BF66DB /* KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* KSJSONCodec.h */; };
+		A2E1A1F0218F919500BF66DB /* Raygun_KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* Raygun_KSJSONCodec.h */; };
 		A2E1A1F1218F919500BF66DB /* KSJSONCodecObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6321003DA90003C8B4 /* KSJSONCodecObjC.h */; };
 		A2E1A1F2218F919500BF66DB /* KSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6621003DA90003C8B4 /* KSLogger.h */; };
 		A2E1A1F3218F919500BF66DB /* KSMach.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6821003DA90003C8B4 /* KSMach.h */; };
@@ -215,7 +215,7 @@
 		A2E1A22C218F92D500BF66DB /* Raygun_KSDynamicLinker.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5B21003DA90003C8B4 /* Raygun_KSDynamicLinker.c */; };
 		A2E1A22D218F92D500BF66DB /* Raygun_KSFileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5D21003DA90003C8B4 /* Raygun_KSFileUtils.c */; };
 		A2E1A22E218F92D500BF66DB /* Raygun_KSID.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5F21003DA90003C8B4 /* Raygun_KSID.c */; };
-		A2E1A22F218F92D500BF66DB /* KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* KSJSONCodec.c */; };
+		A2E1A22F218F92D500BF66DB /* Raygun_KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* Raygun_KSJSONCodec.c */; };
 		A2E1A230218F92D500BF66DB /* KSJSONCodecObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6421003DA90003C8B4 /* KSJSONCodecObjC.m */; };
 		A2E1A231218F92D500BF66DB /* KSLogger.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6521003DA90003C8B4 /* KSLogger.c */; };
 		A2E1A232218F92D500BF66DB /* KSMach.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6721003DA90003C8B4 /* KSMach.c */; };
@@ -390,10 +390,10 @@
 		A2E4AD6921003DAA0003C8B4 /* Raygun_KSID.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC5F21003DA90003C8B4 /* Raygun_KSID.c */; };
 		A2E4AD6A21003DAA0003C8B4 /* Raygun_KSID.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6021003DA90003C8B4 /* Raygun_KSID.h */; };
 		A2E4AD6B21003DAA0003C8B4 /* Raygun_KSID.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6021003DA90003C8B4 /* Raygun_KSID.h */; };
-		A2E4AD6C21003DAA0003C8B4 /* KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* KSJSONCodec.c */; };
-		A2E4AD6D21003DAA0003C8B4 /* KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* KSJSONCodec.c */; };
-		A2E4AD6E21003DAA0003C8B4 /* KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* KSJSONCodec.h */; };
-		A2E4AD6F21003DAA0003C8B4 /* KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* KSJSONCodec.h */; };
+		A2E4AD6C21003DAA0003C8B4 /* Raygun_KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* Raygun_KSJSONCodec.c */; };
+		A2E4AD6D21003DAA0003C8B4 /* Raygun_KSJSONCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6121003DA90003C8B4 /* Raygun_KSJSONCodec.c */; };
+		A2E4AD6E21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* Raygun_KSJSONCodec.h */; };
+		A2E4AD6F21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6221003DA90003C8B4 /* Raygun_KSJSONCodec.h */; };
 		A2E4AD7021003DAA0003C8B4 /* KSJSONCodecObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6321003DA90003C8B4 /* KSJSONCodecObjC.h */; };
 		A2E4AD7121003DAA0003C8B4 /* KSJSONCodecObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6321003DA90003C8B4 /* KSJSONCodecObjC.h */; };
 		A2E4AD7221003DAA0003C8B4 /* KSJSONCodecObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6421003DA90003C8B4 /* KSJSONCodecObjC.m */; };
@@ -735,8 +735,8 @@
 		A2E4AC5E21003DA90003C8B4 /* Raygun_KSFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSFileUtils.h; sourceTree = "<group>"; };
 		A2E4AC5F21003DA90003C8B4 /* Raygun_KSID.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSID.c; sourceTree = "<group>"; };
 		A2E4AC6021003DA90003C8B4 /* Raygun_KSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSID.h; sourceTree = "<group>"; };
-		A2E4AC6121003DA90003C8B4 /* KSJSONCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSJSONCodec.c; sourceTree = "<group>"; };
-		A2E4AC6221003DA90003C8B4 /* KSJSONCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSJSONCodec.h; sourceTree = "<group>"; };
+		A2E4AC6121003DA90003C8B4 /* Raygun_KSJSONCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSJSONCodec.c; sourceTree = "<group>"; };
+		A2E4AC6221003DA90003C8B4 /* Raygun_KSJSONCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSJSONCodec.h; sourceTree = "<group>"; };
 		A2E4AC6321003DA90003C8B4 /* KSJSONCodecObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSJSONCodecObjC.h; sourceTree = "<group>"; };
 		A2E4AC6421003DA90003C8B4 /* KSJSONCodecObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSJSONCodecObjC.m; sourceTree = "<group>"; };
 		A2E4AC6521003DA90003C8B4 /* KSLogger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSLogger.c; sourceTree = "<group>"; };
@@ -1088,8 +1088,8 @@
 				A2E4AC5E21003DA90003C8B4 /* Raygun_KSFileUtils.h */,
 				A2E4AC5F21003DA90003C8B4 /* Raygun_KSID.c */,
 				A2E4AC6021003DA90003C8B4 /* Raygun_KSID.h */,
-				A2E4AC6121003DA90003C8B4 /* KSJSONCodec.c */,
-				A2E4AC6221003DA90003C8B4 /* KSJSONCodec.h */,
+				A2E4AC6121003DA90003C8B4 /* Raygun_KSJSONCodec.c */,
+				A2E4AC6221003DA90003C8B4 /* Raygun_KSJSONCodec.h */,
 				A2E4AC6321003DA90003C8B4 /* KSJSONCodecObjC.h */,
 				A2E4AC6421003DA90003C8B4 /* KSJSONCodecObjC.m */,
 				A2E4AC6521003DA90003C8B4 /* KSLogger.c */,
@@ -1297,7 +1297,7 @@
 				DC5EFAAA211015A7002C0713 /* RaygunCrashReportSink.h in Headers */,
 				A2E4ADA621003DAA0003C8B4 /* KSSymbolicator.h in Headers */,
 				A2E4ADB421003DAA0003C8B4 /* KSCrashReportFilter.h in Headers */,
-				A2E4AD6E21003DAA0003C8B4 /* KSJSONCodec.h in Headers */,
+				A2E4AD6E21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
 				A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */,
 				A2E4AD2021003DAA0003C8B4 /* Raygun_KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD821003DAA0003C8B4 /* NSData+GZip.h in Headers */,
@@ -1405,7 +1405,7 @@
 				DC5EFAAB211015A8002C0713 /* RaygunCrashReportSink.h in Headers */,
 				A2E4ADA721003DAA0003C8B4 /* KSSymbolicator.h in Headers */,
 				A2E4ADB521003DAA0003C8B4 /* KSCrashReportFilter.h in Headers */,
-				A2E4AD6F21003DAA0003C8B4 /* KSJSONCodec.h in Headers */,
+				A2E4AD6F21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
 				A2E4AE1321003DAA0003C8B4 /* Malloc.h in Headers */,
 				A2E4AD2121003DAA0003C8B4 /* Raygun_KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD921003DAA0003C8B4 /* NSData+GZip.h in Headers */,
@@ -1547,7 +1547,7 @@
 				A2E1A1ED218F919500BF66DB /* Raygun_KSDynamicLinker.h in Headers */,
 				A2E1A1EE218F919500BF66DB /* Raygun_KSFileUtils.h in Headers */,
 				A2E1A1EF218F919500BF66DB /* Raygun_KSID.h in Headers */,
-				A2E1A1F0218F919500BF66DB /* KSJSONCodec.h in Headers */,
+				A2E1A1F0218F919500BF66DB /* Raygun_KSJSONCodec.h in Headers */,
 				A2E1A1F1218F919500BF66DB /* KSJSONCodecObjC.h in Headers */,
 				A2E1A1F2218F919500BF66DB /* KSLogger.h in Headers */,
 				A2E1A1F3218F919500BF66DB /* KSMach.h in Headers */,
@@ -1912,7 +1912,7 @@
 				A2E4AD4E21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E4AD9021003DAA0003C8B4 /* KSStackCursor.c in Sources */,
 				A29D6745216DA80000BAC934 /* RaygunUtils.m in Sources */,
-				A2E4AD6C21003DAA0003C8B4 /* KSJSONCodec.c in Sources */,
+				A2E4AD6C21003DAA0003C8B4 /* Raygun_KSJSONCodec.c in Sources */,
 				DC5EFA7A210FFA7A002C0713 /* RaygunClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1997,7 +1997,7 @@
 				A2E4AD4F21003DAA0003C8B4 /* Raygun_KSCPU_x86_64.c in Sources */,
 				A2E4AD9121003DAA0003C8B4 /* KSStackCursor.c in Sources */,
 				A29D6746216DA80000BAC934 /* RaygunUtils.m in Sources */,
-				A2E4AD6D21003DAA0003C8B4 /* KSJSONCodec.c in Sources */,
+				A2E4AD6D21003DAA0003C8B4 /* Raygun_KSJSONCodec.c in Sources */,
 				DC5EFA7B210FFA7A002C0713 /* RaygunClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2045,7 +2045,7 @@
 				A2E1A22C218F92D500BF66DB /* Raygun_KSDynamicLinker.c in Sources */,
 				A2E1A22D218F92D500BF66DB /* Raygun_KSFileUtils.c in Sources */,
 				A2E1A22E218F92D500BF66DB /* Raygun_KSID.c in Sources */,
-				A2E1A22F218F92D500BF66DB /* KSJSONCodec.c in Sources */,
+				A2E1A22F218F92D500BF66DB /* Raygun_KSJSONCodec.c in Sources */,
 				A2E1A230218F92D500BF66DB /* KSJSONCodecObjC.m in Sources */,
 				A2E1A231218F92D500BF66DB /* KSLogger.c in Sources */,
 				A2E1A232218F92D500BF66DB /* KSMach.c in Sources */,

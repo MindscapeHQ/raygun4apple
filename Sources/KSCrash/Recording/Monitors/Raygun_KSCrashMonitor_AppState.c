@@ -28,7 +28,7 @@
 #include "Raygun_KSCrashMonitor_AppState.h"
 
 #include "Raygun_KSFileUtils.h"
-#include "KSJSONCodec.h"
+#include "Raygun_KSJSONCodec.h"
 #include "Raygun_KSCrashMonitorContext.h"
 
 //#define KSLogger_LocalLevel TRACE
@@ -84,7 +84,7 @@ static int onBooleanElement(const char* const name, const bool value, void* cons
         state->crashedLastLaunch = value;
     }
 
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onFloatingPointElement(const char* const name, const double value, void* const userData)
@@ -100,7 +100,7 @@ static int onFloatingPointElement(const char* const name, const double value, vo
         state->backgroundDurationSinceLastCrash = value;
     }
 
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onIntegerElement(const char* const name, const int64_t value, void* const userData)
@@ -112,7 +112,7 @@ static int onIntegerElement(const char* const name, const int64_t value, void* c
         if(value != kFormatVersion)
         {
             KSLOG_ERROR("Expected version 1 but got %" PRId64, value);
-            return KSJSON_ERROR_INVALID_DATA;
+            return RAYGUN_KSJSON_ERROR_INVALID_DATA;
         }
     }
     else if(strcmp(name, kKeyLaunchesSinceLastCrash) == 0)
@@ -130,34 +130,34 @@ static int onIntegerElement(const char* const name, const int64_t value, void* c
 
 static int onNullElement(__unused const char* const name, __unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onStringElement(__unused const char* const name,
                            __unused const char* const value,
                            __unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onBeginObject(__unused const char* const name, __unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onBeginArray(__unused const char* const name, __unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onEndContainer(__unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int onEndData(__unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 
@@ -167,7 +167,7 @@ static int addJSONData(const char* const data, const int length, void* const use
 {
     const int fd = *((int*)userData);
     const bool success = raygun_ksfu_writeBytesToFD(fd, data, length);
-    return success ? KSJSON_OK : KSJSON_ERROR_CANNOT_ADD_DATA;
+    return success ? RAYGUN_KSJSON_OK : RAYGUN_KSJSON_ERROR_CANNOT_ADD_DATA;
 }
 
 
@@ -212,7 +212,7 @@ bool loadState(const char* const path)
         return false;
     }
 
-    KSJSONDecodeCallbacks callbacks;
+    Raygun_KSJSONDecodeCallbacks callbacks;
     callbacks.onBeginArray = onBeginArray;
     callbacks.onBeginObject = onBeginObject;
     callbacks.onBooleanElement = onBooleanElement;
@@ -226,7 +226,7 @@ bool loadState(const char* const path)
     int errorOffset = 0;
 
     char stringBuffer[1000];
-    const int result = ksjson_decode(data,
+    const int result = raygun_ksjson_decode(data,
                                      (int)length,
                                      stringBuffer,
                                      sizeof(stringBuffer),
@@ -234,10 +234,10 @@ bool loadState(const char* const path)
                                      &g_state,
                                      &errorOffset);
     free(data);
-    if(result != KSJSON_OK)
+    if(result != RAYGUN_KSJSON_OK)
     {
         KSLOG_ERROR("%s, offset %d: %s",
-                    path, errorOffset, ksjson_stringForError(result));
+                    path, errorOffset, raygun_ksjson_stringForError(result));
         return false;
     }
     return true;
@@ -260,62 +260,62 @@ bool saveState(const char* const path)
         return false;
     }
 
-    KSJSONEncodeContext JSONContext;
-    ksjson_beginEncode(&JSONContext,
+    Raygun_KSJSONEncodeContext JSONContext;
+    raygun_ksjson_beginEncode(&JSONContext,
                        true,
                        addJSONData,
                        &fd);
 
     int result;
-    if((result = ksjson_beginObject(&JSONContext, NULL)) != KSJSON_OK)
+    if((result = raygun_ksjson_beginObject(&JSONContext, NULL)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    if((result = ksjson_addIntegerElement(&JSONContext,
+    if((result = raygun_ksjson_addIntegerElement(&JSONContext,
                                           kKeyFormatVersion,
-                                          kFormatVersion)) != KSJSON_OK)
+                                          kFormatVersion)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
     // Record this launch crashed state into "crashed last launch" field.
-    if((result = ksjson_addBooleanElement(&JSONContext,
+    if((result = raygun_ksjson_addBooleanElement(&JSONContext,
                                           kKeyCrashedLastLaunch,
-                                          g_state.crashedThisLaunch)) != KSJSON_OK)
+                                          g_state.crashedThisLaunch)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    if((result = ksjson_addFloatingPointElement(&JSONContext,
+    if((result = raygun_ksjson_addFloatingPointElement(&JSONContext,
                                                 kKeyActiveDurationSinceLastCrash,
-                                                g_state.activeDurationSinceLastCrash)) != KSJSON_OK)
+                                                g_state.activeDurationSinceLastCrash)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    if((result = ksjson_addFloatingPointElement(&JSONContext,
+    if((result = raygun_ksjson_addFloatingPointElement(&JSONContext,
                                                 kKeyBackgroundDurationSinceLastCrash,
-                                                g_state.backgroundDurationSinceLastCrash)) != KSJSON_OK)
+                                                g_state.backgroundDurationSinceLastCrash)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    if((result = ksjson_addIntegerElement(&JSONContext,
+    if((result = raygun_ksjson_addIntegerElement(&JSONContext,
                                           kKeyLaunchesSinceLastCrash,
-                                          g_state.launchesSinceLastCrash)) != KSJSON_OK)
+                                          g_state.launchesSinceLastCrash)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    if((result = ksjson_addIntegerElement(&JSONContext,
+    if((result = raygun_ksjson_addIntegerElement(&JSONContext,
                                           kKeySessionsSinceLastCrash,
-                                          g_state.sessionsSinceLastCrash)) != KSJSON_OK)
+                                          g_state.sessionsSinceLastCrash)) != RAYGUN_KSJSON_OK)
     {
         goto done;
     }
-    result = ksjson_endEncode(&JSONContext);
+    result = raygun_ksjson_endEncode(&JSONContext);
 
 done:
     close(fd);
-    if(result != KSJSON_OK)
+    if(result != RAYGUN_KSJSON_OK)
     {
         KSLOG_ERROR("%s: %s",
-                    path, ksjson_stringForError(result));
+                    path, raygun_ksjson_stringForError(result));
         return false;
     }
     return true;

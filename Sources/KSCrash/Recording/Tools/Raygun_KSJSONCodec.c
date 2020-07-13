@@ -25,7 +25,7 @@
 //
 
 
-#include "KSJSONCodec.h"
+#include "Raygun_KSJSONCodec.h"
 
 #include <ctype.h>
 #include <errno.h>
@@ -74,19 +74,19 @@ static char g_hexNybbles[] =
     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
 };
 
-const char* ksjson_stringForError(const int error)
+const char* raygun_ksjson_stringForError(const int error)
 {
     switch (error)
     {
-        case KSJSON_ERROR_INVALID_CHARACTER:
+        case RAYGUN_KSJSON_ERROR_INVALID_CHARACTER:
             return "Invalid character";
-        case KSJSON_ERROR_DATA_TOO_LONG:
+        case RAYGUN_KSJSON_ERROR_DATA_TOO_LONG:
             return "Data too long";
-        case KSJSON_ERROR_CANNOT_ADD_DATA:
+        case RAYGUN_KSJSON_ERROR_CANNOT_ADD_DATA:
             return "Cannot add data";
-        case KSJSON_ERROR_INCOMPLETE:
+        case RAYGUN_KSJSON_ERROR_INCOMPLETE:
             return "Incomplete data";
-        case KSJSON_ERROR_INVALID_DATA:
+        case RAYGUN_KSJSON_ERROR_INVALID_DATA:
             return "Invalid data";
         default:
             return "(unknown error)";
@@ -122,7 +122,7 @@ const char* ksjson_stringForError(const int error)
  *
  * @return KSJSON_OK if the data was handled successfully.
  */
-static int appendEscapedString(KSJSONEncodeContext* const context,
+static int appendEscapedString(Raygun_KSJSONEncodeContext* const context,
                                const char* restrict const string,
                                int length)
 {
@@ -176,7 +176,7 @@ static int appendEscapedString(KSJSONEncodeContext* const context,
             {
                 KSLOG_DEBUG("Invalid character 0x%02x in string: %s",
                             *src, string);
-                return KSJSON_ERROR_INVALID_CHARACTER;
+                return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
                 *dst++ = *src;
         }
@@ -196,11 +196,11 @@ static int appendEscapedString(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the data was handled successfully.
  */
-static int addEscapedString(KSJSONEncodeContext* const context,
+static int addEscapedString(Raygun_KSJSONEncodeContext* const context,
                             const char* restrict const string,
                             int length)
 {
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
 
     // Keep adding portions until the whole string has been processed.
     int offset = 0;
@@ -212,7 +212,7 @@ static int addEscapedString(KSJSONEncodeContext* const context,
             toAdd = KSJSONCODEC_WorkBufferSize / 2;
         }
         result = appendEscapedString(context, string + offset, toAdd);
-        unlikely_if(result != KSJSON_OK)
+        unlikely_if(result != RAYGUN_KSJSON_OK)
         {
             break;
         }
@@ -231,12 +231,12 @@ static int addEscapedString(KSJSONEncodeContext* const context,
  *
  * @return KSJSON_OK if the data was handled successfully.
  */
-static int addQuotedEscapedString(KSJSONEncodeContext* const context,
+static int addQuotedEscapedString(Raygun_KSJSONEncodeContext* const context,
                                   const char* restrict const string,
                                   int length)
 {
     int result;
-    unlikely_if((result = addJSONData(context, "\"", 1)) != KSJSON_OK)
+    unlikely_if((result = addJSONData(context, "\"", 1)) != RAYGUN_KSJSON_OK)
     {
         return result;
     }
@@ -248,9 +248,9 @@ static int addQuotedEscapedString(KSJSONEncodeContext* const context,
     return result || closeResult;
 }
 
-int ksjson_beginElement(KSJSONEncodeContext* const context, const char* const name)
+int raygun_ksjson_beginElement(Raygun_KSJSONEncodeContext* const context, const char* const name)
 {
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
 
     // Decide if a comma is warranted.
     unlikely_if(context->containerFirstEntry)
@@ -259,7 +259,7 @@ int ksjson_beginElement(KSJSONEncodeContext* const context, const char* const na
     }
     else
     {
-        unlikely_if((result = addJSONData(context, ",", 1)) != KSJSON_OK)
+        unlikely_if((result = addJSONData(context, ",", 1)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
@@ -268,13 +268,13 @@ int ksjson_beginElement(KSJSONEncodeContext* const context, const char* const na
     // Pretty printing
     unlikely_if(context->prettyPrint && context->containerLevel > 0)
     {
-        unlikely_if((result = addJSONData(context, "\n", 1)) != KSJSON_OK)
+        unlikely_if((result = addJSONData(context, "\n", 1)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
         for(int i = 0; i < context->containerLevel; i++)
         {
-            unlikely_if((result = addJSONData(context, "    ", 4)) != KSJSON_OK)
+            unlikely_if((result = addJSONData(context, "    ", 4)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
@@ -287,22 +287,22 @@ int ksjson_beginElement(KSJSONEncodeContext* const context, const char* const na
         unlikely_if(name == NULL)
         {
             KSLOG_DEBUG("Name was null inside an object");
-            return KSJSON_ERROR_INVALID_DATA;
+            return RAYGUN_KSJSON_ERROR_INVALID_DATA;
         }
-        unlikely_if((result = addQuotedEscapedString(context, name, (int)strlen(name))) != KSJSON_OK)
+        unlikely_if((result = addQuotedEscapedString(context, name, (int)strlen(name))) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
         unlikely_if(context->prettyPrint)
         {
-            unlikely_if((result = addJSONData(context, ": ", 2)) != KSJSON_OK)
+            unlikely_if((result = addJSONData(context, ": ", 2)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
         }
         else
         {
-            unlikely_if((result = addJSONData(context, ":", 1)) != KSJSON_OK)
+            unlikely_if((result = addJSONData(context, ":", 1)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
@@ -311,19 +311,19 @@ int ksjson_beginElement(KSJSONEncodeContext* const context, const char* const na
     return result;
 }
 
-int ksjson_addRawJSONData(KSJSONEncodeContext* const context,
+int raygun_ksjson_addRawJSONData(Raygun_KSJSONEncodeContext* const context,
                           const char* const data,
                           const int length)
 {
     return addJSONData(context, data, length);
 }
 
-int ksjson_addBooleanElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addBooleanElement(Raygun_KSJSONEncodeContext* const context,
                              const char* const name,
                              const bool value)
 {
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
@@ -337,12 +337,12 @@ int ksjson_addBooleanElement(KSJSONEncodeContext* const context,
     }
 }
 
-int ksjson_addFloatingPointElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addFloatingPointElement(Raygun_KSJSONEncodeContext* const context,
                                    const char* const name,
                                    double value)
 {
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
@@ -351,12 +351,12 @@ int ksjson_addFloatingPointElement(KSJSONEncodeContext* const context,
     return addJSONData(context, buff, (int)strlen(buff));
 }
 
-int ksjson_addIntegerElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addIntegerElement(Raygun_KSJSONEncodeContext* const context,
                              const char* const name,
                              int64_t value)
 {
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
@@ -365,18 +365,18 @@ int ksjson_addIntegerElement(KSJSONEncodeContext* const context,
     return addJSONData(context, buff, (int)strlen(buff));
 }
 
-int ksjson_addNullElement(KSJSONEncodeContext* const context,
+int ksjson_addNullElement(Raygun_KSJSONEncodeContext* const context,
                           const char* const name)
 {
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
     return addJSONData(context, "null", 4);
 }
 
-int ksjson_addStringElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addStringElement(Raygun_KSJSONEncodeContext* const context,
                             const char* const name,
                             const char* const value,
                             int length)
@@ -385,8 +385,8 @@ int ksjson_addStringElement(KSJSONEncodeContext* const context,
     {
         return ksjson_addNullElement(context, name);
     }
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
@@ -397,67 +397,67 @@ int ksjson_addStringElement(KSJSONEncodeContext* const context,
     return addQuotedEscapedString(context, value, length);
 }
 
-int ksjson_beginStringElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginStringElement(Raygun_KSJSONEncodeContext* const context,
                               const char* const name)
 {
-    int result = ksjson_beginElement(context, name);
-    unlikely_if(result != KSJSON_OK)
+    int result = raygun_ksjson_beginElement(context, name);
+    unlikely_if(result != RAYGUN_KSJSON_OK)
     {
         return result;
     }
     return addJSONData(context, "\"", 1);
 }
 
-int ksjson_appendStringElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_appendStringElement(Raygun_KSJSONEncodeContext* const context,
                                const char* const value,
                                int length)
 {
     return addEscapedString(context, value, length);
 }
 
-int ksjson_endStringElement(KSJSONEncodeContext* const context)
+int raygun_ksjson_endStringElement(Raygun_KSJSONEncodeContext* const context)
 {
     return addJSONData(context, "\"", 1);
 }
 
-int ksjson_addDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_addDataElement(Raygun_KSJSONEncodeContext* const context,
                           const char* name,
                           const char* value,
                           int length)
 {
-    int result = KSJSON_OK;
-    result = ksjson_beginDataElement(context, name);
-    if(result == KSJSON_OK)
+    int result = RAYGUN_KSJSON_OK;
+    result = raygun_ksjson_beginDataElement(context, name);
+    if(result == RAYGUN_KSJSON_OK)
     {
-        result = ksjson_appendDataElement(context, value, length);
+        result = raygun_ksjson_appendDataElement(context, value, length);
     }
-    if(result == KSJSON_OK)
+    if(result == RAYGUN_KSJSON_OK)
     {
-        result = ksjson_endDataElement(context);
+        result = raygun_ksjson_endDataElement(context);
     }
     return result;
 }
 
-int ksjson_beginDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginDataElement(Raygun_KSJSONEncodeContext* const context,
                             const char* const name)
 {
-    return ksjson_beginStringElement(context, name);
+    return raygun_ksjson_beginStringElement(context, name);
 }
 
-int ksjson_appendDataElement(KSJSONEncodeContext* const context,
+int raygun_ksjson_appendDataElement(Raygun_KSJSONEncodeContext* const context,
                              const char* const value,
                              int length)
 {
     unsigned char* currentByte = (unsigned char*)value;
     unsigned char* end = currentByte + length;
     char chars[2];
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
     while(currentByte < end)
     {
         chars[0] = g_hexNybbles[(*currentByte>>4)&15];
         chars[1] = g_hexNybbles[*currentByte&15];
         result = addJSONData(context, chars, sizeof(chars));
-        if(result != KSJSON_OK)
+        if(result != RAYGUN_KSJSON_OK)
         {
             break;
         }
@@ -466,18 +466,18 @@ int ksjson_appendDataElement(KSJSONEncodeContext* const context,
     return result;
 }
 
-int ksjson_endDataElement(KSJSONEncodeContext* const context)
+int raygun_ksjson_endDataElement(Raygun_KSJSONEncodeContext* const context)
 {
-    return ksjson_endStringElement(context);
+    return raygun_ksjson_endStringElement(context);
 }
 
-int ksjson_beginArray(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginArray(Raygun_KSJSONEncodeContext* const context,
                       const char* const name)
 {
     likely_if(context->containerLevel >= 0)
     {
-        int result = ksjson_beginElement(context, name);
-        unlikely_if(result != KSJSON_OK)
+        int result = raygun_ksjson_beginElement(context, name);
+        unlikely_if(result != RAYGUN_KSJSON_OK)
         {
             return result;
         }
@@ -490,13 +490,13 @@ int ksjson_beginArray(KSJSONEncodeContext* const context,
     return addJSONData(context, "[", 1);
 }
 
-int ksjson_beginObject(KSJSONEncodeContext* const context,
+int raygun_ksjson_beginObject(Raygun_KSJSONEncodeContext* const context,
                        const char* const name)
 {
     likely_if(context->containerLevel >= 0)
     {
-        int result = ksjson_beginElement(context, name);
-        unlikely_if(result != KSJSON_OK)
+        int result = raygun_ksjson_beginElement(context, name);
+        unlikely_if(result != RAYGUN_KSJSON_OK)
         {
             return result;
         }
@@ -509,11 +509,11 @@ int ksjson_beginObject(KSJSONEncodeContext* const context,
     return addJSONData(context, "{", 1);
 }
 
-int ksjson_endContainer(KSJSONEncodeContext* const context)
+int raygun_ksjson_endContainer(Raygun_KSJSONEncodeContext* const context)
 {
     unlikely_if(context->containerLevel <= 0)
     {
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
 
     bool isObject = context->isObject[context->containerLevel];
@@ -523,13 +523,13 @@ int ksjson_endContainer(KSJSONEncodeContext* const context)
     unlikely_if(context->prettyPrint && !context->containerFirstEntry)
     {
         int result;
-        unlikely_if((result = addJSONData(context, "\n", 1)) != KSJSON_OK)
+        unlikely_if((result = addJSONData(context, "\n", 1)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
         for(int i = 0; i < context->containerLevel; i++)
         {
-            unlikely_if((result = addJSONData(context, "    ", 4)) != KSJSON_OK)
+            unlikely_if((result = addJSONData(context, "    ", 4)) != RAYGUN_KSJSON_OK)
             {
                 return result;
             }
@@ -539,7 +539,7 @@ int ksjson_endContainer(KSJSONEncodeContext* const context)
     return addJSONData(context, isObject ? "}" : "]", 1);
 }
 
-void ksjson_beginEncode(KSJSONEncodeContext* const context,
+void raygun_ksjson_beginEncode(Raygun_KSJSONEncodeContext* const context,
                         bool prettyPrint,
                         KSJSONAddDataFunc addJSONDataFunc,
                         void* const userData)
@@ -551,12 +551,12 @@ void ksjson_beginEncode(KSJSONEncodeContext* const context,
     context->containerFirstEntry = true;
 }
 
-int ksjson_endEncode(KSJSONEncodeContext* const context)
+int raygun_ksjson_endEncode(Raygun_KSJSONEncodeContext* const context)
 {
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
     while(context->containerLevel > 0)
     {
-        unlikely_if((result = ksjson_endContainer(context)) != KSJSON_OK)
+        unlikely_if((result = raygun_ksjson_endContainer(context)) != RAYGUN_KSJSON_OK)
         {
             return result;
         }
@@ -586,7 +586,7 @@ typedef struct
     /** Length of the string buffer. */
     int stringBufferLength;
     /** The callbacks to call while decoding. */
-    KSJSONDecodeCallbacks* const callbacks;
+    Raygun_KSJSONDecodeCallbacks* const callbacks;
     /** Data that was specified when calling ksjson_decode(). */
     void* userData;
 } KSJSONDecodeContext;
@@ -688,14 +688,14 @@ static int writeUTF8(unsigned int character, char** dst)
     {
         **dst = (char) character;
         (*dst)++;
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
     if(character <= 0x7ff)
     {
         (*dst)[0] = (char)(0xc0 | (character >> 6));
         (*dst)[1] = (char)(0x80 | (character & 0x3f));
         *dst += 2;
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
     if(character <= 0xffff)
     {
@@ -703,7 +703,7 @@ static int writeUTF8(unsigned int character, char** dst)
         (*dst)[1] = (char)(0x80 | ((character >> 6) & 0x3f));
         (*dst)[2] = (char)(0x80 | (character & 0x3f));
         *dst += 3;
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
     // RFC3629 restricts UTF-8 to end at 0x10ffff.
     if(character <= 0x10ffff)
@@ -713,12 +713,12 @@ static int writeUTF8(unsigned int character, char** dst)
         (*dst)[2] = (char)(0x80 | ((character >> 6) & 0x3f));
         (*dst)[3] = (char)(0x80 | (character & 0x3f));
         *dst += 4;
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
 
     // If we get here, the character cannot be converted to valid UTF-8.
     KSLOG_DEBUG("Invalid unicode: 0x%04x", character);
-    return KSJSON_ERROR_INVALID_CHARACTER;
+    return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
 }
 
 static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBufferLength)
@@ -727,7 +727,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     unlikely_if(*context->bufferPtr != '\"')
     {
         KSLOG_DEBUG("Expected '\"' but got '%c'", *context->bufferPtr);
-        return KSJSON_ERROR_INVALID_CHARACTER;
+        return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
     }
 
     const char* src = context->bufferPtr + 1;
@@ -744,7 +744,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     unlikely_if(src >= context->bufferEnd)
     {
         KSLOG_DEBUG("Premature end of data");
-        return KSJSON_ERROR_INCOMPLETE;
+        return RAYGUN_KSJSON_ERROR_INCOMPLETE;
     }
     const char* srcEnd = src;
     src = context->bufferPtr + 1;
@@ -752,7 +752,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     if(length >= dstBufferLength)
     {
         KSLOG_DEBUG("String is too long");
-        return KSJSON_ERROR_DATA_TOO_LONG;
+        return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
     }
 
     context->bufferPtr = srcEnd + 1;
@@ -762,7 +762,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     {
         memcpy(dstBuffer, src, length);
         dstBuffer[length] = 0;
-        return KSJSON_OK;
+        return RAYGUN_KSJSON_OK;
     }
 
     char* dst = dstBuffer;
@@ -807,7 +807,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     unlikely_if(src + 5 > srcEnd)
                     {
                         KSLOG_DEBUG("Premature end of data");
-                        return KSJSON_ERROR_INCOMPLETE;
+                        return RAYGUN_KSJSON_ERROR_INCOMPLETE;
                     }
                     unsigned int accum =
                     g_hexConversion[src[1]] << 12 |
@@ -818,7 +818,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     {
                         KSLOG_DEBUG("Invalid unicode sequence: %c%c%c%c",
                                     src[1], src[2], src[3], src[4]);
-                        return KSJSON_ERROR_INVALID_CHARACTER;
+                        return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                     }
 
                     // UTF-16 Trail surrogate on its own.
@@ -826,7 +826,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     {
                         KSLOG_DEBUG("Unexpected trail surrogate: 0x%04x",
                                     accum);
-                        return KSJSON_ERROR_INVALID_CHARACTER;
+                        return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                     }
 
                     // UTF-16 Lead surrogate.
@@ -836,14 +836,14 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                         unlikely_if(src + 11 > srcEnd)
                         {
                             KSLOG_DEBUG("Premature end of data");
-                            return KSJSON_ERROR_INCOMPLETE;
+                            return RAYGUN_KSJSON_ERROR_INCOMPLETE;
                         }
                         unlikely_if(src[5] != '\\' ||
                                     src[6] != 'u')
                         {
                             KSLOG_DEBUG("Expected \"\\u\" but got: \"%c%c\"",
                                         src[5], src[6]);
-                            return KSJSON_ERROR_INVALID_CHARACTER;
+                            return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                         }
                         src += 6;
                         unsigned int accum2 =
@@ -855,14 +855,14 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                         {
                             KSLOG_DEBUG("Invalid trail surrogate: 0x%04x",
                                         accum2);
-                            return KSJSON_ERROR_INVALID_CHARACTER;
+                            return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                         }
                         // And combine 20 bit result.
                         accum = ((accum - 0xd800) << 10) | (accum2 - 0xdc00);
                     }
 
                     int result = writeUTF8(accum, &dst);
-                    unlikely_if(result != KSJSON_OK)
+                    unlikely_if(result != RAYGUN_KSJSON_OK)
                     {
                         return result;
                     }
@@ -871,13 +871,13 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                 }
                 default:
                     KSLOG_DEBUG("Invalid control character '%c'", *src);
-                    return KSJSON_ERROR_INVALID_CHARACTER;
+                    return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
         }
     }
 
     *dst = 0;
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
 static int decodeElement(const char* const name, KSJSONDecodeContext* context)
@@ -886,7 +886,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
     unlikely_if(context->bufferPtr >= context->bufferEnd)
     {
         KSLOG_DEBUG("Premature end of data");
-        return KSJSON_ERROR_INCOMPLETE;
+        return RAYGUN_KSJSON_ERROR_INCOMPLETE;
     }
 
     int sign = 1;
@@ -898,7 +898,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
         {
             context->bufferPtr++;
             result = context->callbacks->onBeginArray(name, context->userData);
-            unlikely_if(result != KSJSON_OK) return result;
+            unlikely_if(result != RAYGUN_KSJSON_OK) return result;
             while(context->bufferPtr < context->bufferEnd)
             {
                 SKIP_WHITESPACE(context);
@@ -912,7 +912,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                     return context->callbacks->onEndContainer(context->userData);
                 }
                 result = decodeElement(NULL, context);
-                unlikely_if(result != KSJSON_OK) return result;
+                unlikely_if(result != RAYGUN_KSJSON_OK) return result;
                 SKIP_WHITESPACE(context);
                 unlikely_if(context->bufferPtr >= context->bufferEnd)
                 {
@@ -924,13 +924,13 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                 }
             }
             KSLOG_DEBUG("Premature end of data");
-            return KSJSON_ERROR_INCOMPLETE;
+            return RAYGUN_KSJSON_ERROR_INCOMPLETE;
         }
         case '{':
         {
             context->bufferPtr++;
             result = context->callbacks->onBeginObject(name, context->userData);
-            unlikely_if(result != KSJSON_OK) return result;
+            unlikely_if(result != RAYGUN_KSJSON_OK) return result;
             while(context->bufferPtr < context->bufferEnd)
             {
                 SKIP_WHITESPACE(context);
@@ -944,7 +944,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                     return context->callbacks->onEndContainer(context->userData);
                 }
                 result = decodeString(context, context->nameBuffer, context->nameBufferLength);
-                unlikely_if(result != KSJSON_OK) return result;
+                unlikely_if(result != RAYGUN_KSJSON_OK) return result;
                 SKIP_WHITESPACE(context);
                 unlikely_if(context->bufferPtr >= context->bufferEnd)
                 {
@@ -953,12 +953,12 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                 unlikely_if(*context->bufferPtr != ':')
                 {
                     KSLOG_DEBUG("Expected ':' but got '%c'", *context->bufferPtr);
-                    return KSJSON_ERROR_INVALID_CHARACTER;
+                    return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                 }
                 context->bufferPtr++;
                 SKIP_WHITESPACE(context);
                 result = decodeElement(context->nameBuffer, context);
-                unlikely_if(result != KSJSON_OK) return result;
+                unlikely_if(result != RAYGUN_KSJSON_OK) return result;
                 SKIP_WHITESPACE(context);
                 unlikely_if(context->bufferPtr >= context->bufferEnd)
                 {
@@ -970,12 +970,12 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                 }
             }
             KSLOG_DEBUG("Premature end of data");
-            return KSJSON_ERROR_INCOMPLETE;
+            return RAYGUN_KSJSON_ERROR_INCOMPLETE;
         }
         case '\"':
         {
             result = decodeString(context, context->stringBuffer, context->stringBufferLength);
-            unlikely_if(result != KSJSON_OK) return result;
+            unlikely_if(result != RAYGUN_KSJSON_OK) return result;
             result = context->callbacks->onStringElement(name,
                                                 context->stringBuffer,
                                                 context->userData);
@@ -986,7 +986,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(context->bufferEnd - context->bufferPtr < 5)
             {
                 KSLOG_DEBUG("Premature end of data");
-                return KSJSON_ERROR_INCOMPLETE;
+                return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'a' &&
                           context->bufferPtr[2] == 'l' &&
@@ -995,7 +995,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             {
                 KSLOG_DEBUG("Expected \"false\" but got \"f%c%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3], context->bufferPtr[4]);
-                return KSJSON_ERROR_INVALID_CHARACTER;
+                return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
             context->bufferPtr += 5;
             return context->callbacks->onBooleanElement(name, false, context->userData);
@@ -1005,7 +1005,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(context->bufferEnd - context->bufferPtr < 4)
             {
                 KSLOG_DEBUG("Premature end of data");
-                return KSJSON_ERROR_INCOMPLETE;
+                return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'r' &&
                           context->bufferPtr[2] == 'u' &&
@@ -1013,7 +1013,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             {
                 KSLOG_DEBUG("Expected \"true\" but got \"t%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3]);
-                return KSJSON_ERROR_INVALID_CHARACTER;
+                return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
             context->bufferPtr += 4;
             return context->callbacks->onBooleanElement(name, true, context->userData);
@@ -1023,7 +1023,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(context->bufferEnd - context->bufferPtr < 4)
             {
                 KSLOG_DEBUG("Premature end of data");
-                return KSJSON_ERROR_INCOMPLETE;
+                return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'u' &&
                           context->bufferPtr[2] == 'l' &&
@@ -1031,7 +1031,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             {
                 KSLOG_DEBUG("Expected \"null\" but got \"n%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3]);
-                return KSJSON_ERROR_INVALID_CHARACTER;
+                return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
             context->bufferPtr += 4;
             return context->callbacks->onNullElement(name, context->userData);
@@ -1042,7 +1042,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(!isdigit(*context->bufferPtr))
         {
             KSLOG_DEBUG("Not a digit: '%c'", *context->bufferPtr);
-            return KSJSON_ERROR_INVALID_CHARACTER;
+            return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
         }
             // Fall through
         case '0': case '1': case '2': case '3': case '4':
@@ -1065,7 +1065,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(context->bufferPtr >= context->bufferEnd)
             {
                 KSLOG_DEBUG("Premature end of data");
-                return KSJSON_ERROR_INCOMPLETE;
+                return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
 
             if(!isFPChar(*context->bufferPtr) && accum >= 0)
@@ -1082,7 +1082,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             unlikely_if(context->bufferPtr >= context->bufferEnd)
             {
                 KSLOG_DEBUG("Premature end of data");
-                return KSJSON_ERROR_INCOMPLETE;
+                return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
 
             // our buffer is not necessarily NULL-terminated, so
@@ -1093,7 +1093,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             if(len >= context->stringBufferLength)
             {
                 KSLOG_DEBUG("Number is too long.");
-                return KSJSON_ERROR_DATA_TOO_LONG;
+                return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
             }
             strncpy(context->stringBuffer, start, len);
             context->stringBuffer[len] = '\0';
@@ -1105,14 +1105,14 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
         }
     }
     KSLOG_DEBUG("Invalid character '%c'", *context->bufferPtr);
-    return KSJSON_ERROR_INVALID_CHARACTER;
+    return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
 }
 
-int ksjson_decode(const char* const data,
+int raygun_ksjson_decode(const char* const data,
                   int length,
                   char* stringBuffer,
                   int stringBufferLength,
-                  KSJSONDecodeCallbacks* const callbacks,
+                  Raygun_KSJSONDecodeCallbacks* const callbacks,
                   void* const userData,
                   int* const errorOffset)
 {
@@ -1135,12 +1135,12 @@ int ksjson_decode(const char* const data,
     const char* ptr = data;
 
     int result = decodeElement(NULL, &context);
-    likely_if(result == KSJSON_OK)
+    likely_if(result == RAYGUN_KSJSON_OK)
     {
         result = callbacks->onEndData(userData);
     }
 
-    unlikely_if(result != KSJSON_OK && errorOffset != NULL)
+    unlikely_if(result != RAYGUN_KSJSON_OK && errorOffset != NULL)
     {
         *errorOffset = (int)(ptr - data);
     }
@@ -1152,7 +1152,7 @@ typedef void (*UpdateDecoderCallback)(struct JSONFromFileContext* context);
 
 typedef struct JSONFromFileContext
 {
-    KSJSONEncodeContext* encodeContext;
+    Raygun_KSJSONEncodeContext* encodeContext;
     KSJSONDecodeContext* decodeContext;
     char* bufferStart;
     const char* sourceFilename;
@@ -1199,7 +1199,7 @@ static int addJSONFromFile_onBooleanElement(const char* const name,
                                             void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_addBooleanElement(context->encodeContext, name, value);
+    int result = raygun_ksjson_addBooleanElement(context->encodeContext, name, value);
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1209,7 +1209,7 @@ static int addJSONFromFile_onFloatingPointElement(const char* const name,
                                                   void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_addFloatingPointElement(context->encodeContext, name, value);
+    int result = raygun_ksjson_addFloatingPointElement(context->encodeContext, name, value);
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1219,7 +1219,7 @@ static int addJSONFromFile_onIntegerElement(const char* const name,
                                             void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_addIntegerElement(context->encodeContext, name, value);
+    int result = raygun_ksjson_addIntegerElement(context->encodeContext, name, value);
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1238,7 +1238,7 @@ static int addJSONFromFile_onStringElement(const char* const name,
                                            void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_addStringElement(context->encodeContext, name, value, (int)strlen(value));
+    int result = raygun_ksjson_addStringElement(context->encodeContext, name, value, (int)strlen(value));
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1247,7 +1247,7 @@ static int addJSONFromFile_onBeginObject(const char* const name,
                                          void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_beginObject(context->encodeContext, name);
+    int result = raygun_ksjson_beginObject(context->encodeContext, name);
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1256,7 +1256,7 @@ static int addJSONFromFile_onBeginArray(const char* const name,
                                         void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = ksjson_beginArray(context->encodeContext, name);
+    int result = raygun_ksjson_beginArray(context->encodeContext, name);
     context->updateDecoderCallback(context);
     return result;
 }
@@ -1264,10 +1264,10 @@ static int addJSONFromFile_onBeginArray(const char* const name,
 static int addJSONFromFile_onEndContainer(void* const userData)
 {
     JSONFromFileContext* context = (JSONFromFileContext*)userData;
-    int result = KSJSON_OK;
+    int result = RAYGUN_KSJSON_OK;
     if(context->closeLastContainer || context->encodeContext->containerLevel > 2)
     {
-        result = ksjson_endContainer(context->encodeContext);
+        result = raygun_ksjson_endContainer(context->encodeContext);
     }
     context->updateDecoderCallback(context);
     return result;
@@ -1275,15 +1275,15 @@ static int addJSONFromFile_onEndContainer(void* const userData)
 
 static int addJSONFromFile_onEndData(__unused void* const userData)
 {
-    return KSJSON_OK;
+    return RAYGUN_KSJSON_OK;
 }
 
-int ksjson_addJSONFromFile(KSJSONEncodeContext* const encodeContext,
+int raygun_ksjson_addJSONFromFile(Raygun_KSJSONEncodeContext* const encodeContext,
                            const char* restrict const name,
                            const char* restrict const filename,
                            const bool closeLastContainer)
 {
-    KSJSONDecodeCallbacks callbacks =
+    Raygun_KSJSONDecodeCallbacks callbacks =
     {
         .onBeginArray = addJSONFromFile_onBeginArray,
         .onBeginObject = addJSONFromFile_onBeginObject,
@@ -1333,19 +1333,19 @@ int ksjson_addJSONFromFile(KSJSONEncodeContext* const encodeContext,
     close(fd);
     while(closeLastContainer && encodeContext->containerLevel > containerLevel)
     {
-        ksjson_endContainer(encodeContext);
+        raygun_ksjson_endContainer(encodeContext);
     }
 
     return result;
 }
 
-int ksjson_addJSONElement(KSJSONEncodeContext* const encodeContext,
+int raygun_ksjson_addJSONElement(Raygun_KSJSONEncodeContext* const encodeContext,
                           const char* restrict const name,
                           const char* restrict const jsonData,
                           const int jsonDataLength,
                           const bool closeLastContainer)
 {
-    KSJSONDecodeCallbacks callbacks =
+    Raygun_KSJSONDecodeCallbacks callbacks =
     {
         .onBeginArray = addJSONFromFile_onBeginArray,
         .onBeginObject = addJSONFromFile_onBeginObject,
@@ -1388,7 +1388,7 @@ int ksjson_addJSONElement(KSJSONEncodeContext* const encodeContext,
     int result = decodeElement(name, &decodeContext);
     while(closeLastContainer && encodeContext->containerLevel > containerLevel)
     {
-        ksjson_endContainer(encodeContext);
+        raygun_ksjson_endContainer(encodeContext);
     }
     
     return result;
