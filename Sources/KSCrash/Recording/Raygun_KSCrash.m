@@ -31,7 +31,7 @@
 #import "Raygun_KSCrashDoctor.h"
 #import "Raygun_KSCrashReportFields.h"
 #import "Raygun_KSCrashMonitor_AppState.h"
-#import "KSJSONCodecObjC.h"
+#import "Raygun_KSJSONCodecObjC.h"
 #import "NSError+SimpleConstructor.h"
 #import "Raygun_KSCrashMonitorContext.h"
 #import "Raygun_KSCrashMonitor_System.h"
@@ -171,8 +171,8 @@ static NSString* getBasePath()
         NSData* userInfoJSON = nil;
         if(userInfo != nil)
         {
-            userInfoJSON = [self nullTerminated:[KSJSONCodec encode:userInfo
-                                                            options:KSJSONEncodeOptionSorted
+            userInfoJSON = [self nullTerminated:[Raygun_KSJSONCodec encode:userInfo
+                                                            options:Raygun_KSJSONEncodeOptionSorted
                                                               error:&error]];
             if(error != NULL)
             {
@@ -385,7 +385,7 @@ static NSString* getBasePath()
     const char* cLanguage = [language cStringUsingEncoding:NSUTF8StringEncoding];
     const char* cLineOfCode = [lineOfCode cStringUsingEncoding:NSUTF8StringEncoding];
     NSError* error = nil;
-    NSData* jsonData = [KSJSONCodec encode:stackTrace options:0 error:&error];
+    NSData* jsonData = [Raygun_KSJSONCodec encode:stackTrace options:0 error:&error];
     if(jsonData == nil || error != nil)
     {
         KSLOG_ERROR(@"Error encoding stack trace to JSON: %@", error);
@@ -502,10 +502,10 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
     }
 
     NSError* error = nil;
-    NSMutableDictionary* crashReport = [KSJSONCodec decode:jsonData
-                                                   options:KSJSONDecodeOptionIgnoreNullInArray |
-                                                           KSJSONDecodeOptionIgnoreNullInObject |
-                                                           KSJSONDecodeOptionKeepPartialObject
+    NSMutableDictionary* crashReport = [Raygun_KSJSONCodec decode:jsonData
+                                                   options:Raygun_KSJSONDecodeOptionIgnoreNullInArray |
+                                                           Raygun_KSJSONDecodeOptionIgnoreNullInObject |
+                                                           Raygun_KSJSONDecodeOptionKeepPartialObject
                                                      error:&error];
     if(error != nil)
     {

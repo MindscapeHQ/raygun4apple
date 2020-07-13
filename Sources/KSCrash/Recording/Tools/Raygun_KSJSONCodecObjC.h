@@ -31,45 +31,45 @@
 /** Optional behavior when encoding JSON data */
 typedef enum
 {
-    KSJSONEncodeOptionNone = 0,
+    Raygun_KSJSONEncodeOptionNone = 0,
 
     /** Indent 4 spaces per object/array level */
-    KSJSONEncodeOptionPretty = 1,
+    Raygun_KSJSONEncodeOptionPretty = 1,
 
     /** Sort object contents by key name */
-    KSJSONEncodeOptionSorted = 2,
-} KSJSONEncodeOption;
+    Raygun_KSJSONEncodeOptionSorted = 2,
+} Raygun_KSJSONEncodeOption;
 
 
 /** Optional behavior when decoding JSON data */
 typedef enum
 {
-    KSJSONDecodeOptionNone = 0,
+    Raygun_KSJSONDecodeOptionNone = 0,
 
     /** Normally, null elements get stored as [NSNull null].
      * If this option is set, do not store anything when a null element is
      * encountered inside an array.
      */
-    KSJSONDecodeOptionIgnoreNullInArray = 1,
+    Raygun_KSJSONDecodeOptionIgnoreNullInArray = 1,
 
     /** Normally, null elements get stored as [NSNull null].
      * If this option is set, do not store anything when a null element is
      * encountered inside an object.
      */
-    KSJSONDecodeOptionIgnoreNullInObject = 2,
+    Raygun_KSJSONDecodeOptionIgnoreNullInObject = 2,
 
     /** Convenience enum to ignore nulls in arrays and objects. */
-    KSJSONDecodeOptionIgnoreAllNulls = 3,
+    Raygun_KSJSONDecodeOptionIgnoreAllNulls = 3,
 
     /** If an error is encountered, return the partially decoded object. */
-    KSJSONDecodeOptionKeepPartialObject = 4,
-} KSJSONDecodeOption;
+    Raygun_KSJSONDecodeOptionKeepPartialObject = 4,
+} Raygun_KSJSONDecodeOption;
 
 
 /**
  * Encodes and decodes UTF-8 JSON data.
  */
-@interface KSJSONCodec : NSObject
+@interface Raygun_KSJSONCodec : NSObject
 
 /** Encode an object to JSON data.
  *
@@ -83,7 +83,7 @@ typedef enum
  * @return The encoded UTF-8 JSON data or nil if an error occurred.
  */
 + (NSData*) encode:(id) object
-           options:(KSJSONEncodeOption) options
+           options:(Raygun_KSJSONEncodeOption) options
              error:(NSError**) error;
 
 /** Decode JSON data to an object.
@@ -99,7 +99,7 @@ typedef enum
  *         option is not set, nil when an error occurs.
  */
 + (id) decode:(NSData*) JSONData
-      options:(KSJSONDecodeOption) options
+      options:(Raygun_KSJSONDecodeOption) options
         error:(NSError**) error;
 
 @end
