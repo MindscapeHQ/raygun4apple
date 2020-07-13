@@ -35,7 +35,7 @@
 #import "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
-#import "KSLogger.h"
+#import "Raygun_KSLogger.h"
 
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
@@ -171,7 +171,7 @@ static bool VMStats(vm_statistics_data_t* const vmStats, vm_size_t* const pageSi
     
     if((kr = host_page_size(hostPort, pageSize)) != KERN_SUCCESS)
     {
-        KSLOG_ERROR(@"host_page_size: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR(@"host_page_size: %s", mach_error_string(kr));
         return false;
     }
     
@@ -182,7 +182,7 @@ static bool VMStats(vm_statistics_data_t* const vmStats, vm_size_t* const pageSi
                          &hostSize);
     if(kr != KERN_SUCCESS)
     {
-        KSLOG_ERROR(@"host_statistics: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR(@"host_statistics: %s", mach_error_string(kr));
         return false;
     }
     

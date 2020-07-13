@@ -32,7 +32,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -111,7 +111,7 @@ static int onIntegerElement(const char* const name, const int64_t value, void* c
     {
         if(value != kFormatVersion)
         {
-            KSLOG_ERROR("Expected version 1 but got %" PRId64, value);
+            RAYGUN_KSLOG_ERROR("Expected version 1 but got %" PRId64, value);
             return RAYGUN_KSJSON_ERROR_INVALID_DATA;
         }
     }
@@ -208,7 +208,7 @@ bool loadState(const char* const path)
     int length;
     if(!raygun_ksfu_readEntireFile(path, &data, &length, 50000))
     {
-        KSLOG_ERROR("%s: Could not load file", path);
+        RAYGUN_KSLOG_ERROR("%s: Could not load file", path);
         return false;
     }
 
@@ -236,7 +236,7 @@ bool loadState(const char* const path)
     free(data);
     if(result != RAYGUN_KSJSON_OK)
     {
-        KSLOG_ERROR("%s, offset %d: %s",
+        RAYGUN_KSLOG_ERROR("%s, offset %d: %s",
                     path, errorOffset, raygun_ksjson_stringForError(result));
         return false;
     }
@@ -254,7 +254,7 @@ bool saveState(const char* const path)
     int fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
     if(fd < 0)
     {
-        KSLOG_ERROR("Could not open file %s for writing: %s",
+        RAYGUN_KSLOG_ERROR("Could not open file %s for writing: %s",
                     path,
                     strerror(errno));
         return false;
@@ -314,7 +314,7 @@ done:
     close(fd);
     if(result != RAYGUN_KSJSON_OK)
     {
-        KSLOG_ERROR("%s: %s",
+        RAYGUN_KSLOG_ERROR("%s: %s",
                     path, raygun_ksjson_stringForError(result));
         return false;
     }

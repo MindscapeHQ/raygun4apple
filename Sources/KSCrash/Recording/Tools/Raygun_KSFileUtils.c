@@ -28,7 +28,7 @@
 #include "Raygun_KSFileUtils.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <dirent.h>
 #include <errno.h>
@@ -80,7 +80,7 @@ static int raygun_dirContentsCount(const char* path)
     DIR* dir = opendir(path);
     if(dir == NULL)
     {
-        KSLOG_ERROR("Error reading directory %s: %s", strerror(errno));
+        RAYGUN_KSLOG_ERROR("Error reading directory %s: %s", strerror(errno));
         return 0;
     }
     
@@ -106,7 +106,7 @@ static void raygun_dirContents(const char* path, char*** entries, int* count)
     dir = opendir(path);
     if(dir == NULL)
     {
-        KSLOG_ERROR("Error reading directory %s: %s", strerror(errno));
+        RAYGUN_KSLOG_ERROR("Error reading directory %s: %s", strerror(errno));
         goto done;
     }
     
@@ -117,7 +117,7 @@ static void raygun_dirContents(const char* path, char*** entries, int* count)
     {
         if(index >= entryCount)
         {
-            KSLOG_ERROR("Contents of %s have been mutated", path);
+            RAYGUN_KSLOG_ERROR("Contents of %s have been mutated", path);
             goto done;
         }
         entryList[index] = strdup(ent->d_name);
@@ -158,7 +158,7 @@ static bool raygun_deletePathContents(const char* path, bool deleteTopLevelPathA
     struct stat statStruct = {0};
     if(stat(path, &statStruct) != 0)
     {
-        KSLOG_ERROR("Could not stat %s: %s", strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not stat %s: %s", strerror(errno));
         return false;
     }
     if(S_ISDIR(statStruct.st_mode))
@@ -196,7 +196,7 @@ static bool raygun_deletePathContents(const char* path, bool deleteTopLevelPathA
     }
     else
     {
-        KSLOG_ERROR("Could not delete %s: Not a regular file.", path);
+        RAYGUN_KSLOG_ERROR("Could not delete %s: Not a regular file.", path);
         return false;
     }
     return true;
@@ -225,7 +225,7 @@ bool raygun_ksfu_writeBytesToFD(const int fd, const char* const bytes, int lengt
         int bytesWritten = (int)write(fd, pos, (unsigned)length);
         if(bytesWritten == -1)
         {
-            KSLOG_ERROR("Could not write to fd %d: %s", fd, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not write to fd %d: %s", fd, strerror(errno));
             return false;
         }
         length -= bytesWritten;
@@ -242,7 +242,7 @@ bool raygun_ksfu_readBytesFromFD(const int fd, char* const bytes, int length)
         int bytesRead = (int)read(fd, pos, (unsigned)length);
         if(bytesRead == -1)
         {
-            KSLOG_ERROR("Could not write to fd %d: %s", fd, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not write to fd %d: %s", fd, strerror(errno));
             return false;
         }
         length -= bytesRead;
@@ -262,14 +262,14 @@ bool raygun_ksfu_readEntireFile(const char* const path, char** data, int* length
     struct stat st;
     if(stat(path, &st) < 0)
     {
-        KSLOG_ERROR("Could not stat %s: %s", path, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not stat %s: %s", path, strerror(errno));
         goto done;
     }
 
     fd = open(path, O_RDONLY);
     if(fd < 0)
     {
-        KSLOG_ERROR("Could not open %s: %s", path, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not open %s: %s", path, strerror(errno));
         goto done;
     }
 
@@ -281,7 +281,7 @@ bool raygun_ksfu_readEntireFile(const char* const path, char** data, int* length
     {
         if(lseek(fd, -bytesToRead, SEEK_END) < 0)
         {
-            KSLOG_ERROR("Could not seek to %d from end of %s: %s", -bytesToRead, path, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not seek to %d from end of %s: %s", -bytesToRead, path, strerror(errno));
             goto done;
         }
     }
@@ -289,7 +289,7 @@ bool raygun_ksfu_readEntireFile(const char* const path, char** data, int* length
     mem = malloc((unsigned)bytesToRead + 1);
     if(mem == NULL)
     {
-        KSLOG_ERROR("Out of memory");
+        RAYGUN_KSLOG_ERROR("Out of memory");
         goto done;
     }
 
@@ -333,7 +333,7 @@ bool raygun_ksfu_writeStringToFD(const int fd, const char* const string)
             int bytesWritten = (int)write(fd, pos, (unsigned)bytesToWrite);
             if(bytesWritten == -1)
             {
-                KSLOG_ERROR("Could not write to fd %d: %s",
+                RAYGUN_KSLOG_ERROR("Could not write to fd %d: %s",
                             fd, strerror(errno));
                 return false;
             }
@@ -381,7 +381,7 @@ int raygun_ksfu_readLineFromFD(const int fd, char* const buffer, const int maxLe
         int bytesRead = (int)read(fd, ch, 1);
         if(bytesRead < 0)
         {
-            KSLOG_ERROR("Could not read from fd %d: %s", fd, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not read from fd %d: %s", fd, strerror(errno));
             return -1;
         }
         else if(bytesRead == 0 || *ch == '\n')
@@ -404,7 +404,7 @@ bool raygun_ksfu_makePath(const char* absolutePath)
             *ptr = '\0';
             if(mkdir(pathCopy, S_IRWXU) < 0 && errno != EEXIST)
             {
-                KSLOG_ERROR("Could not create directory %s: %s", pathCopy, strerror(errno));
+                RAYGUN_KSLOG_ERROR("Could not create directory %s: %s", pathCopy, strerror(errno));
                 goto done;
             }
             *ptr = '/';
@@ -412,7 +412,7 @@ bool raygun_ksfu_makePath(const char* absolutePath)
     }
     if(mkdir(pathCopy, S_IRWXU) < 0 && errno != EEXIST)
     {
-        KSLOG_ERROR("Could not create directory %s: %s", pathCopy, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not create directory %s: %s", pathCopy, strerror(errno));
         goto done;
     }
     isSuccessful = true;
@@ -428,7 +428,7 @@ bool raygun_ksfu_removeFile(const char* path, bool mustExist)
     {
         if(mustExist || errno != ENOENT)
         {
-            KSLOG_ERROR("Could not delete %s: %s", path, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not delete %s: %s", path, strerror(errno));
         }
         return false;
     }
@@ -453,7 +453,7 @@ bool raygun_ksfu_openBufferedWriter(Raygun_KSBufferedWriter* writer, const char*
     writer->fd = open(path, O_RDWR | O_CREAT | O_EXCL, 0644);
     if(writer->fd < 0)
     {
-        KSLOG_ERROR("Could not open crash report file %s: %s", path, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not open crash report file %s: %s", path, strerror(errno));
         return false;
     }
     return true;
@@ -519,7 +519,7 @@ static bool raygun_fillReadBuffer(Raygun_KSBufferedReader* reader)
     int bytesRead = (int)read(reader->fd, reader->buffer + reader->dataEndPos, (size_t)bytesToRead);
     if(bytesRead < 0)
     {
-        KSLOG_ERROR("Could not read: %s", strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not read: %s", strerror(errno));
         return false;
     }
     else
@@ -617,7 +617,7 @@ bool raygun_ksfu_openBufferedReader(Raygun_KSBufferedReader* reader, const char*
     reader->fd = open(path, O_RDONLY);
     if(reader->fd < 0)
     {
-        KSLOG_ERROR("Could not open file %s: %s", path, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not open file %s: %s", path, strerror(errno));
         return false;
     }
     raygun_fillReadBuffer(reader);

@@ -25,7 +25,7 @@
 //
 
 #include "Raygun_KSCrashReportStore.h"
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 #include "Raygun_KSFileUtils.h"
 
 #include <dirent.h>
@@ -88,7 +88,7 @@ static int getReportCount()
     DIR* dir = opendir(g_reportsPath);
     if(dir == NULL)
     {
-        KSLOG_ERROR("Could not open directory %s", g_reportsPath);
+        RAYGUN_KSLOG_ERROR("Could not open directory %s", g_reportsPath);
         goto done;
     }
     struct dirent* ent;
@@ -114,7 +114,7 @@ static int getReportIDs(int64_t* reportIDs, int count)
     DIR* dir = opendir(g_reportsPath);
     if(dir == NULL)
     {
-        KSLOG_ERROR("Could not open directory %s", g_reportsPath);
+        RAYGUN_KSLOG_ERROR("Could not open directory %s", g_reportsPath);
         goto done;
     }
 
@@ -226,19 +226,19 @@ int64_t raygun_kscrs_addUserReport(const char* report, int reportLength)
     int fd = open(crashReportPath, O_WRONLY | O_CREAT, 0644);
     if(fd < 0)
     {
-        KSLOG_ERROR("Could not open file %s: %s", crashReportPath, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not open file %s: %s", crashReportPath, strerror(errno));
         goto done;
     }
 
     int bytesWritten = (int)write(fd, report, (unsigned)reportLength);
     if(bytesWritten < 0)
     {
-        KSLOG_ERROR("Could not write to file %s: %s", crashReportPath, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not write to file %s: %s", crashReportPath, strerror(errno));
         goto done;
     }
     else if(bytesWritten < reportLength)
     {
-        KSLOG_ERROR("Expected to write %d bytes to file %s, but only wrote %d", crashReportPath, reportLength, bytesWritten);
+        RAYGUN_KSLOG_ERROR("Expected to write %d bytes to file %s, but only wrote %d", crashReportPath, reportLength, bytesWritten);
     }
 
 done:

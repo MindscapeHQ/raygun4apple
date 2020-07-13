@@ -29,7 +29,7 @@
 #include "KSStackCursor_SelfThread.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <memory.h>
 #include <stdlib.h>
@@ -50,7 +50,7 @@ void raygun_kscm_reportUserException(const char* name,
 {
     if(!g_isEnabled)
     {
-        KSLOG_WARN("User-reported exception monitor is not installed. Exception has not been recorded.");
+        RAYGUN_KSLOG_ERROR("User-reported exception monitor is not installed. Exception has not been recorded.");
     }
     else
     {
@@ -71,7 +71,7 @@ void raygun_kscm_reportUserException(const char* name,
         kssc_initSelfThread(&stackCursor, 0);
 
 
-        KSLOG_DEBUG("Filling out context.");
+        RAYGUN_KSLOG_ERROR("Filling out context.");
         Raygun_KSCrash_MonitorContext context;
         memset(&context, 0, sizeof(context));
         context.crashType = Raygun_KSCrashMonitorTypeUserReported;

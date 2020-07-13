@@ -45,7 +45,7 @@
 #include <memory.h>
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 
 // ============================================================================
@@ -167,20 +167,20 @@ void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes)
         if(!hasWarned)
         {
             hasWarned = true;
-            KSLOGBASIC_WARN("    ************************ Crash Handler Notice ************************");
-            KSLOGBASIC_WARN("    *     App is running in a debugger. Masking out unsafe monitors.     *");
-            KSLOGBASIC_WARN("    * This means that most crashes WILL NOT BE RECORDED while debugging! *");
-            KSLOGBASIC_WARN("    **********************************************************************");
+            RAYGUN_KSLOGBASIC_WARN("    ************************ Crash Handler Notice ************************");
+            RAYGUN_KSLOGBASIC_WARN("    *     App is running in a debugger. Masking out unsafe monitors.     *");
+            RAYGUN_KSLOGBASIC_WARN("    * This means that most crashes WILL NOT BE RECORDED while debugging! *");
+            RAYGUN_KSLOGBASIC_WARN("    **********************************************************************");
         }
         monitorTypes &= Raygun_KSCrashMonitorTypeDebuggerSafe;
     }
     if(g_requiresAsyncSafety && (monitorTypes & Raygun_KSCrashMonitorTypeAsyncUnsafe))
     {
-        KSLOG_DEBUG("Async-safe environment detected. Masking out unsafe monitors.");
+        RAYGUN_KSLOG_ERROR("Async-safe environment detected. Masking out unsafe monitors.");
         monitorTypes &= Raygun_KSCrashMonitorTypeAsyncSafe;
     }
 
-    KSLOG_DEBUG("Changing active monitors from 0x%x tp 0x%x.", g_activeMonitors, monitorTypes);
+    RAYGUN_KSLOG_ERROR("Changing active monitors from 0x%x tp 0x%x.", g_activeMonitors, monitorTypes);
 
     Raygun_KSCrashMonitorType activeMonitors = Raygun_KSCrashMonitorTypeNone;
     for(int i = 0; i < g_monitorsCount; i++)
@@ -198,7 +198,7 @@ void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes)
         }
     }
 
-    KSLOG_DEBUG("Active monitors are now 0x%x.", activeMonitors);
+    RAYGUN_KSLOG_ERROR("Active monitors are now 0x%x.", activeMonitors);
     g_activeMonitors = activeMonitors;
 }
 
@@ -222,7 +222,7 @@ bool raygun_kscm_notifyFatalExceptionCaptured(bool isAsyncSafeEnvironment)
     g_handlingFatalException = true;
     if(g_crashedDuringExceptionHandling)
     {
-        KSLOG_INFO("Detected crash in the crash reporter. Uninstalling KSCrash.");
+        RAYGUN_KSLOG_ERROR("Detected crash in the crash reporter. Uninstalling KSCrash.");
         raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorTypeNone);
     }
     return g_crashedDuringExceptionHandling;
@@ -250,7 +250,7 @@ void raygun_kscm_handleException(struct Raygun_KSCrash_MonitorContext* context)
         g_handlingFatalException = false;
     } else {
         if(g_handlingFatalException && !g_crashedDuringExceptionHandling) {
-            KSLOG_DEBUG("Exception is fatal. Restoring original handlers.");
+            RAYGUN_KSLOG_ERROR("Exception is fatal. Restoring original handlers.");
             raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorTypeNone);
         }
     }

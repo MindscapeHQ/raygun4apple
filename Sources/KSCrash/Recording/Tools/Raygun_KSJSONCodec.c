@@ -46,9 +46,9 @@
 #endif
 
 #if KSJSONCODEC_UseKSLogger
-    #include "KSLogger.h"
+    #include "Raygun_KSLogger.h"
 #else
-    #define KSLOG_DEBUG(FMT, ...)
+    #define RAYGUN_KSLOG_ERROR(FMT, ...)
 #endif
 
 /** The work buffer size to use when escaping string values.
@@ -174,7 +174,7 @@ static int appendEscapedString(Raygun_KSJSONEncodeContext* const context,
             default:
                 unlikely_if((unsigned char)*src < ' ')
             {
-                KSLOG_DEBUG("Invalid character 0x%02x in string: %s",
+                RAYGUN_KSLOG_ERROR("Invalid character 0x%02x in string: %s",
                             *src, string);
                 return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
@@ -286,7 +286,7 @@ int raygun_ksjson_beginElement(Raygun_KSJSONEncodeContext* const context, const 
     {
         unlikely_if(name == NULL)
         {
-            KSLOG_DEBUG("Name was null inside an object");
+            RAYGUN_KSLOG_ERROR("Name was null inside an object");
             return RAYGUN_KSJSON_ERROR_INVALID_DATA;
         }
         unlikely_if((result = addQuotedEscapedString(context, name, (int)strlen(name))) != RAYGUN_KSJSON_OK)
@@ -717,7 +717,7 @@ static int writeUTF8(unsigned int character, char** dst)
     }
 
     // If we get here, the character cannot be converted to valid UTF-8.
-    KSLOG_DEBUG("Invalid unicode: 0x%04x", character);
+    RAYGUN_KSLOG_ERROR("Invalid unicode: 0x%04x", character);
     return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
 }
 
@@ -726,7 +726,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     *dstBuffer = '\0';
     unlikely_if(*context->bufferPtr != '\"')
     {
-        KSLOG_DEBUG("Expected '\"' but got '%c'", *context->bufferPtr);
+        RAYGUN_KSLOG_ERROR("Expected '\"' but got '%c'", *context->bufferPtr);
         return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
     }
 
@@ -743,7 +743,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     }
     unlikely_if(src >= context->bufferEnd)
     {
-        KSLOG_DEBUG("Premature end of data");
+        RAYGUN_KSLOG_ERROR("Premature end of data");
         return RAYGUN_KSJSON_ERROR_INCOMPLETE;
     }
     const char* srcEnd = src;
@@ -751,7 +751,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
     int length = (int)(srcEnd - src);
     if(length >= dstBufferLength)
     {
-        KSLOG_DEBUG("String is too long");
+        RAYGUN_KSLOG_ERROR("String is too long");
         return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
     }
 
@@ -806,7 +806,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                 {
                     unlikely_if(src + 5 > srcEnd)
                     {
-                        KSLOG_DEBUG("Premature end of data");
+                        RAYGUN_KSLOG_ERROR("Premature end of data");
                         return RAYGUN_KSJSON_ERROR_INCOMPLETE;
                     }
                     unsigned int accum =
@@ -816,7 +816,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     g_hexConversion[src[4]];
                     unlikely_if(accum > 0xffff)
                     {
-                        KSLOG_DEBUG("Invalid unicode sequence: %c%c%c%c",
+                        RAYGUN_KSLOG_ERROR("Invalid unicode sequence: %c%c%c%c",
                                     src[1], src[2], src[3], src[4]);
                         return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                     }
@@ -824,7 +824,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     // UTF-16 Trail surrogate on its own.
                     unlikely_if(accum >= 0xdc00 && accum <= 0xdfff)
                     {
-                        KSLOG_DEBUG("Unexpected trail surrogate: 0x%04x",
+                        RAYGUN_KSLOG_ERROR("Unexpected trail surrogate: 0x%04x",
                                     accum);
                         return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                     }
@@ -835,13 +835,13 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                         // Fetch trail surrogate.
                         unlikely_if(src + 11 > srcEnd)
                         {
-                            KSLOG_DEBUG("Premature end of data");
+                            RAYGUN_KSLOG_ERROR("Premature end of data");
                             return RAYGUN_KSJSON_ERROR_INCOMPLETE;
                         }
                         unlikely_if(src[5] != '\\' ||
                                     src[6] != 'u')
                         {
-                            KSLOG_DEBUG("Expected \"\\u\" but got: \"%c%c\"",
+                            RAYGUN_KSLOG_ERROR("Expected \"\\u\" but got: \"%c%c\"",
                                         src[5], src[6]);
                             return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                         }
@@ -853,7 +853,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                         g_hexConversion[src[4]];
                         unlikely_if(accum2 < 0xdc00 || accum2 > 0xdfff)
                         {
-                            KSLOG_DEBUG("Invalid trail surrogate: 0x%04x",
+                            RAYGUN_KSLOG_ERROR("Invalid trail surrogate: 0x%04x",
                                         accum2);
                             return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                         }
@@ -870,7 +870,7 @@ static int decodeString(KSJSONDecodeContext* context, char* dstBuffer, int dstBu
                     continue;
                 }
                 default:
-                    KSLOG_DEBUG("Invalid control character '%c'", *src);
+                    RAYGUN_KSLOG_ERROR("Invalid control character '%c'", *src);
                     return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
         }
@@ -885,7 +885,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
     SKIP_WHITESPACE(context);
     unlikely_if(context->bufferPtr >= context->bufferEnd)
     {
-        KSLOG_DEBUG("Premature end of data");
+        RAYGUN_KSLOG_ERROR("Premature end of data");
         return RAYGUN_KSJSON_ERROR_INCOMPLETE;
     }
 
@@ -923,7 +923,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                     context->bufferPtr++;
                 }
             }
-            KSLOG_DEBUG("Premature end of data");
+            RAYGUN_KSLOG_ERROR("Premature end of data");
             return RAYGUN_KSJSON_ERROR_INCOMPLETE;
         }
         case '{':
@@ -952,7 +952,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                 }
                 unlikely_if(*context->bufferPtr != ':')
                 {
-                    KSLOG_DEBUG("Expected ':' but got '%c'", *context->bufferPtr);
+                    RAYGUN_KSLOG_ERROR("Expected ':' but got '%c'", *context->bufferPtr);
                     return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
                 }
                 context->bufferPtr++;
@@ -969,7 +969,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                     context->bufferPtr++;
                 }
             }
-            KSLOG_DEBUG("Premature end of data");
+            RAYGUN_KSLOG_ERROR("Premature end of data");
             return RAYGUN_KSJSON_ERROR_INCOMPLETE;
         }
         case '\"':
@@ -985,7 +985,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
         {
             unlikely_if(context->bufferEnd - context->bufferPtr < 5)
             {
-                KSLOG_DEBUG("Premature end of data");
+                RAYGUN_KSLOG_ERROR("Premature end of data");
                 return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'a' &&
@@ -993,7 +993,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
                           context->bufferPtr[3] == 's' &&
                           context->bufferPtr[4] == 'e'))
             {
-                KSLOG_DEBUG("Expected \"false\" but got \"f%c%c%c%c\"",
+                RAYGUN_KSLOG_ERROR("Expected \"false\" but got \"f%c%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3], context->bufferPtr[4]);
                 return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
@@ -1004,14 +1004,14 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
         {
             unlikely_if(context->bufferEnd - context->bufferPtr < 4)
             {
-                KSLOG_DEBUG("Premature end of data");
+                RAYGUN_KSLOG_ERROR("Premature end of data");
                 return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'r' &&
                           context->bufferPtr[2] == 'u' &&
                           context->bufferPtr[3] == 'e'))
             {
-                KSLOG_DEBUG("Expected \"true\" but got \"t%c%c%c\"",
+                RAYGUN_KSLOG_ERROR("Expected \"true\" but got \"t%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3]);
                 return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
@@ -1022,14 +1022,14 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
         {
             unlikely_if(context->bufferEnd - context->bufferPtr < 4)
             {
-                KSLOG_DEBUG("Premature end of data");
+                RAYGUN_KSLOG_ERROR("Premature end of data");
                 return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
             unlikely_if(!(context->bufferPtr[1] == 'u' &&
                           context->bufferPtr[2] == 'l' &&
                           context->bufferPtr[3] == 'l'))
             {
-                KSLOG_DEBUG("Expected \"null\" but got \"n%c%c%c\"",
+                RAYGUN_KSLOG_ERROR("Expected \"null\" but got \"n%c%c%c\"",
                             context->bufferPtr[1], context->bufferPtr[2], context->bufferPtr[3]);
                 return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
             }
@@ -1041,7 +1041,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             context->bufferPtr++;
             unlikely_if(!isdigit(*context->bufferPtr))
         {
-            KSLOG_DEBUG("Not a digit: '%c'", *context->bufferPtr);
+            RAYGUN_KSLOG_ERROR("Not a digit: '%c'", *context->bufferPtr);
             return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
         }
             // Fall through
@@ -1064,7 +1064,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
 
             unlikely_if(context->bufferPtr >= context->bufferEnd)
             {
-                KSLOG_DEBUG("Premature end of data");
+                RAYGUN_KSLOG_ERROR("Premature end of data");
                 return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
 
@@ -1081,7 +1081,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
 
             unlikely_if(context->bufferPtr >= context->bufferEnd)
             {
-                KSLOG_DEBUG("Premature end of data");
+                RAYGUN_KSLOG_ERROR("Premature end of data");
                 return RAYGUN_KSJSON_ERROR_INCOMPLETE;
             }
 
@@ -1092,7 +1092,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             int len = (int)(context->bufferPtr - start);
             if(len >= context->stringBufferLength)
             {
-                KSLOG_DEBUG("Number is too long.");
+                RAYGUN_KSLOG_ERROR("Number is too long.");
                 return RAYGUN_KSJSON_ERROR_DATA_TOO_LONG;
             }
             strncpy(context->stringBuffer, start, len);
@@ -1104,7 +1104,7 @@ static int decodeElement(const char* const name, KSJSONDecodeContext* context)
             return context->callbacks->onFloatingPointElement(name, value, context->userData);
         }
     }
-    KSLOG_DEBUG("Invalid character '%c'", *context->bufferPtr);
+    RAYGUN_KSLOG_ERROR("Invalid character '%c'", *context->bufferPtr);
     return RAYGUN_KSJSON_ERROR_INVALID_CHARACTER;
 }
 
@@ -1186,7 +1186,7 @@ static void updateDecoder_readFile(struct JSONFromFileContext* context)
             {
                 if(bytesRead < 0)
                 {
-                    KSLOG_ERROR("Error reading file %s: %s", context->sourceFilename, strerror(errno));
+                    RAYGUN_KSLOG_ERROR("Error reading file %s: %s", context->sourceFilename, strerror(errno));
                 }
                 context->isEOF = true;
             }

@@ -25,7 +25,7 @@
 //
 
 
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 #include "Raygun_KSSystemCapabilities.h"
 
 // ===========================================================================
@@ -54,8 +54,8 @@
  *
  * Unless you're logging from within signal handlers, it's safe to set it to 0.
  */
-#ifndef KSLOGGER_CBufferSize
-#define KSLOGGER_CBufferSize 1024
+#ifndef RAYGUN_KSLOGGER_CBufferSize
+#define RAYGUN_KSLOGGER_CBufferSize 1024
 #endif
 
 /** Where console logs will be written */
@@ -94,7 +94,7 @@ static inline void writeFmtToLog(const char* fmt, ...)
     va_end(args);
 }
 
-#if KSLOGGER_CBufferSize > 0
+#if RAYGUN_KSLOGGER_CBufferSize > 0
 
 /** The file descriptor where log entries get written. */
 static int g_fd = -1;
@@ -128,7 +128,7 @@ static inline void writeFmtArgsToLog(const char* fmt, va_list args)
     }
     else
     {
-        char buffer[KSLOGGER_CBufferSize];
+        char buffer[RAYGUN_KSLOGGER_CBufferSize];
         vsnprintf(buffer, sizeof(buffer), fmt, args);
         writeToLog(buffer);
     }
@@ -257,7 +257,7 @@ bool kslog_clearLogFile()
 #pragma mark - C -
 // ===========================================================================
 
-void i_kslog_logCBasic(const char* const fmt, ...)
+void raygun_i_kslog_logCBasic(const char* const fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
@@ -267,7 +267,7 @@ void i_kslog_logCBasic(const char* const fmt, ...)
     flushLog();
 }
 
-void i_kslog_logC(const char* const level,
+void raygun_i_kslog_logC(const char* const level,
                   const char* const file,
                   const int line,
                   const char* const function,
@@ -290,7 +290,7 @@ void i_kslog_logC(const char* const level,
 #if RAYGUN_KSCRASH_HAS_OBJC
 #include <CoreFoundation/CoreFoundation.h>
 
-void i_kslog_logObjCBasic(CFStringRef fmt, ...)
+void raygun_i_kslog_logObjCBasic(CFStringRef fmt, ...)
 {
     if(fmt == NULL)
     {
@@ -319,7 +319,7 @@ void i_kslog_logObjCBasic(CFStringRef fmt, ...)
     CFRelease(entry);
 }
 
-void i_kslog_logObjC(const char* const level,
+void raygun_i_kslog_logObjC(const char* const level,
                      const char* const file,
                      const int line,
                      const char* const function,
@@ -329,7 +329,7 @@ void i_kslog_logObjC(const char* const level,
     if(fmt == NULL)
     {
         logFmt = CFStringCreateWithCString(NULL, "%s: %s (%u): %s: (null)", kCFStringEncodingUTF8);
-        i_kslog_logObjCBasic(logFmt, level, lastPathEntry(file), line, function);
+        raygun_i_kslog_logObjCBasic(logFmt, level, lastPathEntry(file), line, function);
     }
     else
     {
@@ -339,7 +339,7 @@ void i_kslog_logObjC(const char* const level,
         va_end(args);
         
         logFmt = CFStringCreateWithCString(NULL, "%s: %s (%u): %s: %@", kCFStringEncodingUTF8);
-        i_kslog_logObjCBasic(logFmt, level, lastPathEntry(file), line, function, entry);
+        raygun_i_kslog_logObjCBasic(logFmt, level, lastPathEntry(file), line, function, entry);
         
         CFRelease(entry);
     }

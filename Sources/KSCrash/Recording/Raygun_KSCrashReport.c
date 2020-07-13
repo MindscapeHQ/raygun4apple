@@ -47,7 +47,7 @@
 #include "Raygun_KSCrashCachedData.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -148,13 +148,13 @@ static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, c
     const int fd = open(filePath, O_RDONLY);
     if(fd < 0)
     {
-        KSLOG_ERROR("Could not open file %s: %s", filePath, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not open file %s: %s", filePath, strerror(errno));
         return;
     }
 
     if(raygun_ksjson_beginStringElement(getJsonContext(writer), key) != RAYGUN_KSJSON_OK)
     {
-        KSLOG_ERROR("Could not start string element");
+        RAYGUN_KSLOG_ERROR("Could not start string element");
         goto done;
     }
 
@@ -166,7 +166,7 @@ static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, c
     {
         if(raygun_ksjson_appendStringElement(getJsonContext(writer), buffer, bytesRead) != RAYGUN_KSJSON_OK)
         {
-            KSLOG_ERROR("Could not append string element");
+            RAYGUN_KSLOG_ERROR("Could not append string element");
             goto done;
         }
     }
@@ -635,7 +635,7 @@ static void writeUnknownObjectContents(const Raygun_KSCrashReportWriter* const w
                         writeMemoryContents(writer, ivar->name, (uintptr_t)pointer, limit);
                         break;
                     default:
-                        KSLOG_DEBUG("%s: Unknown ivar type [%s]", ivar->name, ivar->type);
+                        RAYGUN_KSLOG_ERROR("%s: Unknown ivar type [%s]", ivar->name, ivar->type);
                 }
             }
         }
@@ -1177,7 +1177,7 @@ static void writeThread(const Raygun_KSCrashReportWriter* const writer,
 {
     bool isCrashedThread = ksmc_isCrashedContext(machineContext);
     KSThread thread = ksmc_getThreadFromContext(machineContext);
-    KSLOG_DEBUG("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
+    RAYGUN_KSLOG_ERROR("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
 
     KSStackCursor stackCursor;
     bool hasBacktrace = getStackCursor(crash, machineContext, &stackCursor);
@@ -1238,7 +1238,7 @@ static void writeAllThreads(const Raygun_KSCrashReportWriter* const writer,
     // Fetch info for all threads.
     writer->beginArray(writer, key);
     {
-        KSLOG_DEBUG("Writing %d threads.", threadCount);
+        RAYGUN_KSLOG_ERROR("Writing %d threads.", threadCount);
         for(int i = 0; i < threadCount; i++)
         {
             KSThread thread = ksmc_getThreadAtIndex(context, i);
@@ -1449,7 +1449,7 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
             case Raygun_KSCrashMonitorTypeSystem:
             case Raygun_KSCrashMonitorTypeApplicationState:
             case Raygun_KSCrashMonitorTypeZombie:
-                KSLOG_ERROR("Crash monitor type 0x%x shouldn't be able to cause events!", crash->crashType);
+                RAYGUN_KSLOG_ERROR("Crash monitor type 0x%x shouldn't be able to cause events!", crash->crashType);
                 break;
         }
     }
@@ -1589,11 +1589,11 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     static char tempPath[KSFU_MAX_PATH_LENGTH];
     strncpy(tempPath, path, sizeof(tempPath) - 10);
     strncpy(tempPath + strlen(tempPath) - 5, ".old", 5);
-    KSLOG_INFO("Writing recrash report to %s", path);
+    RAYGUN_KSLOG_ERROR("Writing recrash report to %s", path);
 
     if(rename(path, tempPath) < 0)
     {
-        KSLOG_ERROR("Could not rename %s to %s: %s", path, tempPath, strerror(errno));
+        RAYGUN_KSLOG_ERROR("Could not rename %s to %s: %s", path, tempPath, strerror(errno));
     }
     if(!raygun_ksfu_openBufferedWriter(&bufferedWriter, path, writeBuffer, sizeof(writeBuffer)))
     {
@@ -1616,7 +1616,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
         raygun_ksfu_flushBufferedWriter(&bufferedWriter);
         if(remove(tempPath) < 0)
         {
-            KSLOG_ERROR("Could not remove %s: %s", tempPath, strerror(errno));
+            RAYGUN_KSLOG_ERROR("Could not remove %s: %s", tempPath, strerror(errno));
         }
         writeReportInfo(writer,
                         Raygun_KSCrashField_Report,
@@ -1707,7 +1707,7 @@ static void writeDebugInfo(const Raygun_KSCrashReportWriter* const writer,
 
 void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContext* const monitorContext, const char* const path)
 {
-    KSLOG_INFO("Writing crash report to %s", path);
+    RAYGUN_KSLOG_ERROR("Writing crash report to %s", path);
     char writeBuffer[1024];
     Raygun_KSBufferedWriter bufferedWriter;
 
@@ -1789,7 +1789,7 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
 void raygun_kscrashreport_setUserInfoJSON(const char* const userInfoJSON)
 {
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    KSLOG_TRACE("set userInfoJSON to %p", userInfoJSON);
+    RAYGUN_KSLOG_ERROR("set userInfoJSON to %p", userInfoJSON);
 
     pthread_mutex_lock(&mutex);
     if(g_userInfoJSON != NULL)
@@ -1825,7 +1825,7 @@ void raygun_kscrashreport_setDoNotIntrospectClasses(const char** doNotIntrospect
         newClasses = malloc(sizeof(*newClasses) * (unsigned)newClassesLength);
         if(newClasses == NULL)
         {
-            KSLOG_ERROR("Could not allocate memory");
+            RAYGUN_KSLOG_ERROR("Could not allocate memory");
             return;
         }
         
@@ -1850,6 +1850,6 @@ void raygun_kscrashreport_setDoNotIntrospectClasses(const char** doNotIntrospect
 
 void raygun_kscrashreport_setUserSectionWriteCallback(const KSReportWriteCallback userSectionWriteCallback)
 {
-    KSLOG_TRACE("Set userSectionWriteCallback to %p", userSectionWriteCallback);
+    RAYGUN_KSLOG_ERROR("Set userSectionWriteCallback to %p", userSectionWriteCallback);
     g_userSectionWriteCallback = userSectionWriteCallback;
 }

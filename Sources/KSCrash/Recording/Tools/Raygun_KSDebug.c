@@ -28,7 +28,7 @@
 #include "Raygun_KSDebug.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <errno.h>
 #include <string.h>
@@ -48,7 +48,7 @@ bool raygun_ksdebug_isBeingTraced(void)
     
     if(sysctl(mib, sizeof(mib)/sizeof(*mib), &procInfo, &structSize, NULL, 0) != 0)
     {
-        KSLOG_ERROR("sysctl: %s", strerror(errno));
+        RAYGUN_KSLOG_ERROR("sysctl: %s", strerror(errno));
         return false;
     }
     

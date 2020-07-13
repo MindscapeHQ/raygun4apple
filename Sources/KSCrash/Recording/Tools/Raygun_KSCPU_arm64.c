@@ -34,7 +34,7 @@
 #include <stdlib.h>
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 
 static const char* g_registerNames[] =
@@ -116,7 +116,7 @@ uint64_t raygun_kscpu_registerValue(const KSMachineContext* const context, const
         case 34: return context->machineContext.__ss.__cpsr;
     }
 
-    KSLOG_ERROR("Invalid register number: %d", regNumber);
+    RAYGUN_KSLOG_ERROR("Invalid register number: %d", regNumber);
     return 0;
 }
 
@@ -131,7 +131,7 @@ const char* raygun_kscpu_exceptionRegisterName(const int regNumber)
     {
         return g_exceptionRegisterNames[regNumber];
     }
-    KSLOG_ERROR("Invalid register number: %d", regNumber);
+    RAYGUN_KSLOG_ERROR("Invalid register number: %d", regNumber);
     return NULL;
 }
 
@@ -147,7 +147,7 @@ uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const conte
             return context->machineContext.__es.__far;
     }
 
-    KSLOG_ERROR("Invalid register number: %d", regNumber);
+    RAYGUN_KSLOG_ERROR("Invalid register number: %d", regNumber);
     return 0;
 }
 

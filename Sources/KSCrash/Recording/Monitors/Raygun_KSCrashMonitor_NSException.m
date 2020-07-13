@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 
 //#define KSLogger_LocalLevel TRACE
-#import "KSLogger.h"
+#import "Raygun_KSLogger.h"
 
 
 // ============================================================================
@@ -59,13 +59,13 @@ static NSUncaughtExceptionHandler* g_previousUncaughtExceptionHandler;
  */
 
 static void handleException(NSException* exception, BOOL currentSnapshotUserReported) {
-    KSLOG_DEBUG(@"Trapped exception %@", exception);
+    RAYGUN_KSLOG_ERROR(@"Trapped exception %@", exception);
     if(g_isEnabled)
     {
         ksmc_suspendEnvironment();
         raygun_kscm_notifyFatalExceptionCaptured(false);
 
-        KSLOG_DEBUG(@"Filling out context.");
+        RAYGUN_KSLOG_ERROR(@"Filling out context.");
         NSArray* addresses = [exception callStackReturnAddresses];
         NSUInteger numFrames = addresses.count;
         uintptr_t* callstack = malloc(numFrames * sizeof(*callstack));
@@ -94,7 +94,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         crashContext->stackCursor = &cursor;
         crashContext->currentSnapshotUserReported = currentSnapshotUserReported;
 
-        KSLOG_DEBUG(@"Calling main crash handler.");
+        RAYGUN_KSLOG_ERROR(@"Calling main crash handler.");
         raygun_kscm_handleException(crashContext);
 
         free(callstack);
@@ -103,7 +103,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         }
         if (g_previousUncaughtExceptionHandler != NULL)
         {
-            KSLOG_DEBUG(@"Calling original exception handler.");
+            RAYGUN_KSLOG_ERROR(@"Calling original exception handler.");
             g_previousUncaughtExceptionHandler(exception);
         }
     }
@@ -128,17 +128,17 @@ static void setEnabled(bool isEnabled)
         g_isEnabled = isEnabled;
         if(isEnabled)
         {
-            KSLOG_DEBUG(@"Backing up original handler.");
+            RAYGUN_KSLOG_ERROR(@"Backing up original handler.");
             g_previousUncaughtExceptionHandler = NSGetUncaughtExceptionHandler();
             
-            KSLOG_DEBUG(@"Setting new handler.");
+            RAYGUN_KSLOG_ERROR(@"Setting new handler.");
             NSSetUncaughtExceptionHandler(&handleUncaughtException);
             Raygun_KSCrash.sharedInstance.uncaughtExceptionHandler = &handleUncaughtException;
             Raygun_KSCrash.sharedInstance.currentSnapshotUserReportedExceptionHandler = &handleCurrentSnapshotUserReportedException;
         }
         else
         {
-            KSLOG_DEBUG(@"Restoring original handler.");
+            RAYGUN_KSLOG_ERROR(@"Restoring original handler.");
             NSSetUncaughtExceptionHandler(g_previousUncaughtExceptionHandler);
         }
     }

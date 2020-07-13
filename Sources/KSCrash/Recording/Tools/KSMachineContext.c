@@ -34,7 +34,7 @@
 #include <mach/mach.h>
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #ifdef __arm64__
     #define UC_MCONTEXT uc_mcontext64
@@ -63,22 +63,22 @@ static inline bool isStackOverflow(const KSMachineContext* const context)
 static inline bool getThreadList(KSMachineContext* context)
 {
     const task_t thisTask = mach_task_self();
-    KSLOG_DEBUG("Getting thread list");
+    RAYGUN_KSLOG_ERROR("Getting thread list");
     kern_return_t kr;
     thread_act_array_t threads;
     mach_msg_type_number_t actualThreadCount;
 
     if((kr = task_threads(thisTask, &threads, &actualThreadCount)) != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
         return false;
     }
-    KSLOG_TRACE("Got %d threads", context->threadCount);
+    RAYGUN_KSLOG_ERROR("Got %d threads", context->threadCount);
     int threadCount = (int)actualThreadCount;
     int maxThreadCount = sizeof(context->allThreads) / sizeof(context->allThreads[0]);
     if(threadCount > maxThreadCount)
     {
-        KSLOG_ERROR("Thread count %d is higher than maximum of %d", threadCount, maxThreadCount);
+        RAYGUN_KSLOG_ERROR("Thread count %d is higher than maximum of %d", threadCount, maxThreadCount);
         threadCount = maxThreadCount;
     }
     for(int i = 0; i < threadCount; i++)
@@ -108,7 +108,7 @@ KSThread ksmc_getThreadFromContext(const KSMachineContext* const context)
 
 bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationContext, bool isCrashedContext)
 {
-    KSLOG_DEBUG("Fill thread 0x%x context into %p. is crashed = %d", thread, destinationContext, isCrashedContext);
+    RAYGUN_KSLOG_ERROR("Fill thread 0x%x context into %p. is crashed = %d", thread, destinationContext, isCrashedContext);
     memset(destinationContext, 0, sizeof(*destinationContext));
     destinationContext->thisThread = (thread_t)thread;
     destinationContext->isCurrentThread = thread == ksthread_self();
@@ -123,13 +123,13 @@ bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationCont
         destinationContext->isStackOverflow = isStackOverflow(destinationContext);
         getThreadList(destinationContext);
     }
-    KSLOG_TRACE("Context retrieved.");
+    RAYGUN_KSLOG_ERROR("Context retrieved.");
     return true;
 }
 
 bool ksmc_getContextForSignal(void* signalUserContext, KSMachineContext* destinationContext)
 {
-    KSLOG_DEBUG("Get context from signal user context and put into %p.", destinationContext);
+    RAYGUN_KSLOG_ERROR("Get context from signal user context and put into %p.", destinationContext);
     _STRUCT_MCONTEXT* sourceContext = ((SignalUserContext*)signalUserContext)->UC_MCONTEXT;
     memcpy(&destinationContext->machineContext, sourceContext, sizeof(destinationContext->machineContext));
     destinationContext->thisThread = (thread_t)ksthread_self();
@@ -137,7 +137,7 @@ bool ksmc_getContextForSignal(void* signalUserContext, KSMachineContext* destina
     destinationContext->isSignalContext = true;
     destinationContext->isStackOverflow = isStackOverflow(destinationContext);
     getThreadList(destinationContext);
-    KSLOG_TRACE("Context retrieved.");
+    RAYGUN_KSLOG_ERROR("Context retrieved.");
     return true;
 }
 
@@ -146,7 +146,7 @@ void ksmc_addReservedThread(KSThread thread)
     int nextIndex = g_reservedThreadsCount;
     if(nextIndex > g_reservedThreadsMaxIndex)
     {
-        KSLOG_ERROR("Too many reserved threads (%d). Max is %d", nextIndex, g_reservedThreadsMaxIndex);
+        RAYGUN_KSLOG_ERROR("Too many reserved threads (%d). Max is %d", nextIndex, g_reservedThreadsMaxIndex);
         return;
     }
     g_reservedThreads[g_reservedThreadsCount++] = thread;
@@ -169,7 +169,7 @@ static inline bool isThreadInList(thread_t thread, KSThread* list, int listCount
 void ksmc_suspendEnvironment()
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
-    KSLOG_DEBUG("Suspending environment.");
+    RAYGUN_KSLOG_ERROR("Suspending environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();
     const thread_t thisThread = (thread_t)ksthread_self();
@@ -178,7 +178,7 @@ void ksmc_suspendEnvironment()
     
     if((kr = task_threads(thisTask, &threads, &numThreads)) != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
         return;
     }
     
@@ -190,7 +190,7 @@ void ksmc_suspendEnvironment()
             if((kr = thread_suspend(thread)) != KERN_SUCCESS)
             {
                 // Record the error and keep going.
-                KSLOG_ERROR("thread_suspend (%08x): %s", thread, mach_error_string(kr));
+                RAYGUN_KSLOG_ERROR("thread_suspend (%08x): %s", thread, mach_error_string(kr));
             }
         }
     }
@@ -201,14 +201,14 @@ void ksmc_suspendEnvironment()
     }
     vm_deallocate(thisTask, (vm_address_t)threads, sizeof(thread_t) * numThreads);
     
-    KSLOG_DEBUG("Suspend complete.");
+    RAYGUN_KSLOG_ERROR("Suspend complete.");
 #endif
 }
 
 void ksmc_resumeEnvironment()
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
-    KSLOG_DEBUG("Resuming environment.");
+    RAYGUN_KSLOG_ERROR("Resuming environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();
     const thread_t thisThread = (thread_t)ksthread_self();
@@ -217,7 +217,7 @@ void ksmc_resumeEnvironment()
     
     if((kr = task_threads(thisTask, &threads, &numThreads)) != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
         return;
     }
     
@@ -229,7 +229,7 @@ void ksmc_resumeEnvironment()
             if((kr = thread_resume(thread)) != KERN_SUCCESS)
             {
                 // Record the error and keep going.
-                KSLOG_ERROR("thread_resume (%08x): %s", thread, mach_error_string(kr));
+                RAYGUN_KSLOG_ERROR("thread_resume (%08x): %s", thread, mach_error_string(kr));
             }
         }
     }
@@ -240,7 +240,7 @@ void ksmc_resumeEnvironment()
     }
     vm_deallocate(thisTask, (vm_address_t)threads, sizeof(thread_t) * numThreads);
 
-    KSLOG_DEBUG("Resume complete.");
+    RAYGUN_KSLOG_ERROR("Resume complete.");
 #endif
 }
 
@@ -257,10 +257,10 @@ KSThread ksmc_getThreadAtIndex(const KSMachineContext* const context, int index)
 
 int ksmc_indexOfThread(const KSMachineContext* const context, KSThread thread)
 {
-    KSLOG_TRACE("check thread vs %d threads", context->threadCount);
+    RAYGUN_KSLOG_ERROR("check thread vs %d threads", context->threadCount);
     for(int i = 0; i < (int)context->threadCount; i++)
     {
-        KSLOG_TRACE("%d: %x vs %x", i, thread, context->allThreads[i]);
+        RAYGUN_KSLOG_ERROR("%d: %x vs %x", i, thread, context->allThreads[i]);
         if(context->allThreads[i] == thread)
         {
             return i;

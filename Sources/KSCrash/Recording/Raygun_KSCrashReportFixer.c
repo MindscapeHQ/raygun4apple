@@ -32,7 +32,7 @@
 #include "Raygun_KSDemangle_Swift.h"
 #endif
 #include "Raygun_KSDate.h"
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -304,7 +304,7 @@ char* raygun_kscrf_fixupCrashReport(const char* crashReport)
     free(stringBuffer);
     if(result != RAYGUN_KSJSON_OK)
     {
-        KSLOG_ERROR("Could not decode report: %s", raygun_ksjson_stringForError(result));
+        RAYGUN_KSLOG_ERROR("Could not decode report: %s", raygun_ksjson_stringForError(result));
         free(fixedReport);
         return NULL;
     }

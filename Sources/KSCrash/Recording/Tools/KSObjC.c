@@ -31,7 +31,7 @@
 #include "KSMemory.h"
 #include "KSString.h"
 
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > 70000
 #include <objc/NSObjCRuntime.h>

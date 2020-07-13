@@ -26,7 +26,7 @@
 #include "Raygun_KSCrashCachedData.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <mach/mach.h>
 #include <errno.h>
@@ -69,7 +69,7 @@ static void updateThreadList()
     kern_return_t kr;
     if((kr = task_threads(thisTask, &threads, &allThreadsCount)) != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_threads: %s", mach_error_string(kr));
         return;
     }
 
@@ -180,7 +180,7 @@ void raygun_ksccd_init(int pollingIntervalInSeconds)
                            "KSCrash Cached Data Monitor");
     if(error != 0)
     {
-        KSLOG_ERROR("pthread_create_suspended_np: %s", strerror(error));
+        RAYGUN_KSLOG_ERROR("pthread_create_suspended_np: %s", strerror(error));
     }
     pthread_attr_destroy(&attr);
 }

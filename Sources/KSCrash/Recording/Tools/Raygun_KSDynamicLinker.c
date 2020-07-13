@@ -31,7 +31,7 @@
 #include <mach-o/nlist.h>
 #include <string.h>
 
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #ifdef __LP64__
     #define STRUCT_NLIST struct nlist_64

@@ -34,7 +34,7 @@
 #include "KSStackCursor_MachineContext.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #if RAYGUN_KSCRASH_HAS_MACH
 
@@ -155,10 +155,10 @@ static char g_secondaryEventID[37];
  */
 static void restoreExceptionPorts(void)
 {
-    KSLOG_DEBUG("Restoring original exception ports.");
+    RAYGUN_KSLOG_ERROR("Restoring original exception ports.");
     if(g_previousExceptionPorts.count == 0)
     {
-        KSLOG_DEBUG("Original exception ports were already restored.");
+        RAYGUN_KSLOG_ERROR("Original exception ports were already restored.");
         return;
     }
 
@@ -168,7 +168,7 @@ static void restoreExceptionPorts(void)
     // Reinstall old exception ports.
     for(mach_msg_type_number_t i = 0; i < g_previousExceptionPorts.count; i++)
     {
-        KSLOG_TRACE("Restoring port index %d", i);
+        RAYGUN_KSLOG_ERROR("Restoring port index %d", i);
         kr = task_set_exception_ports(thisTask,
                                       g_previousExceptionPorts.masks[i],
                                       g_previousExceptionPorts.ports[i],
@@ -176,11 +176,11 @@ static void restoreExceptionPorts(void)
                                       g_previousExceptionPorts.flavors[i]);
         if(kr != KERN_SUCCESS)
         {
-            KSLOG_ERROR("task_set_exception_ports: %s",
+            RAYGUN_KSLOG_ERROR("task_set_exception_ports: %s",
                         mach_error_string(kr));
         }
     }
-    KSLOG_DEBUG("Exception ports restored.");
+    RAYGUN_KSLOG_ERROR("Exception ports restored.");
     g_previousExceptionPorts.count = 0;
 }
 
@@ -268,14 +268,14 @@ static void* handleExceptions(void* const userData)
     pthread_setname_np(threadName);
     if(threadName == kThreadSecondary)
     {
-        KSLOG_DEBUG("This is the secondary thread. Suspending.");
+        RAYGUN_KSLOG_ERROR("This is the secondary thread. Suspending.");
         thread_suspend((thread_t)ksthread_self());
         eventID = g_secondaryEventID;
     }
 
     for(;;)
     {
-        KSLOG_DEBUG("Waiting for mach exception");
+        RAYGUN_KSLOG_ERROR("Waiting for mach exception");
 
         // Wait for a message.
         kern_return_t kr = mach_msg(&exceptionMessage.header,
@@ -291,10 +291,10 @@ static void* handleExceptions(void* const userData)
         }
 
         // Loop and try again on failure.
-        KSLOG_ERROR("mach_msg: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("mach_msg: %s", mach_error_string(kr));
     }
 
-    KSLOG_DEBUG("Trapped mach exception code 0x%x, subcode 0x%x",
+    RAYGUN_KSLOG_ERROR("Trapped mach exception code 0x%x, subcode 0x%x",
                 exceptionMessage.code[0], exceptionMessage.code[1]);
     if(g_isEnabled)
     {
@@ -302,29 +302,29 @@ static void* handleExceptions(void* const userData)
         g_isHandlingCrash = true;
         raygun_kscm_notifyFatalExceptionCaptured(true);
 
-        KSLOG_DEBUG("Exception handler is installed. Continuing exception handling.");
+        RAYGUN_KSLOG_ERROR("Exception handler is installed. Continuing exception handling.");
 
 
         // Switch to the secondary thread if necessary, or uninstall the handler
         // to avoid a death loop.
         if(ksthread_self() == g_primaryMachThread)
         {
-            KSLOG_DEBUG("This is the primary exception thread. Activating secondary thread.");
+            RAYGUN_KSLOG_ERROR("This is the primary exception thread. Activating secondary thread.");
 // TODO: This was put here to avoid a freeze. Does secondary thread ever fire?
             restoreExceptionPorts();
             if(thread_resume(g_secondaryMachThread) != KERN_SUCCESS)
             {
-                KSLOG_DEBUG("Could not activate secondary thread. Restoring original exception ports.");
+                RAYGUN_KSLOG_ERROR("Could not activate secondary thread. Restoring original exception ports.");
             }
         }
         else
         {
-            KSLOG_DEBUG("This is the secondary exception thread. Restoring original exception ports.");
+            RAYGUN_KSLOG_ERROR("This is the secondary exception thread. Restoring original exception ports.");
 //            restoreExceptionPorts();
         }
 
         // Fill out crash information
-        KSLOG_DEBUG("Fetching machine state.");
+        RAYGUN_KSLOG_ERROR("Fetching machine state.");
         KSMC_NEW_CONTEXT(machineContext);
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         crashContext->offendingMachineContext = machineContext;
@@ -332,7 +332,7 @@ static void* handleExceptions(void* const userData)
         if(ksmc_getContextForThread(exceptionMessage.thread.name, machineContext, true))
         {
             kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
-            KSLOG_TRACE("Fault address 0x%x, instruction address 0x%x", kscpu_faultAddress(machineContext), kscpu_instructionAddress(machineContext));
+            RAYGUN_KSLOG_ERROR("Fault address 0x%x, instruction address 0x%x", raygun_kscpu_faultAddress(machineContext), raygun_kscpu_instructionAddress(machineContext));
             if(exceptionMessage.exception == EXC_BAD_ACCESS)
             {
                 crashContext->faultAddress = raygun_kscpu_faultAddress(machineContext);
@@ -343,7 +343,7 @@ static void* handleExceptions(void* const userData)
             }
         }
 
-        KSLOG_DEBUG("Filling out context.");
+        RAYGUN_KSLOG_ERROR("Filling out context.");
         crashContext->crashType = Raygun_KSCrashMonitorTypeMachException;
         crashContext->eventID = eventID;
         crashContext->registersAreValid = true;
@@ -362,12 +362,12 @@ static void* handleExceptions(void* const userData)
 
         raygun_kscm_handleException(crashContext);
 
-        KSLOG_DEBUG("Crash handling complete. Restoring original handlers.");
+        RAYGUN_KSLOG_ERROR("Crash handling complete. Restoring original handlers.");
         g_isHandlingCrash = false;
         ksmc_resumeEnvironment();
     }
 
-    KSLOG_DEBUG("Replying to mach exception message.");
+    RAYGUN_KSLOG_ERROR("Replying to mach exception message.");
     // Send a reply saying "I didn't handle this exception".
     replyMessage.header = exceptionMessage.header;
     replyMessage.NDR = exceptionMessage.NDR;
@@ -391,7 +391,7 @@ static void* handleExceptions(void* const userData)
 
 static void uninstallExceptionHandler()
 {
-    KSLOG_DEBUG("Uninstalling mach exception handler.");
+    RAYGUN_KSLOG_ERROR("Uninstalling mach exception handler.");
     
     // NOTE: Do not deallocate the exception port. If a secondary crash occurs
     // it will hang the process.
@@ -402,7 +402,7 @@ static void uninstallExceptionHandler()
     
     if(g_primaryPThread != 0 && g_primaryMachThread != thread_self)
     {
-        KSLOG_DEBUG("Canceling primary exception thread.");
+        RAYGUN_KSLOG_ERROR("Canceling primary exception thread.");
         if(g_isHandlingCrash)
         {
             thread_terminate(g_primaryMachThread);
@@ -416,7 +416,7 @@ static void uninstallExceptionHandler()
     }
     if(g_secondaryPThread != 0 && g_secondaryMachThread != thread_self)
     {
-        KSLOG_DEBUG("Canceling secondary exception thread.");
+        RAYGUN_KSLOG_ERROR("Canceling secondary exception thread.");
         if(g_isHandlingCrash)
         {
             thread_terminate(g_secondaryMachThread);
@@ -430,12 +430,12 @@ static void uninstallExceptionHandler()
     }
     
     g_exceptionPort = MACH_PORT_NULL;
-    KSLOG_DEBUG("Mach exception handlers uninstalled.");
+    RAYGUN_KSLOG_ERROR("Mach exception handlers uninstalled.");
 }
 
 static bool installExceptionHandler()
 {
-    KSLOG_DEBUG("Installing mach exception handler.");
+    RAYGUN_KSLOG_ERROR("Installing mach exception handler.");
 
     bool attributes_created = false;
     pthread_attr_t attr;
@@ -450,7 +450,7 @@ static bool installExceptionHandler()
     EXC_MASK_SOFTWARE |
     EXC_MASK_BREAKPOINT;
 
-    KSLOG_DEBUG("Backing up original exception ports.");
+    RAYGUN_KSLOG_ERROR("Backing up original exception ports.");
     kr = task_get_exception_ports(thisTask,
                                   mask,
                                   g_previousExceptionPorts.masks,
@@ -460,35 +460,35 @@ static bool installExceptionHandler()
                                   g_previousExceptionPorts.flavors);
     if(kr != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_get_exception_ports: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_get_exception_ports: %s", mach_error_string(kr));
         goto failed;
     }
 
     if(g_exceptionPort == MACH_PORT_NULL)
     {
-        KSLOG_DEBUG("Allocating new port with receive rights.");
+        RAYGUN_KSLOG_ERROR("Allocating new port with receive rights.");
         kr = mach_port_allocate(thisTask,
                                 MACH_PORT_RIGHT_RECEIVE,
                                 &g_exceptionPort);
         if(kr != KERN_SUCCESS)
         {
-            KSLOG_ERROR("mach_port_allocate: %s", mach_error_string(kr));
+            RAYGUN_KSLOG_ERROR("mach_port_allocate: %s", mach_error_string(kr));
             goto failed;
         }
 
-        KSLOG_DEBUG("Adding send rights to port.");
+        RAYGUN_KSLOG_ERROR("Adding send rights to port.");
         kr = mach_port_insert_right(thisTask,
                                     g_exceptionPort,
                                     g_exceptionPort,
                                     MACH_MSG_TYPE_MAKE_SEND);
         if(kr != KERN_SUCCESS)
         {
-            KSLOG_ERROR("mach_port_insert_right: %s", mach_error_string(kr));
+            RAYGUN_KSLOG_ERROR("mach_port_insert_right: %s", mach_error_string(kr));
             goto failed;
         }
     }
 
-    KSLOG_DEBUG("Installing port as exception handler.");
+    RAYGUN_KSLOG_ERROR("Installing port as exception handler.");
     kr = task_set_exception_ports(thisTask,
                                   mask,
                                   g_exceptionPort,
@@ -496,11 +496,11 @@ static bool installExceptionHandler()
                                   THREAD_STATE_NONE);
     if(kr != KERN_SUCCESS)
     {
-        KSLOG_ERROR("task_set_exception_ports: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("task_set_exception_ports: %s", mach_error_string(kr));
         goto failed;
     }
 
-    KSLOG_DEBUG("Creating secondary exception thread (suspended).");
+    RAYGUN_KSLOG_ERROR("Creating secondary exception thread (suspended).");
     pthread_attr_init(&attr);
     attributes_created = true;
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
@@ -510,32 +510,32 @@ static bool installExceptionHandler()
                            kThreadSecondary);
     if(error != 0)
     {
-        KSLOG_ERROR("pthread_create_suspended_np: %s", strerror(error));
+        RAYGUN_KSLOG_ERROR("pthread_create_suspended_np: %s", strerror(error));
         goto failed;
     }
     g_secondaryMachThread = pthread_mach_thread_np(g_secondaryPThread);
     ksmc_addReservedThread(g_secondaryMachThread);
 
-    KSLOG_DEBUG("Creating primary exception thread.");
+    RAYGUN_KSLOG_ERROR("Creating primary exception thread.");
     error = pthread_create(&g_primaryPThread,
                            &attr,
                            &handleExceptions,
                            kThreadPrimary);
     if(error != 0)
     {
-        KSLOG_ERROR("pthread_create: %s", strerror(error));
+        RAYGUN_KSLOG_ERROR("pthread_create: %s", strerror(error));
         goto failed;
     }
     pthread_attr_destroy(&attr);
     g_primaryMachThread = pthread_mach_thread_np(g_primaryPThread);
     ksmc_addReservedThread(g_primaryMachThread);
 
-    KSLOG_DEBUG("Mach exception handler installed.");
+    RAYGUN_KSLOG_ERROR("Mach exception handler installed.");
     return true;
 
 
 failed:
-    KSLOG_DEBUG("Failed to install mach exception handler.");
+    RAYGUN_KSLOG_ERROR("Failed to install mach exception handler.");
     if(attributes_created)
     {
         pthread_attr_destroy(&attr);

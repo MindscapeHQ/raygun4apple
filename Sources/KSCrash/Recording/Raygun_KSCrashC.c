@@ -43,7 +43,7 @@
 #include "Raygun_KSSystemCapabilities.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -94,7 +94,7 @@ static void printPreviousLog(const char* filePath)
 static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 {
     if (monitorContext->currentSnapshotUserReported == false) {
-        KSLOG_DEBUG("Updating application state to note crash.");
+        RAYGUN_KSLOG_ERROR("Updating application state to note crash.");
         raygun_kscrashstate_notifyAppCrash();
     }
     monitorContext->consoleLogPath = g_shouldAddConsoleLogToReport ? g_consoleLogPath : NULL;
@@ -119,11 +119,11 @@ static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 
 Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath)
 {
-    KSLOG_DEBUG("Installing crash reporter.");
+    RAYGUN_KSLOG_ERROR("Installing crash reporter.");
 
     if(g_installed)
     {
-        KSLOG_DEBUG("Crash reporter already installed.");
+        RAYGUN_KSLOG_ERROR("Crash reporter already installed.");
         return g_monitoring;
     }
     g_installed = 1;
@@ -150,7 +150,7 @@ Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char
     raygun_kscm_setEventCallback(onCrash);
     Raygun_KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
 
-    KSLOG_DEBUG("Installation complete.");
+    RAYGUN_KSLOG_ERROR("Installation complete.");
     return monitors;
 }
 
@@ -264,21 +264,21 @@ char* raygun_kscrash_readReport(int64_t reportID)
 {
     if(reportID <= 0)
     {
-        KSLOG_ERROR("Report ID was %" PRIx64, reportID);
+        RAYGUN_KSLOG_ERROR("Report ID was %" PRIx64, reportID);
         return NULL;
     }
 
     char* rawReport = raygun_kscrs_readReport(reportID);
     if(rawReport == NULL)
     {
-        KSLOG_ERROR("Failed to load report ID %" PRIx64, reportID);
+        RAYGUN_KSLOG_ERROR("Failed to load report ID %" PRIx64, reportID);
         return NULL;
     }
 
     char* fixedReport = raygun_kscrf_fixupCrashReport(rawReport);
     if(fixedReport == NULL)
     {
-        KSLOG_ERROR("Failed to fixup report ID %" PRIx64, reportID);
+        RAYGUN_KSLOG_ERROR("Failed to fixup report ID %" PRIx64, reportID);
     }
 
     free(rawReport);

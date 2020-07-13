@@ -31,7 +31,7 @@
 #import "KSVarArgs.h"
 
 //#define KSLogger_LocalLevel TRACE
-#import "KSLogger.h"
+#import "Raygun_KSLogger.h"
 
 
 @implementation KSCrashReportFilterPassthrough
@@ -84,7 +84,7 @@
         {
             if(entry == nil)
             {
-                KSLOG_ERROR(@"key entry was nil");
+                RAYGUN_KSLOG_ERROR(@"key entry was nil");
             }
             else
             {
@@ -99,7 +99,7 @@
             }
             if(![entry conformsToProtocol:@protocol(KSCrashReportFilter)])
             {
-                KSLOG_ERROR(@"Not a filter: %@", entry);
+                RAYGUN_KSLOG_ERROR(@"Not a filter: %@", entry);
                 // Cause next key entry to fail as well.
                 return;
             }

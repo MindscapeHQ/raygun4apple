@@ -26,7 +26,7 @@
 #include "KSStackCursor_Backtrace.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 static bool advanceCursor(KSStackCursor *cursor)
 {

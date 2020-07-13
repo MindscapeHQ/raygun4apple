@@ -27,7 +27,7 @@
 
 #include <cxxabi.h>
 #include "Raygun_KSDemangle_CPP.h"
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 extern "C" char* raygun_ksdm_demangleCPP(const char* mangledSymbol)
 {

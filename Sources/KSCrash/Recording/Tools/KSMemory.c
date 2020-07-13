@@ -28,7 +28,7 @@
 #include "KSMemory.h"
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 #include <mach/mach.h>
 

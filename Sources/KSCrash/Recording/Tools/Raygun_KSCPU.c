@@ -33,7 +33,7 @@
 #include <mach-o/arch.h>
 
 //#define KSLogger_LocalLevel TRACE
-#include "KSLogger.h"
+#include "Raygun_KSLogger.h"
 
 
 const char* raygun_kscpu_currentArch(void)
@@ -48,14 +48,14 @@ bool raygun_kscpu_i_fillState(const thread_t thread,
                        const thread_state_flavor_t flavor,
                        const mach_msg_type_number_t stateCount)
 {
-    KSLOG_TRACE("Filling thread state with flavor %x.", flavor);
+    RAYGUN_KSLOG_ERROR("Filling thread state with flavor %x.", flavor);
     mach_msg_type_number_t stateCountBuff = stateCount;
     kern_return_t kr;
     
     kr = thread_get_state(thread, flavor, state, &stateCountBuff);
     if(kr != KERN_SUCCESS)
     {
-        KSLOG_ERROR("thread_get_state: %s", mach_error_string(kr));
+        RAYGUN_KSLOG_ERROR("thread_get_state: %s", mach_error_string(kr));
         return false;
     }
     return true;

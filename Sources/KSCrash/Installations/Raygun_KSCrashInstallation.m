@@ -31,7 +31,7 @@
 #import "Raygun_KSCrash.h"
 #import "KSCString.h"
 #import "Raygun_KSJSONCodecObjC.h"
-#import "KSLogger.h"
+#import "Raygun_KSLogger.h"
 #import "NSError+SimpleConstructor.h"
 #import <objc/runtime.h>
 
@@ -144,7 +144,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     NSData* jsonData = [Raygun_KSJSONCodec encode:value options:Raygun_KSJSONEncodeOptionPretty | Raygun_KSJSONEncodeOptionSorted error:&error];
     if(jsonData == nil)
     {
-        KSLOG_ERROR(@"Could not set value %@ for property %@: %@", value, self.key, error);
+        RAYGUN_KSLOG_ERROR(@"Could not set value %@ for property %@: %@", value, self.key, error);
     }
     else
     {
