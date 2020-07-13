@@ -26,7 +26,7 @@
 
 #import "Raygun_KSCrashMonitor_Deadlock.h"
 #import "Raygun_KSCrashMonitorContext.h"
-#import "KSID.h"
+#import "Raygun_KSID.h"
 #import "KSThread.h"
 #import "KSStackCursor_MachineContext.h"
 #import <Foundation/Foundation.h>
@@ -115,7 +115,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     KSStackCursor stackCursor;
     kssc_initWithMachineContext(&stackCursor, 100, machineContext);
     char eventID[37];
-    ksid_generate(eventID);
+    raygun_ksid_generate(eventID);
 
     KSLOG_DEBUG(@"Filling out context.");
     Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;

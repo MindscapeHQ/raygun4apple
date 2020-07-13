@@ -24,7 +24,7 @@
 
 #include "Raygun_KSCrashMonitor_CPPException.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSID.h"
+#include "Raygun_KSID.h"
 #include "KSThread.h"
 #include "KSMachineContext.h"
 #include "KSStackCursor_SelfThread.h"
@@ -203,7 +203,7 @@ static void setEnabled(bool isEnabled)
         {
             initialize();
 
-            ksid_generate(g_eventID);
+            raygun_ksid_generate(g_eventID);
             g_originalTerminateHandler = std::set_terminate(CPPExceptionTerminate);
         }
         else

@@ -28,7 +28,7 @@
 #import "Raygun_KSCrashMonitor_NSException.h"
 #import "KSStackCursor_Backtrace.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSID.h"
+#include "Raygun_KSID.h"
 #include "KSThread.h"
 #import <Foundation/Foundation.h>
 
@@ -75,7 +75,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         }
 
         char eventID[37];
-        ksid_generate(eventID);
+        raygun_ksid_generate(eventID);
         KSMC_NEW_CONTEXT(machineContext);
         ksmc_getContextForThread(ksthread_self(), machineContext, true);
         KSStackCursor cursor;

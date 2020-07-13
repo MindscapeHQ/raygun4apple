@@ -28,7 +28,7 @@
 #include "Raygun_KSCrashMonitor_MachException.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSCPU.h"
-#include "KSID.h"
+#include "Raygun_KSID.h"
 #include "KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "KSStackCursor_MachineContext.h"
@@ -551,8 +551,8 @@ static void setEnabled(bool isEnabled)
         g_isEnabled = isEnabled;
         if(isEnabled)
         {
-            ksid_generate(g_primaryEventID);
-            ksid_generate(g_secondaryEventID);
+            raygun_ksid_generate(g_primaryEventID);
+            raygun_ksid_generate(g_secondaryEventID);
             if(!installExceptionHandler())
             {
                 return;

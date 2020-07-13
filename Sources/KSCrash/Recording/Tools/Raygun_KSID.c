@@ -27,7 +27,7 @@
 #include <uuid/uuid.h>
 
 
-void ksid_generate(char* destinationBuffer37Bytes)
+void raygun_ksid_generate(char* destinationBuffer37Bytes)
 {
     uuid_t uuid;
     uuid_generate(uuid);

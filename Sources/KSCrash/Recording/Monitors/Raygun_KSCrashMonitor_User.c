@@ -24,7 +24,7 @@
 
 #include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSID.h"
+#include "Raygun_KSID.h"
 #include "KSThread.h"
 #include "KSStackCursor_SelfThread.h"
 
@@ -64,7 +64,7 @@ void raygun_kscm_reportUserException(const char* name,
         }
 
         char eventID[37];
-        ksid_generate(eventID);
+        raygun_ksid_generate(eventID);
         KSMC_NEW_CONTEXT(machineContext);
         ksmc_getContextForThread(ksthread_self(), machineContext, true);
         KSStackCursor stackCursor;

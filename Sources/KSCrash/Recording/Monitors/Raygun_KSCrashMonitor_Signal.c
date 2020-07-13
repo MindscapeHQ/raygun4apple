@@ -26,7 +26,7 @@
 
 #include "Raygun_KSCrashMonitor_Signal.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSID.h"
+#include "Raygun_KSID.h"
 #include "KSSignalInfo.h"
 #include "KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
@@ -212,7 +212,7 @@ static void setEnabled(bool isEnabled)
         g_isEnabled = isEnabled;
         if(isEnabled)
         {
-            ksid_generate(g_eventID);
+            raygun_ksid_generate(g_eventID);
             if(!installSignalHandler())
             {
                 return;
