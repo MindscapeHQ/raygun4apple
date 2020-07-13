@@ -56,7 +56,7 @@ void raygun_kscm_reportUserException(const char* name,
     {
         if(logAllThreads)
         {
-            ksmc_suspendEnvironment();
+            raygun_ksmc_suspendEnvironment();
         }
         if(terminateProgram)
         {
@@ -65,8 +65,8 @@ void raygun_kscm_reportUserException(const char* name,
 
         char eventID[37];
         raygun_ksid_generate(eventID);
-        KSMC_NEW_CONTEXT(machineContext);
-        ksmc_getContextForThread(ksthread_self(), machineContext, true);
+        RAYGUN_KSMC_NEW_CONTEXT(machineContext);
+        raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
         KSStackCursor stackCursor;
         kssc_initSelfThread(&stackCursor, 0);
 
@@ -89,7 +89,7 @@ void raygun_kscm_reportUserException(const char* name,
 
         if(logAllThreads)
         {
-            ksmc_resumeEnvironment();
+            raygun_ksmc_resumeEnvironment();
         }
         if(terminateProgram)
         {

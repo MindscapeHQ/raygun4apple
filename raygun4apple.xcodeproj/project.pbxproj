@@ -156,8 +156,8 @@
 		A2E1A1F1218F919500BF66DB /* Raygun_KSJSONCodecObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6321003DA90003C8B4 /* Raygun_KSJSONCodecObjC.h */; };
 		A2E1A1F2218F919500BF66DB /* Raygun_KSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6621003DA90003C8B4 /* Raygun_KSLogger.h */; };
 		A2E1A1F3218F919500BF66DB /* Raygun_KSMach.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6821003DA90003C8B4 /* Raygun_KSMach.h */; };
-		A2E1A1F4218F919500BF66DB /* KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* KSMachineContext.h */; };
-		A2E1A1F5218F919500BF66DB /* KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* KSMachineContext_Apple.h */; };
+		A2E1A1F4218F919500BF66DB /* Raygun_KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* Raygun_KSMachineContext.h */; };
+		A2E1A1F5218F919500BF66DB /* Raygun_KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* Raygun_KSMachineContext_Apple.h */; };
 		A2E1A1F6218F919500BF66DB /* KSMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6D21003DA90003C8B4 /* KSMemory.h */; };
 		A2E1A1F7218F919500BF66DB /* KSObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6F21003DA90003C8B4 /* KSObjC.h */; };
 		A2E1A1F8218F919500BF66DB /* KSObjCApple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7021003DA90003C8B4 /* KSObjCApple.h */; };
@@ -219,7 +219,7 @@
 		A2E1A230218F92D500BF66DB /* Raygun_KSJSONCodecObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6421003DA90003C8B4 /* Raygun_KSJSONCodecObjC.m */; };
 		A2E1A231218F92D500BF66DB /* Raygun_KSLogger.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6521003DA90003C8B4 /* Raygun_KSLogger.c */; };
 		A2E1A232218F92D500BF66DB /* Raygun_KSMach.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6721003DA90003C8B4 /* Raygun_KSMach.c */; };
-		A2E1A233218F92D500BF66DB /* KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* KSMachineContext.c */; };
+		A2E1A233218F92D500BF66DB /* Raygun_KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* Raygun_KSMachineContext.c */; };
 		A2E1A234218F92D500BF66DB /* KSMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6C21003DA90003C8B4 /* KSMemory.c */; };
 		A2E1A235218F92D500BF66DB /* KSObjC.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6E21003DA90003C8B4 /* KSObjC.c */; };
 		A2E1A236218F92D500BF66DB /* KSSignalInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7121003DA90003C8B4 /* KSSignalInfo.c */; };
@@ -406,12 +406,12 @@
 		A2E4AD7921003DAA0003C8B4 /* Raygun_KSMach.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6721003DA90003C8B4 /* Raygun_KSMach.c */; };
 		A2E4AD7A21003DAA0003C8B4 /* Raygun_KSMach.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6821003DA90003C8B4 /* Raygun_KSMach.h */; };
 		A2E4AD7B21003DAA0003C8B4 /* Raygun_KSMach.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6821003DA90003C8B4 /* Raygun_KSMach.h */; };
-		A2E4AD7C21003DAA0003C8B4 /* KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* KSMachineContext.c */; };
-		A2E4AD7D21003DAA0003C8B4 /* KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* KSMachineContext.c */; };
-		A2E4AD7E21003DAA0003C8B4 /* KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* KSMachineContext.h */; };
-		A2E4AD7F21003DAA0003C8B4 /* KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* KSMachineContext.h */; };
-		A2E4AD8021003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* KSMachineContext_Apple.h */; };
-		A2E4AD8121003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* KSMachineContext_Apple.h */; };
+		A2E4AD7C21003DAA0003C8B4 /* Raygun_KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* Raygun_KSMachineContext.c */; };
+		A2E4AD7D21003DAA0003C8B4 /* Raygun_KSMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6921003DA90003C8B4 /* Raygun_KSMachineContext.c */; };
+		A2E4AD7E21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* Raygun_KSMachineContext.h */; };
+		A2E4AD7F21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6A21003DA90003C8B4 /* Raygun_KSMachineContext.h */; };
+		A2E4AD8021003DAA0003C8B4 /* Raygun_KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* Raygun_KSMachineContext_Apple.h */; };
+		A2E4AD8121003DAA0003C8B4 /* Raygun_KSMachineContext_Apple.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6B21003DA90003C8B4 /* Raygun_KSMachineContext_Apple.h */; };
 		A2E4AD8221003DAA0003C8B4 /* KSMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6C21003DA90003C8B4 /* KSMemory.c */; };
 		A2E4AD8321003DAA0003C8B4 /* KSMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC6C21003DA90003C8B4 /* KSMemory.c */; };
 		A2E4AD8421003DAA0003C8B4 /* KSMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC6D21003DA90003C8B4 /* KSMemory.h */; };
@@ -743,9 +743,9 @@
 		A2E4AC6621003DA90003C8B4 /* Raygun_KSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSLogger.h; sourceTree = "<group>"; };
 		A2E4AC6721003DA90003C8B4 /* Raygun_KSMach.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSMach.c; sourceTree = "<group>"; };
 		A2E4AC6821003DA90003C8B4 /* Raygun_KSMach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSMach.h; sourceTree = "<group>"; };
-		A2E4AC6921003DA90003C8B4 /* KSMachineContext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSMachineContext.c; sourceTree = "<group>"; };
-		A2E4AC6A21003DA90003C8B4 /* KSMachineContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMachineContext.h; sourceTree = "<group>"; };
-		A2E4AC6B21003DA90003C8B4 /* KSMachineContext_Apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMachineContext_Apple.h; sourceTree = "<group>"; };
+		A2E4AC6921003DA90003C8B4 /* Raygun_KSMachineContext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSMachineContext.c; sourceTree = "<group>"; };
+		A2E4AC6A21003DA90003C8B4 /* Raygun_KSMachineContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSMachineContext.h; sourceTree = "<group>"; };
+		A2E4AC6B21003DA90003C8B4 /* Raygun_KSMachineContext_Apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSMachineContext_Apple.h; sourceTree = "<group>"; };
 		A2E4AC6C21003DA90003C8B4 /* KSMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSMemory.c; sourceTree = "<group>"; };
 		A2E4AC6D21003DA90003C8B4 /* KSMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMemory.h; sourceTree = "<group>"; };
 		A2E4AC6E21003DA90003C8B4 /* KSObjC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSObjC.c; sourceTree = "<group>"; };
@@ -1096,9 +1096,9 @@
 				A2E4AC6621003DA90003C8B4 /* Raygun_KSLogger.h */,
 				A2E4AC6721003DA90003C8B4 /* Raygun_KSMach.c */,
 				A2E4AC6821003DA90003C8B4 /* Raygun_KSMach.h */,
-				A2E4AC6921003DA90003C8B4 /* KSMachineContext.c */,
-				A2E4AC6A21003DA90003C8B4 /* KSMachineContext.h */,
-				A2E4AC6B21003DA90003C8B4 /* KSMachineContext_Apple.h */,
+				A2E4AC6921003DA90003C8B4 /* Raygun_KSMachineContext.c */,
+				A2E4AC6A21003DA90003C8B4 /* Raygun_KSMachineContext.h */,
+				A2E4AC6B21003DA90003C8B4 /* Raygun_KSMachineContext_Apple.h */,
 				A2E4AC6C21003DA90003C8B4 /* KSMemory.c */,
 				A2E4AC6D21003DA90003C8B4 /* KSMemory.h */,
 				A2E4AC6E21003DA90003C8B4 /* KSObjC.c */,
@@ -1355,11 +1355,11 @@
 				A2E4ADAE21003DAA0003C8B4 /* KSThread.h in Headers */,
 				A2E4AD3021003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
-				A2E4AD7E21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
+				A2E4AD7E21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */,
 				A2E4AD1221003DAA0003C8B4 /* Raygun_KSSystemCapabilities.h in Headers */,
 				A2E4ACF021003DAA0003C8B4 /* Raygun_KSCrash.h in Headers */,
 				A2E4ACC421003DAA0003C8B4 /* Raygun_KSCrashInstallation+Private.h in Headers */,
-				A2E4AD8021003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */,
+				A2E4AD8021003DAA0003C8B4 /* Raygun_KSMachineContext_Apple.h in Headers */,
 				A2E4AD3A21003DAA0003C8B4 /* Raygun_KSCrashMonitor_Zombie.h in Headers */,
 				A2E4ACEE21003DAA0003C8B4 /* type_traits.h in Headers */,
 				A2E4AD1E21003DAA0003C8B4 /* Raygun_KSCrashMonitor_CPPException.h in Headers */,
@@ -1462,11 +1462,11 @@
 				A2E4ADAF21003DAA0003C8B4 /* KSThread.h in Headers */,
 				A2E4AD3121003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549EA2159F581006859AA /* RaygunFile.h in Headers */,
-				A2E4AD7F21003DAA0003C8B4 /* KSMachineContext.h in Headers */,
+				A2E4AD7F21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */,
 				A2E4AD1321003DAA0003C8B4 /* Raygun_KSSystemCapabilities.h in Headers */,
 				A2E4ACF121003DAA0003C8B4 /* Raygun_KSCrash.h in Headers */,
 				A2E4ACC521003DAA0003C8B4 /* Raygun_KSCrashInstallation+Private.h in Headers */,
-				A2E4AD8121003DAA0003C8B4 /* KSMachineContext_Apple.h in Headers */,
+				A2E4AD8121003DAA0003C8B4 /* Raygun_KSMachineContext_Apple.h in Headers */,
 				A2E4AD3B21003DAA0003C8B4 /* Raygun_KSCrashMonitor_Zombie.h in Headers */,
 				A2E4ACEF21003DAA0003C8B4 /* type_traits.h in Headers */,
 				A2E4AD1F21003DAA0003C8B4 /* Raygun_KSCrashMonitor_CPPException.h in Headers */,
@@ -1551,8 +1551,8 @@
 				A2E1A1F1218F919500BF66DB /* Raygun_KSJSONCodecObjC.h in Headers */,
 				A2E1A1F2218F919500BF66DB /* Raygun_KSLogger.h in Headers */,
 				A2E1A1F3218F919500BF66DB /* Raygun_KSMach.h in Headers */,
-				A2E1A1F4218F919500BF66DB /* KSMachineContext.h in Headers */,
-				A2E1A1F5218F919500BF66DB /* KSMachineContext_Apple.h in Headers */,
+				A2E1A1F4218F919500BF66DB /* Raygun_KSMachineContext.h in Headers */,
+				A2E1A1F5218F919500BF66DB /* Raygun_KSMachineContext_Apple.h in Headers */,
 				A2E1A1F6218F919500BF66DB /* KSMemory.h in Headers */,
 				A2E1A1F7218F919500BF66DB /* KSObjC.h in Headers */,
 				A2E1A1F8218F919500BF66DB /* KSObjCApple.h in Headers */,
@@ -1903,7 +1903,7 @@
 				A2E4AD9C21003DAA0003C8B4 /* KSStackCursor_SelfThread.c in Sources */,
 				A2E4AD2C21003DAA0003C8B4 /* Raygun_KSCrashMonitor_Signal.c in Sources */,
 				A2E4AD2A21003DAA0003C8B4 /* Raygun_KSCrashMonitor_NSException.m in Sources */,
-				A2E4AD7C21003DAA0003C8B4 /* KSMachineContext.c in Sources */,
+				A2E4AD7C21003DAA0003C8B4 /* Raygun_KSMachineContext.c in Sources */,
 				A2E4AD6821003DAA0003C8B4 /* Raygun_KSID.c in Sources */,
 				A29FFFFF213C945600A0018F /* UIViewController+RaygunRUM.m in Sources */,
 				A2E4AD5421003DAA0003C8B4 /* Raygun_KSDebug.c in Sources */,
@@ -1988,7 +1988,7 @@
 				A2E4AD9D21003DAA0003C8B4 /* KSStackCursor_SelfThread.c in Sources */,
 				A2E4AD2D21003DAA0003C8B4 /* Raygun_KSCrashMonitor_Signal.c in Sources */,
 				A2E4AD2B21003DAA0003C8B4 /* Raygun_KSCrashMonitor_NSException.m in Sources */,
-				A2E4AD7D21003DAA0003C8B4 /* KSMachineContext.c in Sources */,
+				A2E4AD7D21003DAA0003C8B4 /* Raygun_KSMachineContext.c in Sources */,
 				A2E4AD6921003DAA0003C8B4 /* Raygun_KSID.c in Sources */,
 				A29F0000213C945700A0018F /* UIViewController+RaygunRUM.m in Sources */,
 				A2E4AD5521003DAA0003C8B4 /* Raygun_KSDebug.c in Sources */,
@@ -2049,7 +2049,7 @@
 				A2E1A230218F92D500BF66DB /* Raygun_KSJSONCodecObjC.m in Sources */,
 				A2E1A231218F92D500BF66DB /* Raygun_KSLogger.c in Sources */,
 				A2E1A232218F92D500BF66DB /* Raygun_KSMach.c in Sources */,
-				A2E1A233218F92D500BF66DB /* KSMachineContext.c in Sources */,
+				A2E1A233218F92D500BF66DB /* Raygun_KSMachineContext.c in Sources */,
 				A2E1A234218F92D500BF66DB /* KSMemory.c in Sources */,
 				A2E1A235218F92D500BF66DB /* KSObjC.c in Sources */,
 				A2E1A236218F92D500BF66DB /* KSSignalInfo.c in Sources */,

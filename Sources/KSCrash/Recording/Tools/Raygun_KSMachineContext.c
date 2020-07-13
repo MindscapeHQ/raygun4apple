@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#include "KSMachineContext_Apple.h"
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext_Apple.h"
+#include "Raygun_KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSCPU_Apple.h"
@@ -50,7 +50,7 @@ static int g_reservedThreadsCount = 0;
 
 
 
-static inline bool isStackOverflow(const KSMachineContext* const context)
+static inline bool isStackOverflow(const Raygun_KSMachineContext* const context)
 {
     KSStackCursor stackCursor;
     kssc_initWithMachineContext(&stackCursor, KSSC_STACK_OVERFLOW_THRESHOLD, context);
@@ -60,7 +60,7 @@ static inline bool isStackOverflow(const KSMachineContext* const context)
     return stackCursor.state.hasGivenUp;
 }
 
-static inline bool getThreadList(KSMachineContext* context)
+static inline bool getThreadList(Raygun_KSMachineContext* context)
 {
     const task_t thisTask = mach_task_self();
     RAYGUN_KSLOG_ERROR("Getting thread list");
@@ -96,17 +96,17 @@ static inline bool getThreadList(KSMachineContext* context)
     return true;
 }
 
-int ksmc_contextSize()
+int raygun_ksmc_contextSize()
 {
-    return sizeof(KSMachineContext);
+    return sizeof(Raygun_KSMachineContext);
 }
 
-KSThread ksmc_getThreadFromContext(const KSMachineContext* const context)
+KSThread raygun_ksmc_getThreadFromContext(const Raygun_KSMachineContext* const context)
 {
     return context->thisThread;
 }
 
-bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationContext, bool isCrashedContext)
+bool raygun_ksmc_getContextForThread(KSThread thread, Raygun_KSMachineContext* destinationContext, bool isCrashedContext)
 {
     RAYGUN_KSLOG_ERROR("Fill thread 0x%x context into %p. is crashed = %d", thread, destinationContext, isCrashedContext);
     memset(destinationContext, 0, sizeof(*destinationContext));
@@ -114,11 +114,11 @@ bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationCont
     destinationContext->isCurrentThread = thread == ksthread_self();
     destinationContext->isCrashedContext = isCrashedContext;
     destinationContext->isSignalContext = false;
-    if(ksmc_canHaveCPUState(destinationContext))
+    if(raygun_ksmc_canHaveCPUState(destinationContext))
     {
         raygun_kscpu_getState(destinationContext);
     }
-    if(ksmc_isCrashedContext(destinationContext))
+    if(raygun_ksmc_isCrashedContext(destinationContext))
     {
         destinationContext->isStackOverflow = isStackOverflow(destinationContext);
         getThreadList(destinationContext);
@@ -127,7 +127,7 @@ bool ksmc_getContextForThread(KSThread thread, KSMachineContext* destinationCont
     return true;
 }
 
-bool ksmc_getContextForSignal(void* signalUserContext, KSMachineContext* destinationContext)
+bool raygun_ksmc_getContextForSignal(void* signalUserContext, Raygun_KSMachineContext* destinationContext)
 {
     RAYGUN_KSLOG_ERROR("Get context from signal user context and put into %p.", destinationContext);
     _STRUCT_MCONTEXT* sourceContext = ((SignalUserContext*)signalUserContext)->UC_MCONTEXT;
@@ -141,7 +141,7 @@ bool ksmc_getContextForSignal(void* signalUserContext, KSMachineContext* destina
     return true;
 }
 
-void ksmc_addReservedThread(KSThread thread)
+void raygun_ksmc_addReservedThread(KSThread thread)
 {
     int nextIndex = g_reservedThreadsCount;
     if(nextIndex > g_reservedThreadsMaxIndex)
@@ -166,7 +166,7 @@ static inline bool isThreadInList(thread_t thread, KSThread* list, int listCount
 }
 #endif
 
-void ksmc_suspendEnvironment()
+void raygun_ksmc_suspendEnvironment()
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
     RAYGUN_KSLOG_ERROR("Suspending environment.");
@@ -205,7 +205,7 @@ void ksmc_suspendEnvironment()
 #endif
 }
 
-void ksmc_resumeEnvironment()
+void raygun_ksmc_resumeEnvironment()
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
     RAYGUN_KSLOG_ERROR("Resuming environment.");
@@ -244,18 +244,18 @@ void ksmc_resumeEnvironment()
 #endif
 }
 
-int ksmc_getThreadCount(const KSMachineContext* const context)
+int raygun_ksmc_getThreadCount(const Raygun_KSMachineContext* const context)
 {
     return context->threadCount;
 }
 
-KSThread ksmc_getThreadAtIndex(const KSMachineContext* const context, int index)
+KSThread raygun_ksmc_getThreadAtIndex(const Raygun_KSMachineContext* const context, int index)
 {
     return context->allThreads[index];
     
 }
 
-int ksmc_indexOfThread(const KSMachineContext* const context, KSThread thread)
+int raygun_ksmc_indexOfThread(const Raygun_KSMachineContext* const context, KSThread thread)
 {
     RAYGUN_KSLOG_ERROR("check thread vs %d threads", context->threadCount);
     for(int i = 0; i < (int)context->threadCount; i++)
@@ -269,27 +269,27 @@ int ksmc_indexOfThread(const KSMachineContext* const context, KSThread thread)
     return -1;
 }
 
-bool ksmc_isCrashedContext(const KSMachineContext* const context)
+bool raygun_ksmc_isCrashedContext(const Raygun_KSMachineContext* const context)
 {
     return context->isCrashedContext;
 }
 
-static inline bool isContextForCurrentThread(const KSMachineContext* const context)
+static inline bool isContextForCurrentThread(const Raygun_KSMachineContext* const context)
 {
     return context->isCurrentThread;
 }
 
-static inline bool isSignalContext(const KSMachineContext* const context)
+static inline bool isSignalContext(const Raygun_KSMachineContext* const context)
 {
     return context->isSignalContext;
 }
 
-bool ksmc_canHaveCPUState(const KSMachineContext* const context)
+bool raygun_ksmc_canHaveCPUState(const Raygun_KSMachineContext* const context)
 {
     return !isContextForCurrentThread(context) || isSignalContext(context);
 }
 
-bool ksmc_hasValidExceptionRegisters(const KSMachineContext* const context)
+bool raygun_ksmc_hasValidExceptionRegisters(const Raygun_KSMachineContext* const context)
 {
-    return ksmc_canHaveCPUState(context) && ksmc_isCrashedContext(context);
+    return raygun_ksmc_canHaveCPUState(context) && raygun_ksmc_isCrashedContext(context);
 }

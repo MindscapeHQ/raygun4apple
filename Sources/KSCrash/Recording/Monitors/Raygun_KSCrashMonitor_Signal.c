@@ -28,7 +28,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
 #include "KSSignalInfo.h"
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "KSStackCursor_MachineContext.h"
 
@@ -84,12 +84,12 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
     RAYGUN_KSLOG_ERROR("Trapped signal %d", sigNum);
     if(g_isEnabled)
     {
-        ksmc_suspendEnvironment();
+        raygun_ksmc_suspendEnvironment();
         raygun_kscm_notifyFatalExceptionCaptured(false);
 
         RAYGUN_KSLOG_ERROR("Filling out context.");
-        KSMC_NEW_CONTEXT(machineContext);
-        ksmc_getContextForSignal(userContext, machineContext);
+        RAYGUN_KSMC_NEW_CONTEXT(machineContext);
+        raygun_ksmc_getContextForSignal(userContext, machineContext);
         kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
@@ -105,7 +105,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
         crashContext->stackCursor = &g_stackCursor;
 
         raygun_kscm_handleException(crashContext);
-        ksmc_resumeEnvironment();
+        raygun_ksmc_resumeEnvironment();
     }
 
     RAYGUN_KSLOG_ERROR("Re-raising signal for regular handlers to catch.");

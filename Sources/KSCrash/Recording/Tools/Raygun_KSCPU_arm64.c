@@ -29,8 +29,8 @@
 
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSCPU_Apple.h"
-#include "KSMachineContext.h"
-#include "KSMachineContext_Apple.h"
+#include "Raygun_KSMachineContext.h"
+#include "Raygun_KSMachineContext_Apple.h"
 #include <stdlib.h>
 
 //#define KSLogger_LocalLevel TRACE
@@ -57,27 +57,27 @@ static const int g_exceptionRegisterNamesCount =
 sizeof(g_exceptionRegisterNames) / sizeof(*g_exceptionRegisterNames);
 
 
-uintptr_t raygun_kscpu_framePointer(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_framePointer(const Raygun_KSMachineContext* const context)
 {
     return context->machineContext.__ss.__fp;
 }
 
-uintptr_t raygun_kscpu_stackPointer(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_stackPointer(const Raygun_KSMachineContext* const context)
 {
     return context->machineContext.__ss.__sp;
 }
 
-uintptr_t raygun_kscpu_instructionAddress(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_instructionAddress(const Raygun_KSMachineContext* const context)
 {
     return context->machineContext.__ss.__pc;
 }
 
-uintptr_t raygun_kscpu_linkRegister(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_linkRegister(const Raygun_KSMachineContext* const context)
 {
     return context->machineContext.__ss.__lr;
 }
 
-void raygun_kscpu_getState(KSMachineContext* context)
+void raygun_kscpu_getState(Raygun_KSMachineContext* context)
 {
     thread_t thread = context->thisThread;
     STRUCT_MCONTEXT_L* const machineContext = &context->machineContext;
@@ -100,7 +100,7 @@ const char* raygun_kscpu_registerName(const int regNumber)
     return NULL;
 }
 
-uint64_t raygun_kscpu_registerValue(const KSMachineContext* const context, const int regNumber)
+uint64_t raygun_kscpu_registerValue(const Raygun_KSMachineContext* const context, const int regNumber)
 {
     if(regNumber <= 29)
     {
@@ -135,7 +135,7 @@ const char* raygun_kscpu_exceptionRegisterName(const int regNumber)
     return NULL;
 }
 
-uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const context, const int regNumber)
+uint64_t raygun_kscpu_exceptionRegisterValue(const Raygun_KSMachineContext* const context, const int regNumber)
 {
     switch(regNumber)
     {
@@ -151,7 +151,7 @@ uint64_t raygun_kscpu_exceptionRegisterValue(const KSMachineContext* const conte
     return 0;
 }
 
-uintptr_t raygun_kscpu_faultAddress(const KSMachineContext* const context)
+uintptr_t raygun_kscpu_faultAddress(const Raygun_KSMachineContext* const context)
 {
     return context->machineContext.__es.__far;
 }

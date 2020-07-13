@@ -51,7 +51,7 @@ typedef struct FrameEntry
 
 typedef struct
 {
-    const struct KSMachineContext* machineContext;
+    const struct Raygun_KSMachineContext* machineContext;
     int maxStackDepth;
     FrameEntry currentFrame;
     uintptr_t instructionAddress;
@@ -130,7 +130,7 @@ static void resetCursor(KSStackCursor* cursor)
     context->isPastFramePointer = 0;
 }
 
-void kssc_initWithMachineContext(KSStackCursor *cursor, int maxStackDepth, const struct KSMachineContext* machineContext)
+void kssc_initWithMachineContext(KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext)
 {
     kssc_initCursor(cursor, resetCursor, advanceCursor);
     MachineContextCursor* context = (MachineContextCursor*)cursor->context;

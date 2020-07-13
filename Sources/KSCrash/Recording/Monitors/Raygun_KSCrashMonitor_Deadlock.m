@@ -107,11 +107,11 @@ static NSTimeInterval g_watchdogInterval = 0;
 
 - (void) handleDeadlock
 {
-    ksmc_suspendEnvironment();
+    raygun_ksmc_suspendEnvironment();
     raygun_kscm_notifyFatalExceptionCaptured(false);
 
-    KSMC_NEW_CONTEXT(machineContext);
-    ksmc_getContextForThread(g_mainQueueThread, machineContext, false);
+    RAYGUN_KSMC_NEW_CONTEXT(machineContext);
+    raygun_ksmc_getContextForThread(g_mainQueueThread, machineContext, false);
     KSStackCursor stackCursor;
     kssc_initWithMachineContext(&stackCursor, 100, machineContext);
     char eventID[37];
@@ -127,7 +127,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     crashContext->stackCursor = &stackCursor;
     
     raygun_kscm_handleException(crashContext);
-    ksmc_resumeEnvironment();
+    raygun_ksmc_resumeEnvironment();
 
     RAYGUN_KSLOG_ERROR(@"Calling abort()");
     abort();

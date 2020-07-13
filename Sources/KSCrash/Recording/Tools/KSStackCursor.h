@@ -31,7 +31,7 @@ extern "C" {
 #endif
     
     
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext.h"
 
 #include <stdbool.h>
 #include <sys/types.h>

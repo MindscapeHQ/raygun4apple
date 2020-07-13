@@ -298,7 +298,7 @@ static void* handleExceptions(void* const userData)
                 exceptionMessage.code[0], exceptionMessage.code[1]);
     if(g_isEnabled)
     {
-        ksmc_suspendEnvironment();
+        raygun_ksmc_suspendEnvironment();
         g_isHandlingCrash = true;
         raygun_kscm_notifyFatalExceptionCaptured(true);
 
@@ -325,11 +325,11 @@ static void* handleExceptions(void* const userData)
 
         // Fill out crash information
         RAYGUN_KSLOG_ERROR("Fetching machine state.");
-        KSMC_NEW_CONTEXT(machineContext);
+        RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         crashContext->offendingMachineContext = machineContext;
         kssc_initCursor(&g_stackCursor, NULL, NULL);
-        if(ksmc_getContextForThread(exceptionMessage.thread.name, machineContext, true))
+        if(raygun_ksmc_getContextForThread(exceptionMessage.thread.name, machineContext, true))
         {
             kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
             RAYGUN_KSLOG_ERROR("Fault address 0x%x, instruction address 0x%x", raygun_kscpu_faultAddress(machineContext), raygun_kscpu_instructionAddress(machineContext));
@@ -364,7 +364,7 @@ static void* handleExceptions(void* const userData)
 
         RAYGUN_KSLOG_ERROR("Crash handling complete. Restoring original handlers.");
         g_isHandlingCrash = false;
-        ksmc_resumeEnvironment();
+        raygun_ksmc_resumeEnvironment();
     }
 
     RAYGUN_KSLOG_ERROR("Replying to mach exception message.");
@@ -514,7 +514,7 @@ static bool installExceptionHandler()
         goto failed;
     }
     g_secondaryMachThread = pthread_mach_thread_np(g_secondaryPThread);
-    ksmc_addReservedThread(g_secondaryMachThread);
+    raygun_ksmc_addReservedThread(g_secondaryMachThread);
 
     RAYGUN_KSLOG_ERROR("Creating primary exception thread.");
     error = pthread_create(&g_primaryPThread,
@@ -528,7 +528,7 @@ static bool installExceptionHandler()
     }
     pthread_attr_destroy(&attr);
     g_primaryMachThread = pthread_mach_thread_np(g_primaryPThread);
-    ksmc_addReservedThread(g_primaryMachThread);
+    raygun_ksmc_addReservedThread(g_primaryMachThread);
 
     RAYGUN_KSLOG_ERROR("Mach exception handler installed.");
     return true;

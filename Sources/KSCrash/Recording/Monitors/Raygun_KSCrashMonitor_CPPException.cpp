@@ -26,7 +26,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
 #include "KSThread.h"
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext.h"
 #include "KSStackCursor_SelfThread.h"
 
 //#define KSLogger_LocalLevel TRACE
@@ -99,7 +99,7 @@ extern "C"
 
 static void CPPExceptionTerminate(void)
 {
-    ksmc_suspendEnvironment();
+    raygun_ksmc_suspendEnvironment();
     RAYGUN_KSLOG_ERROR("Trapped c++ exception");
     const char* name = NULL;
     std::type_info* tinfo = __cxxabiv1::__cxa_current_exception_type();
@@ -154,8 +154,8 @@ catch(TYPE value)\
         g_captureNextStackTrace = g_isEnabled;
 
         // TODO: Should this be done here? Maybe better in the exception handler?
-        KSMC_NEW_CONTEXT(machineContext);
-        ksmc_getContextForThread(ksthread_self(), machineContext, true);
+        RAYGUN_KSMC_NEW_CONTEXT(machineContext);
+        raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
 
         RAYGUN_KSLOG_ERROR("Filling out context.");
         crashContext->crashType = Raygun_KSCrashMonitorTypeCPPException;
@@ -173,7 +173,7 @@ catch(TYPE value)\
     {
         RAYGUN_KSLOG_ERROR("Detected NSException. Letting the current NSException handler deal with it.");
     }
-    ksmc_resumeEnvironment();
+    raygun_ksmc_resumeEnvironment();
 
     RAYGUN_KSLOG_ERROR("Calling original terminate handler.");
     g_originalTerminateHandler();

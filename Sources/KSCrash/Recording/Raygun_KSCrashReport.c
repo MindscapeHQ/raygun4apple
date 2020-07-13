@@ -379,10 +379,10 @@ static bool isValidString(const void* const address)
  * @return True if the cursor was filled.
  */
 static bool getStackCursor(const Raygun_KSCrash_MonitorContext* const crash,
-                           const struct KSMachineContext* const machineContext,
+                           const struct Raygun_KSMachineContext* const machineContext,
                            KSStackCursor *cursor)
 {
-    if(ksmc_getThreadFromContext(machineContext) == ksmc_getThreadFromContext(crash->offendingMachineContext))
+    if(raygun_ksmc_getThreadFromContext(machineContext) == raygun_ksmc_getThreadFromContext(crash->offendingMachineContext))
     {
         *cursor = *((KSStackCursor*)crash->stackCursor);
         return true;
@@ -936,7 +936,7 @@ static void writeBacktrace(const Raygun_KSCrashReportWriter* const writer,
  */
 static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
                                const char* const key,
-                               const struct KSMachineContext* const machineContext,
+                               const struct Raygun_KSMachineContext* const machineContext,
                                const bool isStackOverflow)
 {
     uintptr_t sp = raygun_kscpu_stackPointer(machineContext);
@@ -985,7 +985,7 @@ static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
  * @param forwardDistance The distance past the end of the stack to check.
  */
 static void writeNotableStackContents(const Raygun_KSCrashReportWriter* const writer,
-                                      const struct KSMachineContext* const machineContext,
+                                      const struct Raygun_KSMachineContext* const machineContext,
                                       const int backDistance,
                                       const int forwardDistance)
 {
@@ -1028,7 +1028,7 @@ static void writeNotableStackContents(const Raygun_KSCrashReportWriter* const wr
  */
 static void writeBasicRegisters(const Raygun_KSCrashReportWriter* const writer,
                                 const char* const key,
-                                const struct KSMachineContext* const machineContext)
+                                const struct Raygun_KSMachineContext* const machineContext)
 {
     char registerNameBuff[30];
     const char* registerName;
@@ -1060,7 +1060,7 @@ static void writeBasicRegisters(const Raygun_KSCrashReportWriter* const writer,
  */
 static void writeExceptionRegisters(const Raygun_KSCrashReportWriter* const writer,
                                     const char* const key,
-                                    const struct KSMachineContext* const machineContext)
+                                    const struct Raygun_KSMachineContext* const machineContext)
 {
     char registerNameBuff[30];
     const char* registerName;
@@ -1092,12 +1092,12 @@ static void writeExceptionRegisters(const Raygun_KSCrashReportWriter* const writ
  */
 static void writeRegisters(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
-                           const struct KSMachineContext* const machineContext)
+                           const struct Raygun_KSMachineContext* const machineContext)
 {
     writer->beginObject(writer, key);
     {
         writeBasicRegisters(writer, Raygun_KSCrashField_Basic, machineContext);
-        if(ksmc_hasValidExceptionRegisters(machineContext))
+        if(raygun_ksmc_hasValidExceptionRegisters(machineContext))
         {
             writeExceptionRegisters(writer, Raygun_KSCrashField_Exception, machineContext);
         }
@@ -1112,7 +1112,7 @@ static void writeRegisters(const Raygun_KSCrashReportWriter* const writer,
  * @param machineContext The context to retrieve the registers from.
  */
 static void writeNotableRegisters(const Raygun_KSCrashReportWriter* const writer,
-                                  const struct KSMachineContext* const machineContext)
+                                  const struct Raygun_KSMachineContext* const machineContext)
 {
     char registerNameBuff[30];
     const char* registerName;
@@ -1143,7 +1143,7 @@ static void writeNotableRegisters(const Raygun_KSCrashReportWriter* const writer
  */
 static void writeNotableAddresses(const Raygun_KSCrashReportWriter* const writer,
                                   const char* const key,
-                                  const struct KSMachineContext* const machineContext)
+                                  const struct Raygun_KSMachineContext* const machineContext)
 {
     writer->beginObject(writer, key);
     {
@@ -1171,12 +1171,12 @@ static void writeNotableAddresses(const Raygun_KSCrashReportWriter* const writer
 static void writeThread(const Raygun_KSCrashReportWriter* const writer,
                         const char* const key,
                         const Raygun_KSCrash_MonitorContext* const crash,
-                        const struct KSMachineContext* const machineContext,
+                        const struct Raygun_KSMachineContext* const machineContext,
                         const int threadIndex,
                         const bool shouldWriteNotableAddresses)
 {
-    bool isCrashedThread = ksmc_isCrashedContext(machineContext);
-    KSThread thread = ksmc_getThreadFromContext(machineContext);
+    bool isCrashedThread = raygun_ksmc_isCrashedContext(machineContext);
+    KSThread thread = raygun_ksmc_getThreadFromContext(machineContext);
     RAYGUN_KSLOG_ERROR("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
 
     KSStackCursor stackCursor;
@@ -1188,7 +1188,7 @@ static void writeThread(const Raygun_KSCrashReportWriter* const writer,
         {
             writeBacktrace(writer, Raygun_KSCrashField_Backtrace, &stackCursor);
         }
-        if(ksmc_canHaveCPUState(machineContext))
+        if(raygun_ksmc_canHaveCPUState(machineContext))
         {
             writeRegisters(writer, Raygun_KSCrashField_Registers, machineContext);
         }
@@ -1230,10 +1230,10 @@ static void writeAllThreads(const Raygun_KSCrashReportWriter* const writer,
                             const Raygun_KSCrash_MonitorContext* const crash,
                             bool writeNotableAddresses)
 {
-    const struct KSMachineContext* const context = crash->offendingMachineContext;
-    KSThread offendingThread = ksmc_getThreadFromContext(context);
-    int threadCount = ksmc_getThreadCount(context);
-    KSMC_NEW_CONTEXT(machineContext);
+    const struct Raygun_KSMachineContext* const context = crash->offendingMachineContext;
+    KSThread offendingThread = raygun_ksmc_getThreadFromContext(context);
+    int threadCount = raygun_ksmc_getThreadCount(context);
+    RAYGUN_KSMC_NEW_CONTEXT(machineContext);
 
     // Fetch info for all threads.
     writer->beginArray(writer, key);
@@ -1241,14 +1241,14 @@ static void writeAllThreads(const Raygun_KSCrashReportWriter* const writer,
         RAYGUN_KSLOG_ERROR("Writing %d threads.", threadCount);
         for(int i = 0; i < threadCount; i++)
         {
-            KSThread thread = ksmc_getThreadAtIndex(context, i);
+            KSThread thread = raygun_ksmc_getThreadAtIndex(context, i);
             if(thread == offendingThread)
             {
                 writeThread(writer, NULL, crash, context, i, writeNotableAddresses);
             }
             else
             {
-                ksmc_getContextForThread(thread, machineContext, false);
+                raygun_ksmc_getContextForThread(thread, machineContext, false);
                 writeThread(writer, NULL, crash, machineContext, i, writeNotableAddresses);
             }
         }
@@ -1629,8 +1629,8 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
         {
             writeError(writer, Raygun_KSCrashField_Error, monitorContext);
             raygun_ksfu_flushBufferedWriter(&bufferedWriter);
-            int threadIndex = ksmc_indexOfThread(monitorContext->offendingMachineContext,
-                                                 ksmc_getThreadFromContext(monitorContext->offendingMachineContext));
+            int threadIndex = raygun_ksmc_indexOfThread(monitorContext->offendingMachineContext,
+                                                 raygun_ksmc_getThreadFromContext(monitorContext->offendingMachineContext));
             writeThread(writer,
                         Raygun_KSCrashField_CrashedThread,
                         monitorContext,

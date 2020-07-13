@@ -32,7 +32,7 @@ extern "C" {
 #endif
 
 
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -50,7 +50,7 @@ const char* raygun_kscpu_currentArch(void);
  *
  * @return The context's frame pointer.
  */
-uintptr_t raygun_kscpu_framePointer(const struct KSMachineContext* const context);
+uintptr_t raygun_kscpu_framePointer(const struct Raygun_KSMachineContext* const context);
 
 /** Get the current stack pointer for a machine context.
  *
@@ -58,7 +58,7 @@ uintptr_t raygun_kscpu_framePointer(const struct KSMachineContext* const context
  *
  * @return The context's stack pointer.
  */
-uintptr_t raygun_kscpu_stackPointer(const struct KSMachineContext* const context);
+uintptr_t raygun_kscpu_stackPointer(const struct Raygun_KSMachineContext* const context);
 
 /** Get the address of the instruction about to be, or being executed by a
  * machine context.
@@ -67,7 +67,7 @@ uintptr_t raygun_kscpu_stackPointer(const struct KSMachineContext* const context
  *
  * @return The context's next instruction address.
  */
-uintptr_t raygun_kscpu_instructionAddress(const struct KSMachineContext* const context);
+uintptr_t raygun_kscpu_instructionAddress(const struct Raygun_KSMachineContext* const context);
 
 /** Get the address stored in the link register (arm only). This may
  * contain the first return address of the stack.
@@ -76,7 +76,7 @@ uintptr_t raygun_kscpu_instructionAddress(const struct KSMachineContext* const c
  *
  * @return The link register value.
  */
-uintptr_t raygun_kscpu_linkRegister(const struct KSMachineContext* const context);
+uintptr_t raygun_kscpu_linkRegister(const struct Raygun_KSMachineContext* const context);
 
 /** Get the address whose access caused the last fault.
  *
@@ -84,7 +84,7 @@ uintptr_t raygun_kscpu_linkRegister(const struct KSMachineContext* const context
  *
  * @return The faulting address.
  */
-uintptr_t raygun_kscpu_faultAddress(const struct KSMachineContext* const context);
+uintptr_t raygun_kscpu_faultAddress(const struct Raygun_KSMachineContext* const context);
 
 /** Get the number of normal (not floating point or exception) registers the
  *  currently running CPU has.
@@ -107,7 +107,7 @@ const char* raygun_kscpu_registerName(int regNumber);
  *
  * @return The register's current value.
  */
-uint64_t raygun_kscpu_registerValue(const struct KSMachineContext* const context, int regNumber);
+uint64_t raygun_kscpu_registerValue(const struct Raygun_KSMachineContext* const context, int regNumber);
 
 /** Get the number of exception registers the currently running CPU has.
  *
@@ -129,7 +129,7 @@ const char* raygun_kscpu_exceptionRegisterName(int regNumber);
  *
  * @return The register's current value.
  */
-uint64_t raygun_kscpu_exceptionRegisterValue(const struct KSMachineContext* const context, int regNumber);
+uint64_t raygun_kscpu_exceptionRegisterValue(const struct Raygun_KSMachineContext* const context, int regNumber);
 
 /** Get the direction in which the stack grows on the current architecture.
  *
@@ -141,7 +141,7 @@ int raygun_kscpu_stackGrowDirection(void);
  *
  * @param destinationContext The context to fill.
  */
-void raygun_kscpu_getState(struct KSMachineContext* destinationContext);
+void raygun_kscpu_getState(struct Raygun_KSMachineContext* destinationContext);
     
 #ifdef __cplusplus
 }

@@ -62,7 +62,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
     RAYGUN_KSLOG_ERROR(@"Trapped exception %@", exception);
     if(g_isEnabled)
     {
-        ksmc_suspendEnvironment();
+        raygun_ksmc_suspendEnvironment();
         raygun_kscm_notifyFatalExceptionCaptured(false);
 
         RAYGUN_KSLOG_ERROR(@"Filling out context.");
@@ -76,8 +76,8 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
 
         char eventID[37];
         raygun_ksid_generate(eventID);
-        KSMC_NEW_CONTEXT(machineContext);
-        ksmc_getContextForThread(ksthread_self(), machineContext, true);
+        RAYGUN_KSMC_NEW_CONTEXT(machineContext);
+        raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
         KSStackCursor cursor;
         kssc_initWithBacktrace(&cursor, callstack, (int)numFrames, 0);
 
@@ -99,7 +99,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
 
         free(callstack);
         if (currentSnapshotUserReported) {
-            ksmc_resumeEnvironment();
+            raygun_ksmc_resumeEnvironment();
         }
         if (g_previousUncaughtExceptionHandler != NULL)
         {

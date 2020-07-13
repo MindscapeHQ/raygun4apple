@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 #include "Raygun_KSCrashMonitorType.h"
-#include "KSMachineContext.h"
+#include "Raygun_KSMachineContext.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -67,7 +67,7 @@ typedef struct Raygun_KSCrash_MonitorContext
     bool isStackOverflow;
     
     /** The machine context that generated the event. */
-    struct KSMachineContext* offendingMachineContext;
+    struct Raygun_KSMachineContext* offendingMachineContext;
     
     /** Address that caused the fault. */
     uintptr_t faultAddress;

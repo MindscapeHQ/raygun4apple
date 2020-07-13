@@ -30,8 +30,8 @@
 
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSCPU_Apple.h"
-#include "KSMachineContext.h"
-#include "KSMachineContext_Apple.h"
+#include "Raygun_KSMachineContext.h"
+#include "Raygun_KSMachineContext_Apple.h"
 #include <stdlib.h>
 
 //#define KSLogger_LocalLevel TRACE

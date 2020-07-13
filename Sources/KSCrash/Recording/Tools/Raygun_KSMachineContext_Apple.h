@@ -42,7 +42,7 @@ extern "C" {
     #define STRUCT_MCONTEXT_L _STRUCT_MCONTEXT
 #endif
 
-typedef struct KSMachineContext
+typedef struct Raygun_KSMachineContext
 {
     thread_t thisThread;
     thread_t allThreads[100];
@@ -52,7 +52,7 @@ typedef struct KSMachineContext
     bool isStackOverflow;
     bool isSignalContext;
     STRUCT_MCONTEXT_L machineContext;
-} KSMachineContext;
+} Raygun_KSMachineContext;
     
     
 #ifdef __cplusplus
