@@ -34,7 +34,7 @@
 #include "Raygun_KSJSONCodec.h"
 #include "Raygun_KSCPU.h"
 #include "KSMemory.h"
-#include "KSMach.h"
+#include "Raygun_KSMach.h"
 #include "KSThread.h"
 #include "KSObjC.h"
 #include "KSSignalInfo.h"
@@ -1348,8 +1348,8 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
 #if RAYGUN_KSCRASH_HOST_APPLE
         writer->beginObject(writer, Raygun_KSCrashField_Mach);
         {
-            const char* machExceptionName = ksmach_exceptionName(crash->mach.type);
-            const char* machCodeName = crash->mach.code == 0 ? NULL : ksmach_kernelReturnCodeName(crash->mach.code);
+            const char* machExceptionName = raygun_ksmach_exceptionName(crash->mach.type);
+            const char* machCodeName = crash->mach.code == 0 ? NULL : raygun_ksmach_kernelReturnCodeName(crash->mach.code);
             writer->addUIntegerElement(writer, Raygun_KSCrashField_Exception, (unsigned)crash->mach.type);
             if(machExceptionName != NULL)
             {

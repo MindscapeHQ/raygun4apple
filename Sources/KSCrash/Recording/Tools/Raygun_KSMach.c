@@ -22,14 +22,14 @@
 // THE SOFTWARE.
 //
 
-#include "KSMach.h"
+#include "Raygun_KSMach.h"
 
 #include <mach/mach.h>
 #include <stdlib.h>
 
 #define RETURN_NAME_FOR_ENUM(A) case A: return #A
 
-const char* ksmach_exceptionName(const int64_t exceptionType)
+const char* raygun_ksmach_exceptionName(const int64_t exceptionType)
 {
     switch (exceptionType)
     {
@@ -47,7 +47,7 @@ const char* ksmach_exceptionName(const int64_t exceptionType)
     return NULL;
 }
 
-const char* ksmach_kernelReturnCodeName(const int64_t returnCode)
+const char* raygun_ksmach_kernelReturnCodeName(const int64_t returnCode)
 {
     switch (returnCode)
     {
@@ -110,7 +110,7 @@ const char* ksmach_kernelReturnCodeName(const int64_t returnCode)
 #define EXC_UNIX_BAD_PIPE    0x10001 /* SIGPIPE */
 #define EXC_UNIX_ABORT       0x10002 /* SIGABRT */
 
-int ksmach_machExceptionForSignal(const int sigNum)
+int raygun_ksmach_machExceptionForSignal(const int sigNum)
 {
     switch(sigNum)
     {
@@ -139,7 +139,7 @@ int ksmach_machExceptionForSignal(const int sigNum)
     return 0;
 }
 
-int ksmach_signalForMachException(const int exception,
+int raygun_ksmach_signalForMachException(const int exception,
                                   const mach_exception_code_t code)
 {
     switch(exception)
