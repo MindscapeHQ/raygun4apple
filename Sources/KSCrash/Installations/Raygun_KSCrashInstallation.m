@@ -32,7 +32,7 @@
 #import "KSCString.h"
 #import "Raygun_KSJSONCodecObjC.h"
 #import "Raygun_KSLogger.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 #import <objc/runtime.h>
 
 

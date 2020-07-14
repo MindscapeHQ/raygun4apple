@@ -26,7 +26,7 @@
 
 
 #import "KSCrashReportFilterBasic.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 #import "Container+DeepSearch.h"
 #import "KSVarArgs.h"
 

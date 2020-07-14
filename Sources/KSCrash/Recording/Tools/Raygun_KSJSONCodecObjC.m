@@ -28,7 +28,7 @@
 #import "Raygun_KSJSONCodecObjC.h"
 
 #import "Raygun_KSJSONCodec.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 #import "Raygun_KSDate.h"
 
 

@@ -27,7 +27,7 @@
 
 #import "NSData+GZip.h"
 
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 #import <zlib.h>
 
 

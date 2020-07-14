@@ -24,10 +24,10 @@
 // THE SOFTWARE.
 //
 
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 
 
-@implementation NSError (SimpleConstructor)
+@implementation NSError (Raygun_SimpleConstructor)
 
 + (NSError*) errorWithDomain:(NSString*) domain code:(NSInteger) code description:(NSString*) fmt, ...
 {
@@ -75,5 +75,5 @@
 
 @end
 
-@interface NSError_SimpleConstructor_AOG8G : NSObject @end @implementation NSError_SimpleConstructor_AOG8G @end
+@interface Raygun_NSError_SimpleConstructor_AOG8G : NSObject @end @implementation Raygun_NSError_SimpleConstructor_AOG8G @end
 
