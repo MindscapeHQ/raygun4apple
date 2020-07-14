@@ -24,17 +24,17 @@
 
 
 #include "KSStackCursor_SelfThread.h"
-#include "KSStackCursor_Backtrace.h"
+#include "Raygun_KSStackCursor_Backtrace.h"
 #include <execinfo.h>
 
 //#define KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
-#define MAX_BACKTRACE_LENGTH (KSSC_CONTEXT_SIZE - sizeof(KSStackCursor_Backtrace_Context) / sizeof(void*) - 1)
+#define MAX_BACKTRACE_LENGTH (KSSC_CONTEXT_SIZE - sizeof(Raygun_KSStackCursor_Backtrace_Context) / sizeof(void*) - 1)
 
 typedef struct
 {
-    KSStackCursor_Backtrace_Context SelfThreadContextSpacer;
+    Raygun_KSStackCursor_Backtrace_Context SelfThreadContextSpacer;
     uintptr_t backtrace[0];
 } SelfThreadContext;
 
@@ -42,5 +42,5 @@ void kssc_initSelfThread(Raygun_KSStackCursor *cursor, int skipEntries)
 {
     SelfThreadContext* context = (SelfThreadContext*)cursor->context;
     int backtraceLength = backtrace((void**)context->backtrace, MAX_BACKTRACE_LENGTH);
-    kssc_initWithBacktrace(cursor, context->backtrace, backtraceLength, skipEntries + 1);
+    raygun_kssc_initWithBacktrace(cursor, context->backtrace, backtraceLength, skipEntries + 1);
 }

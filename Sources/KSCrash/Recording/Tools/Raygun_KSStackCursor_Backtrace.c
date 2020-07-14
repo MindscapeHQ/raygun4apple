@@ -23,14 +23,14 @@
 //
 
 
-#include "KSStackCursor_Backtrace.h"
+#include "Raygun_KSStackCursor_Backtrace.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 static bool advanceCursor(Raygun_KSStackCursor *cursor)
 {
-    KSStackCursor_Backtrace_Context* context = (KSStackCursor_Backtrace_Context*)cursor->context;
+    Raygun_KSStackCursor_Backtrace_Context* context = (Raygun_KSStackCursor_Backtrace_Context*)cursor->context;
     int endDepth = context->backtraceLength - context->skippedEntries;
     if(cursor->state.currentDepth < endDepth)
     {
@@ -47,10 +47,10 @@ static bool advanceCursor(Raygun_KSStackCursor *cursor)
     return false;
 }
 
-void kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries)
+void raygun_kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries)
 {
     raygun_kssc_initCursor(cursor, raygun_kssc_resetCursor, advanceCursor);
-    KSStackCursor_Backtrace_Context* context = (KSStackCursor_Backtrace_Context*)cursor->context;
+    Raygun_KSStackCursor_Backtrace_Context* context = (Raygun_KSStackCursor_Backtrace_Context*)cursor->context;
     context->skippedEntries = skipEntries;
     context->backtraceLength = backtraceLength;
     context->backtrace = backtrace;

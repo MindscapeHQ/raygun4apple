@@ -40,7 +40,7 @@ typedef struct
     int skippedEntries;
     int backtraceLength;
     const uintptr_t* backtrace;
-} KSStackCursor_Backtrace_Context;
+} Raygun_KSStackCursor_Backtrace_Context;
     
 
 /** Initialize a stack cursor for an existing backtrace (array of addresses).
@@ -53,7 +53,7 @@ typedef struct
  *
  * @param skipEntries The number of stack entries to skip.
  */
-void kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries);
+void raygun_kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries);
     
     
 #ifdef __cplusplus

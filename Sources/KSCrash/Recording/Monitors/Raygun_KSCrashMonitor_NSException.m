@@ -26,7 +26,7 @@
 
 #import "Raygun_KSCrash.h"
 #import "Raygun_KSCrashMonitor_NSException.h"
-#import "KSStackCursor_Backtrace.h"
+#import "Raygun_KSStackCursor_Backtrace.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
 #include "KSThread.h"
@@ -79,7 +79,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
         Raygun_KSStackCursor cursor;
-        kssc_initWithBacktrace(&cursor, callstack, (int)numFrames, 0);
+        raygun_kssc_initWithBacktrace(&cursor, callstack, (int)numFrames, 0);
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));

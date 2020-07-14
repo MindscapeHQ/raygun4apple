@@ -41,7 +41,7 @@
 #include "Raygun_KSCrashMonitor_Zombie.h"
 #include "KSString.h"
 #include "Raygun_KSCrashReportVersion.h"
-#include "KSStackCursor_Backtrace.h"
+#include "Raygun_KSStackCursor_Backtrace.h"
 #include "KSStackCursor_MachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCrashCachedData.h"
