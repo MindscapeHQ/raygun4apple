@@ -23,7 +23,7 @@
 //#include "llvm/ADT/StringRef.h"
 #include "Raygun_Demangle.h"
 #include "Raygun_Fallthrough.h"
-#include "SwiftStrings.h"
+#include "Raygun_SwiftStrings.h"
 #include "Raygun_LLVM.h"
 #include "Raygun_Punycode.h"
 //#include "UUID.h"

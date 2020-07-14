@@ -183,7 +183,7 @@
 		A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
 		A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
 		A2E1A20E218F919500BF66DB /* Raygun_Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */; };
-		A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
+		A2E1A20F218F919500BF66DB /* Raygun_SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* Raygun_SwiftStrings.h */; };
 		A2E1A210218F92D500BF66DB /* Raygun_KSCrashInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC0821003DA90003C8B4 /* Raygun_KSCrashInstallation.m */; };
 		A2E1A211218F92D500BF66DB /* Raygun_KSCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC2221003DA90003C8B4 /* Raygun_KSCrash.m */; };
 		A2E1A212218F92D500BF66DB /* Raygun_KSCrashC.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC2321003DA90003C8B4 /* Raygun_KSCrashC.c */; };
@@ -500,8 +500,8 @@
 		A2E4AE1721003DAA0003C8B4 /* Raygun_Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */; };
 		A2E4AE1821003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4AE1921003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
-		A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
-		A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
+		A2E4AE1A21003DAA0003C8B4 /* Raygun_SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* Raygun_SwiftStrings.h */; };
+		A2E4AE1B21003DAA0003C8B4 /* Raygun_SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* Raygun_SwiftStrings.h */; };
 		A2EA9FB32133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2EA9FB42133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2EA9FB52133568C00217D41 /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A2EA9FB22133568C00217D41 /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -790,7 +790,7 @@
 		A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_Punycode.cpp; sourceTree = "<group>"; };
 		A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Punycode.h; sourceTree = "<group>"; };
 		A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftStrings.h; sourceTree = "<group>"; };
+		A2E4ACBF21003DAA0003C8B4 /* Raygun_SwiftStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_SwiftStrings.h; sourceTree = "<group>"; };
 		A2E4AE1C210040E80003C8B4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		A2EA9FB22133568C00217D41 /* RaygunDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaygunDefines.h; sourceTree = "<group>"; };
 		A2F38CDA212FAEA4008346D9 /* RaygunCrashReportCustomSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaygunCrashReportCustomSink.m; sourceTree = "<group>"; };
@@ -1174,7 +1174,7 @@
 			children = (
 				A2E4ACB521003DAA0003C8B4 /* Basic */,
 				A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */,
-				A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */,
+				A2E4ACBF21003DAA0003C8B4 /* Raygun_SwiftStrings.h */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -1351,7 +1351,7 @@
 				A2E4ADA221003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				DC5EFA92210FFA7A002C0713 /* RaygunRealUserMonitoring.h in Headers */,
 				A2E4AD4421003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
-				A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
+				A2E4AE1A21003DAA0003C8B4 /* Raygun_SwiftStrings.h in Headers */,
 				A2E4ADAE21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */,
 				A2E4AD3021003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
@@ -1458,7 +1458,7 @@
 				DCD5C1FD2117DEAD002623B7 /* RaygunRealUserMonitoring.h in Headers */,
 				A2E4ADA321003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				A2E4AD4521003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
-				A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
+				A2E4AE1B21003DAA0003C8B4 /* Raygun_SwiftStrings.h in Headers */,
 				A2E4ADAF21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */,
 				A2E4AD3121003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549EA2159F581006859AA /* RaygunFile.h in Headers */,
@@ -1578,7 +1578,7 @@
 				A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */,
 				A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */,
 				A2E1A20E218F919500BF66DB /* Raygun_Punycode.h in Headers */,
-				A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */,
+				A2E1A20F218F919500BF66DB /* Raygun_SwiftStrings.h in Headers */,
 				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
 				DC5EFA8B210FFA7A002C0713 /* RaygunClient.h in Headers */,
