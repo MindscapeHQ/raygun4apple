@@ -31,7 +31,7 @@
 #import "Raygun_KSCrashMonitorContext.h"
 #import "Raygun_KSDate.h"
 #import "Raygun_KSDynamicLinker.h"
-#import "KSSysCtl.h"
+#import "Raygun_KSSysCtl.h"
 #import "Raygun_KSSystemCapabilities.h"
 
 //#define Raygun_KSLogger_LocalLevel TRACE
@@ -96,7 +96,7 @@ const char* cString(NSString* str)
 static NSString* nsstringSysctl(NSString* name)
 {
     NSString* str = nil;
-    int size = (int)kssysctl_stringForName(name.UTF8String, NULL, 0);
+    int size = (int)raygun_kssysctl_stringForName(name.UTF8String, NULL, 0);
     
     if(size <= 0)
     {
@@ -105,7 +105,7 @@ static NSString* nsstringSysctl(NSString* name)
     
     NSMutableData* value = [NSMutableData dataWithLength:(unsigned)size];
     
-    if(kssysctl_stringForName(name.UTF8String, value.mutableBytes, size) != 0)
+    if(raygun_kssysctl_stringForName(name.UTF8String, value.mutableBytes, size) != 0)
     {
         str = [NSString stringWithCString:value.mutableBytes encoding:NSUTF8StringEncoding];
     }
@@ -121,14 +121,14 @@ static NSString* nsstringSysctl(NSString* name)
  */
 static const char* stringSysctl(const char* name)
 {
-    int size = (int)kssysctl_stringForName(name, NULL, 0);
+    int size = (int)raygun_kssysctl_stringForName(name, NULL, 0);
     if(size <= 0)
     {
         return NULL;
     }
 
     char* value = malloc((size_t)size);
-    if(kssysctl_stringForName(name, value, size) <= 0)
+    if(raygun_kssysctl_stringForName(name, value, size) <= 0)
     {
         free(value);
         return NULL;
@@ -152,7 +152,7 @@ static const char* dateString(time_t date)
  */
 static const char* dateSysctl(const char* name)
 {
-    struct timeval value = kssysctl_timevalForName(name);
+    struct timeval value = raygun_kssysctl_timevalForName(name);
     return dateString(value.tv_sec);
 }
 
@@ -307,8 +307,8 @@ static const char* getCPUArchForCPUType(cpu_type_t cpuType, cpu_subtype_t subTyp
 
 static const char* getCurrentCPUArch()
 {
-    const char* result = getCPUArchForCPUType(kssysctl_int32ForName("hw.cputype"),
-                                            kssysctl_int32ForName("hw.cpusubtype"));
+    const char* result = getCPUArchForCPUType(raygun_kssysctl_int32ForName("hw.cputype"),
+                                            raygun_kssysctl_int32ForName("hw.cpusubtype"));
 
     if(result == NULL)
     {
@@ -394,7 +394,7 @@ static const char* getDeviceAndAppHash()
 #endif
     {
         data = [NSMutableData dataWithLength:6];
-        kssysctl_getMacAddress("en0", [data mutableBytes]);
+        raygun_kssysctl_getMacAddress("en0", [data mutableBytes]);
     }
     
     // Append some device-specific data.
@@ -548,8 +548,8 @@ static void initialize()
         g_systemData.bundleShortVersion = cString(infoDict[@"CFBundleShortVersionString"]);
         g_systemData.appID = getAppUUID();
         g_systemData.cpuArchitecture = getCurrentCPUArch();
-        g_systemData.cpuType = kssysctl_int32ForName("hw.cputype");
-        g_systemData.cpuSubType = kssysctl_int32ForName("hw.cpusubtype");
+        g_systemData.cpuType = raygun_kssysctl_int32ForName("hw.cputype");
+        g_systemData.cpuSubType = raygun_kssysctl_int32ForName("hw.cpusubtype");
         g_systemData.binaryCPUType = header->cputype;
         g_systemData.binaryCPUSubType = header->cpusubtype;
         g_systemData.timezone = cString([NSTimeZone localTimeZone].abbreviation);
@@ -559,7 +559,7 @@ static void initialize()
         g_systemData.deviceAppHash = getDeviceAndAppHash();
         g_systemData.buildType = getBuildType();
         g_systemData.storageSize = getStorageSize();
-        g_systemData.memorySize = kssysctl_uint64ForName("hw.memsize");
+        g_systemData.memorySize = raygun_kssysctl_uint64ForName("hw.memsize");
     }
 }
 
