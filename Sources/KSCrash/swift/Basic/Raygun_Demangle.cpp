@@ -24,7 +24,7 @@
 #include "Raygun_Demangle.h"
 #include "Raygun_Fallthrough.h"
 #include "SwiftStrings.h"
-#include "LLVM.h"
+#include "Raygun_LLVM.h"
 #include "Punycode.h"
 //#include "UUID.h"
 #include "Raygun_Optional.h"

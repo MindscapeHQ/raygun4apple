@@ -27,7 +27,7 @@
 //#include "swift/Basic/LLVM.h"
 //#include "llvm/ADT/StringRef.h"
 //#include "llvm/ADT/SmallVector.h"
-#include "LLVM.h"
+#include "Raygun_LLVM.h"
 #include "Raygun_StringRef.h"
 #include <vector>
 #include <cstdint>
