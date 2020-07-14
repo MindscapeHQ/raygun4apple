@@ -40,7 +40,7 @@
  *
  * @param entry The current argument in the vararg list.
  */
-typedef void (^KSVA_Block)(id entry);
+typedef void (^Raygun_KSVA_Block)(id entry);
 
 
 /**
@@ -49,9 +49,9 @@ typedef void (^KSVA_Block)(id entry);
  * @param FIRST_ARG_NAME The name of the first argument in the vararg list.
  * @param BLOCK A code block of type KSVA_Block.
  */
-#define ksva_iterate_list(FIRST_ARG_NAME, BLOCK) \
+#define raygun_ksva_iterate_list(FIRST_ARG_NAME, BLOCK) \
 { \
-    KSVA_Block ksva_block = BLOCK; \
+    Raygun_KSVA_Block ksva_block = BLOCK; \
     va_list ksva_args; \
     va_start(ksva_args,FIRST_ARG_NAME); \
     for(id ksva_arg = FIRST_ARG_NAME; ksva_arg != nil; ksva_arg = va_arg(ksva_args, id)) \
@@ -70,7 +70,7 @@ typedef void (^KSVA_Block)(id entry);
  */
 #define ksva_list_to_nsarray(FIRST_ARG_NAME, ARRAY_NAME) \
     NSMutableArray* ARRAY_NAME = [NSMutableArray array]; \
-    ksva_iterate_list(FIRST_ARG_NAME, ^(id entry) \
+    raygun_ksva_iterate_list(FIRST_ARG_NAME, ^(id entry) \
     { \
         [ARRAY_NAME addObject:entry]; \
     })
@@ -88,7 +88,7 @@ typedef void (^KSVA_Block)(id entry);
     NSMutableDictionary* DICT_NAME = [NSMutableDictionary dictionary]; \
     { \
         __block id ksva_object = nil; \
-        ksva_iterate_list(FIRST_ARG_NAME, ^(id entry) \
+        raygun_ksva_iterate_list(FIRST_ARG_NAME, ^(id entry) \
         { \
             if(ksva_object == nil) \
             { \

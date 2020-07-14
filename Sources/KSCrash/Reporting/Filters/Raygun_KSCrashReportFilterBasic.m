@@ -28,7 +28,7 @@
 #import "Raygun_KSCrashReportFilterBasic.h"
 #import "NSError+Raygun_SimpleConstructor.h"
 #import "Container+Raygun_DeepSearch.h"
-#import "KSVarArgs.h"
+#import "Raygun_KSVarArgs.h"
 
 //#define Raygun_KSLogger_LocalLevel TRACE
 #import "Raygun_KSLogger.h"
@@ -75,10 +75,10 @@
     return self;
 }
 
-+ (KSVA_Block) argBlockWithFilters:(NSMutableArray*) filters andKeys:(NSMutableArray*) keys
++ (Raygun_KSVA_Block) argBlockWithFilters:(NSMutableArray*) filters andKeys:(NSMutableArray*) keys
 {
     __block BOOL isKey = FALSE;
-    KSVA_Block block = ^(id entry)
+    Raygun_KSVA_Block block = ^(id entry)
     {
         if(isKey)
         {
@@ -117,7 +117,7 @@
 {
     NSMutableArray* filters = [NSMutableArray array];
     NSMutableArray* keys = [NSMutableArray array];
-    ksva_iterate_list(firstFilter, [self argBlockWithFilters:filters andKeys:keys]);
+    raygun_ksva_iterate_list(firstFilter, [self argBlockWithFilters:filters andKeys:keys]);
     return [[self alloc] initWithFilters:filters keys:keys];
 }
 
@@ -125,7 +125,7 @@
 {
     NSMutableArray* filters = [NSMutableArray array];
     NSMutableArray* keys = [NSMutableArray array];
-    ksva_iterate_list(firstFilter, [[self class] argBlockWithFilters:filters andKeys:keys]);
+    raygun_ksva_iterate_list(firstFilter, [[self class] argBlockWithFilters:filters andKeys:keys]);
     return [self initWithFilters:filters keys:keys];
 }
 
