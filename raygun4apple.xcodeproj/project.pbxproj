@@ -118,7 +118,7 @@
 		A2E1A1CB218F919500BF66DB /* Raygun_llvm-config.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1921003DA90003C8B4 /* Raygun_llvm-config.h */; };
 		A2E1A1CC218F919500BF66DB /* Raygun_AlignOf.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1C21003DA90003C8B4 /* Raygun_AlignOf.h */; };
 		A2E1A1CD218F919500BF66DB /* Raygun_Casting.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1D21003DA90003C8B4 /* Raygun_Casting.h */; };
-		A2E1A1CE218F919500BF66DB /* Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Compiler.h */; };
+		A2E1A1CE218F919500BF66DB /* Raygun_Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Raygun_Compiler.h */; };
 		A2E1A1CF218F919500BF66DB /* type_traits.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1F21003DA90003C8B4 /* type_traits.h */; };
 		A2E1A1D0218F919500BF66DB /* Raygun_KSCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2121003DA90003C8B4 /* Raygun_KSCrash.h */; };
 		A2E1A1D1218F919500BF66DB /* Raygun_KSCrashC.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2421003DA90003C8B4 /* Raygun_KSCrashC.h */; };
@@ -262,8 +262,8 @@
 		A2E4ACE921003DAA0003C8B4 /* Raygun_AlignOf.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1C21003DA90003C8B4 /* Raygun_AlignOf.h */; };
 		A2E4ACEA21003DAA0003C8B4 /* Raygun_Casting.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1D21003DA90003C8B4 /* Raygun_Casting.h */; };
 		A2E4ACEB21003DAA0003C8B4 /* Raygun_Casting.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1D21003DA90003C8B4 /* Raygun_Casting.h */; };
-		A2E4ACEC21003DAA0003C8B4 /* Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Compiler.h */; };
-		A2E4ACED21003DAA0003C8B4 /* Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Compiler.h */; };
+		A2E4ACEC21003DAA0003C8B4 /* Raygun_Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Raygun_Compiler.h */; };
+		A2E4ACED21003DAA0003C8B4 /* Raygun_Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1E21003DA90003C8B4 /* Raygun_Compiler.h */; };
 		A2E4ACEE21003DAA0003C8B4 /* type_traits.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1F21003DA90003C8B4 /* type_traits.h */; };
 		A2E4ACEF21003DAA0003C8B4 /* type_traits.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC1F21003DA90003C8B4 /* type_traits.h */; };
 		A2E4ACF021003DAA0003C8B4 /* Raygun_KSCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC2121003DA90003C8B4 /* Raygun_KSCrash.h */; };
@@ -671,7 +671,7 @@
 		A2E4AC1A21003DA90003C8B4 /* LICENSE.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.TXT; sourceTree = "<group>"; };
 		A2E4AC1C21003DA90003C8B4 /* Raygun_AlignOf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_AlignOf.h; sourceTree = "<group>"; };
 		A2E4AC1D21003DA90003C8B4 /* Raygun_Casting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Casting.h; sourceTree = "<group>"; };
-		A2E4AC1E21003DA90003C8B4 /* Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compiler.h; sourceTree = "<group>"; };
+		A2E4AC1E21003DA90003C8B4 /* Raygun_Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Compiler.h; sourceTree = "<group>"; };
 		A2E4AC1F21003DA90003C8B4 /* type_traits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_traits.h; sourceTree = "<group>"; };
 		A2E4AC2121003DA90003C8B4 /* Raygun_KSCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCrash.h; sourceTree = "<group>"; };
 		A2E4AC2221003DA90003C8B4 /* Raygun_KSCrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raygun_KSCrash.m; sourceTree = "<group>"; };
@@ -1001,7 +1001,7 @@
 			children = (
 				A2E4AC1C21003DA90003C8B4 /* Raygun_AlignOf.h */,
 				A2E4AC1D21003DA90003C8B4 /* Raygun_Casting.h */,
-				A2E4AC1E21003DA90003C8B4 /* Compiler.h */,
+				A2E4AC1E21003DA90003C8B4 /* Raygun_Compiler.h */,
 				A2E4AC1F21003DA90003C8B4 /* type_traits.h */,
 			);
 			path = Support;
@@ -1326,7 +1326,7 @@
 				A2E4AD2621003DAA0003C8B4 /* Raygun_KSCrashMonitor_MachException.h in Headers */,
 				A2E4AD7021003DAA0003C8B4 /* Raygun_KSJSONCodecObjC.h in Headers */,
 				A29D6741216DA2EB00BAC934 /* RaygunUtils.h in Headers */,
-				A2E4ACEC21003DAA0003C8B4 /* Compiler.h in Headers */,
+				A2E4ACEC21003DAA0003C8B4 /* Raygun_Compiler.h in Headers */,
 				A2E4AD5A21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */,
 				A2F38CDD212FAEA5008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2E4AD8421003DAA0003C8B4 /* Raygun_KSMemory.h in Headers */,
@@ -1433,7 +1433,7 @@
 				A2E4AD2721003DAA0003C8B4 /* Raygun_KSCrashMonitor_MachException.h in Headers */,
 				A2E4AD7121003DAA0003C8B4 /* Raygun_KSJSONCodecObjC.h in Headers */,
 				A29D6742216DA2EB00BAC934 /* RaygunUtils.h in Headers */,
-				A2E4ACED21003DAA0003C8B4 /* Compiler.h in Headers */,
+				A2E4ACED21003DAA0003C8B4 /* Raygun_Compiler.h in Headers */,
 				A2E4AD5B21003DAA0003C8B4 /* Raygun_KSDemangle_CPP.h in Headers */,
 				A2F38CDE212FB35E008346D9 /* RaygunCrashReportCustomSink.h in Headers */,
 				A2E4AD8521003DAA0003C8B4 /* Raygun_KSMemory.h in Headers */,
@@ -1513,7 +1513,7 @@
 				A2E1A1CB218F919500BF66DB /* Raygun_llvm-config.h in Headers */,
 				A2E1A1CC218F919500BF66DB /* Raygun_AlignOf.h in Headers */,
 				A2E1A1CD218F919500BF66DB /* Raygun_Casting.h in Headers */,
-				A2E1A1CE218F919500BF66DB /* Compiler.h in Headers */,
+				A2E1A1CE218F919500BF66DB /* Raygun_Compiler.h in Headers */,
 				A2E1A1CF218F919500BF66DB /* type_traits.h in Headers */,
 				A2E1A1D0218F919500BF66DB /* Raygun_KSCrash.h in Headers */,
 				A2E1A1D1218F919500BF66DB /* Raygun_KSCrashC.h in Headers */,

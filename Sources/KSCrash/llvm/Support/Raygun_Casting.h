@@ -15,7 +15,7 @@
 #ifndef LLVM_SUPPORT_CASTING_H
 #define LLVM_SUPPORT_CASTING_H
 
-#include "Compiler.h"
+#include "Raygun_Compiler.h"
 #include "type_traits.h"
 #include <cassert>
 

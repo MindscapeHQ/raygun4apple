@@ -10,7 +10,7 @@
 #ifndef LLVM_ADT_STRINGREF_H
 #define LLVM_ADT_STRINGREF_H
 
-#include "Compiler.h"
+#include "Raygun_Compiler.h"
 #include <algorithm>
 #include <cassert>
 #include <cstring>

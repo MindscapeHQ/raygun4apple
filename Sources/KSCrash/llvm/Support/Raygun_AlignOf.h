@@ -15,7 +15,7 @@
 #ifndef LLVM_SUPPORT_ALIGNOF_H
 #define LLVM_SUPPORT_ALIGNOF_H
 
-#include "Compiler.h"
+#include "Raygun_Compiler.h"
 #include <cstddef>
 #include <type_traits>
 
