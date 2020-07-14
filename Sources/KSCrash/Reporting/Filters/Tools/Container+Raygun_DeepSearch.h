@@ -60,7 +60,7 @@
 /**
  * Deep key search methods for NSDictionary.
  */
-@interface NSDictionary (DeepSearch)
+@interface NSDictionary (Raygun_DeepSearch)
 
 #pragma mark - Lookups
 
@@ -138,7 +138,7 @@
 /**
  * Deep key search methods for NSDictionary.
  */
-@interface NSArray (DeepSearch)
+@interface NSArray (Raygun_DeepSearch)
 
 #pragma mark - Lookups
 

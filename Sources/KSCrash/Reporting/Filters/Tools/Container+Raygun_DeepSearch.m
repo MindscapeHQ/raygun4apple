@@ -25,7 +25,7 @@
 //
 
 
-#import "Container+DeepSearch.h"
+#import "Container+Raygun_DeepSearch.h"
 
 
 #pragma mark - Base functionality
@@ -264,4 +264,4 @@ static void removeObjectForKeyPath(id container, NSString* keyPath)
 
 @end
 
-@interface DeepSearchP5EM1B9 : NSObject @end @implementation DeepSearchP5EM1B9 @end
+@interface Raygun_DeepSearchP5EM1B9 : NSObject @end @implementation Raygun_DeepSearchP5EM1B9 @end

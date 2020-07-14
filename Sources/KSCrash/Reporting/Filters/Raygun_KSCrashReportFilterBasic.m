@@ -27,7 +27,7 @@
 
 #import "Raygun_KSCrashReportFilterBasic.h"
 #import "NSError+Raygun_SimpleConstructor.h"
-#import "Container+DeepSearch.h"
+#import "Container+Raygun_DeepSearch.h"
 #import "KSVarArgs.h"
 
 //#define Raygun_KSLogger_LocalLevel TRACE
