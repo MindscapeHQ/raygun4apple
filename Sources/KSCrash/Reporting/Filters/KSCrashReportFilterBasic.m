@@ -25,7 +25,7 @@
 //
 
 
-#import "KSCrashReportFilterBasic.h"
+#import "Raygun_KSCrashReportFilterBasic.h"
 #import "NSError+Raygun_SimpleConstructor.h"
 #import "Container+DeepSearch.h"
 #import "KSVarArgs.h"
@@ -34,9 +34,9 @@
 #import "Raygun_KSLogger.h"
 
 
-@implementation KSCrashReportFilterPassthrough
+@implementation Raygun_KSCrashReportFilterPassthrough
 
-+ (KSCrashReportFilterPassthrough*) filter
++ (Raygun_KSCrashReportFilterPassthrough*) filter
 {
     return [[self alloc] init];
 }
@@ -50,7 +50,7 @@
 @end
 
 
-@interface KSCrashReportFilterCombine ()
+@interface Raygun_KSCrashReportFilterCombine ()
 
 @property(nonatomic,readwrite,retain) NSArray* filters;
 @property(nonatomic,readwrite,retain) NSArray* keys;
@@ -60,7 +60,7 @@
 @end
 
 
-@implementation KSCrashReportFilterCombine
+@implementation Raygun_KSCrashReportFilterCombine
 
 @synthesize filters = _filters;
 @synthesize keys = _keys;
@@ -95,7 +95,7 @@
         {
             if([entry isKindOfClass:[NSArray class]])
             {
-                entry = [KSCrashReportFilterPipeline filterWithFilters:entry, nil];
+                entry = [Raygun_KSCrashReportFilterPipeline filterWithFilters:entry, nil];
             }
             if(![entry conformsToProtocol:@protocol(Raygun_KSCrashReportFilter)])
             {
@@ -113,7 +113,7 @@
     return [block copy];
 }
 
-+ (KSCrashReportFilterCombine*) filterWithFiltersAndKeys:(id) firstFilter, ...
++ (Raygun_KSCrashReportFilterCombine*) filterWithFiltersAndKeys:(id) firstFilter, ...
 {
     NSMutableArray* filters = [NSMutableArray array];
     NSMutableArray* keys = [NSMutableArray array];
@@ -231,18 +231,18 @@
 @end
 
 
-@interface KSCrashReportFilterPipeline ()
+@interface Raygun_KSCrashReportFilterPipeline ()
 
 @property(nonatomic,readwrite,retain) NSArray* filters;
 
 @end
 
 
-@implementation KSCrashReportFilterPipeline
+@implementation Raygun_KSCrashReportFilterPipeline
 
 @synthesize filters = _filters;
 
-+ (KSCrashReportFilterPipeline*) filterWithFilters:(id) firstFilter, ...
++ (Raygun_KSCrashReportFilterPipeline*) filterWithFilters:(id) firstFilter, ...
 {
     ksva_list_to_nsarray(firstFilter, filters);
     return [[self alloc] initWithFiltersArray:filters];
@@ -351,19 +351,19 @@
 @end
 
 
-@interface KSCrashReportFilterObjectForKey ()
+@interface Raygun_KSCrashReportFilterObjectForKey ()
 
 @property(nonatomic, readwrite, retain) id key;
 @property(nonatomic, readwrite, assign) BOOL allowNotFound;
 
 @end
 
-@implementation KSCrashReportFilterObjectForKey
+@implementation Raygun_KSCrashReportFilterObjectForKey
 
 @synthesize key = _key;
 @synthesize allowNotFound = _allowNotFound;
 
-+ (KSCrashReportFilterObjectForKey*) filterWithKey:(id)key
++ (Raygun_KSCrashReportFilterObjectForKey*) filterWithKey:(id)key
                                      allowNotFound:(BOOL) allowNotFound
 {
     return [[self alloc] initWithKey:key allowNotFound:allowNotFound];
@@ -418,19 +418,19 @@
 @end
 
 
-@interface KSCrashReportFilterConcatenate ()
+@interface Raygun_KSCrashReportFilterConcatenate ()
 
 @property(nonatomic, readwrite, retain) NSString* separatorFmt;
 @property(nonatomic, readwrite, retain) NSArray* keys;
 
 @end
 
-@implementation KSCrashReportFilterConcatenate
+@implementation Raygun_KSCrashReportFilterConcatenate
 
 @synthesize separatorFmt = _separatorFmt;
 @synthesize keys = _keys;
 
-+ (KSCrashReportFilterConcatenate*) filterWithSeparatorFmt:(NSString*) separatorFmt keys:(id) firstKey, ...
++ (Raygun_KSCrashReportFilterConcatenate*) filterWithSeparatorFmt:(NSString*) separatorFmt keys:(id) firstKey, ...
 {
     ksva_list_to_nsarray(firstKey, keys);
     return [[self alloc] initWithSeparatorFmt:separatorFmt keysArray:keys];
@@ -494,17 +494,17 @@
 @end
 
 
-@interface KSCrashReportFilterSubset ()
+@interface Raygun_KSCrashReportFilterSubset ()
 
 @property(nonatomic, readwrite, retain) NSArray* keyPaths;
 
 @end
 
-@implementation KSCrashReportFilterSubset
+@implementation Raygun_KSCrashReportFilterSubset
 
 @synthesize keyPaths = _keyPaths;
 
-+ (KSCrashReportFilterSubset*) filterWithKeys:(id) firstKeyPath, ...
++ (Raygun_KSCrashReportFilterSubset*) filterWithKeys:(id) firstKeyPath, ...
 {
     ksva_list_to_nsarray(firstKeyPath, keyPaths);
     return [[self alloc] initWithKeysArray:keyPaths];
@@ -566,9 +566,9 @@
 @end
 
 
-@implementation KSCrashReportFilterDataToString
+@implementation Raygun_KSCrashReportFilterDataToString
 
-+ (KSCrashReportFilterDataToString*) filter
++ (Raygun_KSCrashReportFilterDataToString*) filter
 {
     return [[self alloc] init];
 }
@@ -589,9 +589,9 @@
 @end
 
 
-@implementation KSCrashReportFilterStringToData
+@implementation Raygun_KSCrashReportFilterStringToData
 
-+ (KSCrashReportFilterStringToData*) filter
++ (Raygun_KSCrashReportFilterStringToData*) filter
 {
     return [[self alloc] init];
 }

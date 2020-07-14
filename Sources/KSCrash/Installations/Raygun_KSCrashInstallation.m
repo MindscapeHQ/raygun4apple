@@ -27,7 +27,7 @@
 
 #import "Raygun_KSCrashInstallation.h"
 #import "Raygun_KSCrashInstallation+Private.h"
-#import "KSCrashReportFilterBasic.h"
+#import "Raygun_KSCrashReportFilterBasic.h"
 #import "Raygun_KSCrash.h"
 #import "KSCString.h"
 #import "Raygun_KSJSONCodecObjC.h"
@@ -163,7 +163,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 @property(nonatomic,readwrite,retain) NSMutableData* crashHandlerDataBacking;
 @property(nonatomic,readwrite,retain) NSMutableDictionary* fields;
 @property(nonatomic,readwrite,retain) NSArray* requiredProperties;
-@property(nonatomic,readwrite,retain) KSCrashReportFilterPipeline* prependedFilters;
+@property(nonatomic,readwrite,retain) Raygun_KSCrashReportFilterPipeline* prependedFilters;
 
 @end
 
@@ -191,7 +191,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
                                         sizeof(*self.crashHandlerData->reportFields) * kMaxProperties];
         self.fields = [NSMutableDictionary dictionary];
         self.requiredProperties = requiredProperties;
-        self.prependedFilters = [KSCrashReportFilterPipeline filterWithFilters:nil];
+        self.prependedFilters = [Raygun_KSCrashReportFilterPipeline filterWithFilters:nil];
     }
     return self;
 }
@@ -352,7 +352,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
         return;
     }
     
-    sink = [KSCrashReportFilterPipeline filterWithFilters:self.prependedFilters, sink, nil];
+    sink = [Raygun_KSCrashReportFilterPipeline filterWithFilters:self.prependedFilters, sink, nil];
 
     Raygun_KSCrash* handler = [Raygun_KSCrash sharedInstance];
     handler.sink = sink;
