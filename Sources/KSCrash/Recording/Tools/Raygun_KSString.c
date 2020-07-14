@@ -25,7 +25,7 @@
 //
 
 
-#include "KSString.h"
+#include "Raygun_KSString.h"
 #include <string.h>
 #include <stdlib.h>
 #include "Raygun_KSSystemCapabilities.h"
@@ -59,7 +59,7 @@ static const int g_continuationByteCount[0x40] =
     3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 0, 0,
 };
 
-bool ksstring_isNullTerminatedUTF8String(const void* memory,
+bool raygun_ksstring_isNullTerminatedUTF8String(const void* memory,
                                         int minLength,
                                         int maxLength)
 {
@@ -128,7 +128,7 @@ static const unsigned int g_hexConversion[] =
     INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV, INV,
 };
 
-bool ksstring_extractHexValue(const char* string, int stringLength, uint64_t* const result)
+bool raygun_ksstring_extractHexValue(const char* string, int stringLength, uint64_t* const result)
 {
     if(stringLength > 0)
     {

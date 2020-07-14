@@ -39,7 +39,7 @@
 #include "Raygun_KSObjC.h"
 #include "Raygun_KSSignalInfo.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
-#include "KSString.h"
+#include "Raygun_KSString.h"
 #include "Raygun_KSCrashReportVersion.h"
 #include "Raygun_KSStackCursor_Backtrace.h"
 #include "Raygun_KSStackCursor_MachineContext.h"
@@ -360,7 +360,7 @@ static bool isValidString(const void* const address)
     {
         return false;
     }
-    return ksstring_isNullTerminatedUTF8String(buffer, kMinStringLength, sizeof(buffer));
+    return raygun_ksstring_isNullTerminatedUTF8String(buffer, kMinStringLength, sizeof(buffer));
 }
 
 /** Get the backtrace for the specified machine context.
@@ -866,7 +866,7 @@ static void writeAddressReferencedByString(const Raygun_KSCrashReportWriter* con
                                            const char* string)
 {
     uint64_t address = 0;
-    if(string == NULL || !ksstring_extractHexValue(string, (int)strlen(string), &address))
+    if(string == NULL || !raygun_ksstring_extractHexValue(string, (int)strlen(string), &address))
     {
         return;
     }

@@ -29,7 +29,7 @@
 #include "Raygun_KSObjCApple.h"
 
 #include "Raygun_KSMemory.h"
-#include "KSString.h"
+#include "Raygun_KSString.h"
 
 #include "Raygun_KSLogger.h"
 
