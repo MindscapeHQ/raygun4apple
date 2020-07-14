@@ -16,7 +16,7 @@
 #define LLVM_SUPPORT_CASTING_H
 
 #include "Raygun_Compiler.h"
-#include "type_traits.h"
+#include "Raygun_type_traits.h"
 #include <cassert>
 
 namespace llvm {
