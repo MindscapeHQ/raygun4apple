@@ -182,7 +182,7 @@
 		A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
 		A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
 		A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
-		A2E1A20E218F919500BF66DB /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
+		A2E1A20E218F919500BF66DB /* Raygun_Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */; };
 		A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
 		A2E1A210218F92D500BF66DB /* Raygun_KSCrashInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC0821003DA90003C8B4 /* Raygun_KSCrashInstallation.m */; };
 		A2E1A211218F92D500BF66DB /* Raygun_KSCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC2221003DA90003C8B4 /* Raygun_KSCrash.m */; };
@@ -237,7 +237,7 @@
 		A2E1A242218F92D500BF66DB /* NSData+GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC9B21003DAA0003C8B4 /* NSData+GZip.m */; };
 		A2E1A243218F92D500BF66DB /* Raygun_KSCString.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */; };
 		A2E1A244218F92D500BF66DB /* Raygun_Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */; };
-		A2E1A245218F92D500BF66DB /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
+		A2E1A245218F92D500BF66DB /* Raygun_Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */; };
 		A2E1A246218F930E00BF66DB /* LICENSE.TXT in Resources */ = {isa = PBXBuildFile; fileRef = A2E4AC1A21003DA90003C8B4 /* LICENSE.TXT */; };
 		A2E1A247218F930E00BF66DB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4ABDB20FFFA2D0003C8B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E4ABDA20FFFA1B0003C8B4 /* libz.tbd */; platformFilter = ios; };
@@ -494,10 +494,10 @@
 		A2E4AE1121003DAA0003C8B4 /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
 		A2E4AE1221003DAA0003C8B4 /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
 		A2E4AE1321003DAA0003C8B4 /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
-		A2E4AE1421003DAA0003C8B4 /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
-		A2E4AE1521003DAA0003C8B4 /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
-		A2E4AE1621003DAA0003C8B4 /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
-		A2E4AE1721003DAA0003C8B4 /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
+		A2E4AE1421003DAA0003C8B4 /* Raygun_Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */; };
+		A2E4AE1521003DAA0003C8B4 /* Raygun_Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */; };
+		A2E4AE1621003DAA0003C8B4 /* Raygun_Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */; };
+		A2E4AE1721003DAA0003C8B4 /* Raygun_Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */; };
 		A2E4AE1821003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4AE1921003DAA0003C8B4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
 		A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
@@ -787,8 +787,8 @@
 		A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Fallthrough.h; sourceTree = "<group>"; };
 		A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_LLVM.h; sourceTree = "<group>"; };
 		A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Malloc.h; sourceTree = "<group>"; };
-		A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Punycode.cpp; sourceTree = "<group>"; };
-		A2E4ACBD21003DAA0003C8B4 /* Punycode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Punycode.h; sourceTree = "<group>"; };
+		A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_Punycode.cpp; sourceTree = "<group>"; };
+		A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Punycode.h; sourceTree = "<group>"; };
 		A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftStrings.h; sourceTree = "<group>"; };
 		A2E4AE1C210040E80003C8B4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -1188,8 +1188,8 @@
 				A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */,
 				A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */,
 				A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */,
-				A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */,
-				A2E4ACBD21003DAA0003C8B4 /* Punycode.h */,
+				A2E4ACBC21003DAA0003C8B4 /* Raygun_Punycode.cpp */,
+				A2E4ACBD21003DAA0003C8B4 /* Raygun_Punycode.h */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -1345,7 +1345,7 @@
 				A2E4AD3621003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.h in Headers */,
 				A2E4AD1621003DAA0003C8B4 /* Raygun_KSCrashMonitor.h in Headers */,
 				A2E4AD5621003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */,
-				A2E4AE1621003DAA0003C8B4 /* Punycode.h in Headers */,
+				A2E4AE1621003DAA0003C8B4 /* Raygun_Punycode.h in Headers */,
 				A2E4AD4021003DAA0003C8B4 /* Raygun_KSCrashMonitorType.h in Headers */,
 				A2E4AE0E21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */,
 				A2E4ADA221003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
@@ -1452,7 +1452,7 @@
 				A2E4AD3721003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.h in Headers */,
 				A2E4AD1721003DAA0003C8B4 /* Raygun_KSCrashMonitor.h in Headers */,
 				A2E4AD5721003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */,
-				A2E4AE1721003DAA0003C8B4 /* Punycode.h in Headers */,
+				A2E4AE1721003DAA0003C8B4 /* Raygun_Punycode.h in Headers */,
 				A2E4AD4121003DAA0003C8B4 /* Raygun_KSCrashMonitorType.h in Headers */,
 				A2E4AE0F21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */,
 				DCD5C1FD2117DEAD002623B7 /* RaygunRealUserMonitoring.h in Headers */,
@@ -1577,7 +1577,7 @@
 				A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */,
 				A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */,
 				A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */,
-				A2E1A20E218F919500BF66DB /* Punycode.h in Headers */,
+				A2E1A20E218F919500BF66DB /* Raygun_Punycode.h in Headers */,
 				A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */,
 				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
 				DC5EFA91210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
@@ -1846,7 +1846,7 @@
 				A2E4ADF221003DAA0003C8B4 /* Raygun_KSCString.m in Sources */,
 				A2E4ACF821003DAA0003C8B4 /* Raygun_KSCrashCachedData.c in Sources */,
 				A2E4ADA421003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */,
-				A2E4AE1421003DAA0003C8B4 /* Punycode.cpp in Sources */,
+				A2E4AE1421003DAA0003C8B4 /* Raygun_Punycode.cpp in Sources */,
 				A2E4AD3221003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.m in Sources */,
 				A2E4ACC821003DAA0003C8B4 /* Raygun_KSCrashInstallation.m in Sources */,
 				A2E4AD7421003DAA0003C8B4 /* Raygun_KSLogger.c in Sources */,
@@ -1931,7 +1931,7 @@
 				A2E4ADF321003DAA0003C8B4 /* Raygun_KSCString.m in Sources */,
 				A2E4ACF921003DAA0003C8B4 /* Raygun_KSCrashCachedData.c in Sources */,
 				A2E4ADA521003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */,
-				A2E4AE1521003DAA0003C8B4 /* Punycode.cpp in Sources */,
+				A2E4AE1521003DAA0003C8B4 /* Raygun_Punycode.cpp in Sources */,
 				A2E4AD3321003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.m in Sources */,
 				A2E4ACC921003DAA0003C8B4 /* Raygun_KSCrashInstallation.m in Sources */,
 				A2E4AD7521003DAA0003C8B4 /* Raygun_KSLogger.c in Sources */,
@@ -2068,7 +2068,7 @@
 				A2E1A242218F92D500BF66DB /* NSData+GZip.m in Sources */,
 				A2E1A243218F92D500BF66DB /* Raygun_KSCString.m in Sources */,
 				A2E1A244218F92D500BF66DB /* Raygun_Demangle.cpp in Sources */,
-				A2E1A245218F92D500BF66DB /* Punycode.cpp in Sources */,
+				A2E1A245218F92D500BF66DB /* Raygun_Punycode.cpp in Sources */,
 				A2132B3521373FF90030A3C5 /* RaygunEventData.m in Sources */,
 				DCD5C2072117E8C3002623B7 /* RaygunNetworkPerformanceMonitor.m in Sources */,
 				A23A1DE42138A7D80026046C /* RaygunLogger.m in Sources */,

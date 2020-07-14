@@ -13,7 +13,7 @@
 //#include "swift/Basic/LLVM.h"
 //#include "swift/Basic/Punycode.h"
 #include "Raygun_LLVM.h"
-#include "Punycode.h"
+#include "Raygun_Punycode.h"
 #include <vector>
 #include <cstdint>
 
