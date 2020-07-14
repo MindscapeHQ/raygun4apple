@@ -23,14 +23,14 @@
 //
 
 
-#include "KSStackCursor_MachineContext.h"
+#include "Raygun_KSStackCursor_MachineContext.h"
 
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSMemory.h"
 
 #include <stdlib.h>
 
-#define KSLogger_LocalLevel TRACE
+#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 
@@ -130,7 +130,7 @@ static void resetCursor(Raygun_KSStackCursor* cursor)
     context->isPastFramePointer = 0;
 }
 
-void kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext)
+void raygun_kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext)
 {
     raygun_kssc_initCursor(cursor, resetCursor, advanceCursor);
     MachineContextCursor* context = (MachineContextCursor*)cursor->context;

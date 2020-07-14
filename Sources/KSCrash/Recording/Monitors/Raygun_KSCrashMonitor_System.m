@@ -34,7 +34,7 @@
 #import "KSSysCtl.h"
 #import "Raygun_KSSystemCapabilities.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #import "Raygun_KSLogger.h"
 
 #import <Foundation/Foundation.h>

@@ -27,7 +27,7 @@
 #include "Raygun_KSStackCursor_Backtrace.h"
 #include <execinfo.h>
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #define MAX_BACKTRACE_LENGTH (KSSC_CONTEXT_SIZE - sizeof(Raygun_KSStackCursor_Backtrace_Context) / sizeof(void*) - 1)

@@ -27,7 +27,7 @@
 
 #include "KSSysCtl.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #include <errno.h>

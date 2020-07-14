@@ -27,7 +27,7 @@
 #include "KSSymbolicator.h"
 #include <stdlib.h>
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 static bool g_advanceCursor(__unused Raygun_KSStackCursor *cursor)

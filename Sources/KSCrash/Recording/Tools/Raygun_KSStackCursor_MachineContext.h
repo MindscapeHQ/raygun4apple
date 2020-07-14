@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param machineContext The machine context whose stack to walk.
  */
-void kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext);
+void raygun_kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext);
     
     
 #ifdef __cplusplus

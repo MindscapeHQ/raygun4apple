@@ -42,7 +42,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #include <inttypes.h>

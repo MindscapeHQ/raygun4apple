@@ -42,11 +42,11 @@
 #include "KSString.h"
 #include "Raygun_KSCrashReportVersion.h"
 #include "Raygun_KSStackCursor_Backtrace.h"
-#include "KSStackCursor_MachineContext.h"
+#include "Raygun_KSStackCursor_MachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCrashCachedData.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #include <errno.h>
@@ -388,7 +388,7 @@ static bool getStackCursor(const Raygun_KSCrash_MonitorContext* const crash,
         return true;
     }
 
-    kssc_initWithMachineContext(cursor, KSSC_STACK_OVERFLOW_THRESHOLD, machineContext);
+    raygun_kssc_initWithMachineContext(cursor, KSSC_STACK_OVERFLOW_THRESHOLD, machineContext);
     return true;
 }
 

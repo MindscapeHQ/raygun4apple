@@ -29,11 +29,11 @@
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSCPU_Apple.h"
-#include "KSStackCursor_MachineContext.h"
+#include "Raygun_KSStackCursor_MachineContext.h"
 
 #include <mach/mach.h>
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #ifdef __arm64__
@@ -53,7 +53,7 @@ static int g_reservedThreadsCount = 0;
 static inline bool isStackOverflow(const Raygun_KSMachineContext* const context)
 {
     Raygun_KSStackCursor stackCursor;
-    kssc_initWithMachineContext(&stackCursor, KSSC_STACK_OVERFLOW_THRESHOLD, context);
+    raygun_kssc_initWithMachineContext(&stackCursor, KSSC_STACK_OVERFLOW_THRESHOLD, context);
     while(stackCursor.advanceCursor(&stackCursor))
     {
     }

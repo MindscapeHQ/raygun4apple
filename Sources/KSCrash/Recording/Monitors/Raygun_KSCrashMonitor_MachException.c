@@ -31,9 +31,9 @@
 #include "Raygun_KSID.h"
 #include "KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
-#include "KSStackCursor_MachineContext.h"
+#include "Raygun_KSStackCursor_MachineContext.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #if RAYGUN_KSCRASH_HAS_MACH
@@ -331,7 +331,7 @@ static void* handleExceptions(void* const userData)
         raygun_kssc_initCursor(&g_stackCursor, NULL, NULL);
         if(raygun_ksmc_getContextForThread(exceptionMessage.thread.name, machineContext, true))
         {
-            kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
+            raygun_kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
             RAYGUN_KSLOG_ERROR("Fault address 0x%x, instruction address 0x%x", raygun_kscpu_faultAddress(machineContext), raygun_kscpu_instructionAddress(machineContext));
             if(exceptionMessage.exception == EXC_BAD_ACCESS)
             {

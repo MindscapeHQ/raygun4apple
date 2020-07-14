@@ -28,10 +28,10 @@
 #import "Raygun_KSCrashMonitorContext.h"
 #import "Raygun_KSID.h"
 #import "KSThread.h"
-#import "KSStackCursor_MachineContext.h"
+#import "Raygun_KSStackCursor_MachineContext.h"
 #import <Foundation/Foundation.h>
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #import "Raygun_KSLogger.h"
 
 
@@ -113,7 +113,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     RAYGUN_KSMC_NEW_CONTEXT(machineContext);
     raygun_ksmc_getContextForThread(g_mainQueueThread, machineContext, false);
     Raygun_KSStackCursor stackCursor;
-    kssc_initWithMachineContext(&stackCursor, 100, machineContext);
+    raygun_kssc_initWithMachineContext(&stackCursor, 100, machineContext);
     char eventID[37];
     raygun_ksid_generate(eventID);
 

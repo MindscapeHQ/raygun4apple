@@ -32,7 +32,7 @@
 #include "KSThread.h"
 #import <Foundation/Foundation.h>
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #import "Raygun_KSLogger.h"
 
 

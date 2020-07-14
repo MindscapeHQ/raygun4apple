@@ -30,9 +30,9 @@
 #include "Raygun_KSSignalInfo.h"
 #include "Raygun_KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
-#include "KSStackCursor_MachineContext.h"
+#include "Raygun_KSStackCursor_MachineContext.h"
 
-//#define KSLogger_LocalLevel TRACE
+//#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
 #if RAYGUN_KSCRASH_HAS_SIGNAL
@@ -90,7 +90,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
         RAYGUN_KSLOG_ERROR("Filling out context.");
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForSignal(userContext, machineContext);
-        kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
+        raygun_kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
         memset(crashContext, 0, sizeof(*crashContext));
