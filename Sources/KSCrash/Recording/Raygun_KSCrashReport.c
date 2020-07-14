@@ -35,7 +35,7 @@
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSMemory.h"
 #include "Raygun_KSMach.h"
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 #include "Raygun_KSObjC.h"
 #include "Raygun_KSSignalInfo.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
@@ -1204,7 +1204,7 @@ static void writeThread(const Raygun_KSCrashReportWriter* const writer,
             writer->addStringElement(writer, Raygun_KSCrashField_DispatchQueue, name);
         }
         writer->addBooleanElement(writer, Raygun_KSCrashField_Crashed, isCrashedThread);
-        writer->addBooleanElement(writer, Raygun_KSCrashField_CurrentThread, thread == ksthread_self());
+        writer->addBooleanElement(writer, Raygun_KSCrashField_CurrentThread, thread == raygun_ksthread_self());
         if(isCrashedThread)
         {
             writeStackContents(writer, Raygun_KSCrashField_Stack, machineContext, stackCursor.state.hasGivenUp);

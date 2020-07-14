@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 #include <stdbool.h>
 
 /** Suspend the runtime environment.

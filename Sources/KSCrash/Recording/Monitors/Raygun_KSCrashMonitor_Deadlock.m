@@ -27,7 +27,7 @@
 #import "Raygun_KSCrashMonitor_Deadlock.h"
 #import "Raygun_KSCrashMonitorContext.h"
 #import "Raygun_KSID.h"
-#import "KSThread.h"
+#import "Raygun_KSThread.h"
 #import "Raygun_KSStackCursor_MachineContext.h"
 #import <Foundation/Foundation.h>
 
@@ -176,7 +176,7 @@ static void initialize()
     if(!isInitialized)
     {
         isInitialized = true;
-        dispatch_async(dispatch_get_main_queue(), ^{g_mainQueueThread = ksthread_self();});
+        dispatch_async(dispatch_get_main_queue(), ^{g_mainQueueThread = raygun_ksthread_self();});
     }
 }
 

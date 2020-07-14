@@ -38,7 +38,7 @@ extern "C" {
 
 
 #include "Raygun_KSCrashMonitorType.h"
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
     
 #include <stdbool.h>
 

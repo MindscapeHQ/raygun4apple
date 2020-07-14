@@ -25,7 +25,7 @@
 #include "Raygun_KSCrashMonitor_CPPException.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 #include "Raygun_KSMachineContext.h"
 #include "Raygun_KSStackCursor_SelfThread.h"
 
@@ -155,7 +155,7 @@ catch(TYPE value)\
 
         // TODO: Should this be done here? Maybe better in the exception handler?
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
-        raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
+        raygun_ksmc_getContextForThread(raygun_ksthread_self(), machineContext, true);
 
         RAYGUN_KSLOG_ERROR("Filling out context.");
         crashContext->crashType = Raygun_KSCrashMonitorTypeCPPException;

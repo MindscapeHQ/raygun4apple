@@ -39,7 +39,7 @@
 #include "Raygun_KSCrashMonitor_AppState.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
 #include "Raygun_KSDebug.h"
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
 
 #include <memory.h>

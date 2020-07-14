@@ -111,7 +111,7 @@ bool raygun_ksmc_getContextForThread(KSThread thread, Raygun_KSMachineContext* d
     RAYGUN_KSLOG_ERROR("Fill thread 0x%x context into %p. is crashed = %d", thread, destinationContext, isCrashedContext);
     memset(destinationContext, 0, sizeof(*destinationContext));
     destinationContext->thisThread = (thread_t)thread;
-    destinationContext->isCurrentThread = thread == ksthread_self();
+    destinationContext->isCurrentThread = thread == raygun_ksthread_self();
     destinationContext->isCrashedContext = isCrashedContext;
     destinationContext->isSignalContext = false;
     if(raygun_ksmc_canHaveCPUState(destinationContext))
@@ -132,7 +132,7 @@ bool raygun_ksmc_getContextForSignal(void* signalUserContext, Raygun_KSMachineCo
     RAYGUN_KSLOG_ERROR("Get context from signal user context and put into %p.", destinationContext);
     _STRUCT_MCONTEXT* sourceContext = ((SignalUserContext*)signalUserContext)->UC_MCONTEXT;
     memcpy(&destinationContext->machineContext, sourceContext, sizeof(destinationContext->machineContext));
-    destinationContext->thisThread = (thread_t)ksthread_self();
+    destinationContext->thisThread = (thread_t)raygun_ksthread_self();
     destinationContext->isCrashedContext = true;
     destinationContext->isSignalContext = true;
     destinationContext->isStackOverflow = isStackOverflow(destinationContext);
@@ -172,7 +172,7 @@ void raygun_ksmc_suspendEnvironment()
     RAYGUN_KSLOG_ERROR("Suspending environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();
-    const thread_t thisThread = (thread_t)ksthread_self();
+    const thread_t thisThread = (thread_t)raygun_ksthread_self();
     thread_act_array_t threads;
     mach_msg_type_number_t numThreads;
     
@@ -211,7 +211,7 @@ void raygun_ksmc_resumeEnvironment()
     RAYGUN_KSLOG_ERROR("Resuming environment.");
     kern_return_t kr;
     const task_t thisTask = mach_task_self();
-    const thread_t thisThread = (thread_t)ksthread_self();
+    const thread_t thisThread = (thread_t)raygun_ksthread_self();
     thread_act_array_t threads;
     mach_msg_type_number_t numThreads;
     

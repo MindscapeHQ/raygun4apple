@@ -169,7 +169,7 @@
 		A2E1A1FE218F919500BF66DB /* Raygun_KSString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */; };
 		A2E1A1FF218F919500BF66DB /* Raygun_KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */; };
 		A2E1A200218F919500BF66DB /* Raygun_KSSysCtl.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8021003DA90003C8B4 /* Raygun_KSSysCtl.h */; };
-		A2E1A201218F919500BF66DB /* KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* KSThread.h */; };
+		A2E1A201218F919500BF66DB /* Raygun_KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* Raygun_KSThread.h */; };
 		A2E1A202218F919500BF66DB /* NSError+SimpleConstructor.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */; };
 		A2E1A203218F919500BF66DB /* KSCrashReportFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8721003DA90003C8B4 /* KSCrashReportFilter.h */; };
 		A2E1A204218F919500BF66DB /* KSCrashReportFilterBasic.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8C21003DA90003C8B4 /* KSCrashReportFilterBasic.h */; };
@@ -230,7 +230,7 @@
 		A2E1A23B218F92D500BF66DB /* Raygun_KSString.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7B21003DA90003C8B4 /* Raygun_KSString.c */; };
 		A2E1A23C218F92D500BF66DB /* Raygun_KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */; };
 		A2E1A23D218F92D500BF66DB /* Raygun_KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7F21003DA90003C8B4 /* Raygun_KSSysCtl.c */; };
-		A2E1A23E218F92D500BF66DB /* KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* KSThread.c */; };
+		A2E1A23E218F92D500BF66DB /* Raygun_KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* Raygun_KSThread.c */; };
 		A2E1A23F218F92D500BF66DB /* NSError+SimpleConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8421003DA90003C8B4 /* NSError+SimpleConstructor.m */; };
 		A2E1A240218F92D500BF66DB /* KSCrashReportFilterBasic.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8D21003DA90003C8B4 /* KSCrashReportFilterBasic.m */; };
 		A2E1A241218F92D500BF66DB /* Container+DeepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC9821003DAA0003C8B4 /* Container+DeepSearch.m */; };
@@ -454,10 +454,10 @@
 		A2E4ADA921003DAA0003C8B4 /* Raygun_KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7F21003DA90003C8B4 /* Raygun_KSSysCtl.c */; };
 		A2E4ADAA21003DAA0003C8B4 /* Raygun_KSSysCtl.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8021003DA90003C8B4 /* Raygun_KSSysCtl.h */; };
 		A2E4ADAB21003DAA0003C8B4 /* Raygun_KSSysCtl.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8021003DA90003C8B4 /* Raygun_KSSysCtl.h */; };
-		A2E4ADAC21003DAA0003C8B4 /* KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* KSThread.c */; };
-		A2E4ADAD21003DAA0003C8B4 /* KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* KSThread.c */; };
-		A2E4ADAE21003DAA0003C8B4 /* KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* KSThread.h */; };
-		A2E4ADAF21003DAA0003C8B4 /* KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* KSThread.h */; };
+		A2E4ADAC21003DAA0003C8B4 /* Raygun_KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* Raygun_KSThread.c */; };
+		A2E4ADAD21003DAA0003C8B4 /* Raygun_KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* Raygun_KSThread.c */; };
+		A2E4ADAE21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* Raygun_KSThread.h */; };
+		A2E4ADAF21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* Raygun_KSThread.h */; };
 		A2E4ADB021003DAA0003C8B4 /* NSError+SimpleConstructor.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */; };
 		A2E4ADB121003DAA0003C8B4 /* NSError+SimpleConstructor.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */; };
 		A2E4ADB221003DAA0003C8B4 /* NSError+SimpleConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8421003DA90003C8B4 /* NSError+SimpleConstructor.m */; };
@@ -767,8 +767,8 @@
 		A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSSymbolicator.h; sourceTree = "<group>"; };
 		A2E4AC7F21003DA90003C8B4 /* Raygun_KSSysCtl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSSysCtl.c; sourceTree = "<group>"; };
 		A2E4AC8021003DA90003C8B4 /* Raygun_KSSysCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSSysCtl.h; sourceTree = "<group>"; };
-		A2E4AC8121003DA90003C8B4 /* KSThread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSThread.c; sourceTree = "<group>"; };
-		A2E4AC8221003DA90003C8B4 /* KSThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSThread.h; sourceTree = "<group>"; };
+		A2E4AC8121003DA90003C8B4 /* Raygun_KSThread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSThread.c; sourceTree = "<group>"; };
+		A2E4AC8221003DA90003C8B4 /* Raygun_KSThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSThread.h; sourceTree = "<group>"; };
 		A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SimpleConstructor.h"; sourceTree = "<group>"; };
 		A2E4AC8421003DA90003C8B4 /* NSError+SimpleConstructor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SimpleConstructor.m"; sourceTree = "<group>"; };
 		A2E4AC8721003DA90003C8B4 /* KSCrashReportFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCrashReportFilter.h; sourceTree = "<group>"; };
@@ -1120,8 +1120,8 @@
 				A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */,
 				A2E4AC7F21003DA90003C8B4 /* Raygun_KSSysCtl.c */,
 				A2E4AC8021003DA90003C8B4 /* Raygun_KSSysCtl.h */,
-				A2E4AC8121003DA90003C8B4 /* KSThread.c */,
-				A2E4AC8221003DA90003C8B4 /* KSThread.h */,
+				A2E4AC8121003DA90003C8B4 /* Raygun_KSThread.c */,
+				A2E4AC8221003DA90003C8B4 /* Raygun_KSThread.h */,
 				A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */,
 				A2E4AC8421003DA90003C8B4 /* NSError+SimpleConstructor.m */,
 			);
@@ -1352,7 +1352,7 @@
 				DC5EFA92210FFA7A002C0713 /* RaygunRealUserMonitoring.h in Headers */,
 				A2E4AD4421003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
 				A2E4AE1A21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
-				A2E4ADAE21003DAA0003C8B4 /* KSThread.h in Headers */,
+				A2E4ADAE21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */,
 				A2E4AD3021003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7E21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */,
@@ -1459,7 +1459,7 @@
 				A2E4ADA321003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				A2E4AD4521003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
 				A2E4AE1B21003DAA0003C8B4 /* SwiftStrings.h in Headers */,
-				A2E4ADAF21003DAA0003C8B4 /* KSThread.h in Headers */,
+				A2E4ADAF21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */,
 				A2E4AD3121003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
 				A2D549EA2159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7F21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */,
@@ -1564,7 +1564,7 @@
 				A2E1A1FE218F919500BF66DB /* Raygun_KSString.h in Headers */,
 				A2E1A1FF218F919500BF66DB /* Raygun_KSSymbolicator.h in Headers */,
 				A2E1A200218F919500BF66DB /* Raygun_KSSysCtl.h in Headers */,
-				A2E1A201218F919500BF66DB /* KSThread.h in Headers */,
+				A2E1A201218F919500BF66DB /* Raygun_KSThread.h in Headers */,
 				A2E1A202218F919500BF66DB /* NSError+SimpleConstructor.h in Headers */,
 				A2E1A203218F919500BF66DB /* KSCrashReportFilter.h in Headers */,
 				A2E1A204218F919500BF66DB /* KSCrashReportFilterBasic.h in Headers */,
@@ -1865,7 +1865,7 @@
 				A2E4AD8C21003DAA0003C8B4 /* Raygun_KSSignalInfo.c in Sources */,
 				A2E4ADC021003DAA0003C8B4 /* KSCrashReportFilterBasic.m in Sources */,
 				A2E4AD0A21003DAA0003C8B4 /* Raygun_KSCrashReportStore.c in Sources */,
-				A2E4ADAC21003DAA0003C8B4 /* KSThread.c in Sources */,
+				A2E4ADAC21003DAA0003C8B4 /* Raygun_KSThread.c in Sources */,
 				A2E4AD7821003DAA0003C8B4 /* Raygun_KSMach.c in Sources */,
 				A2E4AD4A21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */,
 				A2E4AD1421003DAA0003C8B4 /* Raygun_KSCrashMonitor.c in Sources */,
@@ -1951,7 +1951,7 @@
 				A2E4AD8D21003DAA0003C8B4 /* Raygun_KSSignalInfo.c in Sources */,
 				A2E4ADC121003DAA0003C8B4 /* KSCrashReportFilterBasic.m in Sources */,
 				A2E4AD0B21003DAA0003C8B4 /* Raygun_KSCrashReportStore.c in Sources */,
-				A2E4ADAD21003DAA0003C8B4 /* KSThread.c in Sources */,
+				A2E4ADAD21003DAA0003C8B4 /* Raygun_KSThread.c in Sources */,
 				A2E4AD7921003DAA0003C8B4 /* Raygun_KSMach.c in Sources */,
 				A2E4AD4B21003DAA0003C8B4 /* Raygun_KSCPU_arm64.c in Sources */,
 				A2E4AD1521003DAA0003C8B4 /* Raygun_KSCrashMonitor.c in Sources */,
@@ -2060,7 +2060,7 @@
 				A2E1A23B218F92D500BF66DB /* Raygun_KSString.c in Sources */,
 				A2E1A23C218F92D500BF66DB /* Raygun_KSSymbolicator.c in Sources */,
 				A2E1A23D218F92D500BF66DB /* Raygun_KSSysCtl.c in Sources */,
-				A2E1A23E218F92D500BF66DB /* KSThread.c in Sources */,
+				A2E1A23E218F92D500BF66DB /* Raygun_KSThread.c in Sources */,
 				A28ECA48218FFC370098E422 /* NSViewController+RaygunRUM.m in Sources */,
 				A2E1A23F218F92D500BF66DB /* NSError+SimpleConstructor.m in Sources */,
 				A2E1A240218F92D500BF66DB /* KSCrashReportFilterBasic.m in Sources */,

@@ -89,7 +89,7 @@ static void updateThreadList()
         {
             allThreadNames[i] = strdup(buffer);
         }
-        if(g_searchQueueNames && ksthread_getQueueName((KSThread)thread, buffer, sizeof(buffer)) && buffer[0] != 0)
+        if(g_searchQueueNames && raygun_ksthread_getQueueName((KSThread)thread, buffer, sizeof(buffer)) && buffer[0] != 0)
         {
             allQueueNames[i] = strdup(buffer);
         }

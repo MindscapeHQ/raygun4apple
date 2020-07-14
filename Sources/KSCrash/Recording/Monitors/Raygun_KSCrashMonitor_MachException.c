@@ -29,7 +29,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSCPU.h"
 #include "Raygun_KSID.h"
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSStackCursor_MachineContext.h"
 
@@ -269,7 +269,7 @@ static void* handleExceptions(void* const userData)
     if(threadName == kThreadSecondary)
     {
         RAYGUN_KSLOG_ERROR("This is the secondary thread. Suspending.");
-        thread_suspend((thread_t)ksthread_self());
+        thread_suspend((thread_t)raygun_ksthread_self());
         eventID = g_secondaryEventID;
     }
 
@@ -307,7 +307,7 @@ static void* handleExceptions(void* const userData)
 
         // Switch to the secondary thread if necessary, or uninstall the handler
         // to avoid a death loop.
-        if(ksthread_self() == g_primaryMachThread)
+        if(raygun_ksthread_self() == g_primaryMachThread)
         {
             RAYGUN_KSLOG_ERROR("This is the primary exception thread. Activating secondary thread.");
 // TODO: This was put here to avoid a freeze. Does secondary thread ever fire?
@@ -398,7 +398,7 @@ static void uninstallExceptionHandler()
     
     restoreExceptionPorts();
     
-    thread_t thread_self = (thread_t)ksthread_self();
+    thread_t thread_self = (thread_t)raygun_ksthread_self();
     
     if(g_primaryPThread != 0 && g_primaryMachThread != thread_self)
     {

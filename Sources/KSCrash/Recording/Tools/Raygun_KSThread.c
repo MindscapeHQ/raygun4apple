@@ -25,7 +25,7 @@
 //
 
 
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 
 #include "Raygun_KSSystemCapabilities.h"
 #include "Raygun_KSMemory.h"
@@ -39,14 +39,14 @@
 #include <sys/sysctl.h>
 
 
-KSThread ksthread_self()
+KSThread raygun_ksthread_self()
 {
     thread_t thread_self = mach_thread_self();
     mach_port_deallocate(mach_task_self(), thread_self);
     return (KSThread)thread_self;
 }
 
-bool ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLength)
+bool raygun_ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLength)
 {
     // WARNING: This implementation is no longer async-safe!
     
@@ -54,7 +54,7 @@ bool ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLe
     return pthread_getname_np(pthread, buffer, (unsigned)bufLength) == 0;
 }
 
-bool ksthread_getQueueName(const KSThread thread, char* const buffer, int bufLength)
+bool raygun_ksthread_getQueueName(const KSThread thread, char* const buffer, int bufLength)
 {
     // WARNING: This implementation is no longer async-safe!
     

@@ -49,7 +49,7 @@ typedef uintptr_t KSThread;
  *
  * @return true if a name was found.
  */
-bool ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLength);
+bool raygun_ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLength);
 
 /** Get the name of a thread's dispatch queue. Internally, a queue name will
  * never be more than 64 characters long.
@@ -62,7 +62,7 @@ bool ksthread_getThreadName(const KSThread thread, char* const buffer, int bufLe
  *
  * @return true if a name or label was found.
  */
-bool ksthread_getQueueName(KSThread thread, char* buffer, int bufLength);
+bool raygun_ksthread_getQueueName(KSThread thread, char* buffer, int bufLength);
 
 /* Get the current mach thread ID.
  * mach_thread_self() receives a send right for the thread port which needs to
@@ -71,7 +71,7 @@ bool ksthread_getQueueName(KSThread thread, char* buffer, int bufLength);
  *
  * @return The current thread ID.
  */
-KSThread ksthread_self(void);
+KSThread raygun_ksthread_self(void);
 
 
 #ifdef __cplusplus

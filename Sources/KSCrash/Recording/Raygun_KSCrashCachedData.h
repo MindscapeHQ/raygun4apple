@@ -27,7 +27,7 @@
  */
 
 
-#include "KSThread.h"
+#include "Raygun_KSThread.h"
 
 void raygun_ksccd_init(int pollingIntervalInSeconds);
 
