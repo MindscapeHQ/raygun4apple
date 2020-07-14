@@ -36,7 +36,7 @@
     return [super initWithRequiredProperties:[NSArray array]];
 }
 
-- (id<KSCrashReportFilter>)sink {
+- (id<Raygun_KSCrashReportFilter>)sink {
     return [[RaygunCrashReportSink alloc] init];
 }
 
@@ -44,11 +44,11 @@
     [super sendAllReportsWithCompletion:nil];
 }
 
-- (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink {
+- (void)sendAllReportsWithSink:(id<Raygun_KSCrashReportFilter>)sink {
     [self sendAllReportsWithSink:sink withCompletion:nil];
 }
 
-- (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion)onCompletion {
+- (void)sendAllReportsWithSink:(id<Raygun_KSCrashReportFilter>)sink withCompletion:(Raygun_KSCrashReportFilterCompletion)onCompletion {
     [super sendAllReportsWithSink:sink withCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error != nil) {
             [RaygunLogger logError:@"Error sending: %@", error.localizedDescription];

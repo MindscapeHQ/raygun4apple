@@ -35,14 +35,14 @@
  *                  user cancelling the operation).
  * @param error Non-nil if an error occurred.
  */
-typedef void(^KSCrashReportFilterCompletion)(NSArray* filteredReports, BOOL completed, NSError* error);
+typedef void(^Raygun_KSCrashReportFilterCompletion)(NSArray* filteredReports, BOOL completed, NSError* error);
 
 
 /**
  * A filter receives a set of reports, possibly transforms them, and then
  * calls a completion method.
  */
-@protocol KSCrashReportFilter <NSObject>
+@protocol Raygun_KSCrashReportFilter <NSObject>
 
 /** Filter the specified reports.
  *
@@ -50,7 +50,7 @@ typedef void(^KSCrashReportFilterCompletion)(NSArray* filteredReports, BOOL comp
  * @param onCompletion Block to call when processing is complete.
  */
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion;
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion;
 
 @end
 
@@ -62,7 +62,7 @@ typedef void(^KSCrashReportFilterCompletion)(NSArray* filteredReports, BOOL comp
  * @param completed The parameter to send as "completed".
  * @param error The parameter to send as "error".
  */
-static inline void kscrash_callCompletion(KSCrashReportFilterCompletion onCompletion,
+static inline void raygun_kscrash_callCompletion(Raygun_KSCrashReportFilterCompletion onCompletion,
                                             NSArray* filteredReports,
                                             BOOL completed,
                                             NSError* error)

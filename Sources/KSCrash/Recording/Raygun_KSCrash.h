@@ -28,7 +28,7 @@
 #import <Foundation/Foundation.h>
 
 #import "Raygun_KSCrashReportWriter.h"
-#import "KSCrashReportFilter.h"
+#import "Raygun_KSCrashReportFilter.h"
 #import "Raygun_KSCrashMonitorType.h"
 
 typedef enum
@@ -144,7 +144,7 @@ typedef enum
  * Note: If you use an installation, it will automatically set this property.
  *       Do not modify it in such a case.
  */
-@property(nonatomic,readwrite,retain) id<KSCrashReportFilter> sink;
+@property(nonatomic,readwrite,retain) id<Raygun_KSCrashReportFilter> sink;
 
 /** C Function to call during a crash report to give the callee an opportunity to
  * add to the report. NULL = ignore.
@@ -231,7 +231,7 @@ typedef enum
  *
  * @param onCompletion Called when sending is complete (nil = ignore).
  */
-- (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion;
+- (void) sendAllReportsWithCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion;
 
 /** Get all unsent report IDs.
  *

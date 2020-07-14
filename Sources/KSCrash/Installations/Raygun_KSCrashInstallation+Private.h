@@ -78,7 +78,7 @@ IMPLEMENT_REPORT_KEY_PROPERTY(NAME, NAMEUPPER)
 
 /** Create a new sink. Subclasses must implement this.
  */
-- (id<KSCrashReportFilter>) sink;
+- (id<Raygun_KSCrashReportFilter>) sink;
 
 /** Make an absolute key path if the specified path is not already absolute. */
 - (NSString*) makeKeyPath:(NSString*) keyPath;

@@ -26,7 +26,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "KSCrashReportFilter.h"
+#import "Raygun_KSCrashReportFilter.h"
 #import "Raygun_KSCrashReportWriter.h"
 
 
@@ -59,15 +59,15 @@
  *
  * @param onCompletion Called when sending is complete (nil = ignore).
  */
-- (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion;
+- (void) sendAllReportsWithCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion;
 
-- (void) sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion) onCompletion;
+- (void) sendAllReportsWithSink:(id<Raygun_KSCrashReportFilter>)sink withCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion;
 
 /** Add a filter that gets executed before all normal filters.
  * Prepended filters will be executed in the order in which they were added.
  *
  * @param filter the filter to prepend.
  */
-- (void) addPreFilter:(id<KSCrashReportFilter>) filter;
+- (void) addPreFilter:(id<Raygun_KSCrashReportFilter>) filter;
 
 @end

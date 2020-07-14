@@ -339,7 +339,7 @@ static NSString* getBasePath()
     return true;
 }
 
-- (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion
+- (void) sendAllReportsWithCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSArray* reports = [self allReports];
     
@@ -358,7 +358,7 @@ static NSString* getBasePath()
          {
              raygun_kscrash_deleteAllReports();
          }
-         kscrash_callCompletion(onCompletion, filteredReports, completed, error);
+         raygun_kscrash_callCompletion(onCompletion, filteredReports, completed, error);
      }];
 }
 
@@ -427,17 +427,17 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
     return raygun_kscrash_getReportCount();
 }
 
-- (void) sendReports:(NSArray*) reports onCompletion:(KSCrashReportFilterCompletion) onCompletion
+- (void) sendReports:(NSArray*) reports onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     if([reports count] == 0)
     {
-        kscrash_callCompletion(onCompletion, reports, YES, nil);
+        raygun_kscrash_callCompletion(onCompletion, reports, YES, nil);
         return;
     }
     
     if(self.sink == nil)
     {
-        kscrash_callCompletion(onCompletion, reports, NO,
+        raygun_kscrash_callCompletion(onCompletion, reports, NO,
                                  [NSError errorWithDomain:[[self class] description]
                                                      code:0
                                               description:@"No sink set. Crash reports not sent."]);
@@ -447,7 +447,7 @@ SYNTHESIZE_CRASH_STATE_PROPERTY(BOOL, crashedLastLaunch)
     [self.sink filterReports:reports
                 onCompletion:^(NSArray* filteredReports, BOOL completed, NSError* error)
      {
-         kscrash_callCompletion(onCompletion, filteredReports, completed, error);
+         raygun_kscrash_callCompletion(onCompletion, filteredReports, completed, error);
      }];
 }
 

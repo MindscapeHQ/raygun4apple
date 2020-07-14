@@ -27,6 +27,6 @@
 #import <Foundation/Foundation.h>
 #import "Raygun_KSCrash.h"
 
-@interface RaygunCrashReportSink : NSObject <KSCrashReportFilter>
+@interface RaygunCrashReportSink : NSObject <Raygun_KSCrashReportFilter>
 
 @end

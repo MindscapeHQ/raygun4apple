@@ -25,7 +25,7 @@
 //
 
 
-#import "KSCrashReportFilter.h"
+#import "Raygun_KSCrashReportFilter.h"
 
 
 /**
@@ -34,7 +34,7 @@
  * Input: Anything.
  * Output: Same as input (passthrough).
  */
-@interface KSCrashReportFilterPassthrough : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterPassthrough : NSObject <Raygun_KSCrashReportFilter>
 
 + (KSCrashReportFilterPassthrough*) filter;
 
@@ -48,7 +48,7 @@
  * Input: Anything
  * Output: NSDictionary
  */
-@interface KSCrashReportFilterCombine : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterCombine : NSObject <Raygun_KSCrashReportFilter>
 
 /** Constructor.
  *
@@ -75,7 +75,7 @@
  * Input: Depends on what's in the pipeline.
  * Output: Depends on what's in the pipeline.
  */
-@interface KSCrashReportFilterPipeline : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterPipeline : NSObject <Raygun_KSCrashReportFilter>
 
 /** The filters in this pipeline. */
 @property(nonatomic,readonly,retain) NSArray* filters;
@@ -92,7 +92,7 @@
  */
 - (id) initWithFilters:(id) firstFilter, ... NS_REQUIRES_NIL_TERMINATION;
 
-- (void) addFilter:(id<KSCrashReportFilter>) filter;
+- (void) addFilter:(id<Raygun_KSCrashReportFilter>) filter;
 
 @end
 
@@ -100,7 +100,7 @@
 /**
  * Extracts data associated with a key from each report.
  */
-@interface KSCrashReportFilterObjectForKey : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterObjectForKey : NSObject <Raygun_KSCrashReportFilter>
 
 /** Constructor.
  *
@@ -131,7 +131,7 @@
  * Input: NSDictionary
  * Output: NSString
  */
-@interface KSCrashReportFilterConcatenate : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterConcatenate : NSObject <Raygun_KSCrashReportFilter>
 
 /** Constructor.
  *
@@ -160,7 +160,7 @@
  * Input: NSDictionary
  * Output: NSDictionary
  */
-@interface KSCrashReportFilterSubset : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterSubset : NSObject <Raygun_KSCrashReportFilter>
 
 /** Constructor.
  *
@@ -183,7 +183,7 @@
  * Input: NSData
  * Output: NSString
  */
-@interface KSCrashReportFilterDataToString : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterDataToString : NSObject <Raygun_KSCrashReportFilter>
 
 + (KSCrashReportFilterDataToString*) filter;
 
@@ -196,7 +196,7 @@
  * Input: NSString
  * Output: NSData
  */
-@interface KSCrashReportFilterStringToData : NSObject <KSCrashReportFilter>
+@interface KSCrashReportFilterStringToData : NSObject <Raygun_KSCrashReportFilter>
 
 + (KSCrashReportFilterStringToData*) filter;
 

@@ -327,12 +327,12 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     }
 }
 
-- (void) sendAllReportsWithCompletion:(KSCrashReportFilterCompletion) onCompletion
+- (void) sendAllReportsWithCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     [self sendAllReportsWithSink:[self sink] withCompletion:onCompletion];
 }
 
-- (void) sendAllReportsWithSink:(id<KSCrashReportFilter>)sink withCompletion:(KSCrashReportFilterCompletion) onCompletion
+- (void) sendAllReportsWithSink:(id<Raygun_KSCrashReportFilter>)sink withCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSError *error = [self validateProperties];
     if (error != nil)
@@ -359,12 +359,12 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     [handler sendAllReportsWithCompletion:onCompletion];
 }
 
-- (void) addPreFilter:(id<KSCrashReportFilter>) filter
+- (void) addPreFilter:(id<Raygun_KSCrashReportFilter>) filter
 {
     [self.prependedFilters addFilter:filter];
 }
 
-- (id<KSCrashReportFilter>) sink
+- (id<Raygun_KSCrashReportFilter>) sink
 {
     return nil;
 }

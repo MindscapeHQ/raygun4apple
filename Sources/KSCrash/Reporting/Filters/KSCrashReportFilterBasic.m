@@ -42,9 +42,9 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
-    kscrash_callCompletion(onCompletion, reports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, reports, YES, nil);
 }
 
 @end
@@ -97,7 +97,7 @@
             {
                 entry = [KSCrashReportFilterPipeline filterWithFilters:entry, nil];
             }
-            if(![entry conformsToProtocol:@protocol(KSCrashReportFilter)])
+            if(![entry conformsToProtocol:@protocol(Raygun_KSCrashReportFilter)])
             {
                 RAYGUN_KSLOG_ERROR(@"Not a filter: %@", entry);
                 // Cause next key entry to fail as well.
@@ -130,7 +130,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSArray* filters = self.filters;
     NSArray* keys = self.keys;
@@ -138,13 +138,13 @@
     
     if(filterCount == 0)
     {
-        kscrash_callCompletion(onCompletion, reports, YES, nil);
+        raygun_kscrash_callCompletion(onCompletion, reports, YES, nil);
         return;
     }
     
     if(filterCount != [keys count])
     {
-        kscrash_callCompletion(onCompletion, reports, NO,
+        raygun_kscrash_callCompletion(onCompletion, reports, NO,
                                  [NSError errorWithDomain:[[self class] description]
                                                      code:0
                                               description:@"Key/filter mismatch (%d keys, %d filters",
@@ -155,8 +155,8 @@
     NSMutableArray* reportSets = [NSMutableArray arrayWithCapacity:filterCount];
     
     __block NSUInteger iFilter = 0;
-    __block KSCrashReportFilterCompletion filterCompletion = nil;
-    __block __weak KSCrashReportFilterCompletion weakFilterCompletion = nil;
+    __block Raygun_KSCrashReportFilterCompletion filterCompletion = nil;
+    __block __weak Raygun_KSCrashReportFilterCompletion weakFilterCompletion = nil;
     dispatch_block_t disposeOfCompletion = [^
                                             {
                                                 // Release self-reference on the main thread.
@@ -173,14 +173,14 @@
                             {
                                 if(!completed)
                                 {
-                                    kscrash_callCompletion(onCompletion,
+                                    raygun_kscrash_callCompletion(onCompletion,
                                                              filteredReports,
                                                              completed,
                                                              filterError);
                                 }
                                 else if(filteredReports == nil)
                                 {
-                                    kscrash_callCompletion(onCompletion, filteredReports, NO,
+                                    raygun_kscrash_callCompletion(onCompletion, filteredReports, NO,
                                                              [NSError errorWithDomain:[[self class] description]
                                                                                  code:0
                                                                           description:@"filteredReports was nil"]);
@@ -193,7 +193,7 @@
                             [reportSets addObject:filteredReports];
                             if(++iFilter < filterCount)
                             {
-                                id<KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
+                                id<Raygun_KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
                                 [filter filterReports:reports onCompletion:weakFilterCompletion];
                                 return;
                             }
@@ -217,13 +217,13 @@
                                 [combinedReports addObject:dict];
                             }
                             
-                            kscrash_callCompletion(onCompletion, combinedReports, completed, filterError);
+                            raygun_kscrash_callCompletion(onCompletion, combinedReports, completed, filterError);
                             disposeOfCompletion();
                         } copy];
     weakFilterCompletion = filterCompletion;
     
     // Initial call with first filter to start everything going.
-    id<KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
+    id<Raygun_KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
     [filter filterReports:reports onCompletion:filterCompletion];
 }
 
@@ -259,7 +259,7 @@
     if((self = [super init]))
     {
         NSMutableArray* expandedFilters = [NSMutableArray array];
-        for(id<KSCrashReportFilter> filter in filters)
+        for(id<Raygun_KSCrashReportFilter> filter in filters)
         {
             if([filter isKindOfClass:[NSArray class]])
             {
@@ -275,27 +275,27 @@
     return self;
 }
 
-- (void) addFilter:(id<KSCrashReportFilter>) filter
+- (void) addFilter:(id<Raygun_KSCrashReportFilter>) filter
 {
     NSMutableArray* mutableFilters = (NSMutableArray*)self.filters; // Shh! Don't tell anyone!
     [mutableFilters insertObject:filter atIndex:0];
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSArray* filters = self.filters;
     NSUInteger filterCount = [filters count];
     
     if(filterCount == 0)
     {
-        kscrash_callCompletion(onCompletion, reports, YES,  nil);
+        raygun_kscrash_callCompletion(onCompletion, reports, YES,  nil);
         return;
     }
     
     __block NSUInteger iFilter = 0;
-    __block KSCrashReportFilterCompletion filterCompletion;
-    __block __weak KSCrashReportFilterCompletion weakFilterCompletion = nil;
+    __block Raygun_KSCrashReportFilterCompletion filterCompletion;
+    __block __weak Raygun_KSCrashReportFilterCompletion weakFilterCompletion = nil;
     dispatch_block_t disposeOfCompletion = [^
                                             {
                                                 // Release self-reference on the main thread.
@@ -312,14 +312,14 @@
                             {
                                 if(!completed)
                                 {
-                                    kscrash_callCompletion(onCompletion,
+                                    raygun_kscrash_callCompletion(onCompletion,
                                                              filteredReports,
                                                              completed,
                                                              filterError);
                                 }
                                 else if(filteredReports == nil)
                                 {
-                                    kscrash_callCompletion(onCompletion, filteredReports, NO,
+                                    raygun_kscrash_callCompletion(onCompletion, filteredReports, NO,
                                                              [NSError errorWithDomain:[[self class] description]
                                                                                  code:0
                                                                           description:@"filteredReports was nil"]);
@@ -332,19 +332,19 @@
                             // filter fails to complete.
                             if(++iFilter < filterCount)
                             {
-                                id<KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
+                                id<Raygun_KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
                                 [filter filterReports:filteredReports onCompletion:weakFilterCompletion];
                                 return;
                             }
                             
                             // All filters complete, or a filter failed.
-                            kscrash_callCompletion(onCompletion, filteredReports, completed, filterError);
+                            raygun_kscrash_callCompletion(onCompletion, filteredReports, completed, filterError);
                             disposeOfCompletion();
                         } copy];
     weakFilterCompletion = filterCompletion;
     
     // Initial call with first filter to start everything going.
-    id<KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
+    id<Raygun_KSCrashReportFilter> filter = [filters objectAtIndex:iFilter];
     [filter filterReports:reports onCompletion:filterCompletion];
 }
 
@@ -381,7 +381,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSMutableArray* filteredReports = [NSMutableArray arrayWithCapacity:[reports count]];
     for(NSDictionary* report in reports)
@@ -399,7 +399,7 @@
         {
             if(!self.allowNotFound)
             {
-                kscrash_callCompletion(onCompletion, filteredReports, NO,
+                raygun_kscrash_callCompletion(onCompletion, filteredReports, NO,
                                          [NSError errorWithDomain:[[self class] description]
                                                              code:0
                                                       description:@"Key not found: %@", self.key]);
@@ -412,7 +412,7 @@
             [filteredReports addObject:object];
         }
     }
-    kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
 }
 
 @end
@@ -466,7 +466,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSMutableArray* filteredReports = [NSMutableArray arrayWithCapacity:[reports count]];
     for(NSDictionary* report in reports)
@@ -488,7 +488,7 @@
         }
         [filteredReports addObject:concatenated];
     }
-    kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
 }
 
 @end
@@ -539,7 +539,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion) onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
     NSMutableArray* filteredReports = [NSMutableArray arrayWithCapacity:[reports count]];
     for(NSDictionary* report in reports)
@@ -550,7 +550,7 @@
             id object = [report objectForKeyPath:keyPath];
             if(object == nil)
             {
-                kscrash_callCompletion(onCompletion, filteredReports, NO,
+                raygun_kscrash_callCompletion(onCompletion, filteredReports, NO,
                                          [NSError errorWithDomain:[[self class] description]
                                                              code:0
                                                       description:@"Report did not have key path %@", keyPath]);
@@ -560,7 +560,7 @@
         }
         [filteredReports addObject:subset];
     }
-    kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
 }
 
 @end
@@ -574,7 +574,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion)onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion)onCompletion
 {
     NSMutableArray* filteredReports = [NSMutableArray arrayWithCapacity:[reports count]];
     for(NSData* report in reports)
@@ -583,7 +583,7 @@
         [filteredReports addObject:converted];
     }
 
-    kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
 }
 
 @end
@@ -597,7 +597,7 @@
 }
 
 - (void) filterReports:(NSArray*) reports
-          onCompletion:(KSCrashReportFilterCompletion)onCompletion
+          onCompletion:(Raygun_KSCrashReportFilterCompletion)onCompletion
 {
     NSMutableArray* filteredReports = [NSMutableArray arrayWithCapacity:[reports count]];
     for(NSString* report in reports)
@@ -605,7 +605,7 @@
         NSData* converted = [report dataUsingEncoding:NSUTF8StringEncoding];
         if(converted == nil)
         {
-            kscrash_callCompletion(onCompletion, filteredReports, NO,
+            raygun_kscrash_callCompletion(onCompletion, filteredReports, NO,
                                      [NSError errorWithDomain:[[self class] description]
                                                          code:0
                                                   description:@"Could not convert report to UTF-8"]);
@@ -617,7 +617,7 @@
         }
     }
 
-    kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
+    raygun_kscrash_callCompletion(onCompletion, filteredReports, YES, nil);
 }
 
 @end
