@@ -25,7 +25,7 @@
 //
 
 
-#include "Demangle.h"
+#include "Raygun_Demangle.h"
 #include "Raygun_KSDemangle_Swift.h"
 
 extern "C" char* raygun_ksdm_demangleSwift(const char* mangledSymbol)

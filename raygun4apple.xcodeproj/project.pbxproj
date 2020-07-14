@@ -177,7 +177,7 @@
 		A2E1A206218F919500BF66DB /* Raygun_KSVarArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC9921003DAA0003C8B4 /* Raygun_KSVarArgs.h */; };
 		A2E1A207218F919500BF66DB /* NSData+GZip.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC9A21003DAA0003C8B4 /* NSData+GZip.h */; };
 		A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACA821003DAA0003C8B4 /* Raygun_KSCString.h */; };
-		A2E1A209218F919500BF66DB /* Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Demangle.h */; };
+		A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
 		A2E1A20A218F919500BF66DB /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
 		A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
 		A2E1A20C218F919500BF66DB /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
@@ -236,7 +236,7 @@
 		A2E1A241218F92D500BF66DB /* Container+Raygun_DeepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC9821003DAA0003C8B4 /* Container+Raygun_DeepSearch.m */; };
 		A2E1A242218F92D500BF66DB /* NSData+GZip.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC9B21003DAA0003C8B4 /* NSData+GZip.m */; };
 		A2E1A243218F92D500BF66DB /* Raygun_KSCString.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */; };
-		A2E1A244218F92D500BF66DB /* Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Demangle.cpp */; };
+		A2E1A244218F92D500BF66DB /* Raygun_Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */; };
 		A2E1A245218F92D500BF66DB /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
 		A2E1A246218F930E00BF66DB /* LICENSE.TXT in Resources */ = {isa = PBXBuildFile; fileRef = A2E4AC1A21003DA90003C8B4 /* LICENSE.TXT */; };
 		A2E1A247218F930E00BF66DB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */; };
@@ -482,10 +482,10 @@
 		A2E4ADF121003DAA0003C8B4 /* Raygun_KSCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACA821003DAA0003C8B4 /* Raygun_KSCString.h */; };
 		A2E4ADF221003DAA0003C8B4 /* Raygun_KSCString.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */; };
 		A2E4ADF321003DAA0003C8B4 /* Raygun_KSCString.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */; };
-		A2E4AE0821003DAA0003C8B4 /* Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Demangle.cpp */; };
-		A2E4AE0921003DAA0003C8B4 /* Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Demangle.cpp */; };
-		A2E4AE0A21003DAA0003C8B4 /* Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Demangle.h */; };
-		A2E4AE0B21003DAA0003C8B4 /* Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Demangle.h */; };
+		A2E4AE0821003DAA0003C8B4 /* Raygun_Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */; };
+		A2E4AE0921003DAA0003C8B4 /* Raygun_Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */; };
+		A2E4AE0A21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
+		A2E4AE0B21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
 		A2E4AE0C21003DAA0003C8B4 /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
 		A2E4AE0D21003DAA0003C8B4 /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
 		A2E4AE0E21003DAA0003C8B4 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
@@ -781,8 +781,8 @@
 		A2E4AC9B21003DAA0003C8B4 /* NSData+GZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+GZip.m"; sourceTree = "<group>"; };
 		A2E4ACA821003DAA0003C8B4 /* Raygun_KSCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSCString.h; sourceTree = "<group>"; };
 		A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raygun_KSCString.m; sourceTree = "<group>"; };
-		A2E4ACB621003DAA0003C8B4 /* Demangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Demangle.cpp; sourceTree = "<group>"; };
-		A2E4ACB721003DAA0003C8B4 /* Demangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demangle.h; sourceTree = "<group>"; };
+		A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_Demangle.cpp; sourceTree = "<group>"; };
+		A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Demangle.h; sourceTree = "<group>"; };
 		A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemangleNodes.h; sourceTree = "<group>"; };
 		A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fallthrough.h; sourceTree = "<group>"; };
 		A2E4ACBA21003DAA0003C8B4 /* LLVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLVM.h; sourceTree = "<group>"; };
@@ -1182,8 +1182,8 @@
 		A2E4ACB521003DAA0003C8B4 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				A2E4ACB621003DAA0003C8B4 /* Demangle.cpp */,
-				A2E4ACB721003DAA0003C8B4 /* Demangle.h */,
+				A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */,
+				A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */,
 				A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */,
 				A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */,
 				A2E4ACBA21003DAA0003C8B4 /* LLVM.h */,
@@ -1316,7 +1316,7 @@
 				A2E4AD6621003DAA0003C8B4 /* Raygun_KSFileUtils.h in Headers */,
 				A2E4AE1021003DAA0003C8B4 /* LLVM.h in Headers */,
 				A2E4ACDE21003DAA0003C8B4 /* Raygun_None.h in Headers */,
-				A2E4AE0A21003DAA0003C8B4 /* Demangle.h in Headers */,
+				A2E4AE0A21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */,
 				A2E4ADB021003DAA0003C8B4 /* NSError+Raygun_SimpleConstructor.h in Headers */,
 				A2E4AD8E21003DAA0003C8B4 /* Raygun_KSSignalInfo.h in Headers */,
 				DC5EFA6B210FFA7A002C0713 /* RaygunNetworkPerformanceMonitor.h in Headers */,
@@ -1424,7 +1424,7 @@
 				A2E4AD6721003DAA0003C8B4 /* Raygun_KSFileUtils.h in Headers */,
 				A2E4AE1121003DAA0003C8B4 /* LLVM.h in Headers */,
 				A2E4ACDF21003DAA0003C8B4 /* Raygun_None.h in Headers */,
-				A2E4AE0B21003DAA0003C8B4 /* Demangle.h in Headers */,
+				A2E4AE0B21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */,
 				A2E4ADB121003DAA0003C8B4 /* NSError+Raygun_SimpleConstructor.h in Headers */,
 				A2E4AD8F21003DAA0003C8B4 /* Raygun_KSSignalInfo.h in Headers */,
 				A2E4ACEB21003DAA0003C8B4 /* Casting.h in Headers */,
@@ -1572,7 +1572,7 @@
 				A2E1A206218F919500BF66DB /* Raygun_KSVarArgs.h in Headers */,
 				A2E1A207218F919500BF66DB /* NSData+GZip.h in Headers */,
 				A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */,
-				A2E1A209218F919500BF66DB /* Demangle.h in Headers */,
+				A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */,
 				A2E1A20A218F919500BF66DB /* DemangleNodes.h in Headers */,
 				A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */,
 				A2E1A20C218F919500BF66DB /* LLVM.h in Headers */,
@@ -1892,7 +1892,7 @@
 				A2E4AD4C21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */,
 				A29D673D216D677100BAC934 /* RaygunBreadcrumb.m in Sources */,
 				A2E4AD9821003DAA0003C8B4 /* Raygun_KSStackCursor_MachineContext.c in Sources */,
-				A2E4AE0821003DAA0003C8B4 /* Demangle.cpp in Sources */,
+				A2E4AE0821003DAA0003C8B4 /* Raygun_Demangle.cpp in Sources */,
 				A2E4ADB221003DAA0003C8B4 /* NSError+Raygun_SimpleConstructor.m in Sources */,
 				A2132B3321373FF90030A3C5 /* RaygunEventData.m in Sources */,
 				A2E4AD6021003DAA0003C8B4 /* Raygun_KSDynamicLinker.c in Sources */,
@@ -1978,7 +1978,7 @@
 				A29D673E216D677100BAC934 /* RaygunBreadcrumb.m in Sources */,
 				A2E4AD4D21003DAA0003C8B4 /* Raygun_KSCPU_x86_32.c in Sources */,
 				A2E4AD9921003DAA0003C8B4 /* Raygun_KSStackCursor_MachineContext.c in Sources */,
-				A2E4AE0921003DAA0003C8B4 /* Demangle.cpp in Sources */,
+				A2E4AE0921003DAA0003C8B4 /* Raygun_Demangle.cpp in Sources */,
 				A2132B3421373FF90030A3C5 /* RaygunEventData.m in Sources */,
 				A2E4ADB321003DAA0003C8B4 /* NSError+Raygun_SimpleConstructor.m in Sources */,
 				A2E4AD6121003DAA0003C8B4 /* Raygun_KSDynamicLinker.c in Sources */,
@@ -2067,7 +2067,7 @@
 				A2E1A241218F92D500BF66DB /* Container+Raygun_DeepSearch.m in Sources */,
 				A2E1A242218F92D500BF66DB /* NSData+GZip.m in Sources */,
 				A2E1A243218F92D500BF66DB /* Raygun_KSCString.m in Sources */,
-				A2E1A244218F92D500BF66DB /* Demangle.cpp in Sources */,
+				A2E1A244218F92D500BF66DB /* Raygun_Demangle.cpp in Sources */,
 				A2E1A245218F92D500BF66DB /* Punycode.cpp in Sources */,
 				A2132B3521373FF90030A3C5 /* RaygunEventData.m in Sources */,
 				DCD5C2072117E8C3002623B7 /* RaygunNetworkPerformanceMonitor.m in Sources */,

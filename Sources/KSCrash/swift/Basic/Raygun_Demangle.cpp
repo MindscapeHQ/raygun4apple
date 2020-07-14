@@ -21,7 +21,7 @@
 //#include "swift/Basic/Punycode.h"
 //#include "swift/Basic/UUID.h"
 //#include "llvm/ADT/StringRef.h"
-#include "Demangle.h"
+#include "Raygun_Demangle.h"
 #include "Fallthrough.h"
 #include "SwiftStrings.h"
 #include "LLVM.h"
