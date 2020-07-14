@@ -24,7 +24,7 @@
 
 
 #include "Raygun_KSStackCursor.h"
-#include "KSSymbolicator.h"
+#include "Raygun_KSSymbolicator.h"
 #include <stdlib.h>
 
 //#define Raygun_KSLogger_LocalLevel TRACE
@@ -51,7 +51,7 @@ void raygun_kssc_initCursor(Raygun_KSStackCursor *cursor,
                      void (*resetCursor)(Raygun_KSStackCursor*),
                      bool (*advanceCursor)(Raygun_KSStackCursor*))
 {
-    cursor->symbolicate = kssymbolicator_symbolicate;
+    cursor->symbolicate = raygun_kssymbolicator_symbolicate;
     cursor->advanceCursor = advanceCursor != NULL ? advanceCursor : g_advanceCursor;
     cursor->resetCursor = resetCursor != NULL ? resetCursor : raygun_kssc_resetCursor;
     cursor->resetCursor(cursor);

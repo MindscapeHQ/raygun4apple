@@ -40,7 +40,7 @@ extern "C" {
  *
  * @return True if successful.
  */
-bool kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor);
+bool raygun_kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor);
 
     
 #ifdef __cplusplus

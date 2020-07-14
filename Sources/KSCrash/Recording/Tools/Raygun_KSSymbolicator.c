@@ -23,7 +23,7 @@
 //
 
 
-#include "KSSymbolicator.h"
+#include "Raygun_KSSymbolicator.h"
 #include "Raygun_KSDynamicLinker.h"
 
 
@@ -52,7 +52,7 @@
 #define CALL_INSTRUCTION_FROM_RETURN_ADDRESS(A) (DETAG_INSTRUCTION_ADDRESS((A)) - 1)
 
 
-bool kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor)
+bool raygun_kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor)
 {
     Dl_info symbolsBuffer;
     if(raygun_ksdl_dladdr(CALL_INSTRUCTION_FROM_RETURN_ADDRESS(cursor->stackEntry.address), &symbolsBuffer))

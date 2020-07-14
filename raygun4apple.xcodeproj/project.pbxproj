@@ -167,7 +167,7 @@
 		A2E1A1FC218F919500BF66DB /* Raygun_KSStackCursor_MachineContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7821003DA90003C8B4 /* Raygun_KSStackCursor_MachineContext.h */; };
 		A2E1A1FD218F919500BF66DB /* Raygun_KSStackCursor_SelfThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7A21003DA90003C8B4 /* Raygun_KSStackCursor_SelfThread.h */; };
 		A2E1A1FE218F919500BF66DB /* Raygun_KSString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */; };
-		A2E1A1FF218F919500BF66DB /* KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* KSSymbolicator.h */; };
+		A2E1A1FF218F919500BF66DB /* Raygun_KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */; };
 		A2E1A200218F919500BF66DB /* KSSysCtl.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8021003DA90003C8B4 /* KSSysCtl.h */; };
 		A2E1A201218F919500BF66DB /* KSThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8221003DA90003C8B4 /* KSThread.h */; };
 		A2E1A202218F919500BF66DB /* NSError+SimpleConstructor.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8321003DA90003C8B4 /* NSError+SimpleConstructor.h */; };
@@ -228,7 +228,7 @@
 		A2E1A239218F92D500BF66DB /* Raygun_KSStackCursor_MachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7721003DA90003C8B4 /* Raygun_KSStackCursor_MachineContext.c */; };
 		A2E1A23A218F92D500BF66DB /* Raygun_KSStackCursor_SelfThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7921003DA90003C8B4 /* Raygun_KSStackCursor_SelfThread.c */; };
 		A2E1A23B218F92D500BF66DB /* Raygun_KSString.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7B21003DA90003C8B4 /* Raygun_KSString.c */; };
-		A2E1A23C218F92D500BF66DB /* KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* KSSymbolicator.c */; };
+		A2E1A23C218F92D500BF66DB /* Raygun_KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */; };
 		A2E1A23D218F92D500BF66DB /* KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7F21003DA90003C8B4 /* KSSysCtl.c */; };
 		A2E1A23E218F92D500BF66DB /* KSThread.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8121003DA90003C8B4 /* KSThread.c */; };
 		A2E1A23F218F92D500BF66DB /* NSError+SimpleConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC8421003DA90003C8B4 /* NSError+SimpleConstructor.m */; };
@@ -446,10 +446,10 @@
 		A2E4ADA121003DAA0003C8B4 /* Raygun_KSString.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7B21003DA90003C8B4 /* Raygun_KSString.c */; };
 		A2E4ADA221003DAA0003C8B4 /* Raygun_KSString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */; };
 		A2E4ADA321003DAA0003C8B4 /* Raygun_KSString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */; };
-		A2E4ADA421003DAA0003C8B4 /* KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* KSSymbolicator.c */; };
-		A2E4ADA521003DAA0003C8B4 /* KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* KSSymbolicator.c */; };
-		A2E4ADA621003DAA0003C8B4 /* KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* KSSymbolicator.h */; };
-		A2E4ADA721003DAA0003C8B4 /* KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* KSSymbolicator.h */; };
+		A2E4ADA421003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */; };
+		A2E4ADA521003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */; };
+		A2E4ADA621003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */; };
+		A2E4ADA721003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */; };
 		A2E4ADA821003DAA0003C8B4 /* KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7F21003DA90003C8B4 /* KSSysCtl.c */; };
 		A2E4ADA921003DAA0003C8B4 /* KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC7F21003DA90003C8B4 /* KSSysCtl.c */; };
 		A2E4ADAA21003DAA0003C8B4 /* KSSysCtl.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC8021003DA90003C8B4 /* KSSysCtl.h */; };
@@ -763,8 +763,8 @@
 		A2E4AC7A21003DA90003C8B4 /* Raygun_KSStackCursor_SelfThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSStackCursor_SelfThread.h; sourceTree = "<group>"; };
 		A2E4AC7B21003DA90003C8B4 /* Raygun_KSString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSString.c; sourceTree = "<group>"; };
 		A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSString.h; sourceTree = "<group>"; };
-		A2E4AC7D21003DA90003C8B4 /* KSSymbolicator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSSymbolicator.c; sourceTree = "<group>"; };
-		A2E4AC7E21003DA90003C8B4 /* KSSymbolicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSymbolicator.h; sourceTree = "<group>"; };
+		A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Raygun_KSSymbolicator.c; sourceTree = "<group>"; };
+		A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_KSSymbolicator.h; sourceTree = "<group>"; };
 		A2E4AC7F21003DA90003C8B4 /* KSSysCtl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSSysCtl.c; sourceTree = "<group>"; };
 		A2E4AC8021003DA90003C8B4 /* KSSysCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSysCtl.h; sourceTree = "<group>"; };
 		A2E4AC8121003DA90003C8B4 /* KSThread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSThread.c; sourceTree = "<group>"; };
@@ -1116,8 +1116,8 @@
 				A2E4AC7A21003DA90003C8B4 /* Raygun_KSStackCursor_SelfThread.h */,
 				A2E4AC7B21003DA90003C8B4 /* Raygun_KSString.c */,
 				A2E4AC7C21003DA90003C8B4 /* Raygun_KSString.h */,
-				A2E4AC7D21003DA90003C8B4 /* KSSymbolicator.c */,
-				A2E4AC7E21003DA90003C8B4 /* KSSymbolicator.h */,
+				A2E4AC7D21003DA90003C8B4 /* Raygun_KSSymbolicator.c */,
+				A2E4AC7E21003DA90003C8B4 /* Raygun_KSSymbolicator.h */,
 				A2E4AC7F21003DA90003C8B4 /* KSSysCtl.c */,
 				A2E4AC8021003DA90003C8B4 /* KSSysCtl.h */,
 				A2E4AC8121003DA90003C8B4 /* KSThread.c */,
@@ -1295,7 +1295,7 @@
 				DC5EFAA2211013FB002C0713 /* RaygunCrashInstallation.h in Headers */,
 				A2E4AD0421003DAA0003C8B4 /* Raygun_KSCrashReportFields.h in Headers */,
 				DC5EFAAA211015A7002C0713 /* RaygunCrashReportSink.h in Headers */,
-				A2E4ADA621003DAA0003C8B4 /* KSSymbolicator.h in Headers */,
+				A2E4ADA621003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */,
 				A2E4ADB421003DAA0003C8B4 /* KSCrashReportFilter.h in Headers */,
 				A2E4AD6E21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
 				A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */,
@@ -1403,7 +1403,7 @@
 				DC5EFAA3211013FB002C0713 /* RaygunCrashInstallation.h in Headers */,
 				A2E4AD0521003DAA0003C8B4 /* Raygun_KSCrashReportFields.h in Headers */,
 				DC5EFAAB211015A8002C0713 /* RaygunCrashReportSink.h in Headers */,
-				A2E4ADA721003DAA0003C8B4 /* KSSymbolicator.h in Headers */,
+				A2E4ADA721003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */,
 				A2E4ADB521003DAA0003C8B4 /* KSCrashReportFilter.h in Headers */,
 				A2E4AD6F21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
 				A2E4AE1321003DAA0003C8B4 /* Malloc.h in Headers */,
@@ -1562,7 +1562,7 @@
 				A2E1A1FC218F919500BF66DB /* Raygun_KSStackCursor_MachineContext.h in Headers */,
 				A2E1A1FD218F919500BF66DB /* Raygun_KSStackCursor_SelfThread.h in Headers */,
 				A2E1A1FE218F919500BF66DB /* Raygun_KSString.h in Headers */,
-				A2E1A1FF218F919500BF66DB /* KSSymbolicator.h in Headers */,
+				A2E1A1FF218F919500BF66DB /* Raygun_KSSymbolicator.h in Headers */,
 				A2E1A200218F919500BF66DB /* KSSysCtl.h in Headers */,
 				A2E1A201218F919500BF66DB /* KSThread.h in Headers */,
 				A2E1A202218F919500BF66DB /* NSError+SimpleConstructor.h in Headers */,
@@ -1845,7 +1845,7 @@
 				DC5EFA71210FFA7A002C0713 /* RaygunClientMessage.m in Sources */,
 				A2E4ADF221003DAA0003C8B4 /* KSCString.m in Sources */,
 				A2E4ACF821003DAA0003C8B4 /* Raygun_KSCrashCachedData.c in Sources */,
-				A2E4ADA421003DAA0003C8B4 /* KSSymbolicator.c in Sources */,
+				A2E4ADA421003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */,
 				A2E4AE1421003DAA0003C8B4 /* Punycode.cpp in Sources */,
 				A2E4AD3221003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.m in Sources */,
 				A2E4ACC821003DAA0003C8B4 /* Raygun_KSCrashInstallation.m in Sources */,
@@ -1930,7 +1930,7 @@
 				DC5EFA72210FFA7A002C0713 /* RaygunClientMessage.m in Sources */,
 				A2E4ADF321003DAA0003C8B4 /* KSCString.m in Sources */,
 				A2E4ACF921003DAA0003C8B4 /* Raygun_KSCrashCachedData.c in Sources */,
-				A2E4ADA521003DAA0003C8B4 /* KSSymbolicator.c in Sources */,
+				A2E4ADA521003DAA0003C8B4 /* Raygun_KSSymbolicator.c in Sources */,
 				A2E4AE1521003DAA0003C8B4 /* Punycode.cpp in Sources */,
 				A2E4AD3321003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.m in Sources */,
 				A2E4ACC921003DAA0003C8B4 /* Raygun_KSCrashInstallation.m in Sources */,
@@ -2058,7 +2058,7 @@
 				A2E1A239218F92D500BF66DB /* Raygun_KSStackCursor_MachineContext.c in Sources */,
 				A2E1A23A218F92D500BF66DB /* Raygun_KSStackCursor_SelfThread.c in Sources */,
 				A2E1A23B218F92D500BF66DB /* Raygun_KSString.c in Sources */,
-				A2E1A23C218F92D500BF66DB /* KSSymbolicator.c in Sources */,
+				A2E1A23C218F92D500BF66DB /* Raygun_KSSymbolicator.c in Sources */,
 				A2E1A23D218F92D500BF66DB /* KSSysCtl.c in Sources */,
 				A2E1A23E218F92D500BF66DB /* KSThread.c in Sources */,
 				A28ECA48218FFC370098E422 /* NSViewController+RaygunRUM.m in Sources */,
