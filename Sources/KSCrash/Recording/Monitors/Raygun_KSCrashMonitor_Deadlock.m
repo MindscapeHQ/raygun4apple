@@ -112,7 +112,7 @@ static NSTimeInterval g_watchdogInterval = 0;
 
     RAYGUN_KSMC_NEW_CONTEXT(machineContext);
     raygun_ksmc_getContextForThread(g_mainQueueThread, machineContext, false);
-    KSStackCursor stackCursor;
+    Raygun_KSStackCursor stackCursor;
     kssc_initWithMachineContext(&stackCursor, 100, machineContext);
     char eventID[37];
     raygun_ksid_generate(eventID);

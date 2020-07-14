@@ -23,20 +23,20 @@
 //
 
 
-#include "KSStackCursor.h"
+#include "Raygun_KSStackCursor.h"
 #include "KSSymbolicator.h"
 #include <stdlib.h>
 
 //#define KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
 
-static bool g_advanceCursor(__unused KSStackCursor *cursor)
+static bool g_advanceCursor(__unused Raygun_KSStackCursor *cursor)
 {
     RAYGUN_KSLOG_ERROR("No stack cursor has been set. For C++, this means that hooking __cxa_throw() failed for some reason. Embedded frameworks can cause this: https://github.com/kstenerud/KSCrash/issues/205");
     return false;
 }
 
-void kssc_resetCursor(KSStackCursor *cursor)
+void raygun_kssc_resetCursor(Raygun_KSStackCursor *cursor)
 {
     cursor->state.currentDepth = 0;
     cursor->state.hasGivenUp = false;
@@ -47,12 +47,12 @@ void kssc_resetCursor(KSStackCursor *cursor)
     cursor->stackEntry.symbolName = NULL;
 }
 
-void kssc_initCursor(KSStackCursor *cursor,
-                     void (*resetCursor)(KSStackCursor*),
-                     bool (*advanceCursor)(KSStackCursor*))
+void raygun_kssc_initCursor(Raygun_KSStackCursor *cursor,
+                     void (*resetCursor)(Raygun_KSStackCursor*),
+                     bool (*advanceCursor)(Raygun_KSStackCursor*))
 {
     cursor->symbolicate = kssymbolicator_symbolicate;
     cursor->advanceCursor = advanceCursor != NULL ? advanceCursor : g_advanceCursor;
-    cursor->resetCursor = resetCursor != NULL ? resetCursor : kssc_resetCursor;
+    cursor->resetCursor = resetCursor != NULL ? resetCursor : raygun_kssc_resetCursor;
     cursor->resetCursor(cursor);
 }

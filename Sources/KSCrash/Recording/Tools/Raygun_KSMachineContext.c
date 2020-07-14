@@ -52,7 +52,7 @@ static int g_reservedThreadsCount = 0;
 
 static inline bool isStackOverflow(const Raygun_KSMachineContext* const context)
 {
-    KSStackCursor stackCursor;
+    Raygun_KSStackCursor stackCursor;
     kssc_initWithMachineContext(&stackCursor, KSSC_STACK_OVERFLOW_THRESHOLD, context);
     while(stackCursor.advanceCursor(&stackCursor))
     {

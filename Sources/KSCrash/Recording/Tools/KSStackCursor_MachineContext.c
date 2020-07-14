@@ -59,7 +59,7 @@ typedef struct
     bool isPastFramePointer;
 } MachineContextCursor;
 
-static bool advanceCursor(KSStackCursor *cursor)
+static bool advanceCursor(Raygun_KSStackCursor *cursor)
 {
     MachineContextCursor* context = (MachineContextCursor*)cursor->context;
     uintptr_t nextAddress = 0;
@@ -119,9 +119,9 @@ successfulExit:
     return true;
 }
 
-static void resetCursor(KSStackCursor* cursor)
+static void resetCursor(Raygun_KSStackCursor* cursor)
 {
-    kssc_resetCursor(cursor);
+    raygun_kssc_resetCursor(cursor);
     MachineContextCursor* context = (MachineContextCursor*)cursor->context;
     context->currentFrame.previous = 0;
     context->currentFrame.return_address = 0;
@@ -130,9 +130,9 @@ static void resetCursor(KSStackCursor* cursor)
     context->isPastFramePointer = 0;
 }
 
-void kssc_initWithMachineContext(KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext)
+void kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext)
 {
-    kssc_initCursor(cursor, resetCursor, advanceCursor);
+    raygun_kssc_initCursor(cursor, resetCursor, advanceCursor);
     MachineContextCursor* context = (MachineContextCursor*)cursor->context;
     context->machineContext = machineContext;
     context->maxStackDepth = maxStackDepth;

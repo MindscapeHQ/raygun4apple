@@ -51,7 +51,7 @@
 static volatile bool g_isEnabled = false;
 
 static Raygun_KSCrash_MonitorContext g_monitorContext;
-static KSStackCursor g_stackCursor;
+static Raygun_KSStackCursor g_stackCursor;
 
 #if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
 /** Our custom signal stack. The signal handler will use this as its stack. */

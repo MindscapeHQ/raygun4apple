@@ -67,7 +67,7 @@ static Raygun_KSCrash_MonitorContext g_monitorContext;
 
 // TODO: Thread local storage is not supported < ios 9.
 // Find some other way to do thread local. Maybe storage with lookup by tid?
-static KSStackCursor g_stackCursor;
+static Raygun_KSStackCursor g_stackCursor;
 
 
 // ============================================================================
@@ -190,7 +190,7 @@ static void initialize()
     if(!isInitialized)
     {
         isInitialized = true;
-        kssc_initCursor(&g_stackCursor, NULL, NULL);
+        raygun_kssc_initCursor(&g_stackCursor, NULL, NULL);
     }
 }
 

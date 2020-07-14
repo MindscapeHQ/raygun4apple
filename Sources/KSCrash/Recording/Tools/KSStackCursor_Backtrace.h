@@ -31,7 +31,7 @@ extern "C" {
 #endif
     
     
-#include "KSStackCursor.h"
+#include "Raygun_KSStackCursor.h"
 
 /** Exposed for other internal systems to use.
  */
@@ -53,7 +53,7 @@ typedef struct
  *
  * @param skipEntries The number of stack entries to skip.
  */
-void kssc_initWithBacktrace(KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries);
+void kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries);
     
     
 #ifdef __cplusplus

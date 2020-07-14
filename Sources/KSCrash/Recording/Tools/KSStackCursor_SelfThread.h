@@ -31,7 +31,7 @@ extern "C" {
 #endif
     
     
-#include "KSStackCursor.h"
+#include "Raygun_KSStackCursor.h"
 
 /** Initialize a stack cursor for the current thread.
  *  You may want to skip some entries to account for the trace immediately leading
@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param skipEntries The number of stack entries to skip.
  */
-void kssc_initSelfThread(KSStackCursor *cursor, int skipEntries);
+void kssc_initSelfThread(Raygun_KSStackCursor *cursor, int skipEntries);
     
     
 #ifdef __cplusplus

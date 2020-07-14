@@ -67,7 +67,7 @@ void raygun_kscm_reportUserException(const char* name,
         raygun_ksid_generate(eventID);
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
-        KSStackCursor stackCursor;
+        Raygun_KSStackCursor stackCursor;
         kssc_initSelfThread(&stackCursor, 0);
 
 

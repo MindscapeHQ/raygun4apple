@@ -31,7 +31,7 @@ extern "C" {
 #endif
 
 
-#include "KSStackCursor.h"
+#include "Raygun_KSStackCursor.h"
 #include <stdbool.h>
 
 /** Symbolicate a stack cursor.
@@ -40,7 +40,7 @@ extern "C" {
  *
  * @return True if successful.
  */
-bool kssymbolicator_symbolicate(KSStackCursor *cursor);
+bool kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor);
 
     
 #ifdef __cplusplus

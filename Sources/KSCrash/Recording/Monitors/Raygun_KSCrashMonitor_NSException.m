@@ -78,7 +78,7 @@ static void handleException(NSException* exception, BOOL currentSnapshotUserRepo
         raygun_ksid_generate(eventID);
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
-        KSStackCursor cursor;
+        Raygun_KSStackCursor cursor;
         kssc_initWithBacktrace(&cursor, callstack, (int)numFrames, 0);
 
         Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;

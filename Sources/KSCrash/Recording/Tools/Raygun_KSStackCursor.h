@@ -41,7 +41,7 @@ extern "C" {
 /** Point at which to give up walking a stack and consider it a stack overflow. */
 #define KSSC_STACK_OVERFLOW_THRESHOLD 150
 
-typedef struct KSStackCursor
+typedef struct Raygun_KSStackCursor
 {
     struct
     {
@@ -70,17 +70,17 @@ typedef struct KSStackCursor
     } state;
 
     /** Reset the cursor back to the beginning. */
-    void (*resetCursor)(struct KSStackCursor*);
+    void (*resetCursor)(struct Raygun_KSStackCursor*);
 
     /** Advance the cursor to the next stack entry. */
-    bool (*advanceCursor)(struct KSStackCursor*);
+    bool (*advanceCursor)(struct Raygun_KSStackCursor*);
     
     /** Attempt to symbolicate the current address, filling in the fields in stackEntry. */
-    bool (*symbolicate)(struct KSStackCursor*);
+    bool (*symbolicate)(struct Raygun_KSStackCursor*);
     
     /** Internal context-specific information. */
     void* context[KSSC_CONTEXT_SIZE];
-} KSStackCursor;
+} Raygun_KSStackCursor;
 
 
 /** Common initialization routine for a stack cursor.
@@ -92,16 +92,16 @@ typedef struct KSStackCursor
  *
  * @param advanceCursor Function to advance the cursor (NULL = default: Do nothing and return false).
  */
-void kssc_initCursor(KSStackCursor *cursor,
-                     void (*resetCursor)(KSStackCursor*),
-                     bool (*advanceCursor)(KSStackCursor*));
+void raygun_kssc_initCursor(Raygun_KSStackCursor *cursor,
+                     void (*resetCursor)(Raygun_KSStackCursor*),
+                     bool (*advanceCursor)(Raygun_KSStackCursor*));
 
 /** Reset a cursor.
  *  INTERNAL METHOD. Do not call!
  *
  * @param cursor The cursor to reset.
  */
-void kssc_resetCursor(KSStackCursor *cursor);
+void raygun_kssc_resetCursor(Raygun_KSStackCursor *cursor);
 
     
 #ifdef __cplusplus

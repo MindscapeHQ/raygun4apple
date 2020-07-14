@@ -380,11 +380,11 @@ static bool isValidString(const void* const address)
  */
 static bool getStackCursor(const Raygun_KSCrash_MonitorContext* const crash,
                            const struct Raygun_KSMachineContext* const machineContext,
-                           KSStackCursor *cursor)
+                           Raygun_KSStackCursor *cursor)
 {
     if(raygun_ksmc_getThreadFromContext(machineContext) == raygun_ksmc_getThreadFromContext(crash->offendingMachineContext))
     {
-        *cursor = *((KSStackCursor*)crash->stackCursor);
+        *cursor = *((Raygun_KSStackCursor*)crash->stackCursor);
         return true;
     }
 
@@ -887,7 +887,7 @@ static void writeAddressReferencedByString(const Raygun_KSCrashReportWriter* con
  */
 static void writeBacktrace(const Raygun_KSCrashReportWriter* const writer,
                            const char* const key,
-                           KSStackCursor* stackCursor)
+                           Raygun_KSStackCursor* stackCursor)
 {
     writer->beginObject(writer, key);
     {
@@ -1179,7 +1179,7 @@ static void writeThread(const Raygun_KSCrashReportWriter* const writer,
     KSThread thread = raygun_ksmc_getThreadFromContext(machineContext);
     RAYGUN_KSLOG_ERROR("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
 
-    KSStackCursor stackCursor;
+    Raygun_KSStackCursor stackCursor;
     bool hasBacktrace = getStackCursor(crash, machineContext, &stackCursor);
 
     writer->beginObject(writer, key);

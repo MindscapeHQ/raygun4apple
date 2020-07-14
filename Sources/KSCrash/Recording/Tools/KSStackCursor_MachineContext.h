@@ -31,7 +31,7 @@ extern "C" {
 #endif
     
     
-#include "KSStackCursor.h"
+#include "Raygun_KSStackCursor.h"
 
 /** Initialize a stack cursor for a machine context.
  *
@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param machineContext The machine context whose stack to walk.
  */
-void kssc_initWithMachineContext(KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext);
+void kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext);
     
     
 #ifdef __cplusplus
