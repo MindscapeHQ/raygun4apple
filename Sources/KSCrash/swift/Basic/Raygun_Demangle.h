@@ -142,7 +142,7 @@ public:
   enum class Kind : uint16_t {
 #define NODE(ID) ID,
 //#include "swift/Basic/DemangleNodes.def"
-#include "DemangleNodes.h"
+#include "Raygun_DemangleNodes.h"
   };
 
   typedef uint64_t IndexType;

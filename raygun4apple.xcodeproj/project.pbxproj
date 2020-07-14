@@ -178,7 +178,7 @@
 		A2E1A207218F919500BF66DB /* NSData+GZip.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4AC9A21003DAA0003C8B4 /* NSData+GZip.h */; };
 		A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACA821003DAA0003C8B4 /* Raygun_KSCString.h */; };
 		A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
-		A2E1A20A218F919500BF66DB /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
+		A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
 		A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
 		A2E1A20C218F919500BF66DB /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
 		A2E1A20D218F919500BF66DB /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
@@ -486,8 +486,8 @@
 		A2E4AE0921003DAA0003C8B4 /* Raygun_Demangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */; };
 		A2E4AE0A21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
 		A2E4AE0B21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
-		A2E4AE0C21003DAA0003C8B4 /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
-		A2E4AE0D21003DAA0003C8B4 /* DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */; };
+		A2E4AE0C21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
+		A2E4AE0D21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
 		A2E4AE0E21003DAA0003C8B4 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
 		A2E4AE0F21003DAA0003C8B4 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
 		A2E4AE1021003DAA0003C8B4 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
@@ -783,7 +783,7 @@
 		A2E4ACA921003DAA0003C8B4 /* Raygun_KSCString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raygun_KSCString.m; sourceTree = "<group>"; };
 		A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_Demangle.cpp; sourceTree = "<group>"; };
 		A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Demangle.h; sourceTree = "<group>"; };
-		A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemangleNodes.h; sourceTree = "<group>"; };
+		A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_DemangleNodes.h; sourceTree = "<group>"; };
 		A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fallthrough.h; sourceTree = "<group>"; };
 		A2E4ACBA21003DAA0003C8B4 /* LLVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLVM.h; sourceTree = "<group>"; };
 		A2E4ACBB21003DAA0003C8B4 /* Malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malloc.h; sourceTree = "<group>"; };
@@ -1184,7 +1184,7 @@
 			children = (
 				A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */,
 				A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */,
-				A2E4ACB821003DAA0003C8B4 /* DemangleNodes.h */,
+				A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */,
 				A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */,
 				A2E4ACBA21003DAA0003C8B4 /* LLVM.h */,
 				A2E4ACBB21003DAA0003C8B4 /* Malloc.h */,
@@ -1283,7 +1283,7 @@
 				DC5EFAE52112B6C0002C0713 /* RaygunThread.h in Headers */,
 				DC5EFA8F210FFA7A002C0713 /* RaygunUserInformation.h in Headers */,
 				A2E4ACE821003DAA0003C8B4 /* Raygun_AlignOf.h in Headers */,
-				A2E4AE0C21003DAA0003C8B4 /* DemangleNodes.h in Headers */,
+				A2E4AE0C21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */,
 				A2E4ACF621003DAA0003C8B4 /* Raygun_KSCrashC.h in Headers */,
 				A2E4AD9E21003DAA0003C8B4 /* Raygun_KSStackCursor_SelfThread.h in Headers */,
 				A2E4AD1021003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */,
@@ -1391,7 +1391,7 @@
 				DC5EFA8A210FFA7A002C0713 /* RaygunClient.h in Headers */,
 				DC5EFA84210FFA7A002C0713 /* RaygunMessage.h in Headers */,
 				A2E4ACE921003DAA0003C8B4 /* Raygun_AlignOf.h in Headers */,
-				A2E4AE0D21003DAA0003C8B4 /* DemangleNodes.h in Headers */,
+				A2E4AE0D21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */,
 				A2E4ACF721003DAA0003C8B4 /* Raygun_KSCrashC.h in Headers */,
 				A2E4AD9F21003DAA0003C8B4 /* Raygun_KSStackCursor_SelfThread.h in Headers */,
 				A2E4AD1121003DAA0003C8B4 /* Raygun_KSCrashReportWriter.h in Headers */,
@@ -1573,7 +1573,7 @@
 				A2E1A207218F919500BF66DB /* NSData+GZip.h in Headers */,
 				A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */,
 				A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */,
-				A2E1A20A218F919500BF66DB /* DemangleNodes.h in Headers */,
+				A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */,
 				A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */,
 				A2E1A20C218F919500BF66DB /* LLVM.h in Headers */,
 				A2E1A20D218F919500BF66DB /* Malloc.h in Headers */,
