@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param skipEntries The number of stack entries to skip.
  */
-void kssc_initSelfThread(Raygun_KSStackCursor *cursor, int skipEntries);
+void raygun_kssc_initSelfThread(Raygun_KSStackCursor *cursor, int skipEntries);
     
     
 #ifdef __cplusplus

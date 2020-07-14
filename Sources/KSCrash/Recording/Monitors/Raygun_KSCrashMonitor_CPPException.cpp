@@ -27,7 +27,7 @@
 #include "Raygun_KSID.h"
 #include "KSThread.h"
 #include "Raygun_KSMachineContext.h"
-#include "KSStackCursor_SelfThread.h"
+#include "Raygun_KSStackCursor_SelfThread.h"
 
 //#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
@@ -84,7 +84,7 @@ extern "C"
     {
         if(g_captureNextStackTrace)
         {
-            kssc_initSelfThread(&g_stackCursor, 1);
+            raygun_kssc_initSelfThread(&g_stackCursor, 1);
         }
         
         static cxa_throw_type orig_cxa_throw = NULL;

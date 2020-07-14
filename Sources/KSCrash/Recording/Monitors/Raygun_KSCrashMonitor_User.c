@@ -26,7 +26,7 @@
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
 #include "KSThread.h"
-#include "KSStackCursor_SelfThread.h"
+#include "Raygun_KSStackCursor_SelfThread.h"
 
 //#define Raygun_KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
@@ -68,7 +68,7 @@ void raygun_kscm_reportUserException(const char* name,
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForThread(ksthread_self(), machineContext, true);
         Raygun_KSStackCursor stackCursor;
-        kssc_initSelfThread(&stackCursor, 0);
+        raygun_kssc_initSelfThread(&stackCursor, 0);
 
 
         RAYGUN_KSLOG_ERROR("Filling out context.");
