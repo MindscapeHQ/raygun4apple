@@ -37,7 +37,7 @@
 #include "Raygun_KSMach.h"
 #include "KSThread.h"
 #include "Raygun_KSObjC.h"
-#include "KSSignalInfo.h"
+#include "Raygun_KSSignalInfo.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
 #include "KSString.h"
 #include "Raygun_KSCrashReportVersion.h"
@@ -1366,8 +1366,8 @@ static void writeError(const Raygun_KSCrashReportWriter* const writer,
 #endif
         writer->beginObject(writer, Raygun_KSCrashField_Signal);
         {
-            const char* sigName = kssignal_signalName(crash->signal.signum);
-            const char* sigCodeName = kssignal_signalCodeName(crash->signal.signum, crash->signal.sigcode);
+            const char* sigName = raygun_kssignal_signalName(crash->signal.signum);
+            const char* sigCodeName = raygun_kssignal_signalCodeName(crash->signal.signum, crash->signal.sigcode);
             writer->addUIntegerElement(writer, Raygun_KSCrashField_Signal, (unsigned)crash->signal.signum);
             if(sigName != NULL)
             {

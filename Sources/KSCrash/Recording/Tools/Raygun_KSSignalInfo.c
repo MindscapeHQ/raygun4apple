@@ -25,7 +25,7 @@
 //
 
 
-#include "KSSignalInfo.h"
+#include "Raygun_KSSignalInfo.h"
 
 #include <signal.h>
 #include <stdlib.h>
@@ -35,19 +35,19 @@ typedef struct
 {
     const int code;
     const char* const name;
-} KSSignalCodeInfo;
+} Raygun_KSSignalCodeInfo;
 
 typedef struct
 {
     const int sigNum;
     const char* const name;
-    const KSSignalCodeInfo* const codes;
+    const Raygun_KSSignalCodeInfo* const codes;
     const int numCodes;
-} KSSignalInfo;
+} Raygun_KSSignalInfo;
 
 #define ENUM_NAME_MAPPING(A) {A, #A}
 
-static const KSSignalCodeInfo g_sigIllCodes[] =
+static const Raygun_KSSignalCodeInfo g_sigIllCodes[] =
 {
 #ifdef ILL_NOOP
     ENUM_NAME_MAPPING(ILL_NOOP),
@@ -62,14 +62,14 @@ static const KSSignalCodeInfo g_sigIllCodes[] =
     ENUM_NAME_MAPPING(ILL_BADSTK),
 };
 
-static const KSSignalCodeInfo g_sigTrapCodes[] =
+static const Raygun_KSSignalCodeInfo g_sigTrapCodes[] =
 {
     ENUM_NAME_MAPPING(0),
     ENUM_NAME_MAPPING(TRAP_BRKPT),
     ENUM_NAME_MAPPING(TRAP_TRACE),
 };
 
-static const KSSignalCodeInfo g_sigFPECodes[] =
+static const Raygun_KSSignalCodeInfo g_sigFPECodes[] =
 {
 #ifdef FPE_NOOP
     ENUM_NAME_MAPPING(FPE_NOOP),
@@ -84,7 +84,7 @@ static const KSSignalCodeInfo g_sigFPECodes[] =
     ENUM_NAME_MAPPING(FPE_INTOVF),
 };
 
-static const KSSignalCodeInfo g_sigBusCodes[] =
+static const Raygun_KSSignalCodeInfo g_sigBusCodes[] =
 {
 #ifdef BUS_NOOP
     ENUM_NAME_MAPPING(BUS_NOOP),
@@ -94,7 +94,7 @@ static const KSSignalCodeInfo g_sigBusCodes[] =
     ENUM_NAME_MAPPING(BUS_OBJERR),
 };
 
-static const KSSignalCodeInfo g_sigSegVCodes[] =
+static const Raygun_KSSignalCodeInfo g_sigSegVCodes[] =
 {
 #ifdef SEGV_NOOP
     ENUM_NAME_MAPPING(SEGV_NOOP),
@@ -106,7 +106,7 @@ static const KSSignalCodeInfo g_sigSegVCodes[] =
 #define SIGNAL_INFO(SIGNAL, CODES) {SIGNAL, #SIGNAL, CODES, sizeof(CODES) / sizeof(*CODES)}
 #define SIGNAL_INFO_NOCODES(SIGNAL) {SIGNAL, #SIGNAL, 0, 0}
 
-static const KSSignalInfo g_fatalSignalData[] =
+static const Raygun_KSSignalInfo g_fatalSignalData[] =
 {
     SIGNAL_INFO_NOCODES(SIGABRT),
     SIGNAL_INFO(SIGBUS, g_sigBusCodes),
@@ -133,7 +133,7 @@ static const int g_fatalSignals[] =
     SIGTRAP,
 };
 
-const char* kssignal_signalName(const int sigNum)
+const char* raygun_kssignal_signalName(const int sigNum)
 {
     for(int i = 0; i < g_fatalSignalsCount; i++)
     {
@@ -145,7 +145,7 @@ const char* kssignal_signalName(const int sigNum)
     return NULL;
 }
 
-const char* kssignal_signalCodeName(const int sigNum, const int code)
+const char* raygun_kssignal_signalCodeName(const int sigNum, const int code)
 {
     for(int si = 0; si < g_fatalSignalsCount; si++)
     {
@@ -163,12 +163,12 @@ const char* kssignal_signalCodeName(const int sigNum, const int code)
     return NULL;
 }
 
-const int* kssignal_fatalSignals(void)
+const int* raygun_kssignal_fatalSignals(void)
 {
     return g_fatalSignals;
 }
 
-int kssignal_numFatalSignals(void)
+int raygun_kssignal_numFatalSignals(void)
 {
     return g_fatalSignalsCount;
 }

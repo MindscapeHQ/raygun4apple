@@ -27,7 +27,7 @@
 #include "Raygun_KSCrashMonitor_Signal.h"
 #include "Raygun_KSCrashMonitorContext.h"
 #include "Raygun_KSID.h"
-#include "KSSignalInfo.h"
+#include "Raygun_KSSignalInfo.h"
 #include "Raygun_KSMachineContext.h"
 #include "Raygun_KSSystemCapabilities.h"
 #include "KSStackCursor_MachineContext.h"
@@ -139,8 +139,8 @@ static bool installSignalHandler()
     }
 #endif
 
-    const int* fatalSignals = kssignal_fatalSignals();
-    int fatalSignalsCount = kssignal_numFatalSignals();
+    const int* fatalSignals = raygun_kssignal_fatalSignals();
+    int fatalSignalsCount = raygun_kssignal_numFatalSignals();
 
     if(g_previousSignalHandlers == NULL)
     {
@@ -163,7 +163,7 @@ static bool installSignalHandler()
         if(sigaction(fatalSignals[i], &action, &g_previousSignalHandlers[i]) != 0)
         {
             char sigNameBuff[30];
-            const char* sigName = kssignal_signalName(fatalSignals[i]);
+            const char* sigName = raygun_kssignal_signalName(fatalSignals[i]);
             if(sigName == NULL)
             {
                 snprintf(sigNameBuff, sizeof(sigNameBuff), "%d", fatalSignals[i]);
@@ -190,8 +190,8 @@ static void uninstallSignalHandler(void)
 {
     RAYGUN_KSLOG_ERROR("Uninstalling signal handlers.");
 
-    const int* fatalSignals = kssignal_fatalSignals();
-    int fatalSignalsCount = kssignal_numFatalSignals();
+    const int* fatalSignals = raygun_kssignal_fatalSignals();
+    int fatalSignalsCount = raygun_kssignal_numFatalSignals();
 
     for(int i = 0; i < fatalSignalsCount; i++)
     {
