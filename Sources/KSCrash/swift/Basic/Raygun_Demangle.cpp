@@ -22,7 +22,7 @@
 //#include "swift/Basic/UUID.h"
 //#include "llvm/ADT/StringRef.h"
 #include "Raygun_Demangle.h"
-#include "Fallthrough.h"
+#include "Raygun_Fallthrough.h"
 #include "SwiftStrings.h"
 #include "LLVM.h"
 #include "Punycode.h"

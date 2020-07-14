@@ -179,7 +179,7 @@
 		A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACA821003DAA0003C8B4 /* Raygun_KSCString.h */; };
 		A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
 		A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
-		A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
+		A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
 		A2E1A20C218F919500BF66DB /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
 		A2E1A20D218F919500BF66DB /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
 		A2E1A20E218F919500BF66DB /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
@@ -488,8 +488,8 @@
 		A2E4AE0B21003DAA0003C8B4 /* Raygun_Demangle.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */; };
 		A2E4AE0C21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
 		A2E4AE0D21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
-		A2E4AE0E21003DAA0003C8B4 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
-		A2E4AE0F21003DAA0003C8B4 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */; };
+		A2E4AE0E21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
+		A2E4AE0F21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
 		A2E4AE1021003DAA0003C8B4 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
 		A2E4AE1121003DAA0003C8B4 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* LLVM.h */; };
 		A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
@@ -784,7 +784,7 @@
 		A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raygun_Demangle.cpp; sourceTree = "<group>"; };
 		A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Demangle.h; sourceTree = "<group>"; };
 		A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_DemangleNodes.h; sourceTree = "<group>"; };
-		A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fallthrough.h; sourceTree = "<group>"; };
+		A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Fallthrough.h; sourceTree = "<group>"; };
 		A2E4ACBA21003DAA0003C8B4 /* LLVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLVM.h; sourceTree = "<group>"; };
 		A2E4ACBB21003DAA0003C8B4 /* Malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malloc.h; sourceTree = "<group>"; };
 		A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Punycode.cpp; sourceTree = "<group>"; };
@@ -1185,7 +1185,7 @@
 				A2E4ACB621003DAA0003C8B4 /* Raygun_Demangle.cpp */,
 				A2E4ACB721003DAA0003C8B4 /* Raygun_Demangle.h */,
 				A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */,
-				A2E4ACB921003DAA0003C8B4 /* Fallthrough.h */,
+				A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */,
 				A2E4ACBA21003DAA0003C8B4 /* LLVM.h */,
 				A2E4ACBB21003DAA0003C8B4 /* Malloc.h */,
 				A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */,
@@ -1347,7 +1347,7 @@
 				A2E4AD5621003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */,
 				A2E4AE1621003DAA0003C8B4 /* Punycode.h in Headers */,
 				A2E4AD4021003DAA0003C8B4 /* Raygun_KSCrashMonitorType.h in Headers */,
-				A2E4AE0E21003DAA0003C8B4 /* Fallthrough.h in Headers */,
+				A2E4AE0E21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */,
 				A2E4ADA221003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				DC5EFA92210FFA7A002C0713 /* RaygunRealUserMonitoring.h in Headers */,
 				A2E4AD4421003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
@@ -1454,7 +1454,7 @@
 				A2E4AD5721003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */,
 				A2E4AE1721003DAA0003C8B4 /* Punycode.h in Headers */,
 				A2E4AD4121003DAA0003C8B4 /* Raygun_KSCrashMonitorType.h in Headers */,
-				A2E4AE0F21003DAA0003C8B4 /* Fallthrough.h in Headers */,
+				A2E4AE0F21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */,
 				DCD5C1FD2117DEAD002623B7 /* RaygunRealUserMonitoring.h in Headers */,
 				A2E4ADA321003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				A2E4AD4521003DAA0003C8B4 /* Raygun_KSCPU.h in Headers */,
@@ -1574,7 +1574,7 @@
 				A2E1A208218F919500BF66DB /* Raygun_KSCString.h in Headers */,
 				A2E1A209218F919500BF66DB /* Raygun_Demangle.h in Headers */,
 				A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */,
-				A2E1A20B218F919500BF66DB /* Fallthrough.h in Headers */,
+				A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */,
 				A2E1A20C218F919500BF66DB /* LLVM.h in Headers */,
 				A2E1A20D218F919500BF66DB /* Malloc.h in Headers */,
 				A2E1A20E218F919500BF66DB /* Punycode.h in Headers */,
