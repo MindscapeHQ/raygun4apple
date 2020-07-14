@@ -28,7 +28,7 @@
 #include "KSThread.h"
 
 #include "Raygun_KSSystemCapabilities.h"
-#include "KSMemory.h"
+#include "Raygun_KSMemory.h"
 
 //#define KSLogger_LocalLevel TRACE
 #include "Raygun_KSLogger.h"
@@ -71,13 +71,13 @@ bool ksthread_getQueueName(const KSThread thread, char* const buffer, int bufLen
     }
     
     thread_identifier_info_t idInfo = (thread_identifier_info_t)info;
-    if(!ksmem_isMemoryReadable(idInfo, sizeof(*idInfo)))
+    if(!raygun_ksmem_isMemoryReadable(idInfo, sizeof(*idInfo)))
     {
         RAYGUN_KSLOG_ERROR("Thread %p has an invalid thread identifier info %p", thread, idInfo);
         return false;
     }
     dispatch_queue_t* dispatch_queue_ptr = (dispatch_queue_t*)idInfo->dispatch_qaddr;
-    if(!ksmem_isMemoryReadable(dispatch_queue_ptr, sizeof(*dispatch_queue_ptr)))
+    if(!raygun_ksmem_isMemoryReadable(dispatch_queue_ptr, sizeof(*dispatch_queue_ptr)))
     {
         RAYGUN_KSLOG_ERROR("Thread %p has an invalid dispatch queue pointer %p", thread, dispatch_queue_ptr);
         return false;

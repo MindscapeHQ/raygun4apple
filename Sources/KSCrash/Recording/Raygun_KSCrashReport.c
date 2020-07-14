@@ -33,10 +33,10 @@
 #include "Raygun_KSFileUtils.h"
 #include "Raygun_KSJSONCodec.h"
 #include "Raygun_KSCPU.h"
-#include "KSMemory.h"
+#include "Raygun_KSMemory.h"
 #include "Raygun_KSMach.h"
 #include "KSThread.h"
-#include "KSObjC.h"
+#include "Raygun_KSObjC.h"
 #include "KSSignalInfo.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"
 #include "KSString.h"
@@ -356,7 +356,7 @@ static bool isValidString(const void* const address)
         // Wrapped around the address range.
         return false;
     }
-    if(!ksmem_copySafely(address, buffer, sizeof(buffer)))
+    if(!raygun_ksmem_copySafely(address, buffer, sizeof(buffer)))
     {
         return false;
     }
@@ -431,7 +431,7 @@ static void writeNSStringContents(const Raygun_KSCrashReportWriter* const writer
 {
     const void* object = (const void*)objectAddress;
     char buffer[200];
-    if(ksobjc_copyStringContents(object, buffer, sizeof(buffer)))
+    if(raygun_ksobjc_copyStringContents(object, buffer, sizeof(buffer)))
     {
         writer->addStringElement(writer, key, buffer);
     }
@@ -455,7 +455,7 @@ static void writeURLContents(const Raygun_KSCrashReportWriter* const writer,
 {
     const void* object = (const void*)objectAddress;
     char buffer[200];
-    if(ksobjc_copyStringContents(object, buffer, sizeof(buffer)))
+    if(raygun_ksobjc_copyStringContents(object, buffer, sizeof(buffer)))
     {
         writer->addStringElement(writer, key, buffer);
     }
@@ -478,7 +478,7 @@ static void writeDateContents(const Raygun_KSCrashReportWriter* const writer,
                               __unused int* limit)
 {
     const void* object = (const void*)objectAddress;
-    writer->addFloatingPointElement(writer, key, ksobjc_dateContents(object));
+    writer->addFloatingPointElement(writer, key, raygun_ksobjc_dateContents(object));
 }
 
 /** Write a number to the report.
@@ -498,7 +498,7 @@ static void writeNumberContents(const Raygun_KSCrashReportWriter* const writer,
                                 __unused int* limit)
 {
     const void* object = (const void*)objectAddress;
-    writer->addFloatingPointElement(writer, key, ksobjc_numberAsFloat(object));
+    writer->addFloatingPointElement(writer, key, raygun_ksobjc_numberAsFloat(object));
 }
 
 /** Write an array to the report.
@@ -519,7 +519,7 @@ static void writeArrayContents(const Raygun_KSCrashReportWriter* const writer,
 {
     const void* object = (const void*)objectAddress;
     uintptr_t firstObject;
-    if(ksobjc_arrayContents(object, &firstObject, 1) == 1)
+    if(raygun_ksobjc_arrayContents(object, &firstObject, 1) == 1)
     {
         writeMemoryContents(writer, key, firstObject, limit);
     }
@@ -542,7 +542,7 @@ static void writeUnknownObjectContents(const Raygun_KSCrashReportWriter* const w
 {
     (*limit)--;
     const void* object = (const void*)objectAddress;
-    KSObjCIvar ivars[10];
+    Raygun_KSObjCIvar ivars[10];
     int8_t s8;
     int16_t s16;
     int sInt;
@@ -561,77 +561,77 @@ static void writeUnknownObjectContents(const Raygun_KSCrashReportWriter* const w
     
     writer->beginObject(writer, key);
     {
-        if(ksobjc_isTaggedPointer(object))
+        if(raygun_ksobjc_isTaggedPointer(object))
         {
-            writer->addIntegerElement(writer, "tagged_payload", (int64_t)ksobjc_taggedPointerPayload(object));
+            writer->addIntegerElement(writer, "tagged_payload", (int64_t)raygun_ksobjc_taggedPointerPayload(object));
         }
         else
         {
-            const void* class = ksobjc_isaPointer(object);
-            int ivarCount = ksobjc_ivarList(class, ivars, sizeof(ivars)/sizeof(*ivars));
+            const void* class = raygun_ksobjc_isaPointer(object);
+            int ivarCount = raygun_ksobjc_ivarList(class, ivars, sizeof(ivars)/sizeof(*ivars));
             *limit -= ivarCount;
             for(int i = 0; i < ivarCount; i++)
             {
-                KSObjCIvar* ivar = &ivars[i];
+                Raygun_KSObjCIvar* ivar = &ivars[i];
                 switch(ivar->type[0])
                 {
                     case 'c':
-                        ksobjc_ivarValue(object, ivar->index, &s8);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &s8);
                         writer->addIntegerElement(writer, ivar->name, s8);
                         break;
                     case 'i':
-                        ksobjc_ivarValue(object, ivar->index, &sInt);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &sInt);
                         writer->addIntegerElement(writer, ivar->name, sInt);
                         break;
                     case 's':
-                        ksobjc_ivarValue(object, ivar->index, &s16);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &s16);
                         writer->addIntegerElement(writer, ivar->name, s16);
                         break;
                     case 'l':
-                        ksobjc_ivarValue(object, ivar->index, &s32);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &s32);
                         writer->addIntegerElement(writer, ivar->name, s32);
                         break;
                     case 'q':
-                        ksobjc_ivarValue(object, ivar->index, &s64);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &s64);
                         writer->addIntegerElement(writer, ivar->name, s64);
                         break;
                     case 'C':
-                        ksobjc_ivarValue(object, ivar->index, &u8);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &u8);
                         writer->addUIntegerElement(writer, ivar->name, u8);
                         break;
                     case 'I':
-                        ksobjc_ivarValue(object, ivar->index, &uInt);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &uInt);
                         writer->addUIntegerElement(writer, ivar->name, uInt);
                         break;
                     case 'S':
-                        ksobjc_ivarValue(object, ivar->index, &u16);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &u16);
                         writer->addUIntegerElement(writer, ivar->name, u16);
                         break;
                     case 'L':
-                        ksobjc_ivarValue(object, ivar->index, &u32);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &u32);
                         writer->addUIntegerElement(writer, ivar->name, u32);
                         break;
                     case 'Q':
-                        ksobjc_ivarValue(object, ivar->index, &u64);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &u64);
                         writer->addUIntegerElement(writer, ivar->name, u64);
                         break;
                     case 'f':
-                        ksobjc_ivarValue(object, ivar->index, &f32);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &f32);
                         writer->addFloatingPointElement(writer, ivar->name, f32);
                         break;
                     case 'd':
-                        ksobjc_ivarValue(object, ivar->index, &f64);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &f64);
                         writer->addFloatingPointElement(writer, ivar->name, f64);
                         break;
                     case 'B':
-                        ksobjc_ivarValue(object, ivar->index, &b);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &b);
                         writer->addBooleanElement(writer, ivar->name, b);
                         break;
                     case '*':
                     case '@':
                     case '#':
                     case ':':
-                        ksobjc_ivarValue(object, ivar->index, &pointer);
+                        raygun_ksobjc_ivarValue(object, ivar->index, &pointer);
                         writeMemoryContents(writer, ivar->name, (uintptr_t)pointer, limit);
                         break;
                     default:
@@ -678,48 +678,48 @@ static bool writeObjCObject(const Raygun_KSCrashReportWriter* const writer,
 {
 #if RAYGUN_KSCRASH_HAS_OBJC
     const void* object = (const void*)address;
-    switch(ksobjc_objectType(object))
+    switch(raygun_ksobjc_objectType(object))
     {
-        case KSObjCTypeClass:
+        case Raygun_KSObjCTypeClass:
             writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashMemType_Class);
-            writer->addStringElement(writer, Raygun_KSCrashField_Class, ksobjc_className(object));
+            writer->addStringElement(writer, Raygun_KSCrashField_Class, raygun_ksobjc_className(object));
             return true;
-        case KSObjCTypeObject:
+        case Raygun_KSObjCTypeObject:
         {
             writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashMemType_Object);
-            const char* className = ksobjc_objectClassName(object);
+            const char* className = raygun_ksobjc_objectClassName(object);
             writer->addStringElement(writer, Raygun_KSCrashField_Class, className);
             if(!isRestrictedClass(className))
             {
-                switch(ksobjc_objectClassType(object))
+                switch(raygun_ksobjc_objectClassType(object))
                 {
-                    case KSObjCClassTypeString:
+                    case Raygun_KSObjCClassTypeString:
                         writeNSStringContents(writer, Raygun_KSCrashField_Value, address, limit);
                         return true;
-                    case KSObjCClassTypeURL:
+                    case Raygun_KSObjCClassTypeURL:
                         writeURLContents(writer, Raygun_KSCrashField_Value, address, limit);
                         return true;
-                    case KSObjCClassTypeDate:
+                    case Raygun_KSObjCClassTypeDate:
                         writeDateContents(writer, Raygun_KSCrashField_Value, address, limit);
                         return true;
-                    case KSObjCClassTypeArray:
+                    case Raygun_KSObjCClassTypeArray:
                         if(*limit > 0)
                         {
                             writeArrayContents(writer, Raygun_KSCrashField_FirstObject, address, limit);
                         }
                         return true;
-                    case KSObjCClassTypeNumber:
+                    case Raygun_KSObjCClassTypeNumber:
                         writeNumberContents(writer, Raygun_KSCrashField_Value, address, limit);
                         return true;
-                    case KSObjCClassTypeDictionary:
-                    case KSObjCClassTypeException:
+                    case Raygun_KSObjCClassTypeDictionary:
+                    case Raygun_KSObjCClassTypeException:
                         // TODO: Implement these.
                         if(*limit > 0)
                         {
                             writeUnknownObjectContents(writer, Raygun_KSCrashField_Ivars, address, limit);
                         }
                         return true;
-                    case KSObjCClassTypeUnknown:
+                    case Raygun_KSObjCClassTypeUnknown:
                         if(*limit > 0)
                         {
                             writeUnknownObjectContents(writer, Raygun_KSCrashField_Ivars, address, limit);
@@ -729,12 +729,12 @@ static bool writeObjCObject(const Raygun_KSCrashReportWriter* const writer,
             }
             break;
         }
-        case KSObjCTypeBlock:
+        case Raygun_KSObjCTypeBlock:
             writer->addStringElement(writer, Raygun_KSCrashField_Type, Raygun_KSCrashMemType_Block);
-            const char* className = ksobjc_objectClassName(object);
+            const char* className = raygun_ksobjc_objectClassName(object);
             writer->addStringElement(writer, Raygun_KSCrashField_Class, className);
             return true;
-        case KSObjCTypeUnknown:
+        case Raygun_KSObjCTypeUnknown:
             break;
     }
 #endif
@@ -792,9 +792,9 @@ static bool isValidPointer(const uintptr_t address)
     }
 
 #if RAYGUN_KSCRASH_HAS_OBJC
-    if(ksobjc_isTaggedPointer((const void*)address))
+    if(raygun_ksobjc_isTaggedPointer((const void*)address))
     {
-        if(!ksobjc_isValidTaggedPointer((const void*)address))
+        if(!raygun_ksobjc_isValidTaggedPointer((const void*)address))
         {
             return false;
         }
@@ -819,7 +819,7 @@ static bool isNotableAddress(const uintptr_t address)
         return true;
     }
 
-    if(ksobjc_objectType(object) != KSObjCTypeUnknown)
+    if(raygun_ksobjc_objectType(object) != Raygun_KSObjCTypeUnknown)
     {
         return true;
     }
@@ -962,7 +962,7 @@ static void writeStackContents(const Raygun_KSCrashReportWriter* const writer,
         writer->addBooleanElement(writer, Raygun_KSCrashField_Overflow, isStackOverflow);
         uint8_t stackBuffer[kStackContentsTotalDistance * sizeof(sp)];
         int copyLength = (int)(highAddress - lowAddress);
-        if(ksmem_copySafely((void*)lowAddress, stackBuffer, copyLength))
+        if(raygun_ksmem_copySafely((void*)lowAddress, stackBuffer, copyLength))
         {
             writer->addDataElement(writer, Raygun_KSCrashField_Contents, (void*)stackBuffer, copyLength);
         }
@@ -1007,7 +1007,7 @@ static void writeNotableStackContents(const Raygun_KSCrashReportWriter* const wr
     char nameBuffer[40];
     for(uintptr_t address = lowAddress; address < highAddress; address += sizeof(address))
     {
-        if(ksmem_copySafely((void*)address, &contentsAsPointer, sizeof(contentsAsPointer)))
+        if(raygun_ksmem_copySafely((void*)address, &contentsAsPointer, sizeof(contentsAsPointer)))
         {
             sprintf(nameBuffer, "stack@%p", (void*)address);
             writeMemoryContentsIfNotable(writer, nameBuffer, contentsAsPointer);

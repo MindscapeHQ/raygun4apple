@@ -27,7 +27,7 @@
 
 #include "Raygun_KSCrashMonitor_Zombie.h"
 #include "Raygun_KSCrashMonitorContext.h"
-#include "KSObjC.h"
+#include "Raygun_KSObjC.h"
 #include "Raygun_KSLogger.h"
 
 #include <objc/runtime.h>
@@ -70,15 +70,15 @@ static inline unsigned hashIndex(const void* object)
 static bool copyStringIvar(const void* self, const char* ivarName, char* buffer, int bufferLength)
 {
     Class class = object_getClass((id)self);
-    KSObjCIvar ivar = {0};
-    likely_if(ksobjc_ivarNamed(class, ivarName, &ivar))
+    Raygun_KSObjCIvar ivar = {0};
+    likely_if(raygun_ksobjc_ivarNamed(class, ivarName, &ivar))
     {
         void* pointer;
-        likely_if(ksobjc_ivarValue(self, ivar.index, &pointer))
+        likely_if(raygun_ksobjc_ivarValue(self, ivar.index, &pointer))
         {
-            likely_if(ksobjc_isValidObject(pointer))
+            likely_if(raygun_ksobjc_isValidObject(pointer))
             {
-                likely_if(ksobjc_copyStringContents(pointer, buffer, bufferLength) > 0)
+                likely_if(raygun_ksobjc_copyStringContents(pointer, buffer, bufferLength) > 0)
                 {
                     return true;
                 }

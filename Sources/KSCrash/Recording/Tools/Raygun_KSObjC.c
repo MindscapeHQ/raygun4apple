@@ -25,10 +25,10 @@
 //
 
 
-#include "KSObjC.h"
-#include "KSObjCApple.h"
+#include "Raygun_KSObjC.h"
+#include "Raygun_KSObjCApple.h"
 
-#include "KSMemory.h"
+#include "Raygun_KSMemory.h"
 #include "KSString.h"
 
 #include "Raygun_KSLogger.h"
@@ -77,7 +77,7 @@ typedef enum
 typedef struct
 {
     const char* name;
-    KSObjCClassType type;
+    Raygun_KSObjCClassType type;
     ClassSubtype subtype;
     bool isMutable;
     bool (*isValidObject)(const void* object);
@@ -116,34 +116,34 @@ static int taggedStringDescription(const void* object, char* buffer, int bufferL
 
 static ClassData g_classData[] =
 {
-    {"__NSCFString",         KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
-    {"NSCFString",           KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
-    {"__NSCFConstantString", KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
-    {"NSCFConstantString",   KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
-    {"__NSArray0",           KSObjCClassTypeArray,   ClassSubtypeNSArrayImmutable, false, arrayIsValid,      arrayDescription},
-    {"__NSArrayI",           KSObjCClassTypeArray,   ClassSubtypeNSArrayImmutable, false, arrayIsValid,      arrayDescription},
-    {"__NSArrayM",           KSObjCClassTypeArray,   ClassSubtypeNSArrayMutable,   true,  arrayIsValid,      arrayDescription},
-    {"__NSCFArray",          KSObjCClassTypeArray,   ClassSubtypeCFArray,          false, arrayIsValid,      arrayDescription},
-    {"NSCFArray",            KSObjCClassTypeArray,   ClassSubtypeCFArray,          false, arrayIsValid,      arrayDescription},
-    {"__NSDate",             KSObjCClassTypeDate,    ClassSubtypeNone,             false, dateIsValid,       dateDescription},
-    {"NSDate",               KSObjCClassTypeDate,    ClassSubtypeNone,             false, dateIsValid,       dateDescription},
-    {"__NSCFNumber",         KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
-    {"NSCFNumber",           KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
-    {"NSNumber",             KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
-    {"NSURL",                KSObjCClassTypeURL,     ClassSubtypeNone,             false, urlIsValid,        urlDescription},
-    {NULL,                   KSObjCClassTypeUnknown, ClassSubtypeNone,             false, objectIsValid,     objectDescription},
+    {"__NSCFString",         Raygun_KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
+    {"NSCFString",           Raygun_KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
+    {"__NSCFConstantString", Raygun_KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
+    {"NSCFConstantString",   Raygun_KSObjCClassTypeString,  ClassSubtypeNone,             true,  stringIsValid,     stringDescription},
+    {"__NSArray0",           Raygun_KSObjCClassTypeArray,   ClassSubtypeNSArrayImmutable, false, arrayIsValid,      arrayDescription},
+    {"__NSArrayI",           Raygun_KSObjCClassTypeArray,   ClassSubtypeNSArrayImmutable, false, arrayIsValid,      arrayDescription},
+    {"__NSArrayM",           Raygun_KSObjCClassTypeArray,   ClassSubtypeNSArrayMutable,   true,  arrayIsValid,      arrayDescription},
+    {"__NSCFArray",          Raygun_KSObjCClassTypeArray,   ClassSubtypeCFArray,          false, arrayIsValid,      arrayDescription},
+    {"NSCFArray",            Raygun_KSObjCClassTypeArray,   ClassSubtypeCFArray,          false, arrayIsValid,      arrayDescription},
+    {"__NSDate",             Raygun_KSObjCClassTypeDate,    ClassSubtypeNone,             false, dateIsValid,       dateDescription},
+    {"NSDate",               Raygun_KSObjCClassTypeDate,    ClassSubtypeNone,             false, dateIsValid,       dateDescription},
+    {"__NSCFNumber",         Raygun_KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
+    {"NSCFNumber",           Raygun_KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
+    {"NSNumber",             Raygun_KSObjCClassTypeNumber,  ClassSubtypeNone,             false, numberIsValid,     numberDescription},
+    {"NSURL",                Raygun_KSObjCClassTypeURL,     ClassSubtypeNone,             false, urlIsValid,        urlDescription},
+    {NULL,                   Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, objectIsValid,     objectDescription},
 };
 
 static ClassData g_taggedClassData[] =
 {
-    {"NSAtom",               KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
-    {NULL,                   KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
-    {"NSString",             KSObjCClassTypeString,  ClassSubtypeNone,             false, taggedStringIsValid, taggedStringDescription},
-    {"NSNumber",             KSObjCClassTypeNumber,  ClassSubtypeNone,             false, taggedNumberIsValid, taggedNumberDescription},
-    {"NSIndexPath",          KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
-    {"NSManagedObjectID",    KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
-    {"NSDate",               KSObjCClassTypeDate,    ClassSubtypeNone,             false, taggedDateIsValid,   taggedDateDescription},
-    {NULL,                   KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
+    {"NSAtom",               Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
+    {NULL,                   Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
+    {"NSString",             Raygun_KSObjCClassTypeString,  ClassSubtypeNone,             false, taggedStringIsValid, taggedStringDescription},
+    {"NSNumber",             Raygun_KSObjCClassTypeNumber,  ClassSubtypeNone,             false, taggedNumberIsValid, taggedNumberDescription},
+    {"NSIndexPath",          Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
+    {"NSManagedObjectID",    Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
+    {"NSDate",               Raygun_KSObjCClassTypeDate,    ClassSubtypeNone,             false, taggedDateIsValid,   taggedDateDescription},
+    {NULL,                   Raygun_KSObjCClassTypeUnknown, ClassSubtypeNone,             false, taggedObjectIsValid, taggedObjectDescription},
 };
 static int g_taggedClassDataCount = sizeof(g_taggedClassData) / sizeof(*g_taggedClassData);
 
@@ -182,7 +182,7 @@ static bool isValidTaggedPointer(const void* object)
         if(getTaggedSlot(object) <= g_taggedClassDataCount)
         {
             const ClassData* classData = getClassDataFromTaggedPointer(object);
-            return classData->type != KSObjCClassTypeUnknown;
+            return classData->type != Raygun_KSObjCClassTypeUnknown;
         }
     }
     return false;
@@ -473,7 +473,7 @@ static bool isValidName(const char* const name, const int maxLength)
     }
 
     char buffer[maxLength];
-    int length = ksmem_copyMaxPossible(name, buffer, maxLength);
+    int length = raygun_ksmem_copyMaxPossible(name, buffer, maxLength);
     if(length == 0 || !VALID_NAME_START_CHAR(name[0]))
     {
         return false;
@@ -503,7 +503,7 @@ static bool isValidIvarType(const char* const type)
         return false;
     }
 
-    int length = ksmem_copyMaxPossible(type, buffer, maxLength);
+    int length = raygun_ksmem_copyMaxPossible(type, buffer, maxLength);
     if(length == 0 || !VALID_TYPE_CHAR(type[0]))
     {
         return false;
@@ -524,17 +524,17 @@ static bool isValidIvarType(const char* const type)
 static bool containsValidROData(const void* const classPtr)
 {
     const struct class_t* const class = classPtr;
-    if(!ksmem_isMemoryReadable(class, sizeof(*class)))
+    if(!raygun_ksmem_isMemoryReadable(class, sizeof(*class)))
     {
         return false;
     }
     class_rw_t* rw = getClassRW(class);
-    if(!ksmem_isMemoryReadable(rw, sizeof(*rw)))
+    if(!raygun_ksmem_isMemoryReadable(rw, sizeof(*rw)))
     {
         return false;
     }
     const class_ro_t* ro = getClassRO(class);
-    if(!ksmem_isMemoryReadable(ro, sizeof(*ro)))
+    if(!raygun_ksmem_isMemoryReadable(ro, sizeof(*ro)))
     {
         return false;
     }
@@ -549,7 +549,7 @@ static bool containsValidIvarData(const void* const classPtr)
     {
         return true;
     }
-    if(!ksmem_isMemoryReadable(ivars, sizeof(*ivars)))
+    if(!raygun_ksmem_isMemoryReadable(ivars, sizeof(*ivars)))
     {
         return false;
     }
@@ -560,15 +560,15 @@ static bool containsValidIvarData(const void* const classPtr)
         uint8_t* ivarPtr = (uint8_t*)(&ivars->first) + ivars->entsizeAndFlags;
         for(uint32_t i = 1; i < ivars->count; i++)
         {
-            if(!ksmem_copySafely(ivarPtr, &ivar, sizeof(ivar)))
+            if(!raygun_ksmem_copySafely(ivarPtr, &ivar, sizeof(ivar)))
             {
                 return false;
             }
-            if(!ksmem_isMemoryReadable(ivarPtr, (int)ivars->entsizeAndFlags))
+            if(!raygun_ksmem_isMemoryReadable(ivarPtr, (int)ivars->entsizeAndFlags))
             {
                 return false;
             }
-            if(!ksmem_isMemoryReadable(ivar.offset, sizeof(*ivar.offset)))
+            if(!raygun_ksmem_isMemoryReadable(ivar.offset, sizeof(*ivar.offset)))
             {
                 return false;
             }
@@ -594,13 +594,13 @@ static bool containsValidClassName(const void* const classPtr)
 
 static bool hasValidIsaPointer(const void* object) {
     const struct class_t* isaPtr = getIsaPointer(object);
-    return ksmem_isMemoryReadable(isaPtr, sizeof(*isaPtr));
+    return raygun_ksmem_isMemoryReadable(isaPtr, sizeof(*isaPtr));
 }
 
 static inline bool isValidClass(const void* classPtr)
 {
     const class_t* class = classPtr;
-    if(!ksmem_isMemoryReadable(class, sizeof(*class)))
+    if(!raygun_ksmem_isMemoryReadable(class, sizeof(*class)))
     {
         return false;
     }
@@ -626,7 +626,7 @@ static inline bool isValidObject(const void* objectPtr)
         return isValidTaggedPointer(objectPtr);
     }
     const class_t* object = objectPtr;
-    if(!ksmem_isMemoryReadable(object, sizeof(*object)))
+    if(!raygun_ksmem_isMemoryReadable(object, sizeof(*object)))
     {
         return false;
     }
@@ -647,32 +647,32 @@ static inline bool isValidObject(const void* objectPtr)
 #pragma mark - Basic Objective-C Queries -
 //======================================================================
 
-const void* ksobjc_isaPointer(const void* const objectOrClassPtr)
+const void* raygun_ksobjc_isaPointer(const void* const objectOrClassPtr)
 {
     return getIsaPointer(objectOrClassPtr);
 }
 
-const void* ksobjc_superClass(const void* const classPtr)
+const void* raygun_ksobjc_superClass(const void* const classPtr)
 {
     return getSuperClass(classPtr);
 }
 
-bool ksobjc_isMetaClass(const void* const classPtr)
+bool raygun_ksobjc_isMetaClass(const void* const classPtr)
 {
     return isMetaClass(classPtr);
 }
 
-bool ksobjc_isRootClass(const void* const classPtr)
+bool raygun_ksobjc_isRootClass(const void* const classPtr)
 {
     return isRootClass(classPtr);
 }
 
-const char* ksobjc_className(const void* classPtr)
+const char* raygun_ksobjc_className(const void* classPtr)
 {
     return getClassName(classPtr);
 }
 
-const char* ksobjc_objectClassName(const void* objectPtr)
+const char* raygun_ksobjc_objectClassName(const void* objectPtr)
 {
     if(isTaggedPointer(objectPtr))
     {
@@ -687,7 +687,7 @@ const char* ksobjc_objectClassName(const void* objectPtr)
     return getClassName(isaPtr);
 }
 
-bool ksobjc_isClassNamed(const void* const classPtr, const char* const className)
+bool raygun_ksobjc_isClassNamed(const void* const classPtr, const char* const className)
 {
     const char* name = getClassName(classPtr);
     if(name == NULL || className == NULL)
@@ -697,7 +697,7 @@ bool ksobjc_isClassNamed(const void* const classPtr, const char* const className
     return strcmp(name, className) == 0;
 }
 
-bool ksobjc_isKindOfClass(const void* const classPtr, const char* const className)
+bool raygun_ksobjc_isKindOfClass(const void* const classPtr, const char* const className)
 {
     if(className == NULL)
     {
@@ -726,7 +726,7 @@ bool ksobjc_isKindOfClass(const void* const classPtr, const char* const classNam
     return false;
 }
 
-const void* ksobjc_baseClass(const void* const classPtr)
+const void* raygun_ksobjc_baseClass(const void* const classPtr)
 {
     const struct class_t* superClass = classPtr;
     const struct class_t* subClass = classPtr;
@@ -747,7 +747,7 @@ const void* ksobjc_baseClass(const void* const classPtr)
     return NULL;
 }
 
-int ksobjc_ivarCount(const void* const classPtr)
+int raygun_ksobjc_ivarCount(const void* const classPtr)
 {
     const struct ivar_list_t* ivars = getClassRO(classPtr)->ivars;
     if(ivars == NULL)
@@ -757,7 +757,7 @@ int ksobjc_ivarCount(const void* const classPtr)
     return (int)ivars->count;
 }
 
-int ksobjc_ivarList(const void* const classPtr, KSObjCIvar* dstIvars, int ivarsCount)
+int raygun_ksobjc_ivarList(const void* const classPtr, Raygun_KSObjCIvar* dstIvars, int ivarsCount)
 {
     // TODO: Check this for a possible bad access.
     if(dstIvars == NULL)
@@ -765,7 +765,7 @@ int ksobjc_ivarList(const void* const classPtr, KSObjCIvar* dstIvars, int ivarsC
         return 0;
     }
     
-    int count = ksobjc_ivarCount(classPtr);
+    int count = raygun_ksobjc_ivarCount(classPtr);
     if(count == 0)
     {
         return 0;
@@ -780,7 +780,7 @@ int ksobjc_ivarList(const void* const classPtr, KSObjCIvar* dstIvars, int ivarsC
     const struct ivar_t* src = (void*)srcPtr;
     for(int i = 0; i < count; i++)
     {
-        KSObjCIvar* dst = &dstIvars[i];
+        Raygun_KSObjCIvar* dst = &dstIvars[i];
         dst->name = src->name;
         dst->type = src->type;
         dst->index = i;
@@ -790,7 +790,7 @@ int ksobjc_ivarList(const void* const classPtr, KSObjCIvar* dstIvars, int ivarsC
     return count;
 }
 
-bool ksobjc_ivarNamed(const void* const classPtr, const char* name, KSObjCIvar* dst)
+bool raygun_ksobjc_ivarNamed(const void* const classPtr, const char* name, Raygun_KSObjCIvar* dst)
 {
     if(name == NULL)
     {
@@ -814,7 +814,7 @@ bool ksobjc_ivarNamed(const void* const classPtr, const char* name, KSObjCIvar* 
     return false;
 }
 
-bool ksobjc_ivarValue(const void* const objectPtr, int ivarIndex, void* dst)
+bool raygun_ksobjc_ivarValue(const void* const objectPtr, int ivarIndex, void* dst)
 {
     if(isTaggedPointer(objectPtr))
     {
@@ -845,21 +845,21 @@ bool ksobjc_ivarValue(const void* const objectPtr, int ivarIndex, void* dst)
     const struct ivar_t* ivar = (void*)(ivarPtr + ivars->entsizeAndFlags * (unsigned)ivarIndex);
     
     uintptr_t valuePtr = (uintptr_t)objectPtr + (uintptr_t)*ivar->offset;
-    if(!ksmem_copySafely((void*)valuePtr, dst, (int)ivar->size))
+    if(!raygun_ksmem_copySafely((void*)valuePtr, dst, (int)ivar->size))
     {
         return false;
     }
     return true;
 }
 
-uintptr_t ksobjc_taggedPointerPayload(const void* taggedObjectPtr)
+uintptr_t raygun_ksobjc_taggedPointerPayload(const void* taggedObjectPtr)
 {
     return getTaggedPayload(taggedObjectPtr);
 }
 
 static inline bool isBlockClass(const void* class)
 {
-    const void* baseClass = ksobjc_baseClass(class);
+    const void* baseClass = raygun_ksobjc_baseClass(class);
     if(baseClass == NULL)
     {
         return false;
@@ -872,40 +872,40 @@ static inline bool isBlockClass(const void* class)
     return strcmp(name, g_blockBaseClassName) == 0;
 }
 
-KSObjCType ksobjc_objectType(const void* objectOrClassPtr)
+Raygun_KSObjCType raygun_ksobjc_objectType(const void* objectOrClassPtr)
 {
     if(objectOrClassPtr == NULL)
     {
-        return KSObjCTypeUnknown;
+        return Raygun_KSObjCTypeUnknown;
     }
 
     if(isTaggedPointer(objectOrClassPtr))
     {
-        return KSObjCTypeObject;
+        return Raygun_KSObjCTypeObject;
     }
     
     if(!isValidObject(objectOrClassPtr))
     {
-        return KSObjCTypeUnknown;
+        return Raygun_KSObjCTypeUnknown;
     }
     
     if(!isValidClass(objectOrClassPtr))
     {
-        return KSObjCTypeUnknown;
+        return Raygun_KSObjCTypeUnknown;
     }
     
     const struct class_t* isa = getIsaPointer(objectOrClassPtr);
 
     if(isBlockClass(isa))
     {
-        return KSObjCTypeBlock;
+        return Raygun_KSObjCTypeBlock;
     }
     if(!isMetaClass(isa))
     {
-        return KSObjCTypeObject;
+        return Raygun_KSObjCTypeObject;
     }
     
-    return KSObjCTypeClass;
+    return Raygun_KSObjCTypeClass;
 }
 
 
@@ -959,14 +959,14 @@ static bool stringIsValid(const void* const stringPtr)
     struct __CFString temp;
     uint8_t oneByte;
     CFIndex length = -1;
-    if(!ksmem_copySafely(string, &temp, sizeof(string->base)))
+    if(!raygun_ksmem_copySafely(string, &temp, sizeof(string->base)))
     {
         return false;
     }
     
     if(__CFStrIsInline(string))
     {
-        if(!ksmem_copySafely(&string->variants.inline1, &temp, sizeof(string->variants.inline1)))
+        if(!raygun_ksmem_copySafely(&string->variants.inline1, &temp, sizeof(string->variants.inline1)))
         {
             return false;
         }
@@ -974,7 +974,7 @@ static bool stringIsValid(const void* const stringPtr)
     }
     else if(__CFStrIsMutable(string))
     {
-        if(!ksmem_copySafely(&string->variants.notInlineMutable, &temp, sizeof(string->variants.notInlineMutable)))
+        if(!raygun_ksmem_copySafely(&string->variants.notInlineMutable, &temp, sizeof(string->variants.notInlineMutable)))
         {
             return false;
         }
@@ -982,7 +982,7 @@ static bool stringIsValid(const void* const stringPtr)
     }
     else if(!__CFStrHasLengthByte(string))
     {
-        if(!ksmem_copySafely(&string->variants.notInlineImmutable1, &temp, sizeof(string->variants.notInlineImmutable1)))
+        if(!raygun_ksmem_copySafely(&string->variants.notInlineImmutable1, &temp, sizeof(string->variants.notInlineImmutable1)))
         {
             return false;
         }
@@ -990,11 +990,11 @@ static bool stringIsValid(const void* const stringPtr)
     }
     else
     {
-        if(!ksmem_copySafely(&string->variants.notInlineImmutable2, &temp, sizeof(string->variants.notInlineImmutable2)))
+        if(!raygun_ksmem_copySafely(&string->variants.notInlineImmutable2, &temp, sizeof(string->variants.notInlineImmutable2)))
         {
             return false;
         }
-        if(!ksmem_copySafely(__CFStrContents(string), &oneByte, sizeof(oneByte)))
+        if(!raygun_ksmem_copySafely(__CFStrContents(string), &oneByte, sizeof(oneByte)))
         {
             return false;
         }
@@ -1007,7 +1007,7 @@ static bool stringIsValid(const void* const stringPtr)
     }
     else if(length > 0)
     {
-        if(!ksmem_copySafely(stringStart(string), &oneByte, sizeof(oneByte)))
+        if(!raygun_ksmem_copySafely(stringStart(string), &oneByte, sizeof(oneByte)))
         {
             return false;
         }
@@ -1015,7 +1015,7 @@ static bool stringIsValid(const void* const stringPtr)
     return true;
 }
 
-int ksobjc_stringLength(const void* const stringPtr)
+int raygun_ksobjc_stringLength(const void* const stringPtr)
 {
     if(isTaggedPointer(stringPtr) && isTaggedPointerNSString(stringPtr))
     {
@@ -1158,7 +1158,7 @@ static int copy8BitString(const void* const src, void* const dst, int charCount,
     {
         charCount = maxByteCount - 1;
     }
-    unlikely_if(!ksmem_copySafely(src, dst, charCount))
+    unlikely_if(!raygun_ksmem_copySafely(src, dst, charCount))
     {
         *((uint8_t*)dst) = 0;
         return 0;
@@ -1168,14 +1168,14 @@ static int copy8BitString(const void* const src, void* const dst, int charCount,
     return charCount;
 }
 
-int ksobjc_copyStringContents(const void* stringPtr, char* dst, int maxByteCount)
+int raygun_ksobjc_copyStringContents(const void* stringPtr, char* dst, int maxByteCount)
 {
     if(isTaggedPointer(stringPtr) && isTaggedPointerNSString(stringPtr))
     {
         return extractTaggedNSString(stringPtr, dst, maxByteCount);
     }
     const struct __CFString* string = stringPtr;
-    int charCount = ksobjc_stringLength(string);
+    int charCount = raygun_ksobjc_stringLength(string);
     
     const char* src = stringStart(string);
     if(__CFStrIsUnicode(string))
@@ -1193,7 +1193,7 @@ static int stringDescription(const void* object, char* buffer, int bufferLength)
     
     pBuffer += objectDescription(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": \"");
-    pBuffer += ksobjc_copyStringContents(object, pBuffer, (int)(pEnd - pBuffer));
+    pBuffer += raygun_ksobjc_copyStringContents(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), "\"");
 
     return (int)(pBuffer - buffer);
@@ -1217,17 +1217,17 @@ static int taggedStringDescription(const void* object, char* buffer, __unused in
 static bool urlIsValid(const void* const urlPtr)
 {
     struct __CFURL url;
-    if(!ksmem_copySafely(urlPtr, &url, sizeof(url)))
+    if(!raygun_ksmem_copySafely(urlPtr, &url, sizeof(url)))
     {
         return false;
     }
     return stringIsValid(url._string);
 }
 
-int ksobjc_copyURLContents(const void* const urlPtr, char* dst, int maxLength)
+int raygun_ksobjc_copyURLContents(const void* const urlPtr, char* dst, int maxLength)
 {
     const struct __CFURL* url = urlPtr;
-    return ksobjc_copyStringContents(url->_string, dst, maxLength);
+    return raygun_ksobjc_copyStringContents(url->_string, dst, maxLength);
 }
 
 static int urlDescription(const void* object, char* buffer, int bufferLength)
@@ -1237,7 +1237,7 @@ static int urlDescription(const void* object, char* buffer, int bufferLength)
     
     pBuffer += objectDescription(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": \"");
-    pBuffer += ksobjc_copyURLContents(object, pBuffer, (int)(pEnd - pBuffer));
+    pBuffer += raygun_ksobjc_copyURLContents(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), "\"");
     
     return (int)(pBuffer - buffer);
@@ -1251,10 +1251,10 @@ static int urlDescription(const void* object, char* buffer, int bufferLength)
 static bool dateIsValid(const void* const datePtr)
 {
     struct __CFDate temp;
-    return ksmem_copySafely(datePtr, &temp, sizeof(temp));
+    return raygun_ksmem_copySafely(datePtr, &temp, sizeof(temp));
 }
 
-CFAbsoluteTime ksobjc_dateContents(const void* const datePtr)
+CFAbsoluteTime raygun_ksobjc_dateContents(const void* const datePtr)
 {
     if(isValidTaggedPointer(datePtr))
     {
@@ -1269,7 +1269,7 @@ static int dateDescription(const void* object, char* buffer, int bufferLength)
     char* pBuffer = buffer;
     char* pEnd = buffer + bufferLength;
     
-    CFAbsoluteTime time = ksobjc_dateContents(object);
+    CFAbsoluteTime time = raygun_ksobjc_dateContents(object);
     pBuffer += objectDescription(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": %f", time);
     
@@ -1334,19 +1334,19 @@ static int taggedDateDescription(const void* object, char* buffer, int bufferLen
         NSNUMBER_CASE( kCFNumberCGFloatType,   CGFloat,   RETURN_TYPE, data ) \
     }
 
-Float64 ksobjc_numberAsFloat(const void* object)
+Float64 raygun_ksobjc_numberAsFloat(const void* object)
 {
     EXTRACT_AND_RETURN_NSNUMBER(object, Float64);
     return NAN;
 }
 
-int64_t ksobjc_numberAsInteger(const void* object)
+int64_t raygun_ksobjc_numberAsInteger(const void* object)
 {
     EXTRACT_AND_RETURN_NSNUMBER(object, int64_t);
     return 0;
 }
 
-bool ksobjc_numberIsFloat(const void* object)
+bool raygun_ksobjc_numberIsFloat(const void* object)
 {
     return CFNumberIsFloatType((CFNumberRef)object);
 }
@@ -1354,7 +1354,7 @@ bool ksobjc_numberIsFloat(const void* object)
 static bool numberIsValid(const void* const datePtr)
 {
     struct __CFNumber temp;
-    return ksmem_copySafely(datePtr, &temp, sizeof(temp));
+    return raygun_ksmem_copySafely(datePtr, &temp, sizeof(temp));
 }
 
 static int numberDescription(const void* object, char* buffer, int bufferLength)
@@ -1364,14 +1364,14 @@ static int numberDescription(const void* object, char* buffer, int bufferLength)
 
     pBuffer += objectDescription(object, pBuffer, (int)(pEnd - pBuffer));
 
-    if(ksobjc_numberIsFloat(object))
+    if(raygun_ksobjc_numberIsFloat(object))
     {
-        Float64 value = ksobjc_numberAsFloat(object);
+        Float64 value = raygun_ksobjc_numberAsFloat(object);
         pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": %lf", value);
     }
     else
     {
-        int64_t value = ksobjc_numberAsInteger(object);
+        int64_t value = raygun_ksobjc_numberAsInteger(object);
         pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": %" PRId64, value);
     }
 
@@ -1418,7 +1418,7 @@ static inline bool nsarrayIsMutable(const void* const arrayPtr)
 static inline bool nsarrayIsValid(const void* const arrayPtr)
 {
     struct NSArray temp;
-    return ksmem_copySafely(arrayPtr, &temp, sizeof(temp.basic));
+    return raygun_ksmem_copySafely(arrayPtr, &temp, sizeof(temp.basic));
 }
 
 static inline int nsarrayCount(const void* const arrayPtr)
@@ -1445,7 +1445,7 @@ static int nsarrayContents(const void* const arrayPtr, uintptr_t* contents, int 
         return 0;
     }
     
-    if(!ksmem_copySafely(&array->basic.firstEntry, contents, (int)sizeof(*contents) * count))
+    if(!raygun_ksmem_copySafely(&array->basic.firstEntry, contents, (int)sizeof(*contents) * count))
     {
         return 0;
     }
@@ -1456,7 +1456,7 @@ static int nsarrayContents(const void* const arrayPtr, uintptr_t* contents, int 
 static inline bool cfarrayIsValid(const void* const arrayPtr)
 {
     struct __CFArray temp;
-    if(!ksmem_copySafely(arrayPtr, &temp, sizeof(temp)))
+    if(!raygun_ksmem_copySafely(arrayPtr, &temp, sizeof(temp)))
     {
         return false;
     }
@@ -1466,7 +1466,7 @@ static inline bool cfarrayIsValid(const void* const arrayPtr)
         if(array->_store != NULL)
         {
             struct __CFArrayDeque deque;
-            if(!ksmem_copySafely(array->_store, &deque, sizeof(deque)))
+            if(!raygun_ksmem_copySafely(array->_store, &deque, sizeof(deque)))
             {
                 return false;
             }
@@ -1499,7 +1499,7 @@ static int cfarrayContents(const void* const arrayPtr, uintptr_t* contents, int 
     }
     
     const void* firstEntry = cfarrayData(array);
-    if(!ksmem_copySafely(firstEntry, contents, (int)sizeof(*contents) * count))
+    if(!raygun_ksmem_copySafely(firstEntry, contents, (int)sizeof(*contents) * count))
     {
         return 0;
     }
@@ -1514,7 +1514,7 @@ static bool isCFArray(const void* const arrayPtr)
 
 
 
-int ksobjc_arrayCount(const void* const arrayPtr)
+int raygun_ksobjc_arrayCount(const void* const arrayPtr)
 {
     if(isCFArray(arrayPtr))
     {
@@ -1523,7 +1523,7 @@ int ksobjc_arrayCount(const void* const arrayPtr)
     return nsarrayCount(arrayPtr);
 }
 
-int ksobjc_arrayContents(const void* const arrayPtr, uintptr_t* contents, int count)
+int raygun_ksobjc_arrayContents(const void* const arrayPtr, uintptr_t* contents, int count)
 {
     if(isCFArray(arrayPtr))
     {
@@ -1549,12 +1549,12 @@ static int arrayDescription(const void* object, char* buffer, int bufferLength)
     pBuffer += objectDescription(object, pBuffer, (int)(pEnd - pBuffer));
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), ": [");
 
-    if(pBuffer < pEnd-1 && ksobjc_arrayCount(object) > 0)
+    if(pBuffer < pEnd-1 && raygun_ksobjc_arrayCount(object) > 0)
     {
         uintptr_t contents = 0;
-        if(ksobjc_arrayContents(object, &contents, 1) == 1)
+        if(raygun_ksobjc_arrayContents(object, &contents, 1) == 1)
         {
-            pBuffer += ksobjc_getDescription((void*)contents, pBuffer, (int)(pEnd - pBuffer));
+            pBuffer += raygun_ksobjc_getDescription((void*)contents, pBuffer, (int)(pEnd - pBuffer));
         }
     }
     pBuffer += stringPrintf(pBuffer, (int)(pEnd - pBuffer), "]");
@@ -1567,13 +1567,13 @@ static int arrayDescription(const void* object, char* buffer, int bufferLength)
 #pragma mark - NSDictionary (BROKEN) -
 //======================================================================
 
-bool ksobjc_dictionaryFirstEntry(const void* dict, uintptr_t* key, uintptr_t* value)
+bool raygun_ksobjc_dictionaryFirstEntry(const void* dict, uintptr_t* key, uintptr_t* value)
 {
     // TODO: This is broken.
 
     // Ensure memory is valid.
     struct __CFBasicHash copy;
-    if(!ksmem_copySafely(dict, &copy, sizeof(copy)))
+    if(!raygun_ksmem_copySafely(dict, &copy, sizeof(copy)))
     {
         return false;
     }
@@ -1583,22 +1583,22 @@ bool ksobjc_dictionaryFirstEntry(const void* dict, uintptr_t* key, uintptr_t* va
     uintptr_t* values = (uintptr_t*)ht->pointers;
     
     // Dereference key and value pointers.
-    if(!ksmem_copySafely(keys, &keys, sizeof(keys)))
+    if(!raygun_ksmem_copySafely(keys, &keys, sizeof(keys)))
     {
         return false;
     }
     
-    if(!ksmem_copySafely(values, &values, sizeof(values)))
+    if(!raygun_ksmem_copySafely(values, &values, sizeof(values)))
     {
         return false;
     }
     
     // Copy to destination.
-    if(!ksmem_copySafely(keys, key, sizeof(*key)))
+    if(!raygun_ksmem_copySafely(keys, key, sizeof(*key)))
     {
         return false;
     }
-    if(!ksmem_copySafely(values, value, sizeof(*value)))
+    if(!raygun_ksmem_copySafely(values, value, sizeof(*value)))
     {
         return false;
     }
@@ -1626,7 +1626,7 @@ bool ksobjc_dictionaryFirstEntry(const void* dict, uintptr_t* key, uintptr_t* va
 //    return true;
 //}
 
-int ksobjc_dictionaryCount(const void* dict)
+int raygun_ksobjc_dictionaryCount(const void* dict)
 {
     // TODO: Implement me
 #pragma unused(dict)
@@ -1638,23 +1638,23 @@ int ksobjc_dictionaryCount(const void* dict)
 #pragma mark - General Queries -
 //======================================================================
 
-int ksobjc_getDescription(void* object, char* buffer, int bufferLength)
+int raygun_ksobjc_getDescription(void* object, char* buffer, int bufferLength)
 {
     const ClassData* data = getClassDataFromObject(object);
     return data->description(object, buffer, bufferLength);
 }
 
-bool ksobjc_isTaggedPointer(const void* const pointer)
+bool raygun_ksobjc_isTaggedPointer(const void* const pointer)
 {
     return isTaggedPointer(pointer);
 }
 
-bool ksobjc_isValidTaggedPointer(const void* const pointer)
+bool raygun_ksobjc_isValidTaggedPointer(const void* const pointer)
 {
     return isValidTaggedPointer(pointer);
 }
 
-bool ksobjc_isValidObject(const void* object)
+bool raygun_ksobjc_isValidObject(const void* object)
 {
     if(!isValidObject(object))
     {
@@ -1664,7 +1664,7 @@ bool ksobjc_isValidObject(const void* object)
     return data->isValidObject(object);
 }
 
-KSObjCClassType ksobjc_objectClassType(const void* object)
+Raygun_KSObjCClassType raygun_ksobjc_objectClassType(const void* object)
 {
     const ClassData* data = getClassDataFromObject(object);
     return data->type;

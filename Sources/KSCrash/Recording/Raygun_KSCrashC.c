@@ -34,7 +34,7 @@
 #include "Raygun_KSCrashMonitor_Deadlock.h"
 #include "Raygun_KSCrashMonitor_User.h"
 #include "Raygun_KSFileUtils.h"
-#include "KSObjC.h"
+#include "Raygun_KSObjC.h"
 #include "KSString.h"
 #include "Raygun_KSCrashMonitor_System.h"
 #include "Raygun_KSCrashMonitor_Zombie.h"

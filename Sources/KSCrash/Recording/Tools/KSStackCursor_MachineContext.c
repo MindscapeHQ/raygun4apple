@@ -26,7 +26,7 @@
 #include "KSStackCursor_MachineContext.h"
 
 #include "Raygun_KSCPU.h"
-#include "KSMemory.h"
+#include "Raygun_KSMemory.h"
 
 #include <stdlib.h>
 
@@ -102,7 +102,7 @@ static bool advanceCursor(KSStackCursor *cursor)
         context->isPastFramePointer = true;
     }
 
-    if(!ksmem_copySafely(context->currentFrame.previous, &context->currentFrame, sizeof(context->currentFrame)))
+    if(!raygun_ksmem_copySafely(context->currentFrame.previous, &context->currentFrame, sizeof(context->currentFrame)))
     {
         return false;
     }
