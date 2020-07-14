@@ -21,7 +21,7 @@
 //#include "llvm/ADT/StringRef.h"
 //#include "swift/Basic/Malloc.h"
 #include "Raygun_StringRef.h"
-#include "Malloc.h"
+#include "Raygun_Malloc.h"
 
 namespace llvm {
   class raw_ostream;

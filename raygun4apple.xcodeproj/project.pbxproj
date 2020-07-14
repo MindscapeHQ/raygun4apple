@@ -181,7 +181,7 @@
 		A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */; };
 		A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
 		A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
-		A2E1A20D218F919500BF66DB /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
+		A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
 		A2E1A20E218F919500BF66DB /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
 		A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBF21003DAA0003C8B4 /* SwiftStrings.h */; };
 		A2E1A210218F92D500BF66DB /* Raygun_KSCrashInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4AC0821003DA90003C8B4 /* Raygun_KSCrashInstallation.m */; };
@@ -492,8 +492,8 @@
 		A2E4AE0F21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */; };
 		A2E4AE1021003DAA0003C8B4 /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
 		A2E4AE1121003DAA0003C8B4 /* Raygun_LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */; };
-		A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
-		A2E4AE1321003DAA0003C8B4 /* Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Malloc.h */; };
+		A2E4AE1221003DAA0003C8B4 /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
+		A2E4AE1321003DAA0003C8B4 /* Raygun_Malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */; };
 		A2E4AE1421003DAA0003C8B4 /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
 		A2E4AE1521003DAA0003C8B4 /* Punycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */; };
 		A2E4AE1621003DAA0003C8B4 /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = A2E4ACBD21003DAA0003C8B4 /* Punycode.h */; };
@@ -786,7 +786,7 @@
 		A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_DemangleNodes.h; sourceTree = "<group>"; };
 		A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Fallthrough.h; sourceTree = "<group>"; };
 		A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_LLVM.h; sourceTree = "<group>"; };
-		A2E4ACBB21003DAA0003C8B4 /* Malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malloc.h; sourceTree = "<group>"; };
+		A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raygun_Malloc.h; sourceTree = "<group>"; };
 		A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Punycode.cpp; sourceTree = "<group>"; };
 		A2E4ACBD21003DAA0003C8B4 /* Punycode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Punycode.h; sourceTree = "<group>"; };
 		A2E4ACBE21003DAA0003C8B4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -1187,7 +1187,7 @@
 				A2E4ACB821003DAA0003C8B4 /* Raygun_DemangleNodes.h */,
 				A2E4ACB921003DAA0003C8B4 /* Raygun_Fallthrough.h */,
 				A2E4ACBA21003DAA0003C8B4 /* Raygun_LLVM.h */,
-				A2E4ACBB21003DAA0003C8B4 /* Malloc.h */,
+				A2E4ACBB21003DAA0003C8B4 /* Raygun_Malloc.h */,
 				A2E4ACBC21003DAA0003C8B4 /* Punycode.cpp */,
 				A2E4ACBD21003DAA0003C8B4 /* Punycode.h */,
 			);
@@ -1298,7 +1298,7 @@
 				A2E4ADA621003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */,
 				A2E4ADB421003DAA0003C8B4 /* Raygun_KSCrashReportFilter.h in Headers */,
 				A2E4AD6E21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
-				A2E4AE1221003DAA0003C8B4 /* Malloc.h in Headers */,
+				A2E4AE1221003DAA0003C8B4 /* Raygun_Malloc.h in Headers */,
 				A2E4AD2021003DAA0003C8B4 /* Raygun_KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD821003DAA0003C8B4 /* NSData+GZip.h in Headers */,
 				A2E4AD7621003DAA0003C8B4 /* Raygun_KSLogger.h in Headers */,
@@ -1406,7 +1406,7 @@
 				A2E4ADA721003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */,
 				A2E4ADB521003DAA0003C8B4 /* Raygun_KSCrashReportFilter.h in Headers */,
 				A2E4AD6F21003DAA0003C8B4 /* Raygun_KSJSONCodec.h in Headers */,
-				A2E4AE1321003DAA0003C8B4 /* Malloc.h in Headers */,
+				A2E4AE1321003DAA0003C8B4 /* Raygun_Malloc.h in Headers */,
 				A2E4AD2121003DAA0003C8B4 /* Raygun_KSCrashMonitor_Deadlock.h in Headers */,
 				A2E4ADD921003DAA0003C8B4 /* NSData+GZip.h in Headers */,
 				A2E4AD7721003DAA0003C8B4 /* Raygun_KSLogger.h in Headers */,
@@ -1576,7 +1576,7 @@
 				A2E1A20A218F919500BF66DB /* Raygun_DemangleNodes.h in Headers */,
 				A2E1A20B218F919500BF66DB /* Raygun_Fallthrough.h in Headers */,
 				A2E1A20C218F919500BF66DB /* Raygun_LLVM.h in Headers */,
-				A2E1A20D218F919500BF66DB /* Malloc.h in Headers */,
+				A2E1A20D218F919500BF66DB /* Raygun_Malloc.h in Headers */,
 				A2E1A20E218F919500BF66DB /* Punycode.h in Headers */,
 				A2E1A20F218F919500BF66DB /* SwiftStrings.h in Headers */,
 				DC5EFA97210FFA7A002C0713 /* RaygunClientMessage.h in Headers */,
