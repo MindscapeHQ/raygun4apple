@@ -24,29 +24,29 @@
 // THE SOFTWARE.
 //
 
-#import "KSCString.h"
+#import "Raygun_KSCString.h"
 
-@implementation KSCString
+@implementation Raygun_KSCString
 
 @synthesize length = _length;
 @synthesize bytes = _bytes;
 
-+ (KSCString*) stringWithString:(NSString*) string
++ (Raygun_KSCString*) stringWithString:(NSString*) string
 {
     return [[self alloc] initWithString:string];
 }
 
-+ (KSCString*) stringWithCString:(const char*) string
++ (Raygun_KSCString*) stringWithCString:(const char*) string
 {
     return [[self alloc] initWithCString:string];
 }
 
-+ (KSCString*) stringWithData:(NSData*) data
++ (Raygun_KSCString*) stringWithData:(NSData*) data
 {
     return [[self alloc] initWithData:data];
 }
 
-+ (KSCString*) stringWithData:(const char*) data length:(NSUInteger) length
++ (Raygun_KSCString*) stringWithData:(const char*) data length:(NSUInteger) length
 {
     return [[self alloc] initWithData:data length:length];
 }

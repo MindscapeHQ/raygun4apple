@@ -29,7 +29,7 @@
 #import "Raygun_KSCrashInstallation+Private.h"
 #import "Raygun_KSCrashReportFilterBasic.h"
 #import "Raygun_KSCrash.h"
-#import "KSCString.h"
+#import "Raygun_KSCString.h"
 #import "Raygun_KSJSONCodecObjC.h"
 #import "Raygun_KSLogger.h"
 #import "NSError+Raygun_SimpleConstructor.h"
@@ -83,8 +83,8 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 @property(nonatomic,readwrite,retain) id value;
 
 @property(nonatomic,readwrite,retain) NSMutableData* fieldBacking;
-@property(nonatomic,readwrite,retain) KSCString* keyBacking;
-@property(nonatomic,readwrite,retain) KSCString* valueBacking;
+@property(nonatomic,readwrite,retain) Raygun_KSCString* keyBacking;
+@property(nonatomic,readwrite,retain) Raygun_KSCString* valueBacking;
 
 @end
 
@@ -126,7 +126,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     }
     else
     {
-        self.keyBacking = [KSCString stringWithString:key];
+        self.keyBacking = [Raygun_KSCString stringWithString:key];
     }
     self.field->key = self.keyBacking.bytes;
 }
@@ -149,7 +149,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     else
     {
         _value = value;
-        self.valueBacking = [KSCString stringWithData:jsonData];
+        self.valueBacking = [Raygun_KSCString stringWithData:jsonData];
         self.field->value = self.valueBacking.bytes;
     }
 }
