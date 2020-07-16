@@ -41,7 +41,7 @@ extern "C" {
 #include <stdarg.h>
 
 
-#define KSFU_MAX_PATH_LENGTH 500
+#define RAYGUN_KSFU_MAX_PATH_LENGTH 500
 
 /** Get the last entry in a file path. Assumes UNIX style separators.
  *

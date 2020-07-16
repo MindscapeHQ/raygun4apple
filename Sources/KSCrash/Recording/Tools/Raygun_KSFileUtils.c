@@ -167,7 +167,7 @@ static bool raygun_deletePathContents(const char* path, bool deleteTopLevelPathA
         int entryCount = 0;
         raygun_dirContents(path, &entries, &entryCount);
         
-        int bufferLength = KSFU_MAX_PATH_LENGTH;
+        int bufferLength = RAYGUN_KSFU_MAX_PATH_LENGTH;
         char* pathBuffer = malloc((unsigned)bufferLength);
         snprintf(pathBuffer, bufferLength, "%s/", path);
         char* pathPtr = pathBuffer + strlen(pathBuffer);

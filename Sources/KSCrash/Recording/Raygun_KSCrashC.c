@@ -60,9 +60,9 @@ static volatile bool g_installed = 0;
 
 static bool g_shouldAddConsoleLogToReport = false;
 static bool g_shouldPrintPreviousLog = false;
-static char g_consoleLogPath[KSFU_MAX_PATH_LENGTH];
+static char g_consoleLogPath[RAYGUN_KSFU_MAX_PATH_LENGTH];
 static Raygun_KSCrashMonitorType g_monitoring = Raygun_KSCrashMonitorTypeProductionSafeMinimal;
-static char g_lastCrashReportFilePath[KSFU_MAX_PATH_LENGTH];
+static char g_lastCrashReportFilePath[RAYGUN_KSFU_MAX_PATH_LENGTH];
 
 
 // ============================================================================
@@ -105,7 +105,7 @@ static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
     }
     else
     {
-        char crashReportFilePath[KSFU_MAX_PATH_LENGTH];
+        char crashReportFilePath[RAYGUN_KSFU_MAX_PATH_LENGTH];
         raygun_kscrs_getNextCrashReportPath(crashReportFilePath);
         strncpy(g_lastCrashReportFilePath, crashReportFilePath, sizeof(g_lastCrashReportFilePath));
         raygun_kscrashreport_writeStandardReport(monitorContext, crashReportFilePath);
@@ -128,7 +128,7 @@ Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char
     }
     g_installed = 1;
 
-    char path[KSFU_MAX_PATH_LENGTH];
+    char path[RAYGUN_KSFU_MAX_PATH_LENGTH];
     snprintf(path, sizeof(path), "%s/Reports", installPath);
     raygun_ksfu_makePath(path);
     raygun_kscrs_initialize(appName, path);

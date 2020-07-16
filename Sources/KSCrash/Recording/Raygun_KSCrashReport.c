@@ -1586,7 +1586,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
 {
     char writeBuffer[1024];
     Raygun_KSBufferedWriter bufferedWriter;
-    static char tempPath[KSFU_MAX_PATH_LENGTH];
+    static char tempPath[RAYGUN_KSFU_MAX_PATH_LENGTH];
     strncpy(tempPath, path, sizeof(tempPath) - 10);
     strncpy(tempPath + strlen(tempPath) - 5, ".old", 5);
     RAYGUN_KSLOG_ERROR("Writing recrash report to %s", path);
