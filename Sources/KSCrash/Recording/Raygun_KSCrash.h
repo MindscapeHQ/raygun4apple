@@ -155,7 +155,7 @@ typedef enum
  * Note: If you use an installation, it will automatically set this property.
  *       Do not modify it in such a case.
  */
-@property(nonatomic,readwrite,assign) KSReportWriteCallback onCrash;
+@property(nonatomic,readwrite,assign) Raygun_KSReportWriteCallback onCrash;
 
 /** Add a copy of KSCrash's console log messages to the crash report.
  */

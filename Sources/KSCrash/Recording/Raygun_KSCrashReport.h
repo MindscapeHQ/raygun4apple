@@ -72,7 +72,7 @@ void raygun_kscrashreport_setDoNotIntrospectClasses(const char** doNotIntrospect
  *
  * @param userSectionWriteCallback The user section write callback.
  */
-void raygun_kscrashreport_setUserSectionWriteCallback(const KSReportWriteCallback userSectionWriteCallback);
+void raygun_kscrashreport_setUserSectionWriteCallback(const Raygun_KSReportWriteCallback userSectionWriteCallback);
 
 
 // ============================================================================

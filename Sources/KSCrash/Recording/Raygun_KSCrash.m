@@ -197,7 +197,7 @@ static NSString* getBasePath()
     raygun_kscrash_setDeadlockWatchdogInterval(deadlockWatchdogInterval);
 }
 
-- (void) setOnCrash:(KSReportWriteCallback) onCrash
+- (void) setOnCrash:(Raygun_KSReportWriteCallback) onCrash
 {
     _onCrash = onCrash;
     raygun_kscrash_setCrashNotifyCallback(onCrash);

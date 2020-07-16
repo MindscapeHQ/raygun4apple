@@ -189,7 +189,7 @@ void raygun_kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasse
     raygun_kscrashreport_setDoNotIntrospectClasses(doNotIntrospectClasses, length);
 }
 
-void raygun_kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify)
+void raygun_kscrash_setCrashNotifyCallback(const Raygun_KSReportWriteCallback onCrashNotify)
 {
     raygun_kscrashreport_setUserSectionWriteCallback(onCrashNotify);
 }

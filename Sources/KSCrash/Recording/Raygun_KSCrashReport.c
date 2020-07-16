@@ -113,7 +113,7 @@ typedef struct
 
 static const char* g_userInfoJSON;
 static KSCrash_IntrospectionRules g_introspectionRules;
-static KSReportWriteCallback g_userSectionWriteCallback;
+static Raygun_KSReportWriteCallback g_userSectionWriteCallback;
 
 
 #pragma mark Callbacks
@@ -1848,7 +1848,7 @@ void raygun_kscrashreport_setDoNotIntrospectClasses(const char** doNotIntrospect
     }
 }
 
-void raygun_kscrashreport_setUserSectionWriteCallback(const KSReportWriteCallback userSectionWriteCallback)
+void raygun_kscrashreport_setUserSectionWriteCallback(const Raygun_KSReportWriteCallback userSectionWriteCallback)
 {
     RAYGUN_KSLOG_ERROR("Set userSectionWriteCallback to %p", userSectionWriteCallback);
     g_userSectionWriteCallback = userSectionWriteCallback;

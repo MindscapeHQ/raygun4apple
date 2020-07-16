@@ -117,7 +117,7 @@ void raygun_kscrash_setDoNotIntrospectClasses(const char** doNotIntrospectClasse
  *
  * Default: NULL
  */
-void raygun_kscrash_setCrashNotifyCallback(const KSReportWriteCallback onCrashNotify);
+void raygun_kscrash_setCrashNotifyCallback(const Raygun_KSReportWriteCallback onCrashNotify);
 
 /** Set if KSLOG console messages should be appended to the report.
  *

@@ -243,7 +243,7 @@ typedef struct Raygun_KSCrashReportWriter
 
 } Raygun_KSCrashReportWriter;
 
-typedef void (*KSReportWriteCallback)(const Raygun_KSCrashReportWriter* writer);
+typedef void (*Raygun_KSReportWriteCallback)(const Raygun_KSCrashReportWriter* writer);
 
 
 #ifdef __cplusplus

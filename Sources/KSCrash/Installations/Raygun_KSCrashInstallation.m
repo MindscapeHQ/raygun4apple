@@ -48,7 +48,7 @@ typedef struct
 
 typedef struct
 {
-    KSReportWriteCallback userCrashCallback;
+    Raygun_KSReportWriteCallback userCrashCallback;
     int reportFieldsCount;
     ReportField* reportFields[0];
 } CrashHandlerData;
@@ -300,7 +300,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     return result;
 }
 
-- (KSReportWriteCallback) onCrash
+- (Raygun_KSReportWriteCallback) onCrash
 {
     @synchronized(self)
     {
@@ -308,7 +308,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     }
 }
 
-- (void) setOnCrash:(KSReportWriteCallback)onCrash
+- (void) setOnCrash:(Raygun_KSReportWriteCallback)onCrash
 {
     @synchronized(self)
     {
