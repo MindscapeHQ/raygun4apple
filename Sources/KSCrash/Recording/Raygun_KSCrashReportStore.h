@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSCrashReportStore_h
-#define HDR_KSCrashReportStore_h
+#ifndef RAYGUN_HDR_KSCrashReportStore_h
+#define RAYGUN_HDR_KSCrashReportStore_h
 
 #ifdef __cplusplus
 extern "C" {

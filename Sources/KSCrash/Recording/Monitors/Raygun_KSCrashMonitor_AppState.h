@@ -30,8 +30,8 @@
  */
 
 
-#ifndef HDR_KSCrashMonitor_AppState_h
-#define HDR_KSCrashMonitor_AppState_h
+#ifndef RAYGUN_HDR_KSCrashMonitor_AppState_h
+#define RAYGUN_HDR_KSCrashMonitor_AppState_h
 
 #ifdef __cplusplus
 extern "C" {

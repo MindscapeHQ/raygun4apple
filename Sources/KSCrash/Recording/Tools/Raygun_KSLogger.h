@@ -144,8 +144,8 @@
 // ============================================================================
 
 
-#ifndef HDR_KSLogger_h
-#define HDR_KSLogger_h
+#ifndef RAYGUN_HDR_KSLogger_h
+#define RAYGUN_HDR_KSLogger_h
 
 #ifdef __cplusplus
 extern "C" {

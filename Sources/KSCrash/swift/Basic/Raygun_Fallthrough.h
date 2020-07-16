@@ -17,8 +17,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_BASIC_FALLTHROUGH_H
-#define SWIFT_BASIC_FALLTHROUGH_H
+#ifndef RAYGUN_SWIFT_BASIC_FALLTHROUGH_H
+#define RAYGUN_SWIFT_BASIC_FALLTHROUGH_H
 
 #ifndef __has_attribute
 # define __has_attribute(x) 0

@@ -10,8 +10,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_BASIC_DEMANGLE_H
-#define SWIFT_BASIC_DEMANGLE_H
+#ifndef RAYGUN_SWIFT_BASIC_DEMANGLE_H
+#define RAYGUN_SWIFT_BASIC_DEMANGLE_H
 
 #include <memory>
 #include <string>

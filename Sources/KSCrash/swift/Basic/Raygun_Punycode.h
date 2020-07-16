@@ -21,8 +21,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_BASIC_PUNYCODE_H
-#define SWIFT_BASIC_PUNYCODE_H
+#ifndef RAYGUN_SWIFT_BASIC_PUNYCODE_H
+#define RAYGUN_SWIFT_BASIC_PUNYCODE_H
 
 //#include "swift/Basic/LLVM.h"
 //#include "llvm/ADT/StringRef.h"

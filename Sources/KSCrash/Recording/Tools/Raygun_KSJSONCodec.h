@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_KSJSONCodec_h
-#define HDR_KSJSONCodec_h
+#ifndef RAYGUN_HDR_KSJSONCodec_h
+#define RAYGUN_HDR_KSJSONCodec_h
 
 #ifdef __cplusplus
 extern "C" {

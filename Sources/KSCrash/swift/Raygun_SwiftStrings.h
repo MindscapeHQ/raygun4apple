@@ -10,8 +10,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_STRINGS_H
-#define SWIFT_STRINGS_H
+#ifndef RAYGUN_SWIFT_STRINGS_H
+#define RAYGUN_SWIFT_STRINGS_H
 
 namespace swift {
   /// The extension for serialized modules.

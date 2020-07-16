@@ -25,8 +25,8 @@
 //
 
 
-#ifndef HDR_KSMachineContext_h
-#define HDR_KSMachineContext_h
+#ifndef RAYGUN_HDR_KSMachineContext_h
+#define RAYGUN_HDR_KSMachineContext_h
 
 #ifdef __cplusplus
 extern "C" {

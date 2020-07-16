@@ -22,8 +22,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSCrashMonitor_CPPException_h
-#define HDR_KSCrashMonitor_CPPException_h
+#ifndef RAYGUN_HDR_KSCrashMonitor_CPPException_h
+#define RAYGUN_HDR_KSCrashMonitor_CPPException_h
 
 #ifdef __cplusplus
 extern "C" {

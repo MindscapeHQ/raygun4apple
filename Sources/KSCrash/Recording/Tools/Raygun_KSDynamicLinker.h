@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSDynamicLinker_h
-#define HDR_KSDynamicLinker_h
+#ifndef RAYGUN_HDR_KSDynamicLinker_h
+#define RAYGUN_HDR_KSDynamicLinker_h
 
 #ifdef __cplusplus
 extern "C" {

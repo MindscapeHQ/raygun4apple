@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSCPU_Apple_h
-#define HDR_KSCPU_Apple_h
+#ifndef RAYGUN_HDR_KSCPU_Apple_h
+#define RAYGUN_HDR_KSCPU_Apple_h
 
 #ifdef __cplusplus
 extern "C" {

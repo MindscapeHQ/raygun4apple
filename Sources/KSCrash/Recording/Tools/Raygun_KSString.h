@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSString_h
-#define HDR_KSString_h
+#ifndef RAYGUN_HDR_KSString_h
+#define RAYGUN_HDR_KSString_h
 
 #ifdef __cplusplus
 extern "C" {

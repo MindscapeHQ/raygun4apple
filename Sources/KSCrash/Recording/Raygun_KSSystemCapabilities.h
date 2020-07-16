@@ -23,8 +23,8 @@
 //
 
 
-#ifndef HDR_KSSystemCapabilities_h
-#define HDR_KSSystemCapabilities_h
+#ifndef RAYGUN_HDR_KSSystemCapabilities_h
+#define RAYGUN_HDR_KSSystemCapabilities_h
 
 #ifdef __APPLE__
 #include <TargetConditionals.h>

@@ -25,8 +25,8 @@
 //
 
 
-#ifndef HDR_KSObjC_h
-#define HDR_KSObjC_h
+#ifndef RAYGUN_HDR_KSObjC_h
+#define RAYGUN_HDR_KSObjC_h
 
 #ifdef __cplusplus
 extern "C" {

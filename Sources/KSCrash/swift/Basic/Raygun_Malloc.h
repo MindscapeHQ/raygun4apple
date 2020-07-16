@@ -15,8 +15,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_BASIC_MALLOC_H
-#define SWIFT_BASIC_MALLOC_H
+#ifndef RAYGUN_SWIFT_BASIC_MALLOC_H
+#define RAYGUN_SWIFT_BASIC_MALLOC_H
 
 #include <cassert>
 #if defined(_MSC_VER)

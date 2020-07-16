@@ -28,8 +28,8 @@
  */
 
 
-#ifndef HDR_KSCrashMonitor_Deadlock_h
-#define HDR_KSCrashMonitor_Deadlock_h
+#ifndef RAYGUN_HDR_KSCrashMonitor_Deadlock_h
+#define RAYGUN_HDR_KSCrashMonitor_Deadlock_h
 
 #ifdef __cplusplus
 extern "C" {

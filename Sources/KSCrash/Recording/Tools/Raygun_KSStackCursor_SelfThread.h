@@ -23,8 +23,8 @@
 //
 
 
-#ifndef KSStackCursor_SelfThread_h
-#define KSStackCursor_SelfThread_h
+#ifndef RAYGUN_KSStackCursor_SelfThread_h
+#define RAYGUN_KSStackCursor_SelfThread_h
 
 #ifdef __cplusplus
 extern "C" {

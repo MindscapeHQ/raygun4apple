@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_KSSysCtl_h
-#define HDR_KSSysCtl_h
+#ifndef RAYGUN_HDR_KSSysCtl_h
+#define RAYGUN_HDR_KSSysCtl_h
 
 #ifdef __cplusplus
 extern "C" {

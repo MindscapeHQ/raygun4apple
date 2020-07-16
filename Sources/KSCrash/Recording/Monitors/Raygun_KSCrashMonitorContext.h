@@ -25,8 +25,8 @@
 //
 
 
-#ifndef HDR_KSCrashMonitorContext_h
-#define HDR_KSCrashMonitorContext_h
+#ifndef RAYGUN_HDR_KSCrashMonitorContext_h
+#define RAYGUN_HDR_KSCrashMonitorContext_h
 
 #ifdef __cplusplus
 extern "C" {

@@ -11,8 +11,8 @@
    can be in exported headers and won't override package specific directives.
    This is a C header that can be included in the llvm-c headers. */
 
-#ifndef LLVM_CONFIG_H
-#define LLVM_CONFIG_H
+#ifndef RAYGUN_LLVM_CONFIG_H
+#define RAYGUN_LLVM_CONFIG_H
 
 /* Installation directory for binary executables */
 /* #undef LLVM_BINDIR */

@@ -23,8 +23,8 @@
 //
 
 
-#ifndef KSSymbolicator_h
-#define KSSymbolicator_h
+#ifndef RAYGUN_KSSymbolicator_h
+#define RAYGUN_KSSymbolicator_h
 
 #ifdef __cplusplus
 extern "C" {

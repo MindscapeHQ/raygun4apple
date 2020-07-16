@@ -12,8 +12,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_SUPPORT_CASTING_H
-#define LLVM_SUPPORT_CASTING_H
+#ifndef RAYGUN_LLVM_SUPPORT_CASTING_H
+#define RAYGUN_LLVM_SUPPORT_CASTING_H
 
 #include "Raygun_Compiler.h"
 #include "Raygun_type_traits.h"

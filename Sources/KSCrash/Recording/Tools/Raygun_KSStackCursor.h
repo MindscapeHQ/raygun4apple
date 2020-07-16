@@ -23,8 +23,8 @@
 //
 
 
-#ifndef KSStackCursor_h
-#define KSStackCursor_h
+#ifndef RAYGUN_KSStackCursor_h
+#define RAYGUN_KSStackCursor_h
 
 #ifdef __cplusplus
 extern "C" {

@@ -12,8 +12,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_SUPPORT_ALIGNOF_H
-#define LLVM_SUPPORT_ALIGNOF_H
+#ifndef RAYGUN_LLVM_SUPPORT_ALIGNOF_H
+#define RAYGUN_LLVM_SUPPORT_ALIGNOF_H
 
 #include "Raygun_Compiler.h"
 #include <cstddef>

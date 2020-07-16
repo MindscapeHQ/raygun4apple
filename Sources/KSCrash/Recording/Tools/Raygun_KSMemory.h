@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_ksmemory_h
-#define HDR_ksmemory_h
+#ifndef RAYGUN_HDR_ksmemory_h
+#define RAYGUN_HDR_ksmemory_h
 
 #ifdef __cplusplus
 extern "C" {

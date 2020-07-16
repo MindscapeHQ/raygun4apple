@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_SUPPORT_TYPE_TRAITS_H
-#define LLVM_SUPPORT_TYPE_TRAITS_H
+#ifndef RAYGUN_LLVM_SUPPORT_TYPE_TRAITS_H
+#define RAYGUN_LLVM_SUPPORT_TYPE_TRAITS_H
 
 #include <type_traits>
 #include <utility>

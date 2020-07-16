@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSCrashReportVersion_h
-#define HDR_KSCrashReportVersion_h
+#ifndef RAYGUN_HDR_KSCrashReportVersion_h
+#define RAYGUN_HDR_KSCrashReportVersion_h
 
 #define RAYGUN_KSCRASH_REPORT_VERSION "3.2.0"
 

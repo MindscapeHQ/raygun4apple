@@ -30,8 +30,8 @@
  */
 
 
-#ifndef HDR_KSCrashReportWriter_h
-#define HDR_KSCrashReportWriter_h
+#ifndef RAYGUN_HDR_KSCrashReportWriter_h
+#define RAYGUN_HDR_KSCrashReportWriter_h
 
 #ifdef __cplusplus
 extern "C" {

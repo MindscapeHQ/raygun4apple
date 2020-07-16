@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_KSFileUtils_h
-#define HDR_KSFileUtils_h
+#ifndef RAYGUN_HDR_KSFileUtils_h
+#define RAYGUN_HDR_KSFileUtils_h
 
 #ifdef __cplusplus
 extern "C" {

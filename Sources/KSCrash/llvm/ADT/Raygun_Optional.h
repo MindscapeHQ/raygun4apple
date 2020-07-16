@@ -13,8 +13,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_ADT_OPTIONAL_H
-#define LLVM_ADT_OPTIONAL_H
+#ifndef RAYGUN_LLVM_ADT_OPTIONAL_H
+#define RAYGUN_LLVM_ADT_OPTIONAL_H
 
 #include "Raygun_None.h"
 #include "Raygun_AlignOf.h"

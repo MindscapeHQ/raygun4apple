@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSThread_h
-#define HDR_KSThread_h
+#ifndef RAYGUN_HDR_KSThread_h
+#define RAYGUN_HDR_KSThread_h
 
 #ifdef __cplusplus
 extern "C" {

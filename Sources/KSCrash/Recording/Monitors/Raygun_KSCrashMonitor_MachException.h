@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_KSCrashMonitor_MachException_h
-#define HDR_KSCrashMonitor_MachException_h
+#ifndef RAYGUN_HDR_KSCrashMonitor_MachException_h
+#define RAYGUN_HDR_KSCrashMonitor_MachException_h
 
 #ifdef __cplusplus
 extern "C" {

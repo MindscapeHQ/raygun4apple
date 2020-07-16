@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef HDR_KSDemangle_Swift_h
-#define HDR_KSDemangle_Swift_h
+#ifndef RAYGUN_HDR_KSDemangle_Swift_h
+#define RAYGUN_HDR_KSDemangle_Swift_h
 
 #ifdef __cplusplus
 extern "C" {

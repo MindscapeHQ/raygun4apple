@@ -29,8 +29,8 @@
  */
 
 
-#ifndef HDR_KSSignalInfo_h
-#define HDR_KSSignalInfo_h
+#ifndef RAYGUN_HDR_KSSignalInfo_h
+#define RAYGUN_HDR_KSSignalInfo_h
 
 #ifdef __cplusplus
 extern "C" {

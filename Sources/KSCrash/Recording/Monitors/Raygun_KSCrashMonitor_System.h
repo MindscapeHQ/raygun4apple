@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef KSCrashMonitor_System_h
-#define KSCrashMonitor_System_h
+#ifndef RAYGUN_KSCrashMonitor_System_h
+#define RAYGUN_KSCrashMonitor_System_h
 
 #ifdef __cplusplus
 extern "C" {

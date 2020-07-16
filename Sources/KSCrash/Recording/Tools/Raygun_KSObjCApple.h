@@ -16,8 +16,8 @@
 // This file contains structures and constants copied from Apple header
 // files, arranged for use in KSObjC.
 
-#ifndef HDR_KSObjCApple_h
-#define HDR_KSObjCApple_h
+#ifndef RAYGUN_HDR_KSObjCApple_h
+#define RAYGUN_HDR_KSObjCApple_h
 
 #ifdef __cplusplus
 extern "C" {

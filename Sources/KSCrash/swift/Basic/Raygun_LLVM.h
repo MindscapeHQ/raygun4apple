@@ -15,8 +15,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef SWIFT_BASIC_LLVM_H
-#define SWIFT_BASIC_LLVM_H
+#ifndef RAYGUN_SWIFT_BASIC_LLVM_H
+#define RAYGUN_SWIFT_BASIC_LLVM_H
 
 // Do not proliferate #includes here, require clients to #include their
 // dependencies.

@@ -38,8 +38,8 @@
  *   your app, but KSZombie must be compiled in a separate library if you do.
  */
 
-#ifndef HDR_KSZombie_h
-#define HDR_KSZombie_h
+#ifndef RAYGUN_HDR_KSZombie_h
+#define RAYGUN_HDR_KSZombie_h
 
 #ifdef __cplusplus
 extern "C" {

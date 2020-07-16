@@ -7,8 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_ADT_STRINGREF_H
-#define LLVM_ADT_STRINGREF_H
+#ifndef RAYGUN_LLVM_ADT_STRINGREF_H
+#define RAYGUN_LLVM_ADT_STRINGREF_H
 
 #include "Raygun_Compiler.h"
 #include <algorithm>

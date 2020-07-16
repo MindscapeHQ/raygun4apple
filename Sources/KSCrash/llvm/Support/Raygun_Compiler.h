@@ -12,8 +12,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_SUPPORT_COMPILER_H
-#define LLVM_SUPPORT_COMPILER_H
+#ifndef RAYGUN_LLVM_SUPPORT_COMPILER_H
+#define RAYGUN_LLVM_SUPPORT_COMPILER_H
 
 #include "Raygun_llvm-config.h"
 

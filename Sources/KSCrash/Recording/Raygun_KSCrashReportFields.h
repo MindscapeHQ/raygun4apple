@@ -25,8 +25,8 @@
 //
 
 
-#ifndef HDR_KSCrashReportFields_h
-#define HDR_KSCrashReportFields_h
+#ifndef RAYGUN_HDR_KSCrashReportFields_h
+#define RAYGUN_HDR_KSCrashReportFields_h
 
 
 #pragma mark - Report Types -

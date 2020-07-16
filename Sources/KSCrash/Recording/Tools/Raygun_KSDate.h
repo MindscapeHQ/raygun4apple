@@ -22,8 +22,8 @@
 // THE SOFTWARE.
 //
 
-#ifndef KSDate_h
-#define KSDate_h
+#ifndef RAYGUN_KSDate_h
+#define RAYGUN_KSDate_h
 
 #ifdef __cplusplus
 extern "C" {

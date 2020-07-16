@@ -23,8 +23,8 @@
 //
 
 
-#ifndef KSStackCursor_MachineContext_h
-#define KSStackCursor_MachineContext_h
+#ifndef RAYGUN_KSStackCursor_MachineContext_h
+#define RAYGUN_KSStackCursor_MachineContext_h
 
 #ifdef __cplusplus
 extern "C" {
