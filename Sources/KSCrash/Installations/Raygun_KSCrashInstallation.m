@@ -74,7 +74,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 }
 
 
-@interface KSCrashInstReportField: NSObject
+@interface Raygun_KSCrashInstReportField: NSObject
 
 @property(nonatomic,readonly,assign) int index;
 @property(nonatomic,readonly,assign) ReportField* field;
@@ -88,7 +88,7 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 
 @end
 
-@implementation KSCrashInstReportField
+@implementation Raygun_KSCrashInstReportField
 
 @synthesize index = _index;
 @synthesize key = _key;
@@ -97,9 +97,9 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 @synthesize keyBacking = _keyBacking;
 @synthesize valueBacking= _valueBacking;
 
-+ (KSCrashInstReportField*) fieldWithIndex:(int) index
++ (Raygun_KSCrashInstReportField*) fieldWithIndex:(int) index
 {
-    return [(KSCrashInstReportField*)[self alloc] initWithIndex:index];
+    return [(Raygun_KSCrashInstReportField*)[self alloc] initWithIndex:index];
 }
 
 - (id) initWithIndex:(int) index
@@ -214,12 +214,12 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
     return (CrashHandlerData*)self.crashHandlerDataBacking.mutableBytes;
 }
 
-- (KSCrashInstReportField*) reportFieldForProperty:(NSString*) propertyName
+- (Raygun_KSCrashInstReportField*) reportFieldForProperty:(NSString*) propertyName
 {
-    KSCrashInstReportField* field = [self.fields objectForKey:propertyName];
+    Raygun_KSCrashInstReportField* field = [self.fields objectForKey:propertyName];
     if(field == nil)
     {
-        field = [KSCrashInstReportField fieldWithIndex:self.nextFieldIndex];
+        field = [Raygun_KSCrashInstReportField fieldWithIndex:self.nextFieldIndex];
         self.nextFieldIndex++;
         self.crashHandlerData->reportFieldsCount = self.nextFieldIndex;
         self.crashHandlerData->reportFields[field.index] = field.field;
@@ -230,13 +230,13 @@ static void crashCallback(const Raygun_KSCrashReportWriter* writer)
 
 - (void) reportFieldForProperty:(NSString*) propertyName setKey:(id) key
 {
-    KSCrashInstReportField* field = [self reportFieldForProperty:propertyName];
+    Raygun_KSCrashInstReportField* field = [self reportFieldForProperty:propertyName];
     field.key = key;
 }
 
 - (void) reportFieldForProperty:(NSString*) propertyName setValue:(id) value
 {
-    KSCrashInstReportField* field = [self reportFieldForProperty:propertyName];
+    Raygun_KSCrashInstReportField* field = [self reportFieldForProperty:propertyName];
     field.value = value;
 }
 
