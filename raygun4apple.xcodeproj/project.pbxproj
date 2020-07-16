@@ -911,7 +911,7 @@
 			isa = PBXGroup;
 			children = (
 				DC5EFA4D210FF0FA002C0713 /* Raygun */,
-				A2E4AC0221003DA90003C8B4 /* KSCrash */,
+				A2E4AC0221003DA90003C8B4 /* Raygun_KSCrash */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -945,7 +945,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A2E4AC0221003DA90003C8B4 /* KSCrash */ = {
+		A2E4AC0221003DA90003C8B4 /* Raygun_KSCrash */ = {
 			isa = PBXGroup;
 			children = (
 				A2E4AC0321003DA90003C8B4 /* Installations */,
@@ -954,7 +954,7 @@
 				A2E4AC8521003DA90003C8B4 /* Reporting */,
 				A2E4ACB421003DAA0003C8B4 /* swift */,
 			);
-			path = KSCrash;
+			path = Raygun_KSCrash;
 			sourceTree = "<group>";
 		};
 		A2E4AC0321003DA90003C8B4 /* Installations */ = {
