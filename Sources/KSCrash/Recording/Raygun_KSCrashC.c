@@ -143,7 +143,7 @@ Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char
     {
         printPreviousLog(g_consoleLogPath);
     }
-    kslog_setLogFilename(g_consoleLogPath, true);
+    raygun_kslog_setLogFilename(g_consoleLogPath, true);
     
     raygun_ksccd_init(60);
 
@@ -226,7 +226,7 @@ void raygun_kscrash_reportUserException(const char* name,
                              terminateProgram);
     if(g_shouldAddConsoleLogToReport)
     {
-        kslog_clearLogFile();
+        raygun_kslog_clearLogFile();
     }
 }
 

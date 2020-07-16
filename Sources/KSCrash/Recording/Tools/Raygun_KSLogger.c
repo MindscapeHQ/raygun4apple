@@ -148,7 +148,7 @@ static inline void setLogFD(int fd)
     g_fd = fd;
 }
 
-bool kslog_setLogFilename(const char* filename, bool overwrite)
+bool raygun_kslog_setLogFilename(const char* filename, bool overwrite)
 {
     static int fd = -1;
     if(filename != NULL)
@@ -218,7 +218,7 @@ static inline void flushLog(void)
     fflush(g_file);
 }
 
-bool kslog_setLogFilename(const char* filename, bool overwrite)
+bool raygun_kslog_setLogFilename(const char* filename, bool overwrite)
 {
     static FILE* file = NULL;
     FILE* oldFile = file;
@@ -247,9 +247,9 @@ bool kslog_setLogFilename(const char* filename, bool overwrite)
 
 #endif
 
-bool kslog_clearLogFile()
+bool raygun_kslog_clearLogFile()
 {
-    return kslog_setLogFilename(g_logFilename, true);
+    return raygun_kslog_setLogFilename(g_logFilename, true);
 }
 
 

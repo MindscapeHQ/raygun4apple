@@ -256,10 +256,10 @@ void raygun_i_kslog_logCBasic(const char* fmt, ...);
  *
  * @param overwrite If true, overwrite the log file.
  */
-bool kslog_setLogFilename(const char* filename, bool overwrite);
+bool raygun_kslog_setLogFilename(const char* filename, bool overwrite);
 
 /** Clear the log file. */
-bool kslog_clearLogFile(void);
+bool raygun_kslog_clearLogFile(void);
 
 /** Tests if the logger would print at the specified level.
  *
