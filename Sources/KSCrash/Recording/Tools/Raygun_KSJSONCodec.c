@@ -41,11 +41,11 @@
 // ============================================================================
 
 /** Set to 1 if you're also compiling KSLogger and want to use it here */
-#ifndef KSJSONCODEC_UseKSLogger
-    #define KSJSONCODEC_UseKSLogger 1
+#ifndef RAYGUN_KSJSONCODEC_UseKSLogger
+    #define RAYGUN_KSJSONCODEC_UseKSLogger 1
 #endif
 
-#if KSJSONCODEC_UseKSLogger
+#if RAYGUN_KSJSONCODEC_UseKSLogger
     #include "Raygun_KSLogger.h"
 #else
     #define RAYGUN_KSLOG_ERROR(FMT, ...)
@@ -54,8 +54,8 @@
 /** The work buffer size to use when escaping string values.
  * There's little reason to change this since nothing ever gets truncated.
  */
-#ifndef KSJSONCODEC_WorkBufferSize
-    #define KSJSONCODEC_WorkBufferSize 512
+#ifndef RAYGUN_KSJSONCODEC_WorkBufferSize
+    #define RAYGUN_KSJSONCODEC_WorkBufferSize 512
 #endif
 
 
@@ -126,7 +126,7 @@ static int appendEscapedString(Raygun_KSJSONEncodeContext* const context,
                                const char* restrict const string,
                                int length)
 {
-    char workBuffer[KSJSONCODEC_WorkBufferSize];
+    char workBuffer[RAYGUN_KSJSONCODEC_WorkBufferSize];
     const char* const srcEnd = string + length;
 
     const char* restrict src = string;
@@ -207,9 +207,9 @@ static int addEscapedString(Raygun_KSJSONEncodeContext* const context,
     while(offset < length)
     {
         int toAdd = length - offset;
-        unlikely_if(toAdd > KSJSONCODEC_WorkBufferSize / 2)
+        unlikely_if(toAdd > RAYGUN_KSJSONCODEC_WorkBufferSize / 2)
         {
-            toAdd = KSJSONCODEC_WorkBufferSize / 2;
+            toAdd = RAYGUN_KSJSONCODEC_WorkBufferSize / 2;
         }
         result = appendEscapedString(context, string + offset, toAdd);
         unlikely_if(result != RAYGUN_KSJSON_OK)
@@ -390,7 +390,7 @@ int raygun_ksjson_addStringElement(Raygun_KSJSONEncodeContext* const context,
     {
         return result;
     }
-    if(length == KSJSON_SIZE_AUTOMATIC)
+    if(length == RAYGUN_KSJSON_SIZE_AUTOMATIC)
     {
         length = (int)strlen(value);
     }

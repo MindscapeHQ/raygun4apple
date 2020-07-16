@@ -34,7 +34,7 @@ extern "C" {
 
 #include <stdint.h>
 
-#define KSCRS_MAX_PATH_LENGTH 500
+#define RAYGUN_KSCRS_MAX_PATH_LENGTH 500
 
 /** Initialize the report store.
  *

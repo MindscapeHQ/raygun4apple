@@ -68,7 +68,7 @@ static inline int64_t getNextUniqueID()
 
 static void getCrashReportPathByID(int64_t id, char* pathBuffer)
 {
-    snprintf(pathBuffer, KSCRS_MAX_PATH_LENGTH, "%s/%s-report-%016llx.json", g_reportsPath, g_appName, id);
+    snprintf(pathBuffer, RAYGUN_KSCRS_MAX_PATH_LENGTH, "%s/%s-report-%016llx.json", g_reportsPath, g_appName, id);
     
 }
 
@@ -208,7 +208,7 @@ int raygun_kscrs_getReportIDs(int64_t* reportIDs, int count)
 char* raygun_kscrs_readReport(int64_t reportID)
 {
     pthread_mutex_lock(&g_mutex);
-    char path[KSCRS_MAX_PATH_LENGTH];
+    char path[RAYGUN_KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(reportID, path);
     char* result;
     raygun_ksfu_readEntireFile(path, &result, NULL, 2000000);
@@ -220,7 +220,7 @@ int64_t raygun_kscrs_addUserReport(const char* report, int reportLength)
 {
     pthread_mutex_lock(&g_mutex);
     int64_t currentID = getNextUniqueID();
-    char crashReportPath[KSCRS_MAX_PATH_LENGTH];
+    char crashReportPath[RAYGUN_KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(currentID, crashReportPath);
 
     int fd = open(crashReportPath, O_WRONLY | O_CREAT, 0644);
@@ -260,7 +260,7 @@ void raygun_kscrs_deleteAllReports()
 
 void raygun_kscrs_deleteReportWithID(int64_t reportID)
 {
-    char path[KSCRS_MAX_PATH_LENGTH];
+    char path[RAYGUN_KSCRS_MAX_PATH_LENGTH];
     getCrashReportPathByID(reportID, path);
     raygun_ksfu_removeFile(path, true);
 }

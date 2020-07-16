@@ -43,7 +43,7 @@ extern "C" {
 /* Tells the encoder to automatically determine the length of a field value.
  * Currently, this is done using strlen().
  */
-#define KSJSON_SIZE_AUTOMATIC -1
+#define RAYGUN_KSJSON_SIZE_AUTOMATIC -1
 
 enum
 {

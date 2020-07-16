@@ -43,8 +43,8 @@
 /** Buffer size to use in the "writeFmt" functions.
  * If the formatted output length would exceed this value, it is truncated.
  */
-#ifndef KSFU_WriteFmtBufferSize
-    #define KSFU_WriteFmtBufferSize 1024
+#ifndef RAYGUN_KSFU_WriteFmtBufferSize
+    #define RAYGUN_KSFU_WriteFmtBufferSize 1024
 #endif
 
 
@@ -364,7 +364,7 @@ bool raygun_ksfu_writeFmtArgsToFD(const int fd,
 {
     if(*fmt != 0)
     {
-        char buffer[KSFU_WriteFmtBufferSize];
+        char buffer[RAYGUN_KSFU_WriteFmtBufferSize];
         vsnprintf(buffer, sizeof(buffer), fmt, args);
         return raygun_ksfu_writeStringToFD(fd, buffer);
     }

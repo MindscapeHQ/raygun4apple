@@ -140,7 +140,7 @@ static void addUIntegerElement(const Raygun_KSCrashReportWriter* const writer, c
 
 static void addStringElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const value)
 {
-    raygun_ksjson_addStringElement(getJsonContext(writer), key, value, KSJSON_SIZE_AUTOMATIC);
+    raygun_ksjson_addStringElement(getJsonContext(writer), key, value, RAYGUN_KSJSON_SIZE_AUTOMATIC);
 }
 
 static void addTextFileElement(const Raygun_KSCrashReportWriter* const writer, const char* const key, const char* const filePath)
@@ -265,11 +265,11 @@ static void addJSONElement(const Raygun_KSCrashReportWriter* const writer,
         raygun_ksjson_addStringElement(getJsonContext(writer),
                                 Raygun_KSCrashField_Error,
                                 errorBuff,
-                                KSJSON_SIZE_AUTOMATIC);
+                                RAYGUN_KSJSON_SIZE_AUTOMATIC);
         raygun_ksjson_addStringElement(getJsonContext(writer),
                                 Raygun_KSCrashField_JSONData,
                                 jsonElement,
-                                KSJSON_SIZE_AUTOMATIC);
+                                RAYGUN_KSJSON_SIZE_AUTOMATIC);
         raygun_ksjson_endContainer(getJsonContext(writer));
     }
 }
@@ -318,7 +318,7 @@ static void addTextLinesFromFile(const Raygun_KSCrashReportWriter* const writer,
                 break;
             }
             buffer[length - 1] = '\0';
-            raygun_ksjson_addStringElement(getJsonContext(writer), NULL, buffer, KSJSON_SIZE_AUTOMATIC);
+            raygun_ksjson_addStringElement(getJsonContext(writer), NULL, buffer, RAYGUN_KSJSON_SIZE_AUTOMATIC);
         }
     }
     endContainer(writer);
