@@ -2122,7 +2122,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = marker;
 				CURRENT_PROJECT_VERSION = 1.4.0;
-				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_Debug";
+				GCC_PREPROCESSOR_DEFINITIONS = "Raygun_KSLogger_Level=Raygun_KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode-marker";
 				SDKROOT = iphoneos;
 			};
@@ -2133,7 +2133,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CURRENT_PROJECT_VERSION = 1.4.0;
-				GCC_PREPROCESSOR_DEFINITIONS = "KSLogger_Level=KSLogger_Level_None";
+				GCC_PREPROCESSOR_DEFINITIONS = "Raygun_KSLogger_Level=Raygun_KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode";
 				SDKROOT = iphoneos;
 			};
