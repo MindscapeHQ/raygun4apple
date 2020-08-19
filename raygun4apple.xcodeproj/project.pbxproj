@@ -2121,7 +2121,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = marker;
-				CURRENT_PROJECT_VERSION = 1.4.0;
+				CURRENT_PROJECT_VERSION = 1.4.1;
 				GCC_PREPROCESSOR_DEFINITIONS = "Raygun_KSLogger_Level=Raygun_KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode-marker";
 				SDKROOT = iphoneos;
@@ -2132,7 +2132,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
-				CURRENT_PROJECT_VERSION = 1.4.0;
+				CURRENT_PROJECT_VERSION = 1.4.1;
 				GCC_PREPROCESSOR_DEFINITIONS = "Raygun_KSLogger_Level=Raygun_KSLogger_Level_None";
 				OTHER_CFLAGS = "-fembed-bitcode";
 				SDKROOT = iphoneos;
