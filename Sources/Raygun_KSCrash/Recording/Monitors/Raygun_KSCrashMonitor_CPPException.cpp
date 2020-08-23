@@ -100,7 +100,7 @@ extern "C"
 static void CPPExceptionTerminate(void)
 {
     raygun_ksmc_suspendEnvironment();
-    RAYGUN_KSLOG_ERROR("Trapped c++ exception");
+    RAYGUN_KSLOG_DEBUG("Trapped c++ exception");
     const char* name = NULL;
     std::type_info* tinfo = __cxxabiv1::__cxa_current_exception_type();
     if(tinfo != NULL)
@@ -118,7 +118,7 @@ static void CPPExceptionTerminate(void)
         const char* description = descriptionBuff;
         descriptionBuff[0] = 0;
 
-        RAYGUN_KSLOG_ERROR("Discovering what kind of exception was thrown.");
+        RAYGUN_KSLOG_DEBUG("Discovering what kind of exception was thrown.");
         g_captureNextStackTrace = false;
         try
         {
@@ -157,7 +157,7 @@ catch(TYPE value)\
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForThread(raygun_ksthread_self(), machineContext, true);
 
-        RAYGUN_KSLOG_ERROR("Filling out context.");
+        RAYGUN_KSLOG_DEBUG("Filling out context.");
         crashContext->crashType = Raygun_KSCrashMonitorTypeCPPException;
         crashContext->eventID = g_eventID;
         crashContext->registersAreValid = false;
@@ -171,11 +171,11 @@ catch(TYPE value)\
     }
     else
     {
-        RAYGUN_KSLOG_ERROR("Detected NSException. Letting the current NSException handler deal with it.");
+        RAYGUN_KSLOG_DEBUG("Detected NSException. Letting the current NSException handler deal with it.");
     }
     raygun_ksmc_resumeEnvironment();
 
-    RAYGUN_KSLOG_ERROR("Calling original terminate handler.");
+    RAYGUN_KSLOG_DEBUG("Calling original terminate handler.");
     g_originalTerminateHandler();
 }
 

@@ -48,7 +48,7 @@ bool raygun_kscpu_i_fillState(const thread_t thread,
                        const thread_state_flavor_t flavor,
                        const mach_msg_type_number_t stateCount)
 {
-    RAYGUN_KSLOG_ERROR("Filling thread state with flavor %x.", flavor);
+    RAYGUN_KSLOG_TRACE("Filling thread state with flavor %x.", flavor);
     mach_msg_type_number_t stateCountBuff = stateCount;
     kern_return_t kr;
     

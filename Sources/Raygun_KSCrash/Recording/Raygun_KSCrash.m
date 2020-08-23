@@ -343,12 +343,12 @@ static NSString* getBasePath()
 {
     NSArray* reports = [self allReports];
     
-    RAYGUN_KSLOG_ERROR(@"Sending %d crash reports", [reports count]);
+    RAYGUN_KSLOG_INFO(@"Sending %d crash reports", [reports count]);
     
     [self sendReports:reports
          onCompletion:^(NSArray* filteredReports, BOOL completed, NSError* error)
      {
-         RAYGUN_KSLOG_ERROR(@"Process finished with completion: %d", completed);
+         RAYGUN_KSLOG_DEBUG(@"Process finished with completion: %d", completed);
          if(error != nil)
          {
              RAYGUN_KSLOG_ERROR(@"Failed to send reports: %@", error);

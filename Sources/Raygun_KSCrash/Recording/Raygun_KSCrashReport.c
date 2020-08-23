@@ -1177,7 +1177,7 @@ static void writeThread(const Raygun_KSCrashReportWriter* const writer,
 {
     bool isCrashedThread = raygun_ksmc_isCrashedContext(machineContext);
     KSThread thread = raygun_ksmc_getThreadFromContext(machineContext);
-    RAYGUN_KSLOG_ERROR("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
+    RAYGUN_KSLOG_DEBUG("Writing thread %x (index %d). is crashed: %d", thread, threadIndex, isCrashedThread);
 
     Raygun_KSStackCursor stackCursor;
     bool hasBacktrace = getStackCursor(crash, machineContext, &stackCursor);
@@ -1238,7 +1238,7 @@ static void writeAllThreads(const Raygun_KSCrashReportWriter* const writer,
     // Fetch info for all threads.
     writer->beginArray(writer, key);
     {
-        RAYGUN_KSLOG_ERROR("Writing %d threads.", threadCount);
+        RAYGUN_KSLOG_DEBUG("Writing %d threads.", threadCount);
         for(int i = 0; i < threadCount; i++)
         {
             KSThread thread = raygun_ksmc_getThreadAtIndex(context, i);
@@ -1589,7 +1589,7 @@ void raygun_kscrashreport_writeRecrashReport(const Raygun_KSCrash_MonitorContext
     static char tempPath[RAYGUN_KSFU_MAX_PATH_LENGTH];
     strncpy(tempPath, path, sizeof(tempPath) - 10);
     strncpy(tempPath + strlen(tempPath) - 5, ".old", 5);
-    RAYGUN_KSLOG_ERROR("Writing recrash report to %s", path);
+    RAYGUN_KSLOG_INFO("Writing recrash report to %s", path);
 
     if(rename(path, tempPath) < 0)
     {
@@ -1707,7 +1707,7 @@ static void writeDebugInfo(const Raygun_KSCrashReportWriter* const writer,
 
 void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContext* const monitorContext, const char* const path)
 {
-    RAYGUN_KSLOG_ERROR("Writing crash report to %s", path);
+    RAYGUN_KSLOG_INFO("Writing crash report to %s", path);
     char writeBuffer[1024];
     Raygun_KSBufferedWriter bufferedWriter;
 
@@ -1789,7 +1789,7 @@ void raygun_kscrashreport_writeStandardReport(const Raygun_KSCrash_MonitorContex
 void raygun_kscrashreport_setUserInfoJSON(const char* const userInfoJSON)
 {
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    RAYGUN_KSLOG_ERROR("set userInfoJSON to %p", userInfoJSON);
+    RAYGUN_KSLOG_TRACE("set userInfoJSON to %p", userInfoJSON);
 
     pthread_mutex_lock(&mutex);
     if(g_userInfoJSON != NULL)
@@ -1850,6 +1850,6 @@ void raygun_kscrashreport_setDoNotIntrospectClasses(const char** doNotIntrospect
 
 void raygun_kscrashreport_setUserSectionWriteCallback(const Raygun_KSReportWriteCallback userSectionWriteCallback)
 {
-    RAYGUN_KSLOG_ERROR("Set userSectionWriteCallback to %p", userSectionWriteCallback);
+    RAYGUN_KSLOG_TRACE("Set userSectionWriteCallback to %p", userSectionWriteCallback);
     g_userSectionWriteCallback = userSectionWriteCallback;
 }

@@ -84,22 +84,22 @@ static bool copyStringIvar(const void* self, const char* ivarName, char* buffer,
                 }
                 else
                 {
-                    RAYGUN_KSLOG_ERROR("ksobjc_copyStringContents %s failed", ivarName);
+                    RAYGUN_KSLOG_DEBUG("ksobjc_copyStringContents %s failed", ivarName);
                 }
             }
             else
             {
-                RAYGUN_KSLOG_ERROR("ksobjc_isValidObject %s failed", ivarName);
+                RAYGUN_KSLOG_DEBUG("ksobjc_isValidObject %s failed", ivarName);
             }
         }
         else
         {
-            RAYGUN_KSLOG_ERROR("ksobjc_ivarValue %s failed", ivarName);
+            RAYGUN_KSLOG_DEBUG("ksobjc_ivarValue %s failed", ivarName);
         }
     }
     else
     {
-        RAYGUN_KSLOG_ERROR("ksobjc_ivarNamed %s failed", ivarName);
+        RAYGUN_KSLOG_DEBUG("ksobjc_ivarNamed %s failed", ivarName);
     }
     return false;
 }

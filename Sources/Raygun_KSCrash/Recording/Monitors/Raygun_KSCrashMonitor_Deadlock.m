@@ -117,7 +117,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     char eventID[37];
     raygun_ksid_generate(eventID);
 
-    RAYGUN_KSLOG_ERROR(@"Filling out context.");
+    RAYGUN_KSLOG_DEBUG(@"Filling out context.");
     Raygun_KSCrash_MonitorContext* crashContext = &g_monitorContext;
     memset(crashContext, 0, sizeof(*crashContext));
     crashContext->crashType = Raygun_KSCrashMonitorTypeMainThreadDeadlock;
@@ -129,7 +129,7 @@ static NSTimeInterval g_watchdogInterval = 0;
     raygun_kscm_handleException(crashContext);
     raygun_ksmc_resumeEnvironment();
 
-    RAYGUN_KSLOG_ERROR(@"Calling abort()");
+    RAYGUN_KSLOG_DEBUG(@"Calling abort()");
     abort();
 }
 
@@ -187,13 +187,13 @@ static void setEnabled(bool isEnabled)
         g_isEnabled = isEnabled;
         if(isEnabled)
         {
-            RAYGUN_KSLOG_ERROR(@"Creating new deadlock monitor.");
+            RAYGUN_KSLOG_DEBUG(@"Creating new deadlock monitor.");
             initialize();
             g_monitor = [[KSCrashDeadlockMonitor alloc] init];
         }
         else
         {
-            RAYGUN_KSLOG_ERROR(@"Stopping deadlock monitor.");
+            RAYGUN_KSLOG_DEBUG(@"Stopping deadlock monitor.");
             [g_monitor cancel];
             g_monitor = nil;
         }

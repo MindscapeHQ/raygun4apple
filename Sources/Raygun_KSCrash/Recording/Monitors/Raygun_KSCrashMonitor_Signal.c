@@ -81,13 +81,13 @@ static char g_eventID[37];
  */
 static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
 {
-    RAYGUN_KSLOG_ERROR("Trapped signal %d", sigNum);
+    RAYGUN_KSLOG_DEBUG("Trapped signal %d", sigNum);
     if(g_isEnabled)
     {
         raygun_ksmc_suspendEnvironment();
         raygun_kscm_notifyFatalExceptionCaptured(false);
 
-        RAYGUN_KSLOG_ERROR("Filling out context.");
+        RAYGUN_KSLOG_DEBUG("Filling out context.");
         RAYGUN_KSMC_NEW_CONTEXT(machineContext);
         raygun_ksmc_getContextForSignal(userContext, machineContext);
         raygun_kssc_initWithMachineContext(&g_stackCursor, 100, machineContext);
@@ -108,7 +108,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
         raygun_ksmc_resumeEnvironment();
     }
 
-    RAYGUN_KSLOG_ERROR("Re-raising signal for regular handlers to catch.");
+    RAYGUN_KSLOG_DEBUG("Re-raising signal for regular handlers to catch.");
     // This is technically not allowed, but it works in OSX and iOS.
     raise(sigNum);
 }
@@ -120,18 +120,18 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
 
 static bool installSignalHandler()
 {
-    RAYGUN_KSLOG_ERROR("Installing signal handler.");
+    RAYGUN_KSLOG_DEBUG("Installing signal handler.");
 
 #if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
 
     if(g_signalStack.ss_size == 0)
     {
-        RAYGUN_KSLOG_ERROR("Allocating signal stack area.");
+        RAYGUN_KSLOG_DEBUG("Allocating signal stack area.");
         g_signalStack.ss_size = SIGSTKSZ;
         g_signalStack.ss_sp = malloc(g_signalStack.ss_size);
     }
 
-    RAYGUN_KSLOG_ERROR("Setting signal stack area.");
+    RAYGUN_KSLOG_DEBUG("Setting signal stack area.");
     if(sigaltstack(&g_signalStack, NULL) != 0)
     {
         RAYGUN_KSLOG_ERROR("signalstack: %s", strerror(errno));
@@ -144,7 +144,7 @@ static bool installSignalHandler()
 
     if(g_previousSignalHandlers == NULL)
     {
-        RAYGUN_KSLOG_ERROR("Allocating memory to store previous signal handlers.");
+        RAYGUN_KSLOG_DEBUG("Allocating memory to store previous signal handlers.");
         g_previousSignalHandlers = malloc(sizeof(*g_previousSignalHandlers)
                                           * (unsigned)fatalSignalsCount);
     }
@@ -159,7 +159,7 @@ static bool installSignalHandler()
 
     for(int i = 0; i < fatalSignalsCount; i++)
     {
-        RAYGUN_KSLOG_ERROR("Assigning handler for signal %d", fatalSignals[i]);
+        RAYGUN_KSLOG_DEBUG("Assigning handler for signal %d", fatalSignals[i]);
         if(sigaction(fatalSignals[i], &action, &g_previousSignalHandlers[i]) != 0)
         {
             char sigNameBuff[30];
@@ -178,31 +178,31 @@ static bool installSignalHandler()
             goto failed;
         }
     }
-    RAYGUN_KSLOG_ERROR("Signal handlers installed.");
+    RAYGUN_KSLOG_DEBUG("Signal handlers installed.");
     return true;
 
 failed:
-    RAYGUN_KSLOG_ERROR("Failed to install signal handlers.");
+    RAYGUN_KSLOG_DEBUG("Failed to install signal handlers.");
     return false;
 }
 
 static void uninstallSignalHandler(void)
 {
-    RAYGUN_KSLOG_ERROR("Uninstalling signal handlers.");
+    RAYGUN_KSLOG_DEBUG("Uninstalling signal handlers.");
 
     const int* fatalSignals = raygun_kssignal_fatalSignals();
     int fatalSignalsCount = raygun_kssignal_numFatalSignals();
 
     for(int i = 0; i < fatalSignalsCount; i++)
     {
-        RAYGUN_KSLOG_ERROR("Restoring original handler for signal %d", fatalSignals[i]);
+        RAYGUN_KSLOG_DEBUG("Restoring original handler for signal %d", fatalSignals[i]);
         sigaction(fatalSignals[i], &g_previousSignalHandlers[i], NULL);
     }
     
 #if RAYGUN_KSCRASH_HAS_SIGNAL_STACK
     g_signalStack = (stack_t){0};
 #endif
-    RAYGUN_KSLOG_ERROR("Signal handlers uninstalled.");
+    RAYGUN_KSLOG_DEBUG("Signal handlers uninstalled.");
 }
 
 static void setEnabled(bool isEnabled)
