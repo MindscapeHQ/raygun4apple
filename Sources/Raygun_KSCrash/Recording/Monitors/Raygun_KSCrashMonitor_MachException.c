@@ -430,7 +430,7 @@ static void uninstallExceptionHandler()
     }
     
     g_exceptionPort = MACH_PORT_NULL;
-    RAYGUN_KSLOG_ERROR("Mach exception handlers uninstalled.");
+    RAYGUN_KSLOG_DEBUG("Mach exception handlers uninstalled.");
 }
 
 static bool installExceptionHandler()
