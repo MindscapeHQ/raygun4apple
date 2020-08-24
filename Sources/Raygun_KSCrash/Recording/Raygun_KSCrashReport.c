@@ -635,7 +635,7 @@ static void writeUnknownObjectContents(const Raygun_KSCrashReportWriter* const w
                         writeMemoryContents(writer, ivar->name, (uintptr_t)pointer, limit);
                         break;
                     default:
-                        RAYGUN_KSLOG_ERROR("%s: Unknown ivar type [%s]", ivar->name, ivar->type);
+                        RAYGUN_KSLOG_DEBUG("%s: Unknown ivar type [%s]", ivar->name, ivar->type);
                 }
             }
         }
