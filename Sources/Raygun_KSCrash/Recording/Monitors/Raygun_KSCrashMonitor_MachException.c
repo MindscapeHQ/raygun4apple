@@ -309,7 +309,7 @@ static void* handleExceptions(void* const userData)
         // to avoid a death loop.
         if(raygun_ksthread_self() == g_primaryMachThread)
         {
-            RAYGUN_KSLOG_ERROR("This is the primary exception thread. Activating secondary thread.");
+            RAYGUN_KSLOG_DEBUG("This is the primary exception thread. Activating secondary thread.");
 // TODO: This was put here to avoid a freeze. Does secondary thread ever fire?
             restoreExceptionPorts();
             if(thread_resume(g_secondaryMachThread) != KERN_SUCCESS)

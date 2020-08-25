@@ -94,7 +94,7 @@ static void printPreviousLog(const char* filePath)
 static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 {
     if (monitorContext->currentSnapshotUserReported == false) {
-        RAYGUN_KSLOG_ERROR("Updating application state to note crash.");
+        RAYGUN_KSLOG_DEBUG("Updating application state to note crash.");
         raygun_kscrashstate_notifyAppCrash();
     }
     monitorContext->consoleLogPath = g_shouldAddConsoleLogToReport ? g_consoleLogPath : NULL;
@@ -119,11 +119,11 @@ static void onCrash(struct Raygun_KSCrash_MonitorContext* monitorContext)
 
 Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char* const installPath)
 {
-    RAYGUN_KSLOG_ERROR("Installing crash reporter.");
+    RAYGUN_KSLOG_DEBUG("Installing crash reporter.");
 
     if(g_installed)
     {
-        RAYGUN_KSLOG_ERROR("Crash reporter already installed.");
+        RAYGUN_KSLOG_DEBUG("Crash reporter already installed.");
         return g_monitoring;
     }
     g_installed = 1;
@@ -150,7 +150,7 @@ Raygun_KSCrashMonitorType raygun_kscrash_install(const char* appName, const char
     raygun_kscm_setEventCallback(onCrash);
     Raygun_KSCrashMonitorType monitors = raygun_kscrash_setMonitoring(g_monitoring);
 
-    RAYGUN_KSLOG_ERROR("Installation complete.");
+    RAYGUN_KSLOG_DEBUG("Installation complete.");
     return monitors;
 }
 
