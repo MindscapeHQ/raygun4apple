@@ -29,7 +29,7 @@
 #import "RaygunUserInformation.h"
 #import "RaygunEventData.h"
 #import "RaygunUtils.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 
 @implementation RaygunEventMessage
 

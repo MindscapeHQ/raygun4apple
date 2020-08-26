@@ -28,9 +28,9 @@
 #define RaygunCrashReportCustomSink_h
 
 #import <Foundation/Foundation.h>
-#import "KSCrash.h"
+#import "Raygun_KSCrash.h"
 
-@interface RaygunCrashReportCustomSink : NSObject <KSCrashReportFilter>
+@interface RaygunCrashReportCustomSink : NSObject <Raygun_KSCrashReportFilter>
 
 - (instancetype)init NS_UNAVAILABLE;
 

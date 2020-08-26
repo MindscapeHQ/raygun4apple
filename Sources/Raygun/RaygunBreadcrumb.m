@@ -27,7 +27,7 @@
 #import "RaygunBreadcrumb.h"
 
 #import "RaygunUtils.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+Raygun_SimpleConstructor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

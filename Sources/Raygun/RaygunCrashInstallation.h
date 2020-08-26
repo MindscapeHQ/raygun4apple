@@ -25,12 +25,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KSCrash.h"
-#import "KSCrashInstallation.h"
+#import "Raygun_KSCrash.h"
+#import "Raygun_KSCrashInstallation.h"
 
-@interface RaygunCrashInstallation : KSCrashInstallation
+@interface RaygunCrashInstallation : Raygun_KSCrashInstallation
 
 - (void)sendAllReports;
-- (void)sendAllReportsWithSink:(id<KSCrashReportFilter>)sink;
+- (void)sendAllReportsWithSink:(id<Raygun_KSCrashReportFilter>)sink;
 
 @end
