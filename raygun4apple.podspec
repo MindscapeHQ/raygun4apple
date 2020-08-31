@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'raygun4apple'
-  s.version      = '1.4.1-beta'
+  s.version      = '1.4.1'
   s.summary      = 'Raygun client for Apple platforms'
   s.homepage     = 'https://raygun.com'
   s.authors      = { 'Raygun' => 'hello@raygun.com' }

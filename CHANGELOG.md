@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.1
+- Prefixed KSCrash classes and methods to avoid conflicts with external sources
+
 ## 1.4.0
 - CocoaPods support
 - New sample app projects
