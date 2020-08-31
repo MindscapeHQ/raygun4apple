@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'raygun4apple'
-  s.version      = '1.4.1-beta'
+  s.version      = '1.4.1'
   s.summary      = 'Raygun client for Apple platforms'
   s.homepage     = 'https://raygun.com'
   s.authors      = { 'Raygun' => 'hello@raygun.com' }
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
                           'Sources/**/RaygunClient.h',
                           'Sources/**/RaygunMessageDetails.h',
                           'Sources/**/RaygunMessage.h',
+                          'Sources/**/RaygunCrashReportConverter.h',
   s.ios.public_header_files  = 'raygun4apple-iOS/raygun4apple_iOS.h'
   s.tvos.public_header_files = 'raygun4apple-tvOS/raygun4apple_tvOS.h'
   s.osx.public_header_files  = 'raygun4apple-macOS/raygun4apple_macOS.h'
