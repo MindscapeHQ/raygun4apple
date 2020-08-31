@@ -2,6 +2,7 @@
 
 ## 1.4.1
 - Prefixed KSCrash classes and methods to avoid conflicts with external sources
+- The RaygunCrashReportConverter class is now public
 
 ## 1.4.0
 - CocoaPods support

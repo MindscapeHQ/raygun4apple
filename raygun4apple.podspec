@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
                           'Sources/**/RaygunClient.h',
                           'Sources/**/RaygunMessageDetails.h',
                           'Sources/**/RaygunMessage.h',
+                          'Sources/**/RaygunCrashReportConverter.h',
   s.ios.public_header_files  = 'raygun4apple-iOS/raygun4apple_iOS.h'
   s.tvos.public_header_files = 'raygun4apple-tvOS/raygun4apple_tvOS.h'
   s.osx.public_header_files  = 'raygun4apple-macOS/raygun4apple_macOS.h'
