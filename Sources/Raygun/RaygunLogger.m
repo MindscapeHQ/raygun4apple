@@ -34,41 +34,65 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation RaygunLogger
 
 + (void)logError:(NSString *)message, ... {
-    va_list args;
-    va_start(args, message);
-    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
-    va_end(args);
-    [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelError];
+    @try {
+        va_list args;
+        va_start(args, message);
+        NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+        va_end(args);
+        [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelError];
+    }
+    @catch (NSException *exception) {
+        // Ignore
+    }
 }
 
 + (void)logWarning:(NSString *)message, ... {
-    va_list args;
-    va_start(args, message);
-    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
-    va_end(args);
-    [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelWarning];
+    @try {
+        va_list args;
+        va_start(args, message);
+        NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+        va_end(args);
+        [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelWarning];
+    }
+    @catch (NSException *exception) {
+        // Ignore
+    }
 }
 
 + (void)logDebug:(NSString *)message, ... {
-    va_list args;
-    va_start(args, message);
-    NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
-    va_end(args);
-    [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelDebug];
+    @try {
+        va_list args;
+        va_start(args, message);
+        NSString *formattedMessage = [[NSString alloc] initWithFormat:message arguments:args];
+        va_end(args);
+        [RaygunLogger log:formattedMessage withLevel:RaygunLoggingLevelDebug];
+    }
+    @catch (NSException *exception) {
+        // Ignore
+    }
 }
 
 + (void)logResponseStatusCode:(NSInteger)statusCode {
-    NSString *message = [self ResponseStatusCodeMessage:statusCode];
-    
-    switch ((RaygunResponseStatusCode)statusCode) {
-        case RaygunResponseStatusCodeAccepted: [self logDebug:message]; break;
-            
-        case RaygunResponseStatusCodeBadMessage:    // fall through
-        case RaygunResponseStatusCodeInvalidApiKey: // fall through
-        case RaygunResponseStatusCodeLargePayload:  // fall through
-        case RaygunResponseStatusCodeRateLimited: [self logError:message]; break;
-            
-        default: [self logDebug:message]; break;
+    @try {
+        NSString *message = [self ResponseStatusCodeMessage:statusCode];
+           
+       switch ((RaygunResponseStatusCode)statusCode) {
+           case RaygunResponseStatusCodeAccepted: {
+               [self logDebug:message];
+           } break;
+               
+           case RaygunResponseStatusCodeBadMessage:    // fall through
+           case RaygunResponseStatusCodeInvalidApiKey: // fall through
+           case RaygunResponseStatusCodeLargePayload:  // fall through
+           case RaygunResponseStatusCodeRateLimited: {
+               [self logError:message];
+           } break;
+               
+           default: [self logDebug:message]; break;
+       }
+    }
+    @catch (NSException *exception) {
+        // Ignore
     }
 }
 
