@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if (![RaygunUtils isNullOrEmpty:_stackTrace]) {
-        dict[@"managedStackTrace"] = _stackTrace;
+        dict[@"stackTrace"] = _stackTrace;
     }
     
     return dict;
