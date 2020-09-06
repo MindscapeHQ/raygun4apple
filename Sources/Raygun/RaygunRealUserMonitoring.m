@@ -313,7 +313,10 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
             if (response != nil) {
                 @try {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-                    [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                    if (httpResponse != nil)
+                    {
+                        [RaygunLogger logResponseStatusCode:httpResponse.statusCode];
+                    }
                 }
                 @catch (NSException *exception) {
                     [RaygunLogger logError:@"Failed to read response code from API request"];
