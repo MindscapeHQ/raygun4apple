@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.2
+- Updated crash report property name for the stack trace
+- Additional guards against the provider generating exceptions 
+
 ## 1.4.1
 - Prefixed KSCrash classes and methods to avoid conflicts with external sources
 - The RaygunCrashReportConverter class is now public
