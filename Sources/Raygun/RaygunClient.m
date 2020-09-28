@@ -57,6 +57,8 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
+@synthesize crashReportingApiEndpoint = _crashReportingApiEndpoint;
+@synthesize realUserMonitoringApiEndpoint = _realUserMonitoringApiEndpoint;
 
 // ============================================================================
 #pragma mark - Getters & Setters -
@@ -78,6 +80,32 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)setApplicationVersion:(nullable NSString *)applicationVersion {
     _applicationVersion = applicationVersion;
     [self updateCrashReportUserInformation];
+}
+
+- (void)setCrashReportingApiEndpoint:(nullable NSString *)crashReportingApiEndpoint {
+    _crashReportingApiEndpoint = crashReportingApiEndpoint;
+}
+
+- (nullable NSString*)crashReportingApiEndpoint {
+    if (_crashReportingApiEndpoint != nil)
+    {
+        return _crashReportingApiEndpoint;
+    }
+    
+    return kApiEndPointForCR;
+}
+
+- (void)setRealUserMonitoringApiEndpoint:(nullable NSString *)realUserMonitoringApiEndpoint {
+    _realUserMonitoringApiEndpoint = realUserMonitoringApiEndpoint;
+}
+
+- (nullable NSString*)realUserMonitoringApiEndpoint {
+    if (_realUserMonitoringApiEndpoint != nil)
+    {
+        return _realUserMonitoringApiEndpoint;
+    }
+    
+    return kApiEndPointForRUM;
 }
 
 - (void)setTags:(nullable NSArray<NSString *> *)tags {
