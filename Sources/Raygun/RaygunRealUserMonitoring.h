@@ -30,11 +30,14 @@
 
 @class RaygunUserInformation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RaygunRealUserMonitoring : NSObject
 
 @property (nonatomic) bool enabled;
 @property (nonatomic, readonly, copy) NSDictionary *viewEventTimers;
-@property (nonatomic, readonly, copy) NSSet *ignoredViews;
+@property (nonatomic, readonly, copy) NSSet * ignoredViews;
+@property (nullable, nonatomic, copy) NSString *realUserMonitoringApiEndpoint;
 
 + (instancetype)sharedInstance;
 
@@ -61,3 +64,5 @@
 - (NSNumber *)viewEventStartTimeForKey:(NSString *)key;
 
 @end
+
+NS_ASSUME_NONNULL_END

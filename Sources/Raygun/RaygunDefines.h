@@ -46,8 +46,8 @@ static NSString *_Nonnull const kRaygunClientVersion = @"1.5.0";
 static NSString *_Nonnull const kRaygunIdentifierUserDefaultsKey = @"com.raygun.identifier";
 static NSString *_Nonnull const kRaygunSessionLastSeenDefaultsKey = @"com.raygun.session.lastseen";
 
-static NSString *_Nonnull const kApiEndPointForCR  = @"https://api.raygun.com/entries";
-static NSString *_Nonnull const kApiEndPointForRUM = @"https://api.raygun.com/events";
+static NSString *_Nonnull const kDefaultApiEndPointForCR  = @"https://api.raygun.com/entries";
+static NSString *_Nonnull const kDefaultApiEndPointForRUM = @"https://api.raygun.com/events";
 
 static NSString *_Nonnull const kValueNotKnown = @"Unknown";
 
