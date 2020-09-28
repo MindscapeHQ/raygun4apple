@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+- The API endpoint can now be configured through the Raygun client
+
 ## 1.4.2
 - Updated crash report property name for the stack trace
 - Additional guards against the provider generating exceptions 
