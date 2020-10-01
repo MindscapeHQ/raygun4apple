@@ -51,6 +51,15 @@ static NSString *_Nonnull const kDefaultApiEndPointForRUM = @"https://api.raygun
 
 static NSString *_Nonnull const kValueNotKnown = @"Unknown";
 
+/*
+* Full text descriptions of the RaygunResponseStatusCode values.
+*/
+static NSString *_Nonnull const kStatusCodeDescriptionAccepted      = @"Request succeeded";
+static NSString *_Nonnull const kStatusCodeDescriptionBadMessage    = @"Bad message - could not parse the provided JSON. Check all fields are present, especially both occurredOn (ISO 8601 DateTime) and details { } at the top level";
+static NSString *_Nonnull const kStatusCodeDescriptionInvalidApiKey = @"Invalid API Key - The value specified in the header X-ApiKey did not match with an application in Raygun";
+static NSString *_Nonnull const kStatusCodeDescriptionLargePayload  = @"Request entity too large - The maximum size of a JSON payload is 128KB";
+static NSString *_Nonnull const kStatusCodeDescriptionRateLimited   = @"Too Many Requests - Plan limit exceeded for month or plan expired";
+
 static double const kSessionExpiryPeriodInSeconds = 30.0 * 60.0; // 30 minutes
 static NSInteger const kMaxCrashReportsOnDeviceUpperLimit = 64;
 static NSInteger const kMaxRecordedBreadcrumbs = 32;
