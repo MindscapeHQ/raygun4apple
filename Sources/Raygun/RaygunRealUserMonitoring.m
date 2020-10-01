@@ -61,6 +61,10 @@
 
 static RaygunRealUserMonitoring *sharedInstance = nil;
 
+@synthesize realUserMonitoringApiEndpoint = _realUserMonitoringApiEndpoint;
+
+#pragma mark - Getters & Setters -
+
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -69,14 +73,25 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
     return sharedInstance;
 }
 
-#pragma mark - Getters & Setters -
-
 - (NSDictionary *)viewEventTimers {
     return [[NSDictionary alloc] initWithDictionary:_mutableViewTimers];
 }
 
 - (NSSet *)ignoredViews {
     return [NSSet setWithSet:_mutableIgnoredViews];
+}
+
+- (nullable NSString*)realUserMonitoringApiEndpoint {
+    if (_realUserMonitoringApiEndpoint != nil)
+    {
+        return _realUserMonitoringApiEndpoint;
+    }
+    
+    return kDefaultApiEndPointForRUM;
+}
+
+- (void)setRealUserMonitoringApiEndpoint:(nullable NSString *)realUserMonitoringApiEndpoint {
+    _realUserMonitoringApiEndpoint = realUserMonitoringApiEndpoint;
 }
 
 #pragma mark - Initialising Methods  -
@@ -336,7 +351,7 @@ static RaygunRealUserMonitoring *sharedInstance = nil;
         [RaygunLogger logDebug:@"--------------------------------------------"];
     }
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForRUM]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self realUserMonitoringApiEndpoint]]];
     
     request.HTTPMethod = @"POST";
     [request setValue:RaygunClient.apiKey forHTTPHeaderField:@"X-ApiKey"];

@@ -57,6 +57,7 @@ static RaygunCrashInstallation *sharedCrashInstallation = nil;
 static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
+@synthesize crashReportingApiEndpoint = _crashReportingApiEndpoint;
 
 // ============================================================================
 #pragma mark - Getters & Setters -
@@ -78,6 +79,27 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)setApplicationVersion:(nullable NSString *)applicationVersion {
     _applicationVersion = applicationVersion;
     [self updateCrashReportUserInformation];
+}
+
+- (void)setCrashReportingApiEndpoint:(nullable NSString *)crashReportingApiEndpoint {
+    _crashReportingApiEndpoint = crashReportingApiEndpoint;
+}
+
+- (nullable NSString*)crashReportingApiEndpoint {
+    if (_crashReportingApiEndpoint != nil)
+    {
+        return _crashReportingApiEndpoint;
+    }
+    
+    return kDefaultApiEndPointForCR;
+}
+
+- (void)setRealUserMonitoringApiEndpoint:(nullable NSString *)realUserMonitoringApiEndpoint {
+    [RaygunRealUserMonitoring sharedInstance].realUserMonitoringApiEndpoint = realUserMonitoringApiEndpoint;
+}
+
+- (nullable NSString*)realUserMonitoringApiEndpoint {
+    return [RaygunRealUserMonitoring sharedInstance].realUserMonitoringApiEndpoint;
 }
 
 - (void)setTags:(nullable NSArray<NSString *> *)tags {
@@ -356,7 +378,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
         [RaygunLogger logDebug:@"--------------------------------------------"];
     }
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kApiEndPointForCR]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self crashReportingApiEndpoint]]];
     
     request.HTTPMethod = @"POST";
     [request setValue:sharedApiKey forHTTPHeaderField:@"X-ApiKey"];

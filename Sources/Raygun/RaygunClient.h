@@ -44,6 +44,10 @@ typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 
 @property (nullable, nonatomic, copy) NSString *applicationVersion;
 
+@property (nullable, nonatomic, copy) NSString *crashReportingApiEndpoint;
+
+@property (nullable, nonatomic, copy) NSString *realUserMonitoringApiEndpoint;
+
 @property (nullable, nonatomic, strong) NSArray<NSString *> *tags;
 
 @property (nullable, nonatomic, strong) NSDictionary<NSString *, id> *customData;
