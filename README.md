@@ -53,9 +53,9 @@ To ensure that the Raygun client is correctly configured, try sending a test cra
                             withCustomData:@{@"TestMessage":@"Hello World!"}];
 ```
 
-## Set up unique user tracking
+## Set up Customers
 
-By default, each user will be identified as an anonymous user. However you can set more detailed user information with the following snippet.
+By default, each user will be identified as an anonymous user/customers. However you can set more detailed customer information with the following snippet.
 
 ```objective-c
 RaygunUserInformation *userInfo = nil;
