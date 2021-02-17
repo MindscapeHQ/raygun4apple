@@ -15,10 +15,10 @@
 ## 1.4.0
 - CocoaPods support
 - New sample app projects
-- Fix: UUID not being included by default for user information
+- Fix: UUID not being included by default for user/customer information
 
 ## 1.3.10
-- Fix for anonymous user information not being included in crash reports
+- Fix for anonymous user/customer information not being included in crash reports
 
 ## 1.3.9
 - Additional guards against internal exceptions being thrown when setting custom data
