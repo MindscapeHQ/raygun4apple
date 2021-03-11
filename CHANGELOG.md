@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1
+- Adding missing static modifier for internal functions to avoid symbol collision with other libraries
+
 ## 1.5.0
 - The API endpoint can now be configured through the Raygun client
 - Fix: A bad access exception when logging response codes from the Raygun API
