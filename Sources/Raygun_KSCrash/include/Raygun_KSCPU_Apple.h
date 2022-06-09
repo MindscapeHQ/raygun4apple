@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSCPU_Apple.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2012-01-29.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,35 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+#ifndef RAYGUN_HDR_KSCPU_Apple_h
+#define RAYGUN_HDR_KSCPU_Apple_h
 
-
-#import <Foundation/Foundation.h>
-
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 
+#include <mach/mach_types.h>
+    
+/** Fill in state information about a thread.
+ *
+ * @param thread The thread to get information about.
+ *
+ * @param state Pointer to buffer for state information.
+ *
+ * @param flavor The kind of information to get (arch specific).
+ *
+ * @param stateCount Number of entries in the state information buffer.
+ *
+ * @return true if state fetching was successful.
+ */
+bool raygun_kscpu_i_fillState(thread_t thread,
+                       thread_state_t state,
+                       thread_state_flavor_t flavor,
+                       mach_msg_type_number_t stateCount);
+   
+#ifdef __cplusplus
+}
+#endif
 
-
-
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSCPU_Apple_h

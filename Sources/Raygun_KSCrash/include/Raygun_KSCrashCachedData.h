@@ -1,9 +1,7 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSCrashCachedData.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +22,22 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+
+/* Maintains a cache of difficult-to-retrieve data.
+ */
 
 
-#import <Foundation/Foundation.h>
+#include "Raygun_KSThread.h"
 
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
-#endif
+void raygun_ksccd_init(int pollingIntervalInSeconds);
 
+void raygun_ksccd_freeze(void);
+void raygun_ksccd_unfreeze(void);
 
+void raygun_ksccd_setSearchQueueNames(bool searchQueueNames);
 
+KSThread* raygun_ksccd_getAllThreads(int* threadCount);
 
+const char* raygun_ksccd_getThreadName(KSThread thread);
 
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+const char* raygun_ksccd_getQueueName(KSThread thread);

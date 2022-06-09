@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSMachineContext_Apple.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2016-12-02.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,39 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
 
+#ifndef RAYGUN_HDR_KSMachineContext_Apple_h
+#define RAYGUN_HDR_KSMachineContext_Apple_h
 
-#import <Foundation/Foundation.h>
-
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+#include <mach/mach_types.h>
+#include <stdbool.h>
+#include <sys/ucontext.h>
 
+#ifdef __arm64__
+    #define STRUCT_MCONTEXT_L _STRUCT_MCONTEXT64
+#else
+    #define STRUCT_MCONTEXT_L _STRUCT_MCONTEXT
+#endif
 
+typedef struct Raygun_KSMachineContext
+{
+    thread_t thisThread;
+    thread_t allThreads[100];
+    int threadCount;
+    bool isCrashedContext;
+    bool isCurrentThread;
+    bool isStackOverflow;
+    bool isSignalContext;
+    STRUCT_MCONTEXT_L machineContext;
+} Raygun_KSMachineContext;
+    
+    
+#ifdef __cplusplus
+}
+#endif
 
-
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSMachineContext_Apple_h

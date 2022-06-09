@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSCrashMonitor_MachException.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2012-02-04.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,29 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+
+/* Catches mach exceptions.
+ */
 
 
-#import <Foundation/Foundation.h>
+#ifndef RAYGUN_HDR_KSCrashMonitor_MachException_h
+#define RAYGUN_HDR_KSCrashMonitor_MachException_h
 
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+#include "Raygun_KSCrashMonitor.h"
+#include <stdbool.h>
 
 
+/** Access the Monitor API.
+ */
+Raygun_KSCrashMonitorAPI* raygun_kscm_machexception_getAPI(void);
 
 
-@interface UIViewController (RaygunRUM)
+#ifdef __cplusplus
+}
+#endif
 
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSCrashMonitor_MachException_h

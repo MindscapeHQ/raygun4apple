@@ -1,9 +1,7 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSStackCursor_MachineContext.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Copyright (c) 2016 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +22,30 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
 
+#ifndef RAYGUN_KSStackCursor_MachineContext_h
+#define RAYGUN_KSStackCursor_MachineContext_h
 
-#import <Foundation/Foundation.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+    
+#include "Raygun_KSStackCursor.h"
 
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+/** Initialize a stack cursor for a machine context.
+ *
+ * @param cursor The stack cursor to initialize.
+ *
+ * @param maxStackDepth The max depth to search before giving up.
+ *
+ * @param machineContext The machine context whose stack to walk.
+ */
+void raygun_kssc_initWithMachineContext(Raygun_KSStackCursor *cursor, int maxStackDepth, const struct Raygun_KSMachineContext* machineContext);
+    
+    
+#ifdef __cplusplus
+}
 #endif
 
-
-
-
-
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // KSStackCursor_MachineContext_h

@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSString.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2012-09-15.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,43 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+#ifndef RAYGUN_HDR_KSString_h
+#define RAYGUN_HDR_KSString_h
 
-
-#import <Foundation/Foundation.h>
-
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 
+#include <stdbool.h>
+#include <stdint.h>
 
 
+/** Check if a memory location contains a null terminated UTF-8 string.
+ *
+ * @param memory The memory location to test.
+ *
+ * @param minLength The minimum length to be considered a valid string.
+ *
+ * @param maxLength The maximum length to be considered a valid string.
+ */
+bool raygun_ksstring_isNullTerminatedUTF8String(const void* memory, int minLength, int maxLength);
 
-@interface UIViewController (RaygunRUM)
+/** Extract a hex value in the form "0x123456789abcdef" from a string.
+ *
+ * @param string The string to search.
+ *
+ * @param stringLength The length of the string.
+ *
+ * @param result Buffer to hold the resulting value.
+ *
+ * @return true if the operation was successful.
+ */
+bool raygun_ksstring_extractHexValue(const char* string, int stringLength, uint64_t* result);
 
-+ (void)load;
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
+#ifdef __cplusplus
+}
+#endif
 
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSString_h

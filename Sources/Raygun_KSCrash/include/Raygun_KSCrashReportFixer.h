@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSCrashReportFixer.c
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2016-11-07.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,28 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
+#ifndef RAYGUN_HDR_KSCrashReportFixer_h
+#define RAYGUN_HDR_KSCrashReportFixer_h
 
-
-#import <Foundation/Foundation.h>
-
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 
+/** Fixes up fields in a crash report that could not be fixed up at crash time.
+ * Some fields, such a mangled fields and dates, cannot be fixed up at crash time
+ * because the function calls needed to do it are not async-safe.
+ *
+ * @param crashReport A raw report loaded from disk.
+ *
+ * @return A fixed up crash report.
+ *         MEMORY MANAGEMENT WARNING: User is responsible for calling free() on the returned value.
+ */
+char* raygun_kscrf_fixupCrashReport(const char* crashReport);
 
 
+#ifdef __cplusplus
+}
+#endif
 
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSCrashReportFixer_h

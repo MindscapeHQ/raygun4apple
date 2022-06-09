@@ -1,9 +1,7 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSStackCursor_Backtrace.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Copyright (c) 2016 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +22,42 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
 
+#ifndef RAYGUN_KSStackCursor_Backtrace_h
+#define RAYGUN_KSStackCursor_Backtrace_h
 
-#import <Foundation/Foundation.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+    
+#include "Raygun_KSStackCursor.h"
 
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+/** Exposed for other internal systems to use.
+ */
+typedef struct
+{
+    int skippedEntries;
+    int backtraceLength;
+    const uintptr_t* backtrace;
+} Raygun_KSStackCursor_Backtrace_Context;
+    
+
+/** Initialize a stack cursor for an existing backtrace (array of addresses).
+ *
+ * @param cursor The stack cursor to initialize.
+ *
+ * @param backtrace The existing backtrace to walk.
+ *
+ * @param backtraceLength The length of the backtrace.
+ *
+ * @param skipEntries The number of stack entries to skip.
+ */
+void raygun_kssc_initWithBacktrace(Raygun_KSStackCursor *cursor, const uintptr_t* backtrace, int backtraceLength, int skipEntries);
+    
+    
+#ifdef __cplusplus
+}
 #endif
 
-
-
-
-
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // KSStackCursor_Backtrace_h

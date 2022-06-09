@@ -67,3 +67,4 @@ iOSInjectionProject/
 
 # Custom
 release/
+.build/

@@ -1,9 +1,7 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSSymbolicator.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Copyright (c) 2016 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +22,29 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
 
+#ifndef RAYGUN_KSSymbolicator_h
+#define RAYGUN_KSSymbolicator_h
 
-#import <Foundation/Foundation.h>
-
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 
+#include "Raygun_KSStackCursor.h"
+#include <stdbool.h>
 
+/** Symbolicate a stack cursor.
+ *
+ * @param cursor The cursor to symbolicate.
+ *
+ * @return True if successful.
+ */
+bool raygun_kssymbolicator_symbolicate(Raygun_KSStackCursor *cursor);
 
+    
+#ifdef __cplusplus
+}
+#endif
 
-@interface UIViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // KSSymbolicator_h

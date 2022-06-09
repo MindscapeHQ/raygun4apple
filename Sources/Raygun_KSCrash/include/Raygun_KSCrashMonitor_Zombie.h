@@ -1,9 +1,9 @@
 //
-//  UIViewController+RaygunRUM.h
-//  raygun4apple
+//  KSCrashMonitor_Zombie.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2012-09-15.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,46 @@
 // THE SOFTWARE.
 //
 
-#ifndef UIViewController_RaygunRUM_h
-#define UIViewController_RaygunRUM_h
 
+/* Poor man's zombie tracking.
+ *
+ * Benefits:
+ * - Very low CPU overhead.
+ * - Low memory overhead.
+ *
+ * Limitations:
+ * - Not guaranteed to catch all zombies.
+ * - Can generate false positives or incorrect class names.
+ * - KSZombie itself must be compiled with ARC disabled. You can enable ARC in
+ *   your app, but KSZombie must be compiled in a separate library if you do.
+ */
 
-#import <Foundation/Foundation.h>
+#ifndef RAYGUN_HDR_KSZombie_h
+#define RAYGUN_HDR_KSZombie_h
 
-#if RAYGUN_CAN_USE_UIDEVICE
-//#import <UIKit/UIKit.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+#include "Raygun_KSCrashMonitor.h"
+#include <stdbool.h>
 
 
+/** Get the class of a deallocated object pointer, if it was tracked.
+ *
+ * @param object A pointer to a deallocated object.
+ *
+ * @return The object's class name, or NULL if it wasn't found.
+ */
+const char* raygun_kszombie_className(const void* object);
+
+/** Access the Monitor API.
+ */
+Raygun_KSCrashMonitorAPI* raygun_kscm_zombie_getAPI(void);
 
 
-@interface UIViewController (RaygunRUM)
+#ifdef __cplusplus
+}
+#endif
 
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* UIViewController_RaygunRUM_h */
+#endif // HDR_KSZombie_h
