@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "raygun4apple",
     platforms: [
-        .iOS(.v10),
+        .iOS(.v12),
         .macOS(.v10_10)
     ],
     products: [
