@@ -29,7 +29,8 @@
 #import <objc/runtime.h>
 
 #import "RaygunRealUserMonitoring.h"
-
+#import <TargetConditionals.h>
+#if !TARGET_OS_OSX
 @implementation UIViewController (RaygunRUM)
 
 + (void)load {
@@ -102,3 +103,4 @@
 }
 
 @end
+#endif
