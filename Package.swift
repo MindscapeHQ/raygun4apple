@@ -26,7 +26,8 @@ let package = Package(
             name: "raygun4apple",
             dependencies: [],
             path: "Sources",
-            cxxSettings: [.headerSearchPath("Sources/include")]),
+            exclude: ["include"],
+            cxxSettings: [.headerSearchPath("include")]),
     ],
     cxxLanguageStandard: .gnucxx11
 )
