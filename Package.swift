@@ -13,7 +13,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "raygun4apple",
-            targets: ["raygun4apple", "raygunkscrash"]),
+            targets: ["raygun4apple"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,9 +25,8 @@ let package = Package(
         .target(
             name: "raygun4apple",
             dependencies: [],
-            path: "Sources/Raygun",
-            cxxSettings: [.headerSearchPath("Sources/Raygun/include")]),
-        .target(name: "raygunkscrash", dependencies: [], path: "Sources/Raygun_KSCrash", cxxSettings: [.headerSearchPath("Sources/Raygun_KSCrash/include")]),
+            path: "Sources",
+            cxxSettings: [.headerSearchPath("Sources/include")]),
     ],
     cxxLanguageStandard: .gnucxx11
 )

@@ -1,9 +1,9 @@
 //
-//  NSViewController+RaygunRUM.h
-//  raygun4apple
+//  NSData+GZip.h
 //
-//  Created by Mitchell Duncan on 3/09/18.
-//  Copyright © 2018 Raygun Limited. All rights reserved.
+//  Created by Karl Stenerud on 2012-02-19.
+//
+//  Copyright (c) 2012 Karl Stenerud. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,40 @@
 // THE SOFTWARE.
 //
 
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
 
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
 
-@interface NSViewController (RaygunRUM)
+/**
+ * GNU zip/unzip support for NSData.
+ */
+@interface NSData (GZip)
 
-+ (void)load;
+/**
+ * Gzip the data in this object (no header).
+ *
+ * @param compressionLevel The GZip compression level to use:
+ *                         0 = no compression.
+ *                         1 = best speed.
+ *                         9 = best compression.
+ *                        -1 = default.
+ *
+ * @param error (optional) Set to any error that occurs, or nil if no error.
+ *              Pass nil to ignore.
+ *
+ * @return A new NSData with the gzipped contents of this object.
+ */
+- (NSData*) gzippedWithCompressionLevel:(int) compressionLevel
+                                  error:(NSError**) error;
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+/**
+ * Gunzip the data in this object (no header).
+ *
+ * @param error (optional) Set to any error that occurs, or nil if no error.
+ *              Pass nil to ignore.
+ *
+ * @return A new NSData with the gunzipped contents of this object.
+ */
+- (NSData*) gunzippedWithError:(NSError**) error;
 
 @end
-
-#endif /* NSViewController_RaygunRUM_h */
