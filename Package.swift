@@ -27,7 +27,15 @@ let package = Package(
             dependencies: [],
             path: "Sources",
             exclude: ["include"],
-            cxxSettings: [.headerSearchPath("include")]),
+            cxxSettings: [
+                .define("GCC_ENABLE_CPP_EXCEPTIONS", to:"YES"),
+                .headerSearchPath("include")
+            ],
+            linkerSettings: [
+                .linkedLibrary("z"),
+                .linkedLibrary("c++")
+            ]
+        ),
     ],
     cxxLanguageStandard: .gnucxx11
 )
