@@ -5,6 +5,8 @@
 //  Created by Mitchell Duncan on 15/04/19.
 //
 
+#import <TargetConditionals.h>
+#if !TARGET_OS_OSX
 #import <UIKit/UIKit.h>
 
 //! Project version number for crash_iOS.
@@ -16,3 +18,4 @@ FOUNDATION_EXPORT const unsigned char CrashGenerator_iOSVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <CrashGenerator_iOS/PublicHeader.h>
 
 #import "CrashGenerator.h"
+#endif
