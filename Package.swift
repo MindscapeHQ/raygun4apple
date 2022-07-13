@@ -26,10 +26,10 @@ let package = Package(
             name: "raygun4apple",
             dependencies: [],
             path: "Sources",
-            exclude: ["include"],
+            publicHeadersPath: "include/public",
             cxxSettings: [
                 .define("GCC_ENABLE_CPP_EXCEPTIONS", to:"YES"),
-                .headerSearchPath("include")
+                .headerSearchPath("include/private")
             ],
             linkerSettings: [
                 .linkedLibrary("z"),
