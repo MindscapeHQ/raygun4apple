@@ -23,7 +23,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
+#import <TargetConditionals.h>
+#if !TARGET_OS_OSX
 #import <UIKit/UIKit.h>
 
 //! Project version number for raygun4apple_iOS.
@@ -46,3 +47,4 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_iOSVersionString[];
 #import "RaygunThread.h"
 #import "RaygunUserInformation.h"
 #import "RaygunBreadcrumb.h"
+#endif
