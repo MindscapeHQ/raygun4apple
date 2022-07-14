@@ -25,7 +25,7 @@
 //
 
 #import <TargetConditionals.h>
-#if Target_OS_OSX
+#if TARGET_OS_OSX
 
 #ifndef NSViewController_RaygunRUM_h
 #define NSViewController_RaygunRUM_h
