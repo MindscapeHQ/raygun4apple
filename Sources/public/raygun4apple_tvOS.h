@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-#import <TargetCondtionals.h>
+#import <TargetConditionals.h>
 #if TARGET_OS_TV
 
 #import <UIKit/UIKit.h>
