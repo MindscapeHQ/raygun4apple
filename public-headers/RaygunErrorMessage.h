@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
+//  RaygunErrorMessage.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by Mitchell Duncan on 11/09/17.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,39 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
-
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
+#ifndef RaygunErrorMessage_h
+#define RaygunErrorMessage_h
 
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
+NS_ASSUME_NONNULL_BEGIN
 
-@interface NSViewController (RaygunRUM)
+@interface RaygunErrorMessage : NSObject
 
-+ (void)load;
+@property (nonnull, nonatomic, copy) NSString *className;
+@property (nonnull, nonatomic, copy) NSString *message;
+@property (nullable, nonatomic, copy) NSString *signalName;
+@property (nullable, nonatomic, copy) NSString *signalCode;
+@property (nullable, nonatomic, strong) NSArray *stackTrace;
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
+- (instancetype)init NS_UNAVAILABLE;
 
-- (void)loadViewCapture;
+- (instancetype)init:(nonnull NSString *)className
+         withMessage:(nonnull NSString *)message
+      withSignalName:(nullable NSString *)signalName
+      withSignalCode:(nullable NSString *)signalCode
+      withStackTrace:(nullable NSArray *)stacktrace NS_DESIGNATED_INITIALIZER;
 
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+/*
+ * Creates and returns a dictionary with the classes properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the classes properties and their values.
+ */
+- (NSDictionary *)convertToDictionary;
 
 @end
 
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+NS_ASSUME_NONNULL_END
+
+#endif /* RaygunErrorMessage_h */

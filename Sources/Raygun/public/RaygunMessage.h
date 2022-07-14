@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
+//  RaygunMessage.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by Mitchell Duncan on 11/09/17.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,34 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
-
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
+#ifndef RaygunMessage_h
+#define RaygunMessage_h
 
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
+NS_ASSUME_NONNULL_BEGIN
 
-@interface NSViewController (RaygunRUM)
+@class RaygunMessageDetails;
 
-+ (void)load;
+@interface RaygunMessage : NSObject
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
+@property (nonatomic, copy) NSString *occurredOn;
+@property (nonatomic, strong) RaygunMessageDetails *details;
 
-- (void)loadViewCapture;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
-- (void)viewDidLoadCapture;
+- (instancetype)initWithTimestamp:(NSString *)occurredOn withDetails:(RaygunMessageDetails *)details NS_DESIGNATED_INITIALIZER;
 
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+/*
+ * Creates and returns the json payload to be sent to Raygun.
+ *
+ * @return a data object containing the RaygunMessage properties in a json format.
+ */
+- (NSData *)convertToJson;
 
 @end
 
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+NS_ASSUME_NONNULL_END
+
+#endif /* RaygunMessage_h */

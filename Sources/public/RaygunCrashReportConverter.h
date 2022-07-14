@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
+//  RaygunCrashReportConverter.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by raygundev on 8/1/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,16 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
-
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
-
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
+@class RaygunMessage;
 
-@interface NSViewController (RaygunRUM)
+NS_ASSUME_NONNULL_BEGIN
 
-+ (void)load;
+@interface RaygunCrashReportConverter : NSObject
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+- (RaygunMessage *)convertReportToMessage:(NSDictionary *)report;
 
 @end
 
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+NS_ASSUME_NONNULL_END

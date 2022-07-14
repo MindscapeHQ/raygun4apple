@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
+//  RaygunFrame.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by raygundev on 8/2/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,27 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
-
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
+#ifndef RaygunFrame_h
+#define RaygunFrame_h
 
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
+@interface RaygunFrame : NSObject
 
-@interface NSViewController (RaygunRUM)
+@property (nonatomic, copy) NSNumber *symbolAddress;
+@property (nonatomic, copy) NSNumber *instructionAddress;
+@property (nonatomic, copy) NSString *symbolName;
 
-+ (void)load;
+- (instancetype)init;
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+/*
+ * Creates and returns a dictionary with the frame properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the frame properties and their values.
+ */
+- (NSDictionary *)convertToDictionary;
 
 @end
 
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+#endif /* RaygunFrame_h */

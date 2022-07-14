@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
+//  RaygunThread.h
 //  raygun4apple
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by raygundev on 8/2/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,38 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
-
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
+#ifndef RaygunThread_h
+#define RaygunThread_h
 
 #import <Foundation/Foundation.h>
 
-#import <AppKit/AppKit.h>
+@class RaygunFrame;
 
-@interface NSViewController (RaygunRUM)
+@interface RaygunThread : NSObject
 
-+ (void)load;
+@property (nonatomic, copy) NSNumber *threadIndex;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSArray<RaygunFrame *> *frames;
+@property (nonatomic) BOOL crashed;
+@property (nonatomic) BOOL current;
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
+- (instancetype)init NS_UNAVAILABLE;
 
-- (void)loadViewCapture;
+/*
+ * Initializes a RaygunThread with its index
+ *
+ * @return RaygunThread
+ */
+- (instancetype)initWithIndex:(NSNumber *)threadIndex NS_DESIGNATED_INITIALIZER;
 
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
+/*
+ * Creates and returns a dictionary with the thread properties and their values.
+ * Used when constructing the crash report that is sent to Raygun.
+ *
+ * @return a new Dictionary with the thread properties and their values.
+ */
+- (NSDictionary *)convertToDictionary;
 
 @end
 
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+#endif /* RaygunThread_h */

@@ -1,5 +1,5 @@
 //
-//  NSViewController+RaygunRUM.h
+//  UIViewController+RaygunRUM.m
 //  raygun4apple
 //
 //  Created by Mitchell Duncan on 3/09/18.
@@ -24,16 +24,13 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if TARGET_OS_OSX
-
-#import "NSViewController+RaygunRUM.h"
+#import "UIViewController+RaygunRUM.h"
 
 #import <objc/runtime.h>
 
 #import "RaygunRealUserMonitoring.h"
 
-@implementation NSViewController (RaygunRUM)
+@implementation UIViewController (RaygunRUM)
 
 + (void)load {
     static dispatch_once_t onceToken;
@@ -49,12 +46,12 @@
         [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
         
         // viewWillAppear
-        originalSelector = @selector(viewWillAppear);
+        originalSelector = @selector(viewWillAppear:);
         swizzledSelector = @selector(viewWillAppearCapture:);
         [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
         
         // viewDidAppear
-        originalSelector = @selector(viewDidAppear);
+        originalSelector = @selector(viewDidAppear:);
         swizzledSelector = @selector(viewDidAppearCapture:);
         [self swizzleOriginalSelector:originalSelector withNewSelector:swizzledSelector];
     });
@@ -105,4 +102,3 @@
 }
 
 @end
-#endif /* TARGETOS_OSX */

@@ -1,8 +1,8 @@
 //
-//  NSViewController+RaygunRUM.h
-//  raygun4apple
+//  raygun4apple_tvOS.h
+//  raygun4apple tvOS
 //
-//  Created by Mitchell Duncan on 3/09/18.
+//  Created by Mitchell Duncan on 18/07/18.
 //  Copyright © 2018 Raygun Limited. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,25 @@
 // THE SOFTWARE.
 //
 
-#import <TargetConditionals.h>
-#if Target_OS_OSX
+#import <UIKit/UIKit.h>
 
-#ifndef NSViewController_RaygunRUM_h
-#define NSViewController_RaygunRUM_h
+//! Project version number for raygun4apple_tvOS.
+FOUNDATION_EXPORT double raygun4apple_tvOSVersionNumber;
 
-#import <Foundation/Foundation.h>
+//! Project version string for raygun4apple_tvOS.
+FOUNDATION_EXPORT const unsigned char raygun4apple_tvOSVersionString[];
 
-#import <AppKit/AppKit.h>
+// In this header, you should import all the public headers of your framework using statements like #import <raygun4apple_tvOS/PublicHeader.h>
 
-@interface NSViewController (RaygunRUM)
-
-+ (void)load;
-
-+ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)swizzledSelector;
-
-- (void)loadViewCapture;
-
-- (void)viewDidLoadCapture;
-
-- (void)viewWillAppearCapture:(BOOL)animated;
-
-- (void)viewDidAppearCapture:(BOOL)animated;
-
-@end
-
-#endif /* NSViewController_RaygunRUM_h */
-#endif /* TARGET_OS_OSX */
+#import "RaygunClient.h"
+#import "RaygunBinaryImage.h"
+#import "RaygunClientMessage.h"
+#import "RaygunDefines.h"
+#import "RaygunEnvironmentMessage.h"
+#import "RaygunErrorMessage.h"
+#import "RaygunFrame.h"
+#import "RaygunMessage.h"
+#import "RaygunMessageDetails.h"
+#import "RaygunThread.h"
+#import "RaygunUserInformation.h"
+#import "RaygunBreadcrumb.h"
