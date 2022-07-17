@@ -49,3 +49,5 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_tvOSVersionString[];
 #import "RaygunThread.h"
 #import "RaygunUserInformation.h"
 #import "RaygunBreadcrumb.h"
+
+#endif /* TARGET_OS_TV */
