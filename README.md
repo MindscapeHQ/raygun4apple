@@ -41,7 +41,7 @@ Here is an example which imports raygun4apple, initializes the provider, and sen
 ```swift
 import raygun4apple
 
-let raygunClient = RaygunClient.sharedInstance(apiKey: "DURNOeq9qWCtVTbZaadOXA")
+let raygunClient = RaygunClient.sharedInstance(apiKey: "YOUR_API_KEY_HERE")
 raygunClient.enableCrashReporting()
 raygunClient.send(exception: NSException.init(name: NSExceptionName.illegalSelectorException, reason: "This is a macOS error!"))
 ```

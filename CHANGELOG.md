@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0
+- Creation of Package.swift file for the Swift package manager
+
 ## 1.5.1
 - Adding missing static modifier for internal functions to avoid symbol collision with other libraries
 
