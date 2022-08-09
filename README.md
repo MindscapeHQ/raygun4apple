@@ -21,8 +21,8 @@ import PackageDescription
 let package = Package(
     name: "macos-cli",
     dependencies: [
-		//Note - the version must be atleast 2.0.0 as this is earliest release of this package through SPM.
-         .package(url: "https://github.com/MindscapeHQ/raygun4apple.git", from: "2.0.0"),
+        //Note - the version must be atleast 2.0.0 as this is earliest release of this package through SPM.
+        .package(url: "https://github.com/MindscapeHQ/raygun4apple.git", from: "2.0.0"),
     ],
     targets: [
         .executableTarget(
