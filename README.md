@@ -9,6 +9,43 @@ Supports:
 
 ## Installation
 
+### Using the Swift Package Manager
+
+To integrate Raygun into an SPM managed application, update your Package.swift file to include raygun4apple as a dependency. 
+
+Here is an example of a macOS CLI application which uses raygun4apple as a dependency
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "macos-cli",
+    dependencies: [
+		//Note - the version must be atleast 2.0.0 as this is earliest release of this package through SPM.
+         .package(url: "https://github.com/MindscapeHQ/raygun4apple.git", from: "2.0.0"),
+    ],
+    targets: [
+        .executableTarget(
+            name: "macos-cli",
+            dependencies: ["raygun4apple"])
+    ]
+)
+```
+
+### Configuring the Raygun client
+
+The configuration step is slightly different if installed from via the Swift package manager. Rather than importing the specific header for the target application, simply import `raygun4apple`.
+
+Here is an example which imports raygun4apple, initializes the provider, and sends a test exception.
+
+```swift
+import raygun4apple
+
+let raygunClient = RaygunClient.sharedInstance(apiKey: "DURNOeq9qWCtVTbZaadOXA")
+raygunClient.enableCrashReporting()
+raygunClient.send(exception: NSException.init(name: NSExceptionName.illegalSelectorException, reason: "This is a macOS error!"))
+```
+
 ### With CocoaPods
 
 To integrate Raygun using CocoaPods, update your Podfile to include:
