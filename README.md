@@ -7,13 +7,7 @@ Officially Supports:
 - tvOS 12+
 - macOS 12+
 
-Unofficially Supports:
-- iOS 10+
-- tvOS 10+
-- macOS 10.10+
-
-Note: raygun4apple has been built and tested for iOS 12+, tvOS 12+, and macOS 12+. 
-This isn't to say that raygun4apple will not work on the earlier OS versions, but without having tested this there may be some unexpected issues.
+Note: raygun4apple may work with earlier OS versions, however we recommend updating to the versions we build and test for to avoid experiencing any unexpected issues.
 
 ## Installation
 
