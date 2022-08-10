@@ -2,10 +2,18 @@
 
 [Raygun](https://raygun.com/) provider for iOS, tvOS & macOS supporting Crash Reporting and Real User Monitoring.
 
-Supports:
+Officially Supports:
+- iOS 12+
+- tvOS 12+
+- macOS 12+
+
+Unofficially Supports:
 - iOS 10+
 - tvOS 10+
 - macOS 10.10+
+
+Note: raygun4apple has been built and tested for iOS 12+, tvOS 12+, and macOS 12+. 
+This isn't to say that raygun4apple will not work on the earlier OS versions, but without having tested this there may be some unexpected issues.
 
 ## Installation
 
@@ -13,7 +21,7 @@ Supports:
 
 To integrate Raygun into an SPM managed application, update your Package.swift file to include raygun4apple as a dependency. 
 
-Here is an example of a macOS CLI application which uses raygun4apple as a dependency
+Here is an example of a macOS CLI application which uses raygun4apple as a dependency:
 
 ```swift
 import PackageDescription
@@ -34,7 +42,7 @@ let package = Package(
 
 ### Configuring the Raygun client
 
-The configuration step is slightly different if installed from via the Swift package manager. Rather than importing the specific header for the target application, simply import `raygun4apple`.
+The configuration step is slightly different if installed via the Swift package manager. Rather than importing the specific header for the target application, simply import `raygun4apple`.
 
 Here is an example which imports raygun4apple, initializes the provider, and sends a test exception.
 

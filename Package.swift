@@ -39,7 +39,7 @@ let package = Package(
                 .headerSearchPath("Raygun_KSCrash/swift"),
                 .headerSearchPath("Raygun")
             ]
-        ),
+        )
     ],
     cxxLanguageStandard: .gnucxx11
 )
