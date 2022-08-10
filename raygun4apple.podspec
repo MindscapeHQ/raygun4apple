@@ -6,26 +6,26 @@ Pod::Spec.new do |s|
   s.authors      = { 'Raygun' => 'hello@raygun.com' }
   s.license      = { :type => 'Custom', :file => 'LICENCE.md' }
   s.source       = { :git => 'https://github.com/MindscapeHQ/raygun4apple.git', :tag => s.version.to_s }
-  s.source_files = 'Sources/**/*.{h,m,mm,c,cpp}'
+  s.source_files = 'Sources/**/*.{h,m,mm,c,cpp}', '**/*.h'
   s.ios.source_files    = 'raygun4apple-iOS/*.h'
   s.tvos.source_files   = 'raygun4apple-tvOS/*.h'
   s.osx.source_files    = 'raygun4apple-macOS/*.h'
-  s.ios.exclude_files   = 'Sources/**/NSViewController+RaygunRUM.{h,m}'
-  s.tvos.exclude_files  = 'Sources/**/NSViewController+RaygunRUM.{h,m}'
-  s.osx.exclude_files   = 'Sources/**/UIViewController+RaygunRUM.{h,m}'
-  s.public_header_files = 'Sources/**/RaygunBreadcrumb.h', 
-                          'Sources/**/RaygunDefines.h',
-                          'Sources/**/RaygunThread.h',
-                          'Sources/**/RaygunBinaryImage.h',
-                          'Sources/**/RaygunFrame.h',
-                          'Sources/**/RaygunErrorMessage.h',
-                          'Sources/**/RaygunEnvironmentMessage.h',
-                          'Sources/**/RaygunClientMessage.h',
-                          'Sources/**/RaygunUserInformation.h',
-                          'Sources/**/RaygunClient.h',
-                          'Sources/**/RaygunMessageDetails.h',
-                          'Sources/**/RaygunMessage.h',
-                          'Sources/**/RaygunCrashReportConverter.h',
+  s.ios.exclude_files   = ['Sources/**/NSViewController+RaygunRUM.{h,m}', 'Sources/public/raygun4apple_iOS.h', 'Sources/public/raygun4apple_tvOS.h', 'Sources/public/raygun4apple_macOS.h']
+  s.tvos.exclude_files  = ['Sources/**/NSViewController+RaygunRUM.{h,m}', 'Sources/public/raygun4apple_iOS.h', 'Sources/public/raygun4apple_tvOS.h', 'Sources/public/raygun4apple_macOS.h']
+  s.osx.exclude_files   = ['Sources/**/UIViewController+RaygunRUM.{h,m}', 'Sources/public/raygun4apple_iOS.h', 'Sources/public/raygun4apple_tvOS.h', 'Sources/public/raygun4apple_macOS.h']
+  s.public_header_files = 'Sources/public/RaygunBreadcrumb.h', 
+                          'Sources/public/RaygunDefines.h',
+                          'Sources/public/RaygunThread.h',
+                          'Sources/public/RaygunBinaryImage.h',
+                          'Sources/public/RaygunFrame.h',
+                          'Sources/public/RaygunErrorMessage.h',
+                          'Sources/public/RaygunEnvironmentMessage.h',
+                          'Sources/public/RaygunClientMessage.h',
+                          'Sources/public/RaygunUserInformation.h',
+                          'Sources/public/RaygunClient.h',
+                          'Sources/public/RaygunMessageDetails.h',
+                          'Sources/public/RaygunMessage.h',
+                          'Sources/public/RaygunCrashReportConverter.h',
   s.ios.public_header_files  = 'raygun4apple-iOS/raygun4apple_iOS.h'
   s.tvos.public_header_files = 'raygun4apple-tvOS/raygun4apple_tvOS.h'
   s.osx.public_header_files  = 'raygun4apple-macOS/raygun4apple_macOS.h'
