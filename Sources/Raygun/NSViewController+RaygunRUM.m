@@ -24,6 +24,9 @@
 // THE SOFTWARE.
 //
 
+#import <TargetConditionals.h>
+#if TARGET_OS_OSX
+
 #import "NSViewController+RaygunRUM.h"
 
 #import <objc/runtime.h>
@@ -102,3 +105,4 @@
 }
 
 @end
+#endif /* TARGETOS_OSX */

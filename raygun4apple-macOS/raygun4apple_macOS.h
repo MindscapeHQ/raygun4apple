@@ -24,6 +24,9 @@
 // THE SOFTWARE.
 //
 
+#import <TargetConditionals.h>
+#if TARGET_OS_OSX
+
 #import <Cocoa/Cocoa.h>
 
 //! Project version number for raygun4apple_macOS.
@@ -46,3 +49,5 @@ FOUNDATION_EXPORT const unsigned char raygun4apple_macOSVersionString[];
 #import "RaygunThread.h"
 #import "RaygunUserInformation.h"
 #import "RaygunBreadcrumb.h"
+
+#endif /* TARGET_OS_OSX */
