@@ -388,7 +388,7 @@ static NSString* getBasePath()
     NSData* jsonData = [Raygun_KSJSONCodec encode:stackTrace options:0 error:&error];
     if(jsonData == nil || error != nil)
     {
-        RAYGUN_KSLOG_ERROR(@"Error encoding stack trace to JSON: %@", error);
+        RAYGUN_KSLOG_ERROR(@"Error encoding stack trace %@ to JSON: %@", stackTrace, error);
         // Don't return, since we can still record other useful information.
     }
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
