@@ -55,7 +55,7 @@ To integrate Raygun using CocoaPods, update your Podfile to include:
 pod 'raygun4apple'
 ```
 
-Once updated you can run `pod install` from Terminal.
+Once updated, you can run `pod install` from Terminal.
 
 ### With GitHub releases
 
