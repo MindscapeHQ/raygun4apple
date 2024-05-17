@@ -26,7 +26,7 @@ You're now ready to [configure the client](#using-raygun).
 
 #### OR: Manually
 
-If you're not using Xcode to manage your packages, you cna instead update your Package.swift file to include raygun4apple as a dependency.
+If you're not using Xcode to manage your packages, you can instead update your Package.swift file to include raygun4apple as a dependency.
 
 Here is an example of a macOS CLI application which uses raygun4apple as a dependency:
 
