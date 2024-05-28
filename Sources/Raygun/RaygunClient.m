@@ -239,12 +239,18 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     }
     
     @try {
+      
+        NSArray *trace = exception.callStackSymbols;
+        if (trace == nil) {
+            trace = [NSThread callStackSymbols];
+        }
+      
         [self updateCrashReportUserInformation];
         [Raygun_KSCrash.sharedInstance reportUserException:exception.name
                                              reason:exception.reason
                                            language:@""
                                          lineOfCode:nil
-                                         stackTrace:exception.callStackSymbols
+                                         stackTrace:trace
                                       logAllThreads:NO
                                    terminateProgram:NO];
     } @catch (NSException *exception) {
