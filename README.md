@@ -81,6 +81,8 @@ NB: If you recieve a `A server with the specified hostname could not be found` e
 
 #### Swift UI
 
+_You might like to check our our [Swift UI example app](https://github.com/MindscapeHQ/Raygun4SwiftUI-ExampleApp)_
+
 You likely want to start Raygun in your `AppDelegate`. By default newer Swift UI apps do not come with an `AppDelegate`, so you can [follow these instructions](https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-an-appdelegate-to-a-swiftui-app) to add one to your project (for macOS you need to [use NSApplication](https://stackoverflow.com/questions/71291654/swiftui-appdelegate-on-macos) instead)
 
 Once you've done that, your `AppDelegate.swift` should look something like this:
