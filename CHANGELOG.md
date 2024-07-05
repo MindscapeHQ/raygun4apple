@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1
+- Includes exception explicitly
+
+## 2.0.1
+- Falls back to thread stack trace if nil
+
 ## 2.0.0
 - Creation of Package.swift file for the Swift package manager
 
