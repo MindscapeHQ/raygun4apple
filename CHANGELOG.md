@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.2
+- Adds include for missing ucontext64_t type
+
 ## 2.1.1
 - Includes exception explicitly
 
