@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'raygun4apple'
-  s.version      = '2.0.0'
+  s.version      = '2.1.2'
   s.summary      = 'Raygun client for Apple platforms'
   s.homepage     = 'https://raygun.com'
   s.authors      = { 'Raygun' => 'hello@raygun.com' }
@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   s.frameworks   = 'Foundation'
   s.libraries    = 'z', 'c++'
   s.xcconfig     = { 'GCC_ENABLE_CPP_EXCEPTIONS' => 'YES' }
-  s.ios.deployment_target  = '10.0'
-  s.osx.deployment_target  = '10.10'
-  s.tvos.deployment_target = '10.0'
+  s.ios.deployment_target  = '12.0'
+  s.osx.deployment_target  = '10.13'
+  s.tvos.deployment_target = '12.0'
 end
