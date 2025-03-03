@@ -177,17 +177,21 @@ NS_ASSUME_NONNULL_BEGIN
         localeStr = kValueNotKnown;
     }
     
+    if ([NSThread isMainThread]) {
+
 #if RAYGUN_CAN_USE_UIKIT
-    CGRect screenBounds = [UIScreen mainScreen].bounds;
-    environment.windowsBoundWidth  = @(screenBounds.size.width);
-    environment.windowsBoundHeight = @(screenBounds.size.height);
-    environment.resolutionScale    = @([UIScreen mainScreen].scale);
+        CGRect screenBounds = [UIScreen mainScreen].bounds;
+        environment.windowsBoundWidth  = @(screenBounds.size.width);
+        environment.windowsBoundHeight = @(screenBounds.size.height);
+        environment.resolutionScale    = @([UIScreen mainScreen].scale);
 #else
-    NSRect frame = [[NSApplication sharedApplication].mainWindow frame];
-    environment.windowsBoundWidth  = @(frame.size.width);
-    environment.windowsBoundHeight = @(frame.size.height);
-    environment.resolutionScale    = @([NSScreen mainScreen].backingScaleFactor);
+        NSRect frame = [[NSApplication sharedApplication].mainWindow frame];
+        environment.windowsBoundWidth  = @(frame.size.width);
+        environment.windowsBoundHeight = @(frame.size.height);
+        environment.resolutionScale    = @([NSScreen mainScreen].backingScaleFactor);
 #endif
+
+    }
     
     environment.processorCount = [self numControlEntry:@"hw.logicalcpu_max"];
     environment.oSVersion      = osVersion;
