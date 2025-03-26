@@ -69,7 +69,7 @@
 		A217796F21549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
 		A217797021549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
 		A217797121549725003577E8 /* RaygunFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A217796E21549725003577E8 /* RaygunFileManager.m */; };
-		A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
+		A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A23A1DDF2138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DE02138A7B90026046C /* RaygunLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A23A1DDD2138A7B90026046C /* RaygunLogger.h */; };
 		A23A1DE22138A7D80026046C /* RaygunLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A23A1DE12138A7D80026046C /* RaygunLogger.m */; };
@@ -508,10 +508,10 @@
 		D774F0D728A21A7200A420DB /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C728A21A7200A420DB /* raygun4apple_tvOS.h */; };
 		D774F0D828A21A7200A420DB /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C728A21A7200A420DB /* raygun4apple_tvOS.h */; };
 		D774F0D928A21A7200A420DB /* raygun4apple_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C728A21A7200A420DB /* raygun4apple_tvOS.h */; };
-		D774F0DA28A21A7200A420DB /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C828A21A7200A420DB /* RaygunBinaryImage.h */; };
+		D774F0DA28A21A7200A420DB /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C828A21A7200A420DB /* RaygunBinaryImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0DB28A21A7200A420DB /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C828A21A7200A420DB /* RaygunBinaryImage.h */; };
 		D774F0DC28A21A7200A420DB /* RaygunBinaryImage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C828A21A7200A420DB /* RaygunBinaryImage.h */; };
-		D774F0DD28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C928A21A7200A420DB /* RaygunBreadcrumb.h */; };
+		D774F0DD28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C928A21A7200A420DB /* RaygunBreadcrumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0DE28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C928A21A7200A420DB /* RaygunBreadcrumb.h */; };
 		D774F0DF28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0C928A21A7200A420DB /* RaygunBreadcrumb.h */; };
 		D774F0E028A21A7200A420DB /* raygun4apple_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CA28A21A7200A420DB /* raygun4apple_iOS.h */; };
@@ -520,37 +520,37 @@
 		D774F0E328A21A7200A420DB /* raygun4apple_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CB28A21A7200A420DB /* raygun4apple_macOS.h */; };
 		D774F0E428A21A7200A420DB /* raygun4apple_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CB28A21A7200A420DB /* raygun4apple_macOS.h */; };
 		D774F0E528A21A7200A420DB /* raygun4apple_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CB28A21A7200A420DB /* raygun4apple_macOS.h */; };
-		D774F0E628A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CC28A21A7200A420DB /* RaygunEnvironmentMessage.h */; };
+		D774F0E628A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CC28A21A7200A420DB /* RaygunEnvironmentMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0E728A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CC28A21A7200A420DB /* RaygunEnvironmentMessage.h */; };
 		D774F0E828A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CC28A21A7200A420DB /* RaygunEnvironmentMessage.h */; };
-		D774F0E928A21A7200A420DB /* RaygunClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CD28A21A7200A420DB /* RaygunClient.h */; };
+		D774F0E928A21A7200A420DB /* RaygunClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CD28A21A7200A420DB /* RaygunClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0EA28A21A7200A420DB /* RaygunClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CD28A21A7200A420DB /* RaygunClient.h */; };
 		D774F0EB28A21A7200A420DB /* RaygunClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CD28A21A7200A420DB /* RaygunClient.h */; };
-		D774F0EC28A21A7200A420DB /* RaygunClientMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CE28A21A7200A420DB /* RaygunClientMessage.h */; };
+		D774F0EC28A21A7200A420DB /* RaygunClientMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CE28A21A7200A420DB /* RaygunClientMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0ED28A21A7200A420DB /* RaygunClientMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CE28A21A7200A420DB /* RaygunClientMessage.h */; };
 		D774F0EE28A21A7200A420DB /* RaygunClientMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CE28A21A7200A420DB /* RaygunClientMessage.h */; };
-		D774F0EF28A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CF28A21A7200A420DB /* RaygunCrashReportConverter.h */; };
+		D774F0EF28A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CF28A21A7200A420DB /* RaygunCrashReportConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0F028A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CF28A21A7200A420DB /* RaygunCrashReportConverter.h */; };
 		D774F0F128A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0CF28A21A7200A420DB /* RaygunCrashReportConverter.h */; };
-		D774F0F228A21A7200A420DB /* RaygunUserInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D028A21A7200A420DB /* RaygunUserInformation.h */; };
+		D774F0F228A21A7200A420DB /* RaygunUserInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D028A21A7200A420DB /* RaygunUserInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0F328A21A7200A420DB /* RaygunUserInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D028A21A7200A420DB /* RaygunUserInformation.h */; };
 		D774F0F428A21A7200A420DB /* RaygunUserInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D028A21A7200A420DB /* RaygunUserInformation.h */; };
-		D774F0F528A21A7200A420DB /* RaygunMessageDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D128A21A7200A420DB /* RaygunMessageDetails.h */; };
+		D774F0F528A21A7200A420DB /* RaygunMessageDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D128A21A7200A420DB /* RaygunMessageDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0F628A21A7200A420DB /* RaygunMessageDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D128A21A7200A420DB /* RaygunMessageDetails.h */; };
 		D774F0F728A21A7200A420DB /* RaygunMessageDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D128A21A7200A420DB /* RaygunMessageDetails.h */; };
-		D774F0F828A21A7200A420DB /* RaygunMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D228A21A7200A420DB /* RaygunMessage.h */; };
+		D774F0F828A21A7200A420DB /* RaygunMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D228A21A7200A420DB /* RaygunMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0F928A21A7200A420DB /* RaygunMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D228A21A7200A420DB /* RaygunMessage.h */; };
 		D774F0FA28A21A7200A420DB /* RaygunMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D228A21A7200A420DB /* RaygunMessage.h */; };
-		D774F0FB28A21A7200A420DB /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D328A21A7200A420DB /* RaygunDefines.h */; };
+		D774F0FB28A21A7200A420DB /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D328A21A7200A420DB /* RaygunDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0FC28A21A7200A420DB /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D328A21A7200A420DB /* RaygunDefines.h */; };
 		D774F0FD28A21A7200A420DB /* RaygunDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D328A21A7200A420DB /* RaygunDefines.h */; };
-		D774F0FE28A21A7200A420DB /* RaygunErrorMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D428A21A7200A420DB /* RaygunErrorMessage.h */; };
+		D774F0FE28A21A7200A420DB /* RaygunErrorMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D428A21A7200A420DB /* RaygunErrorMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F0FF28A21A7200A420DB /* RaygunErrorMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D428A21A7200A420DB /* RaygunErrorMessage.h */; };
 		D774F10028A21A7200A420DB /* RaygunErrorMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D428A21A7200A420DB /* RaygunErrorMessage.h */; };
-		D774F10128A21A7200A420DB /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D528A21A7200A420DB /* RaygunFrame.h */; };
+		D774F10128A21A7200A420DB /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D528A21A7200A420DB /* RaygunFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F10228A21A7200A420DB /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D528A21A7200A420DB /* RaygunFrame.h */; };
 		D774F10328A21A7200A420DB /* RaygunFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D528A21A7200A420DB /* RaygunFrame.h */; };
-		D774F10428A21A7200A420DB /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D628A21A7200A420DB /* RaygunThread.h */; };
+		D774F10428A21A7200A420DB /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D628A21A7200A420DB /* RaygunThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D774F10528A21A7200A420DB /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D628A21A7200A420DB /* RaygunThread.h */; };
 		D774F10628A21A7200A420DB /* RaygunThread.h in Headers */ = {isa = PBXBuildFile; fileRef = D774F0D628A21A7200A420DB /* RaygunThread.h */; };
 		DC5EFA38210E8130002C0713 /* raygun4apple_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = DC5EFA2A210E812F002C0713 /* raygun4apple_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1291,9 +1291,20 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D774F10128A21A7200A420DB /* RaygunFrame.h in Headers */,
-				A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */,
+				D774F0DD28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */,
 				D774F0DA28A21A7200A420DB /* RaygunBinaryImage.h in Headers */,
+				D774F0E628A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */,
+				D774F0E928A21A7200A420DB /* RaygunClient.h in Headers */,
+				D774F0EC28A21A7200A420DB /* RaygunClientMessage.h in Headers */,
+				D774F0EF28A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */,
+				A23A1DDE2138A7B90026046C /* RaygunLogger.h in Headers */,
+				D774F0F228A21A7200A420DB /* RaygunUserInformation.h in Headers */,
+				D774F0F528A21A7200A420DB /* RaygunMessageDetails.h in Headers */,
+				D774F0FB28A21A7200A420DB /* RaygunDefines.h in Headers */,
+				D774F0FE28A21A7200A420DB /* RaygunErrorMessage.h in Headers */,
+				D774F0F828A21A7200A420DB /* RaygunMessage.h in Headers */,
+				D774F10128A21A7200A420DB /* RaygunFrame.h in Headers */,
+				D774F10428A21A7200A420DB /* RaygunThread.h in Headers */,
 				A2132B2E21373FD60030A3C5 /* RaygunEventData.h in Headers */,
 				A2E4ACE821003DAA0003C8B4 /* Raygun_AlignOf.h in Headers */,
 				A2E4AE0C21003DAA0003C8B4 /* Raygun_DemangleNodes.h in Headers */,
@@ -1305,10 +1316,8 @@
 				A2E4ADAA21003DAA0003C8B4 /* Raygun_KSSysCtl.h in Headers */,
 				A2E4AD2821003DAA0003C8B4 /* Raygun_KSCrashMonitor_NSException.h in Headers */,
 				A2E4ACFA21003DAA0003C8B4 /* Raygun_KSCrashCachedData.h in Headers */,
-				D774F0DD28A21A7200A420DB /* RaygunBreadcrumb.h in Headers */,
 				DC5EFAA2211013FB002C0713 /* RaygunCrashInstallation.h in Headers */,
 				A2E4AD0421003DAA0003C8B4 /* Raygun_KSCrashReportFields.h in Headers */,
-				D774F0EF28A21A7200A420DB /* RaygunCrashReportConverter.h in Headers */,
 				DC5EFAAA211015A7002C0713 /* RaygunCrashReportSink.h in Headers */,
 				A2E4ADA621003DAA0003C8B4 /* Raygun_KSSymbolicator.h in Headers */,
 				A2E4ADB421003DAA0003C8B4 /* Raygun_KSCrashReportFilter.h in Headers */,
@@ -1318,18 +1327,14 @@
 				A2E4ADD821003DAA0003C8B4 /* NSData+GZip.h in Headers */,
 				A2E4AD7621003DAA0003C8B4 /* Raygun_KSLogger.h in Headers */,
 				A2E4ADBE21003DAA0003C8B4 /* Raygun_KSCrashReportFilterBasic.h in Headers */,
-				D774F0EC28A21A7200A420DB /* RaygunClientMessage.h in Headers */,
 				A2E4ADF021003DAA0003C8B4 /* Raygun_KSCString.h in Headers */,
-				D774F0F228A21A7200A420DB /* RaygunUserInformation.h in Headers */,
 				A2E4AD5221003DAA0003C8B4 /* Raygun_KSDate.h in Headers */,
 				A29F0003213C9CDA00A0018F /* UIViewController+RaygunRUM.h in Headers */,
 				A2E4ACE421003DAA0003C8B4 /* Raygun_llvm-config.h in Headers */,
 				A2E4AD9621003DAA0003C8B4 /* Raygun_KSStackCursor_Backtrace.h in Headers */,
-				D774F10428A21A7200A420DB /* RaygunThread.h in Headers */,
 				A2A6D2A72136601700AFC48E /* RaygunEventMessage.h in Headers */,
 				A2E4AD0E21003DAA0003C8B4 /* Raygun_KSCrashReportVersion.h in Headers */,
 				A2E4ACE021003DAA0003C8B4 /* Raygun_Optional.h in Headers */,
-				D774F0FB28A21A7200A420DB /* RaygunDefines.h in Headers */,
 				A2E4ADD221003DAA0003C8B4 /* Container+Raygun_DeepSearch.h in Headers */,
 				A2E4AD6221003DAA0003C8B4 /* Raygun_KSDynamicLinker.h in Headers */,
 				A2E4AD6621003DAA0003C8B4 /* Raygun_KSFileUtils.h in Headers */,
@@ -1342,7 +1347,6 @@
 				A2E4ACEA21003DAA0003C8B4 /* Raygun_Casting.h in Headers */,
 				A2E4AD0821003DAA0003C8B4 /* Raygun_KSCrashReportFixer.h in Headers */,
 				A2E4AD3C21003DAA0003C8B4 /* Raygun_KSCrashMonitorContext.h in Headers */,
-				D774F0FE28A21A7200A420DB /* RaygunErrorMessage.h in Headers */,
 				A2E4AD2621003DAA0003C8B4 /* Raygun_KSCrashMonitor_MachException.h in Headers */,
 				A2E4AD7021003DAA0003C8B4 /* Raygun_KSJSONCodecObjC.h in Headers */,
 				A29D6741216DA2EB00BAC934 /* RaygunUtils.h in Headers */,
@@ -1360,16 +1364,13 @@
 				A2E4AD0221003DAA0003C8B4 /* Raygun_KSCrashReport.h in Headers */,
 				A2E4AD8821003DAA0003C8B4 /* Raygun_KSObjC.h in Headers */,
 				A2E4AD4621003DAA0003C8B4 /* Raygun_KSCPU_Apple.h in Headers */,
-				D774F0F528A21A7200A420DB /* RaygunMessageDetails.h in Headers */,
 				A217796B215496D2003577E8 /* RaygunFileManager.h in Headers */,
 				A2E4AD3621003DAA0003C8B4 /* Raygun_KSCrashMonitor_User.h in Headers */,
 				A2E4AD1621003DAA0003C8B4 /* Raygun_KSCrashMonitor.h in Headers */,
-				D774F0E628A21A7200A420DB /* RaygunEnvironmentMessage.h in Headers */,
 				A2E4AD5621003DAA0003C8B4 /* Raygun_KSDebug.h in Headers */,
 				A2E4AE1621003DAA0003C8B4 /* Raygun_Punycode.h in Headers */,
 				D774F0E328A21A7200A420DB /* raygun4apple_macOS.h in Headers */,
 				A2E4AD4021003DAA0003C8B4 /* Raygun_KSCrashMonitorType.h in Headers */,
-				D774F0E928A21A7200A420DB /* RaygunClient.h in Headers */,
 				A2E4AE0E21003DAA0003C8B4 /* Raygun_Fallthrough.h in Headers */,
 				A2E4ADA221003DAA0003C8B4 /* Raygun_KSString.h in Headers */,
 				DC5EFA92210FFA7A002C0713 /* RaygunRealUserMonitoring.h in Headers */,
@@ -1378,7 +1379,6 @@
 				D774F0E028A21A7200A420DB /* raygun4apple_iOS.h in Headers */,
 				A2E4ADAE21003DAA0003C8B4 /* Raygun_KSThread.h in Headers */,
 				A2E4AD3021003DAA0003C8B4 /* Raygun_KSCrashMonitor_System.h in Headers */,
-				D774F0F828A21A7200A420DB /* RaygunMessage.h in Headers */,
 				A2D549E92159F581006859AA /* RaygunFile.h in Headers */,
 				A2E4AD7E21003DAA0003C8B4 /* Raygun_KSMachineContext.h in Headers */,
 				A2E4AD1221003DAA0003C8B4 /* Raygun_KSSystemCapabilities.h in Headers */,
