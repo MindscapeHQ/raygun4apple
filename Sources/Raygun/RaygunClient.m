@@ -58,6 +58,7 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 @synthesize userInformation = _userInformation;
 @synthesize crashReportingApiEndpoint = _crashReportingApiEndpoint;
+@synthesize groupingKeyProvider = _groupingKeyProvider;
 
 // ============================================================================
 #pragma mark - Getters & Setters -
@@ -299,6 +300,16 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 
 - (void)sendMessage:(RaygunMessage *)message {
     BOOL send = YES;
+
+    // Call groupingKeyProvider if it's set
+    if (self.groupingKeyProvider != nil && message != nil && message.details != nil) {
+        NSString *groupingKey = self.groupingKeyProvider(message.details);
+
+        if (groupingKey != nil && ![groupingKey isEqualToString:@""]) {
+            message.details.groupingKey = groupingKey;
+            [RaygunLogger logDebug:@"Applied custom grouping key from provider: %@", groupingKey];
+        }
+    }
     
     if (_beforeSendMessage != nil) {
         send = _beforeSendMessage(message);
