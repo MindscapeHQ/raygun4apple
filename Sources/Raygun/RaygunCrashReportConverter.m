@@ -44,6 +44,7 @@
 #import "RaygunFrame.h"
 #import "RaygunThread.h"
 #import "RaygunBreadcrumb.h"
+#import "RaygunClient.h"
 
 #import <sys/sysctl.h>
 
@@ -130,6 +131,16 @@ NS_ASSUME_NONNULL_BEGIN
         
         if (userData[@"customData"]) {
             details.customData = userData[@"customData"];
+        }
+    }
+
+    // Call groupingKeyProvider if it's set
+    RaygunClient *clientInstance = [RaygunClient sharedInstance];
+    if (clientInstance != nil && clientInstance.groupingKeyProvider != nil && details != nil) {
+        NSString *groupingKey = clientInstance.groupingKeyProvider(details);
+
+        if (groupingKey != nil && ![groupingKey isEqualToString:@""]) {
+            details.groupingKey = groupingKey;
         }
     }
     

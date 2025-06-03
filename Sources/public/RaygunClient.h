@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RaygunDefines.h"
+#import "RaygunMessageDetails.h"
 
 @class RaygunUserInformation, RaygunMessage, RaygunBreadcrumb;
 
@@ -35,6 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
  * Block can be used to modify the crash report before it is sent to Raygun.
  */
 typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
+
+/**
+ * Block type for providing a custom grouping key for an error report.
+ * The block is passed the RaygunMessageDetails object which contains all available
+ * information about the error, environment, user, custom data, tags, and threads (including stack traces).
+ *
+ * @param details The RaygunMessageDetails object containing all context for the error.
+ * @return A string to be used as the grouping key. If nil or empty, Raygun will use its default grouping logic.
+ */
+typedef NSString * _Nullable (^RaygunGroupingKeyProviderBlock)(RaygunMessageDetails * _Nonnull details);
 
 @interface RaygunClient : NSObject
 
@@ -59,6 +70,15 @@ typedef BOOL (^RaygunBeforeSendMessage)(RaygunMessage *message);
 @property (nonatomic, assign) int maxReportsStoredOnDevice;
 
 @property (nonatomic, readonly, copy) NSArray<RaygunBreadcrumb *> *breadcrumbs;
+
+/**
+ *  Optional block that can be set to provide a custom grouping key for error reports.
+ *  This key is used by Raygun to group similar errors together.
+ *  When an error is processed, this block will be invoked with details of the error.
+ *  If this property is not set, or if the block returns nil or an empty string,
+ *  Raygun's default grouping logic will be used.
+ */
+@property (nonatomic, copy, nullable) RaygunGroupingKeyProviderBlock groupingKeyProvider;
 
 /*
  * Returns the shared Raygun client
