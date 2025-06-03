@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+- Added the ability to set a custom grouping key for error reports
+
 ## 2.1.3
 
 - Don't add window sizing in background threads by
