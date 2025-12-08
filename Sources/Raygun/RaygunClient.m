@@ -133,7 +133,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 }
 
 - (NSArray *)breadcrumbs {
-    return [NSArray arrayWithArray:_mutableBreadcrumbs];
+    @synchronized(self) {
+        return [NSArray arrayWithArray:_mutableBreadcrumbs];
+    }
 }
 
 // ============================================================================
@@ -372,9 +374,11 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     
     NSMutableArray<NSDictionary *> *userBreadcrumbs = [NSMutableArray array];
     
-    if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
-        for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
-            [userBreadcrumbs addObject:[crumb convertToDictionary]];
+    @synchronized(self) {
+        if (![RaygunUtils isNullOrEmpty:_mutableBreadcrumbs]) {
+            for (RaygunBreadcrumb *crumb in _mutableBreadcrumbs) {
+                [userBreadcrumbs addObject:[crumb convertToDictionary]];
+            }
         }
     }
     
@@ -411,12 +415,15 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 - (void)recordBreadcrumb:(RaygunBreadcrumb *)breadcrumb {
     NSError *error = nil;
     if ([RaygunBreadcrumb validate:breadcrumb withError:&error]) {
-        if ([_mutableBreadcrumbs count] >= kMaxRecordedBreadcrumbs) {
-            [RaygunLogger logDebug:@"Reached max recorded breadcrumbs - removing oldest breadcrumb"];
-            [_mutableBreadcrumbs removeObjectAtIndex:0];
+        @synchronized(self) {
+            if ([_mutableBreadcrumbs count] >= kMaxRecordedBreadcrumbs) {
+                [RaygunLogger logDebug:@"Reached max recorded breadcrumbs - removing oldest breadcrumb"];
+                [_mutableBreadcrumbs removeObjectAtIndex:0];
+            }
+
+            [_mutableBreadcrumbs addObject:breadcrumb];
         }
-        
-        [_mutableBreadcrumbs addObject:breadcrumb];
+
         [self updateCrashReportUserInformation];
         
         [RaygunLogger logDebug:@"Recorded breadcrumb with message: %@", breadcrumb.message];
@@ -443,7 +450,9 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
 }
 
 - (void)clearBreadcrumbs {
-    [_mutableBreadcrumbs removeAllObjects];
+    @synchronized(self) {
+        [_mutableBreadcrumbs removeAllObjects];
+    }
     [self updateCrashReportUserInformation];
 }
 
