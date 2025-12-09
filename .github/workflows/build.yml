@@ -1,0 +1,158 @@
+name: Build Raygun4Apple
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-cocoapods:
+    name: Validate CocoaPods
+    runs-on: macos-15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Install CocoaPods
+        run: gem install cocoapods
+
+      - name: Validate Podspec
+        run: pod lib lint --allow-warnings
+
+  build-xcframeworks:
+    name: Build XCFrameworks
+    runs-on: macos-15
+    needs: [validate-cocoapods]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Build iOS Framework (Device)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-iOS \
+            -destination "generic/platform=iOS" \
+            -archivePath "build/ios-device" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build iOS Framework (Simulator)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-iOS \
+            -destination "generic/platform=iOS Simulator" \
+            -archivePath "build/ios-simulator" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build macOS Framework
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-macOS \
+            -destination "generic/platform=macOS" \
+            -archivePath "build/macos" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build tvOS Framework (Device)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-tvOS \
+            -destination "generic/platform=tvOS" \
+            -archivePath "build/tvos-device" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build tvOS Framework (Simulator)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-tvOS \
+            -destination "generic/platform=tvOS Simulator" \
+            -archivePath "build/tvos-simulator" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Create iOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/ios-device.xcarchive/Products/Library/Frameworks/raygun4apple_iOS.framework \
+            -framework build/ios-simulator.xcarchive/Products/Library/Frameworks/raygun4apple_iOS.framework \
+            -output build/raygun4apple-iOS.xcframework
+
+      - name: Create macOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/macos.xcarchive/Products/Library/Frameworks/raygun4apple_macOS.framework \
+            -output build/raygun4apple-macOS.xcframework
+
+      - name: Create tvOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/tvos-device.xcarchive/Products/Library/Frameworks/raygun4apple_tvOS.framework \
+            -framework build/tvos-simulator.xcarchive/Products/Library/Frameworks/raygun4apple_tvOS.framework \
+            -output build/raygun4apple-tvOS.xcframework
+
+      - name: Package XCFrameworks
+        run: |
+          cd build
+          zip -r raygun4apple-iOS.xcframework.zip raygun4apple-iOS.xcframework
+          zip -r raygun4apple-macOS.xcframework.zip raygun4apple-macOS.xcframework
+          zip -r raygun4apple-tvOS.xcframework.zip raygun4apple-tvOS.xcframework
+          zip -r raygun4apple-xcframeworks.zip raygun4apple-iOS.xcframework raygun4apple-macOS.xcframework raygun4apple-tvOS.xcframework
+
+      - name: Upload iOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-iOS-xcframework
+          path: build/raygun4apple-iOS.xcframework.zip
+          retention-days: 30
+
+      - name: Upload macOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-macOS-xcframework
+          path: build/raygun4apple-macOS.xcframework.zip
+          retention-days: 30
+
+      - name: Upload tvOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-tvOS-xcframework
+          path: build/raygun4apple-tvOS.xcframework.zip
+          retention-days: 30
+
+      - name: Upload Combined XCFrameworks
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-all-xcframeworks
+          path: build/raygun4apple-xcframeworks.zip
+          retention-days: 30
+
+      - name: Generate Build Summary
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### XCFrameworks Created" >> $GITHUB_STEP_SUMMARY
+          echo "- raygun4apple-iOS.xcframework" >> $GITHUB_STEP_SUMMARY
+          echo "- raygun4apple-macOS.xcframework" >> $GITHUB_STEP_SUMMARY
+          echo "- raygun4apple-tvOS.xcframework" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "All XCFrameworks have been uploaded as workflow artifacts and are available for download." >> $GITHUB_STEP_SUMMARY
