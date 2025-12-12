@@ -43,7 +43,8 @@ jobs:
             -archivePath "build/ios-device" \
             SKIP_INSTALL=NO \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 
       - name: Build iOS Framework (Simulator)
         run: |
@@ -54,13 +55,16 @@ jobs:
             -archivePath "build/ios-simulator" \
             SKIP_INSTALL=NO \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 
       - name: Create iOS XCFramework
         run: |
           xcodebuild -create-xcframework \
             -framework build/ios-device.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/ios-device.xcarchive/dSYMs/raygun4apple.framework.dSYM \
             -framework build/ios-simulator.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/ios-simulator.xcarchive/dSYMs/raygun4apple.framework.dSYM \
             -output build/raygun4apple.xcframework
 
       - name: Upload iOS XCFramework
@@ -90,12 +94,14 @@ jobs:
             -archivePath "build/macos" \
             SKIP_INSTALL=NO \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 
       - name: Create macOS XCFramework
         run: |
           xcodebuild -create-xcframework \
             -framework build/macos.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/macos.xcarchive/dSYMs/raygun4apple.framework.dSYM \
             -output build/raygun4apple.xcframework
 
       - name: Upload macOS XCFramework
@@ -125,7 +131,8 @@ jobs:
             -archivePath "build/tvos-device" \
             SKIP_INSTALL=NO \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 
       - name: Build tvOS Framework (Simulator)
         run: |
@@ -136,13 +143,16 @@ jobs:
             -archivePath "build/tvos-simulator" \
             SKIP_INSTALL=NO \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 
       - name: Create tvOS XCFramework
         run: |
           xcodebuild -create-xcframework \
             -framework build/tvos-device.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/tvos-device.xcarchive/dSYMs/raygun4apple.framework.dSYM \
             -framework build/tvos-simulator.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/tvos-simulator.xcarchive/dSYMs/raygun4apple.framework.dSYM \
             -output build/raygun4apple.xcframework
 
       - name: Upload tvOS XCFramework
