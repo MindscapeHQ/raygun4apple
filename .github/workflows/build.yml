@@ -1,0 +1,163 @@
+name: Build Raygun4Apple
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-cocoapods:
+    name: Validate Podspec
+    runs-on: macos-15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Install CocoaPods
+        run: gem install cocoapods
+
+      - name: Validate Podspec
+        run: pod lib lint --allow-warnings
+
+  build-ios-xcframework:
+    name: Build iOS XCFramework
+    runs-on: macos-15
+    needs: [validate-cocoapods]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Build iOS Framework (Device)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-iOS \
+            -destination "generic/platform=iOS" \
+            -archivePath "build/ios-device" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
+
+      - name: Build iOS Framework (Simulator)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-iOS \
+            -destination "generic/platform=iOS Simulator" \
+            -archivePath "build/ios-simulator" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
+
+      - name: Create iOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/ios-device.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/ios-device.xcarchive/dSYMs/raygun4apple.framework.dSYM \
+            -framework build/ios-simulator.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/ios-simulator.xcarchive/dSYMs/raygun4apple.framework.dSYM \
+            -output build/raygun4apple.xcframework
+
+      - name: Upload iOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-iOS-xcframework
+          path: build/raygun4apple.xcframework
+          retention-days: 30
+
+  build-macos-xcframework:
+    name: Build macOS XCFramework
+    runs-on: macos-15
+    needs: [validate-cocoapods]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Build macOS Framework
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-macOS \
+            -destination "generic/platform=macOS" \
+            -archivePath "build/macos" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
+
+      - name: Create macOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/macos.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/macos.xcarchive/dSYMs/raygun4apple.framework.dSYM \
+            -output build/raygun4apple.xcframework
+
+      - name: Upload macOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-macOS-xcframework
+          path: build/raygun4apple.xcframework
+          retention-days: 30
+
+  build-tvos-xcframework:
+    name: Build tvOS XCFramework
+    runs-on: macos-15
+    needs: [validate-cocoapods]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: Build tvOS Framework (Device)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-tvOS \
+            -destination "generic/platform=tvOS" \
+            -archivePath "build/tvos-device" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
+
+      - name: Build tvOS Framework (Simulator)
+        run: |
+          xcodebuild archive \
+            -project raygun4apple.xcodeproj \
+            -scheme raygun4apple-tvOS \
+            -destination "generic/platform=tvOS Simulator" \
+            -archivePath "build/tvos-simulator" \
+            SKIP_INSTALL=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            CODE_SIGNING_ALLOWED=NO \
+            DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
+
+      - name: Create tvOS XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework build/tvos-device.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/tvos-device.xcarchive/dSYMs/raygun4apple.framework.dSYM \
+            -framework build/tvos-simulator.xcarchive/Products/Library/Frameworks/raygun4apple.framework \
+            -debug-symbols $(pwd)/build/tvos-simulator.xcarchive/dSYMs/raygun4apple.framework.dSYM \
+            -output build/raygun4apple.xcframework
+
+      - name: Upload tvOS XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: raygun4apple-tvOS-xcframework
+          path: build/raygun4apple.xcframework
+          retention-days: 30
