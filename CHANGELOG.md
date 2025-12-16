@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5
+
+- Use @synchronized directive for breadcrumbs
+
 ## 2.1.4
 
 - Added the ability to set a custom grouping key for error reports
