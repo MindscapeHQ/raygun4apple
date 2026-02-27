@@ -182,6 +182,19 @@ NS_SWIFT_NAME(send(error:tags:customData:));
 NS_SWIFT_NAME(send(message:));
 
 /*
+ * Synchronously store a crash report to disk.
+ * The report will be sent to Raygun on the next app launch when enableCrashReporting is called.
+ * This is intended for use in contexts where the process is about to terminate (e.g. unhandled exception hooks)
+ * and asynchronous network requests would not complete.
+ *
+ * @param message The crash report to be stored
+ *
+ * @return YES if the report was successfully stored, NO otherwise.
+ */
+- (BOOL)storeCrashReport:(RaygunMessage *)message
+NS_SWIFT_NAME(store(crashReport:));
+
+/*
  * Manually record a breadcrumb that will be included in the next crash report.
  *
  * @param breadcrumb The breadcrumb to be included
