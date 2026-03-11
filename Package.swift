@@ -39,6 +39,11 @@ let package = Package(
                 .headerSearchPath("Raygun_KSCrash/swift"),
                 .headerSearchPath("Raygun")
             ]
+        ),
+        .testTarget(
+            name: "raygun4appleTests",
+            dependencies: ["raygun4apple"],
+            path: "Tests/raygun4appleTests"
         )
     ],
     cxxLanguageStandard: .gnucxx11
