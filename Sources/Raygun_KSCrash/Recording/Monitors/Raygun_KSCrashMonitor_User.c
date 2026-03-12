@@ -103,12 +103,12 @@ static void setEnabled(bool isEnabled)
     g_isEnabled = isEnabled;
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_user_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_user_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

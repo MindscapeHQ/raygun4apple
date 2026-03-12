@@ -250,7 +250,7 @@ void raygun_kscrash_notifyAppCrash(void)
     raygun_kscrashstate_notifyAppCrash();
 }
 
-int raygun_kscrash_getReportCount()
+int raygun_kscrash_getReportCount(void)
 {
     return raygun_kscrs_getReportCount();
 }
@@ -290,7 +290,7 @@ int64_t raygun_kscrash_addUserReport(const char* report, int reportLength)
     return raygun_kscrs_addUserReport(report, reportLength);
 }
 
-void raygun_kscrash_deleteAllReports()
+void raygun_kscrash_deleteAllReports(void)
 {
     raygun_kscrs_deleteAllReports();
 }

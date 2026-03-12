@@ -247,7 +247,7 @@ bool raygun_kslog_setLogFilename(const char* filename, bool overwrite)
 
 #endif
 
-bool raygun_kslog_clearLogFile()
+bool raygun_kslog_clearLogFile(void)
 {
     return raygun_kslog_setLogFilename(g_logFilename, true);
 }

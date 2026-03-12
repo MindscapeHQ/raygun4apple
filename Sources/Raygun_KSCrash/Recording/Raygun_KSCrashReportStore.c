@@ -61,7 +61,7 @@ static int compareInt64(const void* a, const void* b)
     return 0;
 }
 
-static inline int64_t getNextUniqueID()
+static inline int64_t getNextUniqueID(void)
 {
     return g_nextUniqueIDHigh + g_nextUniqueIDLow++;
 }
@@ -82,7 +82,7 @@ static int64_t getReportIDFromFilename(const char* filename)
     return reportID;
 }
 
-static int getReportCount()
+static int getReportCount(void)
 {
     int count = 0;
     DIR* dir = opendir(g_reportsPath);
@@ -138,7 +138,7 @@ done:
     return index;
 }
 
-static void pruneReports()
+static void pruneReports(void)
 {
     int reportCount = getReportCount();
     if(reportCount > g_maxReportCount)
@@ -153,7 +153,7 @@ static void pruneReports()
     }
 }
 
-static void initializeIDs()
+static void initializeIDs(void)
 {
     time_t rawTime;
     time(&rawTime);
@@ -189,7 +189,7 @@ void raygun_kscrs_getNextCrashReportPath(char* crashReportPathBuffer)
     getCrashReportPathByID(getNextUniqueID(), crashReportPathBuffer);
 }
 
-int raygun_kscrs_getReportCount()
+int raygun_kscrs_getReportCount(void)
 {
     pthread_mutex_lock(&g_mutex);
     int count = getReportCount();
@@ -251,7 +251,7 @@ done:
     return currentID;
 }
 
-void raygun_kscrs_deleteAllReports()
+void raygun_kscrs_deleteAllReports(void)
 {
     pthread_mutex_lock(&g_mutex);
     raygun_ksfu_deleteContentsOfPath(g_reportsPath);

@@ -175,7 +175,7 @@ static int addJSONData(const char* const data, const int length, void* const use
 #pragma mark - Utility -
 // ============================================================================
 
-static double getCurentTime()
+static double getCurentTime(void)
 {
     struct timeval tv;
     gettimeofday(&tv, NULL);
@@ -333,7 +333,7 @@ void raygun_kscrashstate_initialize(const char* const stateFilePath)
     loadState(g_stateFilePath);
 }
 
-bool raygun_kscrashstate_reset()
+bool raygun_kscrashstate_reset(void)
 {
     if(g_isEnabled)
     {
@@ -451,7 +451,7 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -476,7 +476,7 @@ static void addContextualInfoToEvent(Raygun_KSCrash_MonitorContext* eventContext
     }
 }
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_appstate_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_appstate_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {
