@@ -353,6 +353,42 @@ static RaygunLoggingLevel sharedLogLevel = RaygunLoggingLevelWarning;
     }
 }
 
+- (BOOL)storeCrashReport:(RaygunMessage *)message {
+    if (message == nil) {
+        [RaygunLogger logWarning:@"Failed to store crash report - Message object cannot be nil"];
+        return NO;
+    }
+
+    // Call groupingKeyProvider if it's set
+    if (self.groupingKeyProvider != nil && message.details != nil) {
+        NSString *groupingKey = self.groupingKeyProvider(message.details);
+
+        if (groupingKey != nil && ![groupingKey isEqualToString:@""]) {
+            message.details.groupingKey = groupingKey;
+            [RaygunLogger logDebug:@"Applied custom grouping key from provider: %@", groupingKey];
+        }
+    }
+
+    BOOL send = YES;
+    if (_beforeSendMessage != nil) {
+        send = _beforeSendMessage(message);
+    }
+
+    if (!send) {
+        [RaygunLogger logDebug:@"Crash report was discarded by beforeSendMessage"];
+        return NO;
+    }
+
+    NSString *path = [self.fileManager storeCrashReport:message withMaxReportsStored:self.maxReportsStoredOnDevice];
+    if (path) {
+        [RaygunLogger logDebug:@"Stored crash report to %@", path];
+        return YES;
+    }
+
+    [RaygunLogger logError:@"Failed to store crash report to disk"];
+    return NO;
+}
+
 - (NSError *)getInnerError:(NSError *)error {
     NSError *innerErrror = error.userInfo[NSUnderlyingErrorKey];
     if (innerErrror) {
