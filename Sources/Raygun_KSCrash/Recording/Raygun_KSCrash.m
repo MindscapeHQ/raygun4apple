@@ -341,6 +341,7 @@ static NSString* getBasePath()
 
 - (void) sendAllReportsWithCompletion:(Raygun_KSCrashReportFilterCompletion) onCompletion
 {
+    NSArray* reportIDs = [self reportIDs];
     NSArray* reports = [self allReports];
     
     RAYGUN_KSLOG_INFO(@"Sending %d crash reports", [reports count]);
@@ -356,7 +357,10 @@ static NSString* getBasePath()
          if((self.deleteBehaviorAfterSendAll == Raygun_KSCDeleteOnSucess && completed) ||
             self.deleteBehaviorAfterSendAll == Raygun_KSCDeleteAlways)
          {
-             raygun_kscrash_deleteAllReports();
+             for(NSNumber* reportID in reportIDs)
+             {
+                 raygun_kscrash_deleteReportWithID([reportID longValue]);
+             }
          }
          raygun_kscrash_callCompletion(onCompletion, filteredReports, completed, error);
      }];
