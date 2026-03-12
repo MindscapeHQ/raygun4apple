@@ -41,6 +41,7 @@
 #include <mach/mach.h>
 #include <pthread.h>
 #include <signal.h>
+#include <string.h>
 
 
 // ============================================================================
@@ -266,7 +267,7 @@ static void* handleExceptions(void* const userData)
 
     const char* threadName = (const char*) userData;
     pthread_setname_np(threadName);
-    if(threadName == kThreadSecondary)
+    if(strcmp(threadName, kThreadSecondary) == 0)
     {
         RAYGUN_KSLOG_DEBUG("This is the secondary thread. Suspending.");
         thread_suspend((thread_t)raygun_ksthread_self());
@@ -389,7 +390,7 @@ static void* handleExceptions(void* const userData)
 #pragma mark - API -
 // ============================================================================
 
-static void uninstallExceptionHandler()
+static void uninstallExceptionHandler(void)
 {
     RAYGUN_KSLOG_DEBUG("Uninstalling mach exception handler.");
     
@@ -433,7 +434,7 @@ static void uninstallExceptionHandler()
     RAYGUN_KSLOG_DEBUG("Mach exception handlers uninstalled.");
 }
 
-static bool installExceptionHandler()
+static bool installExceptionHandler(void)
 {
     RAYGUN_KSLOG_DEBUG("Installing mach exception handler.");
 
@@ -565,7 +566,7 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -584,7 +585,7 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_machexception_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_machexception_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

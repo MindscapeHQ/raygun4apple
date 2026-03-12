@@ -37,7 +37,7 @@ jobs:
         run: gem install cocoapods
 
       - name: Validate Podspec
-        run: pod lib lint --allow-warnings
+        run: pod lib lint
 
   build-ios-xcframework:
     name: Build iOS XCFramework

@@ -97,7 +97,7 @@ static inline bool getThreadList(Raygun_KSMachineContext* context)
     return true;
 }
 
-int raygun_ksmc_contextSize()
+int raygun_ksmc_contextSize(void)
 {
     return sizeof(Raygun_KSMachineContext);
 }
@@ -167,7 +167,7 @@ static inline bool isThreadInList(thread_t thread, KSThread* list, int listCount
 }
 #endif
 
-void raygun_ksmc_suspendEnvironment()
+void raygun_ksmc_suspendEnvironment(void)
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
     RAYGUN_KSLOG_DEBUG("Suspending environment.");
@@ -206,7 +206,7 @@ void raygun_ksmc_suspendEnvironment()
 #endif
 }
 
-void raygun_ksmc_resumeEnvironment()
+void raygun_ksmc_resumeEnvironment(void)
 {
 #if RAYGUN_KSCRASH_HAS_THREADS_API
     RAYGUN_KSLOG_DEBUG("Resuming environment.");

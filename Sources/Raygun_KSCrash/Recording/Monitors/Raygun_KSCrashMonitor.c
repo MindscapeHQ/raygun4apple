@@ -202,7 +202,7 @@ void raygun_kscm_setActiveMonitors(Raygun_KSCrashMonitorType monitorTypes)
     g_activeMonitors = activeMonitors;
 }
 
-Raygun_KSCrashMonitorType raygun_kscm_getActiveMonitors()
+Raygun_KSCrashMonitorType raygun_kscm_getActiveMonitors(void)
 {
     return g_activeMonitors;
 }

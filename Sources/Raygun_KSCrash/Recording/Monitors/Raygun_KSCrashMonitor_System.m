@@ -233,7 +233,7 @@ static const char* uuidBytesToString(const uint8_t* uuidBytes)
  *
  * @return Executable path.
  */
-static NSString* getExecutablePath()
+static NSString* getExecutablePath(void)
 {
     NSBundle* mainBundle = [NSBundle mainBundle];
     NSDictionary* infoDict = [mainBundle infoDictionary];
@@ -246,7 +246,7 @@ static NSString* getExecutablePath()
  *
  * @return The UUID.
  */
-static const char* getAppUUID()
+static const char* getAppUUID(void)
 {
     const char* result = nil;
     
@@ -305,7 +305,7 @@ static const char* getCPUArchForCPUType(cpu_type_t cpuType, cpu_subtype_t subTyp
     return NULL;
 }
 
-static const char* getCurrentCPUArch()
+static const char* getCurrentCPUArch(void)
 {
     const char* result = getCPUArchForCPUType(raygun_kssysctl_int32ForName("hw.cputype"),
                                             raygun_kssysctl_int32ForName("hw.cpusubtype"));
@@ -321,7 +321,7 @@ static const char* getCurrentCPUArch()
  *
  * @return YES if the device is jailbroken.
  */
-static bool isJailbroken()
+static bool isJailbroken(void)
 {
     return raygun_ksdl_imageNamed("MobileSubstrate", false) != UINT32_MAX;
 }
@@ -330,7 +330,7 @@ static bool isJailbroken()
  *
  * @return YES if the app was built in debug mode.
  */
-static bool isDebugBuild()
+static bool isDebugBuild(void)
 {
 #ifdef DEBUG
     return YES;
@@ -343,7 +343,7 @@ static bool isDebugBuild()
  *
  * @return YES if this is a simulator build.
  */
-static bool isSimulatorBuild()
+static bool isSimulatorBuild(void)
 {
 #if TARGET_OS_SIMULATOR
     return YES;
@@ -356,7 +356,7 @@ static bool isSimulatorBuild()
  *
  * @return App Store receipt for iOS 7+, nil otherwise.
  */
-static NSString* getReceiptUrlPath()
+static NSString* getReceiptUrlPath(void)
 {
     NSString* path = nil;
 #if RAYGUN_KSCRASH_HOST_IOS
@@ -380,7 +380,7 @@ static NSString* getReceiptUrlPath()
  *
  * @return The stringified hex representation of the hash for this device + app.
  */
-static const char* getDeviceAndAppHash()
+static const char* getDeviceAndAppHash(void)
 {
     NSMutableData* data = nil;
     
@@ -428,7 +428,7 @@ static const char* getDeviceAndAppHash()
  *
  * @return YES if this is a testing build.
  */
-static bool isTestBuild()
+static bool isTestBuild(void)
 {
     return [getReceiptUrlPath().lastPathComponent isEqualToString:@"sandboxReceipt"];
 }
@@ -438,7 +438,7 @@ static bool isTestBuild()
  *
  * @return YES if there is an app store receipt.
  */
-static bool hasAppStoreReceipt()
+static bool hasAppStoreReceipt(void)
 {
     NSString* receiptPath = getReceiptUrlPath();
     if(receiptPath == nil)
@@ -451,7 +451,7 @@ static bool hasAppStoreReceipt()
     return isAppStoreReceipt && receiptExists;
 }
 
-static const char* getBuildType()
+static const char* getBuildType(void)
 {
     if(isSimulatorBuild())
     {
@@ -472,7 +472,7 @@ static const char* getBuildType()
     return "unknown";
 }
 
-static uint64_t getStorageSize()
+static uint64_t getStorageSize(void)
 {
     NSNumber* storageSize = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemSize];
     return storageSize.unsignedLongLongValue;
@@ -482,7 +482,7 @@ static uint64_t getStorageSize()
 #pragma mark - API -
 // ============================================================================
 
-static void initialize()
+static void initialize(void)
 {
     static bool isInitialized = false;
     if(!isInitialized)
@@ -575,7 +575,7 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -619,7 +619,7 @@ static void addContextualInfoToEvent(Raygun_KSCrash_MonitorContext* eventContext
     }
 }
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_system_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_system_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

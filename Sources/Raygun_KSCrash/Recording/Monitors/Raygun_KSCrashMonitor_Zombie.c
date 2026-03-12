@@ -139,7 +139,7 @@ static void handleDealloc_ ## CLASS(id self, SEL _cmd) \
     fn f = (fn)g_originalDealloc_ ## CLASS; \
     f(self, _cmd); \
 } \
-static void installDealloc_ ## CLASS() \
+static void installDealloc_ ## CLASS(void) \
 { \
     Method method = class_getInstanceMethod(objc_getClass(#CLASS), sel_registerName("dealloc")); \
     g_originalDealloc_ ## CLASS = method_getImplementation(method); \
@@ -154,7 +154,7 @@ static void installDealloc_ ## CLASS() \
 CREATE_ZOMBIE_HANDLER_INSTALLER(NSObject)
 CREATE_ZOMBIE_HANDLER_INSTALLER(NSProxy)
 
-static void install()
+static void install(void)
 {
     unsigned cacheSize = CACHE_SIZE;
     g_zombieHashMask = cacheSize - 1;
@@ -224,7 +224,7 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -239,7 +239,7 @@ static void addContextualInfoToEvent(Raygun_KSCrash_MonitorContext* eventContext
     }
 }
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_zombie_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_zombie_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

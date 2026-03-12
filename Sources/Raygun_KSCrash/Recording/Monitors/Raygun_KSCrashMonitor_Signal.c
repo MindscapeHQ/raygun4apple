@@ -118,7 +118,7 @@ static void handleSignal(int sigNum, siginfo_t* signalInfo, void* userContext)
 #pragma mark - API -
 // ============================================================================
 
-static bool installSignalHandler()
+static bool installSignalHandler(void)
 {
     RAYGUN_KSLOG_DEBUG("Installing signal handler.");
 
@@ -225,7 +225,7 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
@@ -240,7 +240,7 @@ static void addContextualInfoToEvent(struct Raygun_KSCrash_MonitorContext* event
 
 #endif
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_signal_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_signal_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

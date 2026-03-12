@@ -144,12 +144,12 @@ static void setEnabled(bool isEnabled)
     }
 }
 
-static bool isEnabled()
+static bool isEnabled(void)
 {
     return g_isEnabled;
 }
 
-Raygun_KSCrashMonitorAPI* raygun_kscm_nsexception_getAPI()
+Raygun_KSCrashMonitorAPI* raygun_kscm_nsexception_getAPI(void)
 {
     static Raygun_KSCrashMonitorAPI api =
     {

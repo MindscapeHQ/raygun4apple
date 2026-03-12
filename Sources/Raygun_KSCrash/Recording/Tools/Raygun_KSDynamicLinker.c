@@ -296,7 +296,7 @@ bool raygun_ksdl_dladdr(const uintptr_t address, Dl_info* const info)
     return true;
 }
 
-int raygun_ksdl_imageCount()
+int raygun_ksdl_imageCount(void)
 {
     return (int)_dyld_image_count();
 }
