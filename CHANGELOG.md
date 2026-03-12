@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.6
+
+- Add synchronous storeCrashReport method for use during process termination
+- Fix race when deleting crash reports (#70)
+
 ## 2.1.5
 
 - Use @synchronized directive for breadcrumbs
